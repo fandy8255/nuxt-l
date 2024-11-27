@@ -9,9 +9,9 @@
         <div v-for="(product, index) in paginatedProducts" :key="index" class="col-sm-12 col-lg-3">
         {{product.product_name}}
         
-        <ProductCard :imgSrc="product.image" :productTitle="product.product_name"
+        <ProductCard :imgSrc="product.product_url" :productTitle="product.product_name"
             :productDescription="product.product_description"
-            :prodPath="product.product_url"
+            :prodPath="'/tienda' + product.product_url"
             :productCategory="product.product_category"
             :productPrice="product.product_price"
             />
