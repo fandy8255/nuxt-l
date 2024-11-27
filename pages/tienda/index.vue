@@ -11,7 +11,7 @@
         
         <ProductCard :imgSrc="product.image" :productTitle="product.product_name"
             :productDescription="product.product_description"
-            :prodPath="'/' + product.product_url"
+            :prodPath="product.product_url"
             :productCategory="product.product_category"
             :productPrice="product.product_price"
             />
