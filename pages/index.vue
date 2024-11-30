@@ -57,6 +57,11 @@
 
 <script setup>
 
+const supabase = useSupabaseClient()
+const user = await supabase.auth.getUser()
+
+  console.log('user', user.data.user)
+
 //import { useState } from 'vue';
 
 const categories = [

@@ -3,15 +3,21 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   ssr: true,
-
-  /*,
-  components: [
-    {
-      path: '~/components',
-      pathPrefix: false, // [!code ++]
+  modules: ['@nuxt/image', '@nuxtjs/supabase'],
+  runtimeConfig: {
+    public: {
+      baseUrl: process.env.SUPABASE_URL || 'http://localhost:3000',
     },
-  ],
-  */
+  },
+
+  supabase: {
+    redirectOptions: {
+      login: '/login',
+      callback: '/confirm',
+      exclude: ['/', '/register', '/login' ],
+    }
+  },
+
   app: {
     head: {
       link: [
@@ -59,5 +65,5 @@ export default defineNuxtConfig({
     }
   },
 
-  modules: ['@nuxt/image',/*'@splidejs/vue-splide'*/],
+
 })

@@ -10,8 +10,12 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxt-alt/http": "^1.7.10",
     "@nuxt/image": "^1.8.1",
+    "@nuxtjs/supabase": "^1.4.3",
     "@splidejs/vue-splide": "^0.6.12",
+    "bcrypt": "^5.1.1",
+    "jsonwebtoken": "^9.0.2",
     "nuxt": "^3.14.1592",
     "vue": "latest",
     "vue-router": "latest"

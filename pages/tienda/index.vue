@@ -1,61 +1,73 @@
 <template>
   <div>
     <!-- Product Listing -->
-    <div class="container">
-      <FilterComponent @update-products="updateProducts" />
-    </div>
-    <div class="container">
-      <div class="row mt-5">
-        <div v-for="(product, index) in paginatedProducts" :key="index" class="col-sm-12 col-lg-3">
-        {{product.product_name}}
-        
-        <ProductCard :imgSrc="product.product_url" :productTitle="product.product_name"
-            :productDescription="product.product_description"
-            :prodPath="'/tienda' + product.product_url"
-            :productCategory="product.product_category"
-            :productPrice="product.product_price"
-            />
-          
-        </div>
+    <div v-if="loading" class="text-center mt-5" style=" height: 600px !important; margin-top: 100px !important;">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
       </div>
     </div>
+    <div v-else>
+      <div class="container">
+        <FilterComponent @update-products="updateProducts" />
+      </div>
 
-    <!-- Pagination Controls -->
-    <nav aria-label="Page navigation" class="mt-4">
-      <ul class="pagination justify-content-center">
-        <li class="page-item" :class="{ disabled: currentPage === 1 }">
-          <button class="page-link" @click="changePage(1)">First</button>
-        </li>
-        <li class="page-item" :class="{ disabled: currentPage === 1 }">
-          <button class="page-link" @click="changePage(currentPage - 1)">Previous</button>
-        </li>
-        <li
-          v-for="page in visiblePages"
-          :key="page"
-          class="page-item"
-          :class="{ active: page === currentPage }"
-        >
-          <button class="page-link" @click="changePage(page)">{{ page }}</button>
-        </li>
-        <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-          <button class="page-link" @click="changePage(currentPage + 1)">Next</button>
-        </li>
-        <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-          <button class="page-link" @click="changePage(totalPages)">Last</button>
-        </li>
-      </ul>
-    </nav>
+      <div v-if="paginatedProducts" class="container">
+        <div class="row mt-5">
+          <div v-for="(product, index) in paginatedProducts" :key="index" class="col-sm-12 col-lg-3 p-2">
+            <ProductCard :imgSrc="product.product_url" :productTitle="product.product_name"
+              :productDescription="product.product_description" :prodPath="'/tienda' + product.product_url"
+              :productCategory="product.product_category" :productPrice="product.product_price" />
+
+          </div>
+        </div>
+      </div>
+      <div v-else>
+        <div class=" text-center mt-5" style=" height: 600px !important; margin-top: 100px !important;">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Pagination Controls -->
+      <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" :class="{ disabled: currentPage === 1 }">
+            <button class="page-link" @click="changePage(1)">First</button>
+          </li>
+          <li class="page-item" :class="{ disabled: currentPage === 1 }">
+            <button class="page-link" @click="changePage(currentPage - 1)">Previous</button>
+          </li>
+          <li v-for="page in visiblePages" :key="page" class="page-item" :class="{ active: page === currentPage }">
+            <button class="page-link" @click="changePage(page)">{{ page }}</button>
+          </li>
+          <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+            <button class="page-link" @click="changePage(currentPage + 1)">Next</button>
+          </li>
+          <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+            <button class="page-link" @click="changePage(totalPages)">Last</button>
+          </li>
+        </ul>
+      </nav>
+
+    </div>
+
+
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 
 // State for products
 const products = ref([]);
 const currentPage = ref(1);
 const itemsPerPage = 8; // Number of products per page
 const visibleButtons = 5; // Number of visible pagination buttons
+const loading = ref(true);
+const paginatedLoading = ref(true);
+
 
 // Fetch products from your Cloudflare Worker
 const fetchProducts = async () => {
@@ -73,13 +85,20 @@ const fetchProducts = async () => {
   products.value = parsed.data.results;
 };
 
+definePageMeta({
+  middleware: ['auth']
+})
+
 // Fetch products on component mount
-await fetchProducts();
+onMounted(async () => {
+  await fetchProducts().then(res => console.log('fetched')).finally(res => loading.value = false);
+})
+
 
 const updateProducts = (fetchedProducts) => {
-      products.value = fetchedProducts;
-      console.log("products-value:", products.value)
-    };
+  products.value = fetchedProducts;
+  console.log("products-value:", products.value)
+};
 
 // Computed properties
 const totalPages = computed(() => Math.ceil(products.value.length / itemsPerPage));
@@ -106,7 +125,9 @@ const visiblePages = computed(() => {
 const changePage = (page) => {
   if (page > 0 && page <= totalPages.value) {
     currentPage.value = page;
+    window.scrollTo(0, 0)
   }
+  window.scrollTo(0, 0)
 };
 </script>
 
