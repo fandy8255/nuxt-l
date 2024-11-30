@@ -72,7 +72,7 @@ const dateOfBirth = ref('')
 const userType = ref('buyer')
 const isAgeValid = ref(false)
 const userAge = ref(18)
-const runtimeConfig = useRuntimeConfig()
+const runtimeConfig = useRuntimeConfig(event)
 
 // Supabase client
 const supabase = useSupabaseClient()
@@ -135,7 +135,7 @@ const registerUser = async () => {
         method: 'POST',
         headers: {
            'Content-Type': 'application/json',
-           'Authorization': `Bearer ${runtimeConfig.secretApiKey}` 
+           'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}` 
         },
         body: JSON.stringify({
           id: data.user.id,
