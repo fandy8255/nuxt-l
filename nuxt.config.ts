@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   ssr: true,
   modules: ['@nuxt/image', '@nuxtjs/supabase'],
   runtimeConfig: {
+    secretApiKey:process.env.SECRET_API_KEY,
     public: {
       baseUrl: process.env.SUPABASE_URL || 'http://localhost:3000',
     },

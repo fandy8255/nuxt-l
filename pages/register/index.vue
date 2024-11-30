@@ -72,6 +72,7 @@ const dateOfBirth = ref('')
 const userType = ref('buyer')
 const isAgeValid = ref(false)
 const userAge = ref(18)
+const runtimeConfig = useRuntimeConfig()
 
 // Supabase client
 const supabase = useSupabaseClient()
@@ -134,7 +135,7 @@ const registerUser = async () => {
         method: 'POST',
         headers: {
            'Content-Type': 'application/json',
-           'Authorization': `Bearer ${process.env.SECRET_API_KEY}` 
+           'Authorization': `Bearer ${runtimeConfig.secretApiKey}` 
         },
         body: JSON.stringify({
           id: data.user.id,
@@ -144,7 +145,7 @@ const registerUser = async () => {
         })
       });
 
-      console.log(`lag ${process.env.SECRET_API_KEY}`)
+      //console.log(`lag ${process.env.SECRET_API_KEY}`)
     
       const result = await response.json();
       console.log('result', result)
