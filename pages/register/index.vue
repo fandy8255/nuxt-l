@@ -132,7 +132,9 @@ const registerUser = async () => {
     if (data) {
       const response = await fetch('https://lingerie.fandy8255.workers.dev/api/user', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+           'Content-Type': 'application/json',
+           'Authorization': `Bearer ${process.env.SECRET_API_KEY}` },
         body: JSON.stringify({
           id: data.user.id,
           email: email.value,
