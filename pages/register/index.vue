@@ -122,7 +122,7 @@ const registerUser = async () => {
       email: email.value,
       password: password.value,
       options: {
-        emailRedirectTo: 'http://localhost:3000/confirm',
+        emailRedirectTo: 'https://nuxt-l2.pages.dev/confirm',
       }
     });
 
@@ -134,7 +134,8 @@ const registerUser = async () => {
         method: 'POST',
         headers: {
            'Content-Type': 'application/json',
-           'Authorization': `Bearer ${process.env.SECRET_API_KEY}` },
+           'Authorization': `Bearer ${process.env.SECRET_API_KEY}` 
+        },
         body: JSON.stringify({
           id: data.user.id,
           email: email.value,
@@ -143,7 +144,10 @@ const registerUser = async () => {
         })
       });
 
+      console.log(`lag ${process.env.SECRET_API_KEY}`)
+    
       const result = await response.json();
+      console.log('result', result)
       console.log('response', response.data)
       alert('Registro Exitoso , porfavor confirma tu correo para continuar');
       router.push('/login');
