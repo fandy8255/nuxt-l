@@ -36,28 +36,43 @@ async function signOut() {
     <nav class="navbar navbar-expand-lg w-100 position-fixed">
         <div class="container-fluid">
             <div class="d-flex" v-if="userStore.logged_in">
-                <NuxtLink to="/dashboard" class="navbar-brand" >
+                <NuxtLink to="/dashboard" class="navbar-brand">
                     <NuxtImg src="/assets/images/panty-icon.png" width="auto" height="50" />
                 </NuxtLink>
                 <h4 class="text-light lead my-auto">Colombia Panty</h4>
             </div>
-            <div v-else class="d-flex" >
+            <div v-else class="d-flex">
                 <NuxtLink to="/" class="navbar-brand">
                     <NuxtImg src="/assets/images/panty-icon.png" width="auto" height="50" />
                 </NuxtLink>
                 <h4 class="text-light lead my-auto">Colombia Panty</h4>
             </div>
-            <div v-if="!isHydrated" class="ms-auto">
-                <span class="spinner-border spinner-border-sm text-light" role="status"></span>
-            </div>
-            <div class="collapse navbar-collapse" id="navbarNav" v-else>
+
+            <!-- Navbar Toggler Button -->
+            <button 
+                class="navbar-toggler" 
+                type="button" 
+                data-bs-toggle="collapse" 
+                data-bs-target="#navbarNav" 
+                aria-controls="navbarNav" 
+                aria-expanded="false" 
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav" v-if="isHydrated">
                 <ul class="navbar-nav ms-auto gap-2" v-if="userStore.logged_in">
                     <li class="nav-item">
                         <NuxtLink to="/tienda" class="nav-link text-decoration-none">Tienda</NuxtLink>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <a 
+                            class="nav-link dropdown-toggle" 
+                            href="#" 
+                            id="navbarDropdown" 
+                            role="button" 
+                            data-bs-toggle="dropdown" 
+                            aria-expanded="false">
                             {{ userStore.username }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -67,7 +82,9 @@ async function signOut() {
                             <li>
                                 <NuxtLink :to="userStore.user_profile" class="dropdown-item">Perfil</NuxtLink>
                             </li>
-                            <li><button @click="signOut" class="dropdown-item">Sign Out</button></li>
+                            <li>
+                                <button @click="signOut" class="dropdown-item">Sign Out</button>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -89,6 +106,7 @@ async function signOut() {
         </div>
     </nav>
 </template>
+
 <style>
 a:hover {
     color: white !important;
