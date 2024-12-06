@@ -21,26 +21,6 @@
             </div>
         </section>
 
-        <!-- Featured Items Section 
-        <section class="featured-items-section py-5 bg-light">
-            <div class="container">
-                <h2 class="text-center mb-4">Featured Items</h2>
-                <div class="row">
-                    <div class="col-md-4" v-for="item in featuredItems" :key="item.name">
-                        <div class="card shadow-sm">
-                            <img :src="item.image" class="card-img-top" :alt="item.name" />
-                            <div class="card-body">
-                                <h5 class="card-title">{{ item.name }}</h5>
-                                <p class="card-text">${{ item.price }}</p>
-                                <button class="btn btn-primary btn-sm">Buy Now</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        -->
-        <!--<FeaturedProductsCarousel />-->
         <FeaturedItems />
 
         <!-- CTA Section -->
@@ -59,6 +39,15 @@
 
 const supabase = useSupabaseClient()
 const user = await supabase.auth.getUser()
+
+useSeoMeta({
+    title: 'Colombia Panty | Compra panties usados',
+    ogTitle: 'Colombia Panty | Compra panties usados',
+    description: 'Compra y venta de panties usados de Colombianas',
+    ogDescription: 'Compra y venta de panties usados de Colombianas',
+    ogImage: '',
+    twitterCard: '',
+})
 
   console.log('user', user.data.user)
 

@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   ssr: true,
-  modules: ['@nuxt/image', '@nuxtjs/supabase'],
+  modules: ['@nuxt/image', '@nuxtjs/supabase', '@pinia/nuxt'],
   runtimeConfig: {
     public: {
       baseUrl: process.env.SUPABASE_URL || 'http://localhost:3000',
@@ -17,6 +17,12 @@ export default defineNuxtConfig({
       callback: '/confirm',
       exclude: ['/', '/register', '/login' ],
     }
+  },
+
+  image: {
+    bunny: {
+      baseURL: "https://lingerie.b-cdn.net",
+    },
   },
 
   app: {

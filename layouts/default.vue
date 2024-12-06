@@ -1,7 +1,7 @@
 <template>
     <div>
         <Navbar id="navbar" />
-        <div class="slot-wrapper">
+        <div class="slot-wrapper mt-5">
             <slot class="main-content" />
         </div>
         <Footer />
@@ -24,6 +24,10 @@
     
 }
 
+p{
+    color: rgb(47, 45, 45) !important;
+}
+
 #navbar {
     z-index: 1000;
     margin: 0 !important;
@@ -31,11 +35,13 @@
 }
 
 a {
-    color: rgb(74, 121, 0) !important;
+    color: rgb(0, 0, 0) !important;
 }
 
 
-
+a:hover{
+    color: blue !important;
+}
 
 h2 {
     /*font-family: "Fira Sans", sans-serif;*/
@@ -49,6 +55,6 @@ h2 {
 }
 
 .slot-wrapper {
-    /*margin-top: 100px !important;*/
+    margin-top: 100px !important;
 }
 </style>

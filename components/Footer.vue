@@ -29,7 +29,17 @@
                 </div>
 
                 <!-- Newsletter -->
-                <div class="col-12 col-md-4 mb-4">
+                <div class="col-12 col-md-4 mb-4" v-if="userStore.logged_in">
+                    <h3 class="h5 fw-bold mb-3 text-end">Revista</h3>
+                    <ul class="list-unstyled">
+                        <li v-for="model in models" :key="model" class="mb-2 text-end">
+                            <NuxtLink :to="`/modelos/${model.toLowerCase()}`" class="text-decoration-none text-light">
+                                {{ model }}
+                            </NuxtLink>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-4 mb-4" v-else >
                     <h3 class="h5 fw-bold mb-3">Suscríbete a nuestro Newsletter</h3>
                     <form @submit.prevent="subscribe">
                         <div class="mb-3">
@@ -64,6 +74,7 @@ const models = ['Vintage', 'Casual', 'Formal', 'Deportiva'];
 import { ref } from 'vue';
 const email = ref('');
 const subscriptionSuccess = ref(false);
+const userStore = useUserStore();
 
 // Función para manejar la suscripción
 const subscribe = () => {

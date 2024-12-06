@@ -1,20 +1,36 @@
-<script setup lang="ts">
-const user = useSupabaseUser()
+<template>
+    <div>
+        <div>
+            <br>
+            <br>
+            <br>
+            <div class="container">
+                <h1>Tu cuenta ha sido confirmada</h1>
+            </div>
+        </div>
+    </div>
+</template>
 
-/*
-watch(user, () => {
-  if (user.value) {
-      // Redirect to protected page
-      return navigateTo('/login')
-  }
-}, { immediate: true })
-*/
+<script setup>
 
+import { onMounted } from 'vue';
+const router = useRouter()
+
+useSeoMeta({
+    title: 'Colombia Panty | Confirma tu correo',
+    ogTitle: 'Colombia Panty | Confirma tu correo',
+    description: 'Confirma tu correo y compra panties usados de Colombianas',
+    ogDescription: 'Compra panties usados de Colombianas',
+    ogImage: '',
+    twitterCard: '',
+})
+
+onMounted(()=>{
+    router.push('/login')
+})
+    
 </script>
 
-<template>
-  <div>
-    <h1>confirmation page</h1>
-    <div>Waiting for login...</div>
-  </div>
-</template>
+<style scoped>
+
+</style>
