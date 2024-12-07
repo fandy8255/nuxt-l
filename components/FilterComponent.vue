@@ -82,6 +82,10 @@ export default {
       },
     };
   },
+  created() {
+    // Use useRuntimeConfig to initialize runtimeConfig
+    this.runtimeConfig = useRuntimeConfig();
+  },
   methods: {
     async fetchFilteredProducts() {
       // Build query parameters
@@ -95,7 +99,9 @@ export default {
       try {
         const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/products?${params.toString()}`, {
           method: "GET",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json",
+            "Authorization": `Bearer ${this.runtimeConfig.public.secretApiKey}`
+           },
         });
 
         if (!response.ok) throw new Error("Failed to fetch products");

@@ -8,25 +8,30 @@ const router = useRouter();
 const isHydrated = ref(false);
 
 onMounted(() => {
-    isHydrated.value = true; // Mark the store as hydrated when mounted
+   /* isHydrated.value = true; */// Mark the store as hydrated when mounted
+   console.log('logged in?', userStore.logged_in)
 });
 
-/*
+
 onUpdated(()=>{
-    userStore.fetchUserData();
-    console.log('updated nav')
-})*/
+   
+})
 
 async function signOut() {
     const { error } = await useSupabaseClient().auth.signOut();
     if (error) console.error('Sign-out error:', error);
-    userStore.setUser({
+    userStore.signOut({
         username: '',
+        email: '',
+        id:'',
         age: null,
+        user_type: '',
         profile_description: '',
-        profile_image: '',
-        logged_in: false,
+        profile_picture: '',
         ubicacion: '',
+        logged_in: false,
+        user_tok:'',
+        user_profile:''
     });
     router.push('/');
 }
@@ -60,10 +65,13 @@ async function signOut() {
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarNav" v-if="isHydrated">
+            <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto gap-2" v-if="userStore.logged_in">
                     <li class="nav-item">
                         <NuxtLink to="/tienda" class="nav-link text-decoration-none">Tienda</NuxtLink>
+                    </li>
+                    <li class="nav-item">
+                        <NuxtLink to="/usuarios" class="nav-link text-decoration-none">Usuarios</NuxtLink>
                     </li>
                     <li class="nav-item dropdown">
                         <a 

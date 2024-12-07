@@ -67,6 +67,7 @@ const itemsPerPage = 8; // Number of products per page
 const visibleButtons = 5; // Number of visible pagination buttons
 const loading = ref(true);
 const paginatedLoading = ref(true);
+const runtimeConfig = useRuntimeConfig();
 
 
 // Fetch products from your Cloudflare Worker
@@ -77,6 +78,7 @@ const fetchProducts = async () => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
       },
     }
   );

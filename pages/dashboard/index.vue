@@ -8,7 +8,10 @@
         <div v-else>
             <h1 class="text-center mb-4">User Dashboard</h1>
             <h1>Welcome, {{ userStore.username }}!</h1>
+            <p>id: {{ userStore.id }}</p>
             <p>Age: {{ userStore.age }}</p>
+            <p>User Type {{ userStore.user_type }}</p>
+            <p>Email {{ userStore.email }}</p>
             <p>Profile Description: {{ userStore.profile_description }}</p>
             <img :src="userStore.profile_image" alt="Profile Image" />
             <p>Ubicación: {{ userStore.ubicacion }}</p>

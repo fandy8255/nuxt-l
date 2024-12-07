@@ -5,6 +5,7 @@ export const useUserStore = defineStore('user', {
     state: () => ({
         username: '',
         email: '',
+        id:'',
         age: null,
         user_type: '',
         profile_description: '',
@@ -16,8 +17,11 @@ export const useUserStore = defineStore('user', {
     }),
     actions: {
 
-        setUser(userData ) {
+        setUser(userData) {
             Object.assign(this, userData, { logged_in: true });
+        },
+        signOut(userData){
+            Object.assign(this, userData);
         },
         updateUserProfile(updatedData) {
             Object.assign(this, updatedData);
@@ -46,11 +50,14 @@ export const useUserStore = defineStore('user', {
                     this.setUser({
                         username: result.data.username,
                         age: result.data.age,
+                        email:result.data.email,
                         profile_description: result.data.profile_description,
                         profile_picture: result.data.profile_picture,
+                        user_type:result.data.user_type,
                         logged_in: true,
                         ubicacion: result.data.ubicacion,
                         user_tok:user,
+                        id:user.id,
                         user_profile:'/perfil/'+ result.data.username
                     });
                 }

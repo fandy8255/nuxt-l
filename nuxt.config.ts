@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   ssr: true,
-  modules: ['@nuxt/image', '@nuxtjs/supabase', '@pinia/nuxt'],
+  modules: ['@nuxt/image', '@nuxtjs/supabase', '@pinia/nuxt', "pinia-plugin-persistedstate"],
   runtimeConfig: {
     public: {
       baseUrl: process.env.SUPABASE_URL || 'http://localhost:3000',

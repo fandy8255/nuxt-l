@@ -15,8 +15,11 @@
                     <div class="row g-5">
                         <!-- Profile Image -->
                         <div class="col-md-4 text-center">
-                            <NuxtImg provider="bunny" :src="userStore.profile_picture" height="auto" width="300px"
-                                :quality="50" />
+                            <div class="container border rounded">
+                                <NuxtImg provider="bunny" :src="userStore.profile_picture" height="auto" width="300px"
+                                :quality="50" placeholder="/assets/images/panty-icon.png"  />
+                            </div>
+                            
                         </div>
                         <!-- User Details -->
                         <div class="col-md-8">

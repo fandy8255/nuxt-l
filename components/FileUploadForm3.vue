@@ -55,19 +55,8 @@
 <script setup>
 import { ref } from 'vue';
 const runtimeConfig = useRuntimeConfig();
-//const supabase = useSupabaseClient();
-//const { data: { user } } = await supabase.auth.getUser();
-
-const userStore = useUserStore();
-const username=userStore.username
-const email=userStore.email
-const user_type=userStore.user_type
-const user=userStore.user_tok
-
-const obj={
-    email:email,
-    user_type:user_type
-}
+const supabase = useSupabaseClient();
+const { data: { user } } = await supabase.auth.getUser();
 
 const modalId = 'uploadFileModal';
 const file = ref(null);
@@ -93,7 +82,7 @@ const uploadFile = async () => {
     const formData = new FormData();
     formData.append('file', file.value);
     formData.append('product_name', productName.value);
-    formData.append('username', username)
+    formData.append('username', 'fandy8255')
     formData.append('product_price', productPrice.value);
     formData.append('product_description', productDescription.value);
     formData.append('product_category', productCategory.value);
@@ -104,7 +93,6 @@ const uploadFile = async () => {
             headers: {
                 'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
                 'X-User': JSON.stringify(user),
-                'X-User-s': JSON.stringify(obj)
                 
             },
             body: formData,
