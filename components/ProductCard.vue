@@ -1,9 +1,9 @@
 <template>
     <div class="card border-1 my-2">
         <div class="card-img-top m-0 overflow-hidden bsb-overlay-hover text-center" style="max-height: 40vh !important">
-            <NuxtLink :to="'/tienda' + prodPath">
+            <NuxtLink :to="'/tienda/' + prodId">
                 <!--<img class="img-fluid bsb-scale bsb-hover-scale-up" loading="lazy" :src="imgSrc" alt="Business">-->
-                <NuxtImg provider="bunny" :src="imgSrc" height="auto" width="300px" :quality="50" placeholder="/assets/images/panty-icon.png" />
+                <NuxtImg provider="bunny" :src="imgSrc" width="300px" :quality="50" placeholder="/assets/images/panty-icon.jpg" />
             </NuxtLink>
         </div>
         <div class="card-body bg-white p-1 mx-1 border-top">
@@ -33,8 +33,8 @@
 
 <script setup>
 
-const { imgSrc, productTitle, productDescription, prodPath, productCategory,productPrice } = 
-defineProps(['imgSrc', 'productTitle', 'productDescription', 'prodPath', 'productCategory','productPrice'])
+const { imgSrc, productTitle, productDescription, prodId, productCategory,productPrice } = 
+defineProps(['imgSrc', 'productTitle', 'productDescription', 'prodId', 'productCategory','productPrice'])
 //const { } = defineProps(['articleDescription'])
 
 console.log('testing')

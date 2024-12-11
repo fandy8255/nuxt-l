@@ -60,7 +60,7 @@
                                         
                                         <ProductCard :imgSrc="product.product_url" :productTitle="product.product_name"
                                             :productDescription="product.product_description"
-                                            :prodPath="'/tienda/' + product.product_url"
+                                            :prodId="product.id"
                                             :productCategory="product.product_category"
                                             :productPrice="product.product_price" />
                                         
@@ -130,7 +130,7 @@ const userStore = useUserStore();
 // State for pagination
 const products = ref([]);
 const currentPage = ref(1);
-const itemsPerPage = 3;
+const itemsPerPage = 4;
 const usernameSlug = ref('');
 const runtimeConfig = useRuntimeConfig();
 const username= useRoute().params.username[0]

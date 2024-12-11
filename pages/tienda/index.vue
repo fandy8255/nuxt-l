@@ -13,9 +13,9 @@
 
       <div v-if="paginatedProducts" class="container">
         <div class="row mt-5">
-          <div v-for="(product, index) in paginatedProducts" :key="index" class="col-sm-12 col-lg-3 p-2">
+          <div v-for="product in paginatedProducts" :key="product.id" class="col-sm-12 col-lg-3 p-2">
             <ProductCard :imgSrc="product.product_url" :productTitle="product.product_name"
-              :productDescription="product.product_description" :prodPath="'/tienda' + product.product_url"
+              :productDescription="product.product_description" :prodId="product.id"
               :productCategory="product.product_category" :productPrice="product.product_price" />
 
           </div>
@@ -31,8 +31,9 @@
       </div>
 
       <!-- Pagination Controls -->
-      <nav aria-label="Page navigation" class="mt-4">
-        <ul class="pagination justify-content-center">
+       <div class="container">
+        <nav aria-label="Page navigation" class="mt-4 bg-light">
+        <ul class="pagination justify-content-start bg-light">
           <li class="page-item" :class="{ disabled: currentPage === 1 }">
             <button class="page-link" @click="changePage(1)">First</button>
           </li>
@@ -50,6 +51,8 @@
           </li>
         </ul>
       </nav>
+       </div>
+      
 
     </div>
 
@@ -63,7 +66,7 @@ import { ref, computed, onMounted } from 'vue';
 // State for products
 const products = ref([]);
 const currentPage = ref(1);
-const itemsPerPage = 8; // Number of products per page
+const itemsPerPage = 10; // Number of products per page
 const visibleButtons = 5; // Number of visible pagination buttons
 const loading = ref(true);
 const paginatedLoading = ref(true);

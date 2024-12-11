@@ -1,19 +1,19 @@
 <template>
     <div>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" :data-bs-target="`#${modalId}`">
-            Upload Files
+            Upload File
         </button>
 
         <div class="modal fade" :id="modalId" tabindex="-1" aria-labelledby="uploadFileModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="uploadFileModalLabel">Upload Files</h5>
+                        <h5 class="modal-title" id="uploadFileModalLabel">Upload File</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                             @click="resetForm"></button>
                     </div>
                     <div class="modal-body">
-                        <form @submit.prevent="uploadFiles">
+                        <form @submit.prevent="uploadFile">
                             <div class="mb-3">
                                 <label for="productName" class="form-label">Product Name</label>
                                 <input type="text" class="form-control" id="productName" v-model="productName"
@@ -38,9 +38,9 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="fileInput" class="form-label">Select Files</label>
-                                <input type="file" class="form-control" id="fileInput" @change="handleFilesChange"
-                                    multiple required />
+                                <label for="fileInput" class="form-label">Select File</label>
+                                <input type="file" class="form-control" id="fileInput" @change="handleFileChange"
+                                    required />
                             </div>
                             <button type="submit" class="btn btn-success">Submit</button>
                         </form>
@@ -55,46 +55,45 @@
 <script setup>
 import { ref } from 'vue';
 const runtimeConfig = useRuntimeConfig();
+//const supabase = useSupabaseClient();
+//const { data: { user } } = await supabase.auth.getUser();
 
 const userStore = useUserStore();
-const username = userStore.username;
-const email = userStore.email;
-const user_type = userStore.user_type;
-const user = userStore.user_tok;
+const username=userStore.username
+const email=userStore.email
+const user_type=userStore.user_type
+const user=userStore.user_tok
 
-const obj = {
-    email: email,
-    user_type: user_type
-};
+const obj={
+    email:email,
+    user_type:user_type
+}
 
 const modalId = 'uploadFileModal';
-const files = ref([]); // Array to hold multiple files
+const file = ref(null);
 const uploadStatus = ref('');
 const productName = ref('');
 const productPrice = ref('');
 const productDescription = ref('');
 const productCategory = ref('');
 
-const handleFilesChange = (event) => {
-    
-    files.value = Array.from(event.target.files); // Store selected files in an array
-    console.log('changing files', files.value)
+const handleFileChange = (event) => {
+    file.value = event.target.files[0];
 };
 
-const uploadFiles = async () => {
-    if (!files.value.length || !productName.value || !productPrice.value || !productDescription.value || !productCategory.value) {
+const uploadFile = async () => {
+
+    //console.log('user',typeof user, user )
+
+    if (!file.value || !productName.value || !productPrice.value || !productDescription.value || !productCategory.value) {
         uploadStatus.value = 'All fields are required.';
         return;
     }
-    
-    console.log('final files', files.value)
 
     const formData = new FormData();
-    files.value.forEach((file, index) => {
-        formData.append('file', file); // Append each file with a unique key
-    });
+    formData.append('file', file.value);
     formData.append('product_name', productName.value);
-    formData.append('username', username);
+    formData.append('username', username)
     formData.append('product_price', productPrice.value);
     formData.append('product_description', productDescription.value);
     formData.append('product_category', productCategory.value);
@@ -106,12 +105,15 @@ const uploadFiles = async () => {
                 'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
                 'X-User': JSON.stringify(user),
                 'X-User-s': JSON.stringify(obj)
+                
             },
             body: formData,
         });
 
         if (response.ok) {
-            uploadStatus.value = 'Files and product uploaded successfully!';
+            //console.log('response', response)
+            //console.log('resjson', response.json())
+            uploadStatus.value = 'File and product uploaded successfully!';
         } else {
             uploadStatus.value = `Failed: ${response.status} - ${await response.text()}`;
         }
@@ -121,7 +123,7 @@ const uploadFiles = async () => {
 };
 
 const resetForm = () => {
-    files.value = [];
+    file.value = null;
     productName.value = '';
     productPrice.value = '';
     productDescription.value = '';
