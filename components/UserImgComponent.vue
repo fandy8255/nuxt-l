@@ -1,0 +1,30 @@
+<!-- components/UserImgComponent.vue -->
+<template>
+    <div class="d-flex align-items-center gap-2">
+        <NuxtLink :to="'/perfil/' + username">
+        <NuxtImg provider="bunny" :src="image" class="rounded-circle" width="50px" height="50px" alt="User Image"
+            :quality="10" loading="lazy" placeholder="/assets/images/panty-icon.jpg" />
+        </NuxtLink>
+        <span class="fw-bold spans">{{ username }}</span>
+    </div>
+</template>
+
+<script setup>
+defineProps({
+    image: {
+        type: String,
+        required: true,
+    },
+    username: {
+        type: String,
+        required: true,
+    },
+});
+</script>
+
+<style scoped>
+/* Ensure image stays small and rounded */
+.rounded-circle {
+    object-fit: cover;
+}
+</style>

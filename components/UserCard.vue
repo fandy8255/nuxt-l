@@ -1,0 +1,71 @@
+<template>
+  <div class="card border-1 my-2 shadow-sm">
+
+    <div class="card-img-top m-0 overflow-hidden bsb-overlay-hover text-center" style="max-height: 40vh !important">
+      <NuxtLink :to="'/perfil/' + username">
+        <!--<img class="img-fluid bsb-scale bsb-hover-scale-up" loading="lazy" :src="imgSrc" alt="Business">-->
+        <NuxtImg provider="bunny" :src="profilePicture" width="300px" :quality="50"
+          placeholder="/assets/images/panty-icon.jpg" />
+      </NuxtLink>
+    </div>
+    <div class="card-body bg-white p-1 mx-1 border-top">
+
+      <div class="d-flex gap-2 position-absolute" style="top: 10px; left: 10px;">
+        <p class="category px-3 py-1 rounded">{{ ubicacion }}</p>
+      </div>
+
+      <div class="p-xl-1 p-sm-1">
+        <h5>{{ username }}</h5>
+        <p>{{parseDescription(profileDescription) }}</p>
+            <!--<p style="width: fit-content;" class="fs-bolder bg-light px-3 py-1 rounded">{{ productCategory }}</p>-->
+            <div class="d-flex justify-content-between flex-lg-wrap">
+
+              <!-- <DeleteProductModal v-if="userStore.username===username" />-->
+              <span v-if="verified" class="badge bg-success">Verificado</span>
+              <span v-else class="badge bg-danger">No Verificado</span>
+            </div>
+
+      </div>
+    </div>
+  </div>
+
+</template>
+
+<script setup>
+
+
+
+const { username, profilePicture, profileDescription, age, verified, ubicacion } = defineProps([
+  "username",
+  "profilePicture",
+  "profileDescription",
+  "verified",
+  "ubicacion"
+]);
+
+function parseDescription(profileDescription){
+  if (profileDescription){
+    if(profileDescription.length >150){
+      return profileDescription.slice(0, 150) + '...'
+    }
+    else{
+      return profileDescription
+    }
+  }
+  return 
+}
+
+</script>
+
+<style scoped>
+.card-body {
+  border-radius: 5px;
+  background: #f8f9fa;
+}
+
+.category{
+    background: #ff2fe7b0 !important;
+    color: white !important;
+    z-index: 100 !important;
+}
+</style>
