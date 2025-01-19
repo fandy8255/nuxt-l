@@ -13,6 +13,7 @@
                     
                 </div>
                 <div class="col-8">
+                    <FollowButton :viewedUsername="user.username" />
                     <h2>{{ user.username }}
                         <span v-if="user.verified">
                             <i class="fa fa-check-circle text-success"></i>
@@ -135,6 +136,8 @@ const itemsPerPage = 8;
 const usernameSlug = ref('');
 const runtimeConfig = useRuntimeConfig();
 const username= useRoute().params.username[0]
+const followed=ref(null)
+const followers=ref(null)
 
 function test(){
     console.log('emmitedd update store after deleting prod')
@@ -155,14 +158,6 @@ function updateProducts(){
     console.log('emmitedd update store')
     loadUserData()
 }
-
-/*
-function updatedProds(){
-    console.log('triggered')
-    products.value=Array.from(userStore.products)
-    console.log(userStore.products)
-}
-*/
 
 const paginatedProducts = computed(() => {
     const start = (currentPage.value - 1) * itemsPerPage;
@@ -204,6 +199,52 @@ const fetchUser = async (usernameSlug) => {
     }
 };
 
+const fetchFollowers = async (user) => {
+    try {
+        const response = await fetch(
+            `https://lingerie.fandy8255.workers.dev/api/followers`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+                    'X-User': JSON.stringify(user),
+                },
+            }
+        );
+        if (!response.ok) throw new Error('Failed to fetch user data');
+        const data = await response.json();
+        followers.value = data;
+        /*console.log('user data', data)*/
+    } catch (error) {
+        console.error(error);
+        followers.value = null;
+    }
+};
+
+const fetchFollowed = async (user) => {
+    try {
+        const response = await fetch(
+            `https://lingerie.fandy8255.workers.dev/api/followed`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+                    'X-User': JSON.stringify(user),
+                },
+            }
+        );
+        if (!response.ok) throw new Error('Failed to fetch user data');
+        const data = await response.json();
+        followed.value = data;
+        /*console.log('user data', data)*/
+    } catch (error) {
+        console.error(error);
+        followed.value = null;
+    }
+};
+
 
 const fetchProducts = async () => {
     loading.value = true;
@@ -214,6 +255,7 @@ const fetchProducts = async () => {
             headers:{
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+                
             }
         });
         const data = await response.json();
@@ -260,6 +302,9 @@ const loadUserData = async() => {
                 fetchProducts()
             }
         })
+
+        await fetchFollowed(user.value)
+        await fetchFollowers(user.value)
         
     }
 };

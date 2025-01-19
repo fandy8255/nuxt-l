@@ -14,12 +14,18 @@ export const useUserStore = defineStore('user', {
         logged_in: false,
         user_tok: '',
         user_profile: '',
-        products: [], // Array to store seller's products
+        products: [],
+        followers: [],
+        followed: []
     }),
     actions: {
         setUser(userData) {
             Object.assign(this, userData, { logged_in: true });
         },
+        updateFollowersAndFollowed({ followers, followed }) {
+            this.followers = followers;
+            this.followed = followed;
+          },
         signOut(userData) {
             Object.assign(this, userData, { logged_in: false, products: [] }); // Reset products on sign-out
         },
@@ -66,6 +72,33 @@ export const useUserStore = defineStore('user', {
                         user_profile: '/perfil/' + result.data.username,
                     });
 
+                    const [followersResponse, followedResponse] = await Promise.all([
+                        fetch('https://lingerie.fandy8255.workers.dev/api/followers', {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Authorization: `Bearer ${runtimeConfig.public.secretApiKey}`,
+                                'X-User': JSON.stringify(user),
+                            },
+                        }),
+                        fetch('https://lingerie.fandy8255.workers.dev/api/followed', {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Authorization: `Bearer ${runtimeConfig.public.secretApiKey}`,
+                                'X-User': JSON.stringify(user),
+                            },
+                        }),
+                    ]);
+
+                    const [followersResult, followedResult] = await Promise.all([
+                        followersResponse.json(),
+                        followedResponse.json(),
+                    ]);
+
+                    this.followers = followersResult.followers || [];
+                    this.followed = followedResult.followed || [];
+
                     // Fetch seller products if user is a seller
                     if (result.data.user_type === 'seller') {
                         this.fetchSellerProducts();
@@ -81,24 +114,24 @@ export const useUserStore = defineStore('user', {
             const runtimeConfig = useRuntimeConfig();
             try {
                 const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/getProducts?user_id=${this.id}`, {
-                    method :'GET',
-                    headers:{
+                    method: 'GET',
+                    headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
                     }
                 });
 
                 const result = await response.json();
-                
+
                 console.log('resulted', result.data.results)
                 if (result?.data) {
-                    let arr=[]
+                    let arr = []
 
-                
+
                     this.products = result.data.results; // Set the seller's products
 
                 }
-              // return result.data.results
+                // return result.data.results
             } catch (error) {
                 console.error('Error fetching seller products:', error.message);
             }
@@ -125,18 +158,18 @@ export const useUserStore = defineStore('user', {
                 return;
             }
 
-        
+
             const productIndex = this.products.findIndex(product => product.id === productId);
             if (productIndex === -1) {
                 console.error('Product not found.');
                 return;
             }
-        
+
             this.products.splice(productIndex, 1);
-            
+
         },
-    },persist: {
+    }, persist: {
         storage: piniaPluginPersistedstate.localStorage(),
-      }
-    
+    }
+
 });
