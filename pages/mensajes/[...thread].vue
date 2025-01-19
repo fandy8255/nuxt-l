@@ -1,17 +1,21 @@
 <template>
     <div class="message-container container-xl">
-        <h2 class="lead text-start container mb-3" v-if="otherUser">Conversación con: {{ otherUser.username }} {{ otherUser.id }}</h2>
+        <h2 class="lead text-start container mb-3" v-if="otherUser">Conversación con: {{ otherUser.username }} {{
+            otherUser.id }}</h2>
 
         <!-- Message Display Section -->
         <div class="messages">
-            <div v-if="messages" v-for="message in messages" :key="message.message_id" class="message"
-                :class="{ 'my-message': message.message_owner === user.username, 'other-message': message.message_owner !== user.username }">
-                {{ message }}
-                <div class="message-header">
-                    <UserImgComponent :image="message.sender_profile_picture" :username="message.sender_username" />
+            <div v-if="messages" v-for="message in messages" :key="message.message_id" class="d-flex" :class ="{'justify-content-end': message.message_owner !== user.id}" >
+                <div class="message" :class="{ 'my-message': message.message_owner === user.id, 'other-message': message.message_owner !== user.id }">
+                    <!--{{ message }}-->
+                    <div class="message-header">
+                        <UserImgComponent :image="message.sender_profile_picture" :username="message.sender_username" />
+                    </div>
+                    <p class="message-content">{{ message.content }}</p>
+                    <small class="message-time">{{ formatDate(message.created_at) }}</small>
+
                 </div>
-                <p class="message-content">{{ message.content }}</p>
-                <small class="message-time">{{ formatDate(message.created_at) }}</small>
+
             </div>
         </div>
 
@@ -59,13 +63,13 @@ const fetchMessages = async () => {
         console.log('dd', results.messages[0])
         console.log('dd', userStore.username)
         // Find the other user based on sender and receiver usernames
-        let obj={
+        let obj = {
             username: null,
-            id:null
+            id: null
         }
         const currentUserIsSender = results.messages[0]['sender_username'] === userStore.username;
-        obj.username=results.messages[0][currentUserIsSender ? 'receiver_username' : 'sender_username'];
-        obj.id=results.messages[0][currentUserIsSender ? 'receiver_id' : 'sender_id']
+        obj.username = results.messages[0][currentUserIsSender ? 'receiver_username' : 'sender_username'];
+        obj.id = results.messages[0][currentUserIsSender ? 'receiver_id' : 'sender_id']
         otherUser.value = obj
     } catch (error) {
         console.error('Error fetching threads:', error);
@@ -137,8 +141,9 @@ h2 {
 }
 
 .my-message {
-    background-color: #e0ffe0;
-
+    background-color: #dbdbdb;
+    width: 40vw;
+    border: none;
     /* Light green for the logged-in user */
     align-self: flex-start;
 }
@@ -146,6 +151,7 @@ h2 {
 .other-message {
     background-color: #2c2c2c51;
     /* Light blue for the other user */
+    border: none;
     align-self: flex-end;
     width: 40vw;
 }
