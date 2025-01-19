@@ -10,6 +10,8 @@
                     <div class="container border rounded text-center">
                         <NuxtImg provider="bunny" :src="user.profile_picture" height="auto" width="300px" :quality="50" placeholder="/assets/images/panty-icon.png" />
                     </div>
+                    <p class="text-start">seguidores : {{ followers}}</p>
+                    <p class="text-start">siguiendo : {{ followed }}</p>
                     
                 </div>
                 <div class="col-8">
@@ -214,7 +216,8 @@ const fetchFollowers = async (user) => {
         );
         if (!response.ok) throw new Error('Failed to fetch user data');
         const data = await response.json();
-        followers.value = data;
+        console.log('followers', data)
+        followers.value = data.followers;
         /*console.log('user data', data)*/
     } catch (error) {
         console.error(error);
@@ -237,7 +240,8 @@ const fetchFollowed = async (user) => {
         );
         if (!response.ok) throw new Error('Failed to fetch user data');
         const data = await response.json();
-        followed.value = data;
+        console.log('followeddd', data)
+        followed.value = data.followed;
         /*console.log('user data', data)*/
     } catch (error) {
         console.error(error);
@@ -295,16 +299,18 @@ const loadUserData = async() => {
         //fetchProducts()
     } else {
         // Fetch data for other users
-        await fetchUser(usernameSlug.value).then(res=>{
-            /*console.log('user value', user.value)*/
+        await fetchUser(usernameSlug.value).then(async res=>{
+            console.log('user value', user.value)
+
+            await fetchFollowed(user.value)
+            await fetchFollowers(user.value)
             
             if(user.value.user_type==="seller"){
                 fetchProducts()
             }
         })
 
-        await fetchFollowed(user.value)
-        await fetchFollowers(user.value)
+        
         
     }
 };

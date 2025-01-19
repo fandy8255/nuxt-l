@@ -1,11 +1,11 @@
 <template>
-    <div class="message-container container-xl">
+    <div class="message-container container-xl card shadow-lg border-0 p-3 my-5">
         <h2 class="lead text-start container mb-3" v-if="otherUser">Conversación con: {{ otherUser.username }} </h2>
 
         <!-- Message Display Section -->
         <div class="messages">
             <div v-if="messages" v-for="message in messages" :key="message.message_id" class="d-flex"
-                :class="{ 'justify-content-end': message.message_owner !== user.id }">
+                :class="{ 'justify-content-end': message.message_owner !== user.id , 'me-2':true }">
                 <div class="message"
                     :class="{ 'my-message': message.message_owner === user.id, 'other-message': message.message_owner !== user.id }">
                     <!--{{ message }}-->
@@ -120,6 +120,7 @@ onMounted(async () => {
     width: 100%;
     margin: 0 auto;
     padding: 20px;
+    max-height: 75vh;
 }
 
 
