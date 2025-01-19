@@ -1,16 +1,17 @@
 <template>
-    <div class="message-container">
+    <div class="message-container container-xl">
         <h2 class="lead text-start container mb-3" v-if="otherUser">Conversación con: {{ otherUser }}</h2>
 
         <!-- Message Display Section -->
         <div class="messages">
             <div v-if="messages" v-for="message in messages" :key="message.message_id" class="message"
-                :class="{ 'my-message': message.sender_username === user.username, 'other-message': message.sender_username !== user.username }">
+                :class="{ 'my-message': message.message_owner === user.username, 'other-message': message.message_owner !== user.username }">
+                {{ message }}
                 <div class="message-header">
                     <UserImgComponent :image="message.sender_profile_picture" :username="message.sender_username" />
                 </div>
                 <p class="message-content">{{ message.content }}</p>
-                <small class="message-time">{{ formatTime(message.created_at) }}</small>
+                <small class="message-time">{{ formatDate(message.created_at) }}</small>
             </div>
         </div>
 
@@ -68,7 +69,7 @@ const fetchMessages = async () => {
 const sendMessage = async () => {
     if (newMessage.value.trim()) {
         try {
-            const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/thread`, {
+            const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/message`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
@@ -93,10 +94,7 @@ const sendMessage = async () => {
     }
 };
 
-const formatTime = (time) => {
-    const date = new Date(time);
-    return `${date.getHours()}:${date.getMinutes()}`;
-};
+const formatDate = (date) => new Date(date).toLocaleString();
 
 onMounted(async () => {
     await fetchMessages();
@@ -106,7 +104,6 @@ onMounted(async () => {
 <style scoped>
 .message-container {
     width: 100%;
-    max-width: 65vw;
     margin: 0 auto;
     padding: 20px;
 }

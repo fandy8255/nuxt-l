@@ -16,7 +16,7 @@
                         </div>
                         <div class="col-4">
                             <NuxtLink :to="`/mensajes/${thread.thread_id}`">
-                                <p class="card-text mb-1 text-muted">{{ thread.last_message || 'Sin mensajes' }}</p>
+                                <p class="card-text mb-1 text-muted">{{ thread.last_message.slice(0,50) || 'Sin mensajes' }}</p>
                             </NuxtLink>
                             
                         </div>

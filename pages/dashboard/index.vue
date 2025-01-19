@@ -16,6 +16,9 @@
             <img :src="userStore.profile_image" alt="Profile Image" />
             <p>Ubicación: {{ userStore.ubicacion }}</p>
             <p>products {{ userStore.products }}</p>
+            <p>followers {{ userStore.followers }}</p>
+            <p>followed {{ userStore.followed }}</p>
+
         </div>
     </div>
 </template>

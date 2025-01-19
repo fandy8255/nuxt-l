@@ -18,7 +18,7 @@ const props = defineProps({
         required: true, // The username of the profile being viewed
     },
 });
-
+const runtimeConfig = useRuntimeConfig();
 const userStore = useUserStore();
 
 // Compute whether the logged-in user is following the viewed user
@@ -29,9 +29,12 @@ const isFollowing = computed(() =>
 // Handle follow action
 const handleFollow = async () => {
     try {
-        const response = await fetch(`/api/follow`, {
+        const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/follow`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json' ,
+                'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`
+            },
             body: JSON.stringify({
                 follower: userStore.username,
                 followed: props.viewedUsername,
@@ -49,9 +52,12 @@ const handleFollow = async () => {
 // Handle unfollow action
 const handleUnfollow = async () => {
     try {
-        const response = await fetch(`/api/unfollow`, {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
+        const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/unfollow`, {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json' ,
+                'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`
+            },
             body: JSON.stringify({
                 follower: userStore.username,
                 followed: props.viewedUsername,
