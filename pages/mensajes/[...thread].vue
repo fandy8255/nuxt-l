@@ -1,6 +1,6 @@
 <template>
     <div class="message-container container-xl">
-        <h2 class="lead text-start container mb-3" v-if="otherUser">Conversación con: {{ otherUser }}</h2>
+        <h2 class="lead text-start container mb-3" v-if="otherUser">Conversación con: {{ otherUser.username }} {{ otherUser.id }}</h2>
 
         <!-- Message Display Section -->
         <div class="messages">
@@ -59,8 +59,14 @@ const fetchMessages = async () => {
         console.log('dd', results.messages[0])
         console.log('dd', userStore.username)
         // Find the other user based on sender and receiver usernames
+        let obj={
+            username: null,
+            id:null
+        }
         const currentUserIsSender = results.messages[0]['sender_username'] === userStore.username;
-        otherUser.value = results.messages[0][currentUserIsSender ? 'receiver_username' : 'sender_username'];
+        obj.username=results.messages[0][currentUserIsSender ? 'receiver_username' : 'sender_username'];
+        obj.id=results.messages[0][currentUserIsSender ? 'receiver_id' : 'sender_id']
+        otherUser.value = obj
     } catch (error) {
         console.error('Error fetching threads:', error);
     }
@@ -77,7 +83,7 @@ const sendMessage = async () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    thread_id: threadId,
+                    receiver: otherUser.value.id,
                     content: newMessage.value,
                 }),
             });
