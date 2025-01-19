@@ -1,15 +1,19 @@
 <template>
     <div class="message-container container-xl">
-        <h2 class="lead text-start container mb-3" v-if="otherUser">Conversación con: {{ otherUser.username }} {{
-            otherUser.id }}</h2>
+        <h2 class="lead text-start container mb-3" v-if="otherUser">Conversación con: {{ otherUser.username }} </h2>
 
         <!-- Message Display Section -->
         <div class="messages">
-            <div v-if="messages" v-for="message in messages" :key="message.message_id" class="d-flex" :class ="{'justify-content-end': message.message_owner !== user.id}" >
-                <div class="message" :class="{ 'my-message': message.message_owner === user.id, 'other-message': message.message_owner !== user.id }">
+            <div v-if="messages" v-for="message in messages" :key="message.message_id" class="d-flex"
+                :class="{ 'justify-content-end': message.message_owner !== user.id }">
+                <div class="message"
+                    :class="{ 'my-message': message.message_owner === user.id, 'other-message': message.message_owner !== user.id }">
                     <!--{{ message }}-->
+
                     <div class="message-header">
-                        <UserImgComponent :image="message.sender_profile_picture" :username="message.sender_username" />
+                        <UserImgComponent
+                            :image="message.message_owner === message.sender_id ? message.sender_profile_picture : message.receiver_profile_picture"
+                            :username="message.message_owner === message.sender_id ? message.sender_username : message.receiver_username" />
                     </div>
                     <p class="message-content">{{ message.content }}</p>
                     <small class="message-time">{{ formatDate(message.created_at) }}</small>
@@ -20,12 +24,12 @@
         </div>
 
         <!-- New Message Input Section -->
-        <div class="new-message d-flex">
-            <div style="width: 40vw;">
-                <textarea v-model="newMessage" placeholder="Write your message..."
-                    class="message-input col-10"></textarea>
+        <div class="new-message container-xl">
+            <div class="row d-flex w-100">
+                <textarea v-model="newMessage" placeholder="Write your message..." class="message-input col-9 me-5"></textarea>
                 <button @click="sendMessage" class="send-btn col-2">Enviar</button>
             </div>
+            
 
         </div>
     </div>
@@ -182,8 +186,8 @@ h2 {
 }
 
 .message-input {
-    width: 100%;
-    max-width: 100%;
+   /* width: 100%;
+    max-width: 100%;*/
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
