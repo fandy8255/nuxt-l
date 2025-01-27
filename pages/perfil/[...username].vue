@@ -63,17 +63,20 @@
                                 <div class="row">
                                     <div v-for="product in paginatedProducts" :key="product.id"
                                         class="col-sm-12 col-lg-3 p-2" >
+                                        <!--{{ product }}-->
                                     
                                         <ProductCard
-                                            :product="product"
-                                            :imgSrc="product.product_url" 
+                                            :likeCount="product.like_count"
+                                            :productOwner="product.owner_id" 
+                                            :imgSrc="product.main_image_url ?? product.product_url" 
                                             :productTitle="product.product_name"
                                             :productDescription="product.product_description"
-                                            :prodId="product.id"
+                                            :prodId="product.product_id"
                                             :productCategory="product.product_category"
                                             :productPrice="product.product_price"
-                                            :username="product.username"
+                                            :username="product.owner_username" 
                                             :usernamePicture="product.profile_picture"
+                                            :isAd="isAd"
                                             @updateProductsStore2="updateProducts"
                                             
                                              />
@@ -128,8 +131,9 @@ import { ref, computed, onMounted} from "vue";
 const user = ref(null);
 const loading = ref(false);
 const activeTab = ref("products");
-
 const userStore = useUserStore();
+const isAd=ref(0)
+//console.log('is Admin', currentUser)
 
 // State for pagination
 const products = ref([]);
@@ -316,7 +320,9 @@ const loadUserData = async() => {
 };
 
 
-onMounted(() => {
+onMounted(async () => {
+    const currentUserSuper=await userStore.isAd().then(res=>isAd.value=res)
+    console.log('isAd VALUE', isAd)
     console.log('mounted')
     loadUserData()
     //console.log('store productssss', userStore.products)

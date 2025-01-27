@@ -15,13 +15,18 @@
         <div class="row mt-5">
           <div v-for="product in paginatedProducts" :key="product.id" class="col-sm-12 col-lg-3 p-2">
             <!--{{ product }}-->
-
-            <ProductCard :imgSrc="product.product_url" :productTitle="product.product_name"
-              :productDescription="product.product_description" :prodId="product.id"
-              :productCategory="product.product_category" :productPrice="product.product_price"
-              :username="product.username" :usernamePicture="product.profile_picture" />
-
-
+            <ProductCard 
+            :likeCount="product.like_count"
+            :productOwner="product.owner_id" 
+            :imgSrc="product.main_image_url" 
+            :productTitle="product.product_name"
+            :productDescription="product.product_description"
+            :prodId="product.product_id"
+            :productCategory="product.product_category"
+            :productPrice="product.product_price"
+            :username="product.owner_username" 
+            :usernamePicture="product.profile_picture"
+            :isAd="isAd" />
           </div>
         </div>
       </div>
@@ -56,19 +61,17 @@
           </ul>
         </nav>
       </div>
-
-
     </div>
-
 
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+const userStore = useUserStore();
 
-// State for products
 const products = ref([]);
+const isAd=ref(0)
 const currentPage = ref(1);
 const itemsPerPage = 10; // Number of products per page
 const visibleButtons = 5; // Number of visible pagination buttons
@@ -91,6 +94,7 @@ const fetchProducts = async () => {
   );
 
   const parsed = await response.json();
+  console.log('productssssss', parsed)
   products.value = parsed.data.results;
 };
 
@@ -100,6 +104,8 @@ definePageMeta({
 
 // Fetch products on component mount
 onMounted(async () => {
+  const currentUserSuper=await userStore.isAd().then(res=>isAd.value=res)
+  console.log('isAd VALU tndaE', isAd)
   await fetchProducts().then(res => console.log('fetched')).finally(res => loading.value = false);
 })
 

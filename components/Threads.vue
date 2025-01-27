@@ -57,7 +57,7 @@ const { data: { user } } = await supabase.auth.getUser();
 const userStore = useUserStore();
 
 const threads = ref([]);
-const threadsPerPage = 5;
+const threadsPerPage = 3;
 const currentPage = ref(1);
 
 const paginatedThreads = computed(() => {
