@@ -1,6 +1,6 @@
 <template>
     <div class="card border-1 my-2 shadow-sm">
-       <!-- {{ product }}-->
+        <!-- {{ product }}-->
 
         <div class="card-img-top m-0 overflow-hidden bsb-overlay-hover text-center" style="max-height: 40vh !important">
             <NuxtLink :to="'/tienda/' + product.id">
@@ -17,10 +17,10 @@
                     </div>
                     <div class="col-6 text-end">
                         <div class="lk d-flex justify-content-end align-items-end">
-                            <LikeButton v-if="product.user_id !== userStore.id" :likedProductId="product.id" :productOwnerId="product.user_id"
-                                :like_count="product.like_count" />
+                            <LikeButton v-if="product.user_id !== userStore.id" :likedProductId="product.id"
+                                :productOwnerId="product.user_id" :like_count="product.like_count" />
                             <div v-else>
-                                <i class="fa-solid fa-heart"></i> {{product.like_count}}
+                                <i class="fa-solid fa-heart"></i> {{ product.like_count }}
                             </div>
                         </div>
                     </div>
@@ -34,12 +34,18 @@
             <div class="p-xl-1 p-sm-1">
                 <h5>{{ product.product_name }}</h5>
 
-                <p>{{ product.product_description.length < 150 ? product.product_description :product.product_description.slice(0, 150) + '...' }}</p>
-                     <div class="d-flex justify-content-between flex-lg-wrap">
-                        <p id="price" class="text-dark fs-6 fw-bold mb-0">$ {{ product.product_price }} COP</p>
-                        <DeleteProductModal :productId="product.id" v-if="userStore.username === product.username || isAd"
-                        @updateProductsStore="updateProducts" @click="test" />
-                    </div>
+                <p>{{ product.product_description.length < 150 ? product.product_description :
+                    product.product_description.slice(0, 150) + '...' }}</p>
+                        <div class="d-flex justify-content-between flex-lg-wrap">
+                            <p id="price" class="text-dark fs-6 fw-bold mb-0">$ {{ product.product_price }} COP</p>
+                            <DeleteProductModal :productId="product.id"
+                                v-if="userStore.username === product.username || isAd"
+                                @updateProductsStore="updateProducts" @click="test" />
+                            <div v-else> 
+                                <ReportModal :productId="product.id" :reporterId="userStore.id" :reportedId="product.user_id" />
+                            </div>
+                        </div>
+
             </div>
         </div>
 
@@ -58,6 +64,16 @@ const emit = defineEmits(['updateProductsStore2'])
 function updateProducts() {
     emit('updateProductsStore2')
 }
+
+const isReportModalOpen = ref(false);
+const selectedProductId = ref(null);
+const selectedReportedId = ref(null);
+
+const openModal = (productId, reportedId) => {
+    selectedProductId.value = productId;
+    selectedReportedId.value = reportedId;
+    isReportModalOpen.value = true;
+};
 
 
 </script>

@@ -2,7 +2,7 @@
     <div class="container-fluid mt-2">
         <div class="row w-100">
 
-            <div class="col-sm-12 col-lg-4 ">
+            <div class="col-sm-12 col-lg-4 mt-5 ">
                 <div class="container">
                     <div style="position: relative; top: 10px; left: 10px">
                         <div class="d-flex">
