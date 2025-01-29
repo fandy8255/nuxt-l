@@ -3,7 +3,6 @@
         <div v-if="user">
             <div class="row">
                 <div class="col-12">
-                    hola mate223
                     <MessageModal :message="message" @clear="clearMessage" style="z-index: 105 !important;" />
                 </div>
                 <!-- Profile Section -->
