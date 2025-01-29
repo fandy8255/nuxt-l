@@ -16,7 +16,8 @@ export const useUserStore = defineStore('user', {
         user_profile: '',
         products: [],
         followers: [],
-        followed: []
+        followed: [],
+        liked_products:[]
     }),
     actions: {
         setUser(userData) {
@@ -25,25 +26,19 @@ export const useUserStore = defineStore('user', {
         updateFollowersAndFollowed({ followers, followed }) {
             this.followers = followers;
             this.followed = followed;
-          },
+        },
         signOut(userData) {
             Object.assign(this, userData, { logged_in: false, products: [] }); // Reset products on sign-out
         },
         updateUserProfile(updatedData) {
             Object.assign(this, updatedData);
         },
-        async fetchUserData() {
-            console.log('fetched once')
-            if (this.logged_in) return; // Prevent duplicate fetches if data is already set
+
+        async isAd() {
 
             const supabase = useSupabaseClient();
             const { data: { user } } = await supabase.auth.getUser();
             if (!user) return;
-
-            if (this.products.length > 0) {
-                console.log('Products are already loaded:', this.products);
-                return;
-            }
 
             const runtimeConfig = useRuntimeConfig();
             try {
@@ -58,118 +53,180 @@ export const useUserStore = defineStore('user', {
 
                 const result = await response.json();
                 if (result?.data) {
-                    this.setUser({
-                        username: result.data.username,
-                        age: result.data.age,
-                        email: result.data.email,
-                        profile_description: result.data.profile_description,
-                        profile_picture: result.data.profile_picture,
-                        user_type: result.data.user_type,
-                        logged_in: true,
-                        ubicacion: result.data.ubicacion,
-                        user_tok: user,
-                        id: user.id,
-                        user_profile: '/perfil/' + result.data.username,
-                    });
-
-                    const [followersResponse, followedResponse] = await Promise.all([
-                        fetch('https://lingerie.fandy8255.workers.dev/api/followers', {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                Authorization: `Bearer ${runtimeConfig.public.secretApiKey}`,
-                                'X-User': JSON.stringify(user),
-                            },
-                        }),
-                        fetch('https://lingerie.fandy8255.workers.dev/api/followed', {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                Authorization: `Bearer ${runtimeConfig.public.secretApiKey}`,
-                                'X-User': JSON.stringify(user),
-                            },
-                        }),
-                    ]);
-
-                    const [followersResult, followedResult] = await Promise.all([
-                        followersResponse.json(),
-                        followedResponse.json(),
-                    ]);
-
-                    this.followers = followersResult.followers || [];
-                    this.followed = followedResult.followed || [];
-
-                    // Fetch seller products if user is a seller
-                    if (result.data.user_type === 'seller') {
-                        this.fetchSellerProducts();
-
-                    }
+                    return result.data.is_admin
                 }
             } catch (error) {
-                console.error('Error fetching user data:', error.message);
+               return 0
             }
+
         },
-        async fetchSellerProducts() {
-            if (this.user_type !== 'seller') return; // Only fetch products for sellers
+        async fetchLikedProducts() {
+            if (!this.logged_in) return; // Ensure the user is logged in
+
+            const supabase = useSupabaseClient();
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) return;
+
             const runtimeConfig = useRuntimeConfig();
             try {
-                const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/getProducts?user_id=${this.id}`, {
+                const response = await fetch('https://lingerie.fandy8255.workers.dev/api/liked-products', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
-                    }
+                        Authorization: `Bearer ${runtimeConfig.public.secretApiKey}`,
+                        'X-User': JSON.stringify(user),
+                    },
                 });
 
                 const result = await response.json();
-
-                console.log('resulted', result.data.results)
-                if (result?.data) {
-                    let arr = []
-
-
-                    this.products = result.data.results; // Set the seller's products
-
+                if (result?.likedProducts) {
+                    this.liked_products = result.likedProducts; // Update the liked_products state
                 }
-                // return result.data.results
             } catch (error) {
-                console.error('Error fetching seller products:', error.message);
+                console.error('Error fetching liked products:', error.message);
             }
         },
-        addProduct(product) {
-            if (this.user_type !== 'seller') {
-                console.error('Only sellers can add products.');
-                return;
-            }
 
-            // Validate the product object
-            if (!product || !product.id || !product.product_name || !product.product_price || !product.product_category) {
-                console.error('Invalid product object. A product must have an id, name, and price.');
-                return;
-            }
+        async fetchUserData() {
+                console.log('fetched once')
+                if (this.logged_in) return; // Prevent duplicate fetches if data is already set
 
-            // Add the product to the products array
-            this.products.push(product);
-        },
+                const supabase = useSupabaseClient();
+                const { data: { user } } = await supabase.auth.getUser();
+                if (!user) return;
 
-        deleteProduct(productId) {
-            if (this.user_type !== 'seller') {
-                console.error('Only sellers can delete products.');
-                return;
-            }
+                if (this.products.length > 0) {
+                    console.log('Products are already loaded:', this.products);
+                    return;
+                }
+
+                const runtimeConfig = useRuntimeConfig();
+                try {
+                    const response = await fetch('https://lingerie.fandy8255.workers.dev/api/profile', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${runtimeConfig.public.secretApiKey}`,
+                            'X-User': JSON.stringify(user),
+                        },
+                    });
+
+                    const result = await response.json();
+                    if (result?.data) {
+                        this.setUser({
+                            username: result.data.username,
+                            age: result.data.age,
+                            email: result.data.email,
+                            profile_description: result.data.profile_description,
+                            profile_picture: result.data.profile_picture,
+                            user_type: result.data.user_type,
+                            logged_in: true,
+                            ubicacion: result.data.ubicacion,
+                            user_tok: user,
+                            id: user.id,
+                            user_profile: '/perfil/' + result.data.username,
+                        });
+
+                        const [followersResponse, followedResponse] = await Promise.all([
+                            fetch('https://lingerie.fandy8255.workers.dev/api/followers', {
+                                method: 'GET',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    Authorization: `Bearer ${runtimeConfig.public.secretApiKey}`,
+                                    'X-User': JSON.stringify(user),
+                                },
+                            }),
+                            fetch('https://lingerie.fandy8255.workers.dev/api/followed', {
+                                method: 'GET',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    Authorization: `Bearer ${runtimeConfig.public.secretApiKey}`,
+                                    'X-User': JSON.stringify(user),
+                                },
+                            }),
+                        ]);
+
+                        const [followersResult, followedResult] = await Promise.all([
+                            followersResponse.json(),
+                            followedResponse.json(),
+                        ]);
+
+                        this.followers = followersResult.followers || [];
+                        this.followed = followedResult.followed || [];
+
+                        // Fetch seller products if user is a seller
+                        if (result.data.user_type === 'seller') {
+                            this.fetchSellerProducts();
+
+                        }
+
+                        await this.fetchLikedProducts();
+                    }
+                } catch (error) {
+                    console.error('Error fetching user data:', error.message);
+                }
+            },
+        async fetchSellerProducts() {
+                if (this.user_type !== 'seller') return; // Only fetch products for sellers
+                const runtimeConfig = useRuntimeConfig();
+                try {
+                    const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/getProducts?user_id=${this.id}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+                        }
+                    });
+
+                    const result = await response.json();
+
+                    console.log('resulted', result.data.results)
+                    if (result?.data) {
+                        let arr = []
 
 
-            const productIndex = this.products.findIndex(product => product.id === productId);
-            if (productIndex === -1) {
-                console.error('Product not found.');
-                return;
-            }
+                        this.products = result.data.results; // Set the seller's products
 
-            this.products.splice(productIndex, 1);
+                    }
+                    // return result.data.results
+                } catch (error) {
+                    console.error('Error fetching seller products:', error.message);
+                }
+            },
+            addProduct(product) {
+                if (this.user_type !== 'seller') {
+                    console.error('Only sellers can add products.');
+                    return;
+                }
 
-        },
-    }, persist: {
-        storage: piniaPluginPersistedstate.localStorage(),
-    }
+                // Validate the product object
+                if (!product || !product.id || !product.product_name || !product.product_price || !product.product_category) {
+                    console.error('Invalid product object. A product must have an id, name, and price.');
+                    return;
+                }
 
-});
+                // Add the product to the products array
+                this.products.push(product);
+            },
+
+            deleteProduct(productId) {
+                if (this.user_type !== 'seller') {
+                    console.error('Only sellers can delete products.');
+                    return;
+                }
+
+
+                const productIndex = this.products.findIndex(product => product.id === productId);
+                if (productIndex === -1) {
+                    console.error('Product not found.');
+                    return;
+                }
+
+                this.products.splice(productIndex, 1);
+
+            },
+        }, persist: {
+            storage: piniaPluginPersistedstate.localStorage(),
+        }
+
+    });

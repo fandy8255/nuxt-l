@@ -5,11 +5,38 @@
             <div class="col-sm-12 col-lg-4 ">
                 <div class="container">
                     <div style="position: relative; top: 10px; left: 10px">
-                        <UserImgComponent v-if="product && product.owner" :image="product.owner.profile_picture" :username="product.owner.username" />
-                       <!-- {{ product && product.owner ? product.owner.profile_picture : 'none' }}-->
+                        <div class="d-flex">
+                            <div class="row w-100">
+                                <div class="col-6">
+
+                                    <UserImgComponent v-if="loaded" :image="product.profile_picture"
+                                        :username="product.username" />
+
+                                </div>
+                                <div class="col-6 text-end">
+                                    <div class="lk d-flex justify-content-end align-items-end">
+                                        <!-- {{ product && product.owner ? product.owner.id : 'loading' }} 
+                                          {{ product }}
+                                        {{ product.like_count }}-->
+
+                                        <LikeButton v-if="loaded && product.user_id !== userStore.id"
+                                            @click="handleClick" :likedProductId="product.id"
+                                            :productOwnerId="product.user_id"
+                                            :like_count="product ? parseInt(product.like_count) : 0" />
+                                        <div v-else>
+                                            <i class="fa-solid fa-heart"></i> {{ product.like_count }}
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- {{ product && product.owner ? product.owner.profile_picture : 'none' }}-->
                         <h2 class="mt-4">{{ product.product_name }}</h2>
                         <p>{{ product.product_description }}</p>
                         <p>{{ product.product_category }}</p>
+
                         <div class="rating mb-3">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
@@ -43,12 +70,20 @@
 </template>
 
 <script setup>
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, computed } from 'vue';
 
 const router = useRouter()
 const prodId = useRoute().params.product_id[0];
 const runtimeConfig = useRuntimeConfig();
 const product = ref({})
+//const computedLikes=computed(()=>likes.value + 10)
+const likes = ref()
+const loaded = ref(false)
+const userStore = useUserStore();
+
+function handleClick() {
+    likes.value = likes.value + 1
+}
 
 const fetchInfo = async (prodId) => {
     try {
@@ -66,20 +101,25 @@ const fetchInfo = async (prodId) => {
         const result = await response.json();
         console.log('info', result)
         product.value = result.data;
+        likes.value = result.data.like_count
     } catch (error) {
         console.error(error);
-        product.value={}
-        //product.value = null
-        //user.value = null;
+        product.value = {}
     }
 };
 
-onBeforeMount( () => {
-    console.log('prodId', prodId)
-    //fetchProduct(prodId)
-    fetchInfo(prodId)
+onMounted(() => {
 
+    fetchInfo(prodId).then(res => loaded.value = true)
+    console.log('producft', product)
 })
+
+/*
+
+onBeforeMount(() => {
+   
+
+})*/
 
 </script>
 

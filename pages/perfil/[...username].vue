@@ -9,14 +9,21 @@
                 <!-- Profile Section -->
                 <div class="col-4 p-2 text-center">
                     <div class="container border rounded text-center">
-                        <NuxtImg provider="bunny" :src="user.profile_picture" height="auto" width="300px" :quality="50" placeholder="/assets/images/panty-icon.png" />
+                        <NuxtImg provider="bunny" :src="user.profile_picture" height="auto" width="300px" :quality="50"
+                            placeholder="/assets/images/panty-icon.png" />
                     </div>
-                    <p class="text-start">seguidores : {{ followers}}</p>
-                    <p class="text-start">siguiendo : {{ followed }}</p>
-                    
+                    <div class="d-flex my-2">
+                        <div class="me-3">
+                            Seguidores <i class="fa-solid fa-user"></i> {{ followers ? followers.length : 0 }} 
+                        </div>
+                        <div>
+                            Siguiendo <i class="fa-solid fa-user"> </i> {{ followed ? followed.length : 0 }}
+                        </div>
+                    </div>
+
                 </div>
                 <div class="col-8">
-                    <FollowButton :viewedUsername="user.username" />
+                    <FollowButton :viewedUsername="user.username" v-if="user.username !== userStore.username" />
                     <h2>{{ user.username }}
                         <span v-if="user.verified">
                             <i class="fa fa-check-circle text-success"></i>
@@ -59,26 +66,16 @@
                         <div v-else>
                             <div class="container">
                                 <div class="row">
-                                    <FileUploadForm @updateProductsStore="updateProducts" v-if="userStore.username===username" @success="handleSuccess" />
+                                    <FileUploadForm @updateProductsStore="updateProducts"
+                                        v-if="userStore.username === username" @success="handleSuccess" />
                                 </div>
                                 <div class="row">
-                                    <div v-for="product in paginatedProducts" :key="product.id"
-                                        class="col-sm-12 col-lg-3 p-2" >
-                                    
-                                        <ProductCard
-                                            :product="product"
-                                            :imgSrc="product.product_url" 
-                                            :productTitle="product.product_name"
-                                            :productDescription="product.product_description"
-                                            :prodId="product.id"
-                                            :productCategory="product.product_category"
-                                            :productPrice="product.product_price"
-                                            :username="product.username"
-                                            :usernamePicture="product.profile_picture"
-                                            @updateProductsStore2="updateProducts"
-                                            
-                                             />
-                                    
+                                    <div  v-for="product in paginatedProducts" :key="product.id"
+                                        class="col-sm-12 col-lg-3 p-2">
+
+                                        <ProductCard :product="product" :isAd="isAd"
+                                            @updateProductsStore2="updateProducts" />
+
                                     </div>
                                 </div>
                                 <!-- Pagination Controls -->
@@ -110,27 +107,32 @@
 
                     <!-- Contact Tab -->
 
-                    <div v-if="activeTab === 'contact'" class="tab-pane fade show active">
-                    <ContactForm :receiver="user" />
-                       
+                    <div v-if="activeTab === 'contact' && user.username !== userStore.username"
+                        class="tab-pane fade show active">
+                        <ContactForm :receiver="user" />
+
                     </div>
                 </div>
             </div>
         </div>
         <div v-else>
-            <p class="text-center mt-5">No se encontró el usuario.</p>
+            <div class="row w-100 d-flex justify-content-center align-items-center my-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted} from "vue";
+import { ref, computed, onMounted } from "vue";
 
 const user = ref(null);
 const loading = ref(false);
 const activeTab = ref("products");
-
 const userStore = useUserStore();
+const isAd = ref(0)
 
 // State for pagination
 const products = ref([]);
@@ -138,11 +140,12 @@ const currentPage = ref(1);
 const itemsPerPage = 8;
 const usernameSlug = ref('');
 const runtimeConfig = useRuntimeConfig();
-const username= useRoute().params.username[0]
-const followed=ref(null)
-const followers=ref(null)
+const username = useRoute().params.username[0]
+const followed = ref(null)
+const followers = ref(null)
 
-function test(){
+
+function test() {
     console.log('emmitedd update store after deleting prod')
     loadUserData()
 }
@@ -157,7 +160,7 @@ const clearMessage = () => {
     message.value = null; // Clear the modal message
 };
 
-function updateProducts(){
+function updateProducts() {
     console.log('emmitedd update store')
     loadUserData()
 }
@@ -195,7 +198,6 @@ const fetchUser = async (usernameSlug) => {
         if (!response.ok) throw new Error('Failed to fetch user data');
         const data = await response.json();
         user.value = data;
-        /*console.log('user data', data)*/
     } catch (error) {
         console.error(error);
         user.value = null;
@@ -217,9 +219,7 @@ const fetchFollowers = async (user) => {
         );
         if (!response.ok) throw new Error('Failed to fetch user data');
         const data = await response.json();
-        console.log('followers', data)
         followers.value = data.followers;
-        /*console.log('user data', data)*/
     } catch (error) {
         console.error(error);
         followers.value = null;
@@ -241,9 +241,7 @@ const fetchFollowed = async (user) => {
         );
         if (!response.ok) throw new Error('Failed to fetch user data');
         const data = await response.json();
-        console.log('followeddd', data)
         followed.value = data.followed;
-        /*console.log('user data', data)*/
     } catch (error) {
         console.error(error);
         followed.value = null;
@@ -256,11 +254,11 @@ const fetchProducts = async () => {
     /*console.log('u-id', user.value.id)*/
     try {
         const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/getProducts?user_id=${user.value.id}`, {
-            method :'GET',
-            headers:{
+            method: 'GET',
+            headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
-                
+
             }
         });
         const data = await response.json();
@@ -273,62 +271,56 @@ const fetchProducts = async () => {
     }
 };
 
-const loadUserData = async() => {
+const loadUserData = async () => {
     usernameSlug.value = useRoute().params.username[0];
 
     if (usernameSlug.value === userStore.username) {
         /*console.log('fetched from store')*/
         // Use data from Pinia store for authenticated user
         user.value = {
-            id:userStore.id,
+            id: userStore.id,
             username: userStore.username,
             age: userStore.age,
             profile_description: userStore.profile_description,
             profile_picture: userStore.profile_picture,
-            ubicacion:userStore.ubicacion,
+            ubicacion: userStore.ubicacion,
             user_type: userStore.user_type,
         };
 
-        
-        if (userStore.user_type==="seller"){
-            console.log('fetched products from store')
-            //console.log('just before refreshing prods', userStore.products)
-            products.value=Array.from(userStore.products)
-            console.log('prods', products.value)
+
+        if (userStore.user_type === "seller") {
+            products.value = Array.from(userStore.products)
         }
 
         //fetchProducts()
     } else {
         // Fetch data for other users
-        await fetchUser(usernameSlug.value).then(async res=>{
-            console.log('user value', user.value)
-
+        await fetchUser(usernameSlug.value).then(async res => {
             await fetchFollowed(user.value)
             await fetchFollowers(user.value)
-            
-            if(user.value.user_type==="seller"){
+
+            if (user.value.user_type === "seller") {
                 fetchProducts()
             }
         })
 
-        
-        
+
+
     }
 };
 
 
-onMounted(() => {
-    console.log('mounted')
+onMounted(async () => {
+    const currentUserSuper = await userStore.isAd().then(res => isAd.value = res)
     loadUserData()
-    //console.log('store productssss', userStore.products)
-    //console.log('user store', userStore)
 });
 
 
 </script>
 
 <style scoped>
-#contact-title,#products-title{
+#contact-title,
+#products-title {
     color: dimgrey !important;
 }
 </style>
