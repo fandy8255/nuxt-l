@@ -6,12 +6,11 @@
         <button v-else @click="handleLike" class="lk-btn">
             <i class="fa-regular fa-heart"></i>
         </button>
-        <span>{{ currentLikeCount }}</span>
     </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 
 const props = defineProps({
     likedProductId: {
@@ -22,26 +21,15 @@ const props = defineProps({
         type: String,
         required: true, // The ID of the user who owns the product
     },
-    like_count: {
-        type: Number,
-        required :true, // The initial like count
-    },
 });
 
 const runtimeConfig = useRuntimeConfig();
 const userStore = useUserStore(); // Assume userStore contains the logged-in user's info
 
-// Reactive like count
-
-
 // Check if the product is already liked by the logged-in user
 const isLiked = computed(() =>
     userStore.liked_products.includes(props.likedProductId)
 );
-
-const currentLikeCount = ref(props.like_count);
-
-console.log('propslike count', props.like_count)
 
 // Handle like action
 const handleLike = async () => {
@@ -61,7 +49,6 @@ const handleLike = async () => {
 
         if (response.ok) {
             userStore.liked_products.push(props.likedProductId); // Update local state
-            currentLikeCount.value += 1; // Increment like count
         }
     } catch (error) {
         console.error('Error liking product:', error.message);
@@ -85,10 +72,7 @@ const handleUnlike = async () => {
 
         if (response.ok) {
             const index = userStore.liked_products.indexOf(props.likedProductId);
-            if (index > -1) {
-                userStore.liked_products.splice(index, 1); // Update local state
-                currentLikeCount.value -= 1; // Decrement like count
-            }
+            if (index > -1) userStore.liked_products.splice(index, 1); // Update local state
         }
     } catch (error) {
         console.error('Error unliking product:', error.message);
@@ -97,7 +81,7 @@ const handleUnlike = async () => {
 </script>
 
 <style scoped>
-.lk-btn {
+.lk-btn{
     background: transparent;
     border: none;
 }

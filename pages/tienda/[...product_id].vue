@@ -8,20 +8,25 @@
                         <div class="d-flex">
                             <div class="row w-100">
                                 <div class="col-6">
-                                    <!-- {{ product }}-->
 
-                                    <UserImgComponent v-if="product && product.owner"
-                                        :image="product && product.owner ? product.owner.profile_picture : 'loading'"
-                                        :username="product && product.owner ? product.owner.username : 'loading'" />
+                                    <UserImgComponent v-if="loaded" :image="product.profile_picture"
+                                        :username="product.username" />
 
                                 </div>
                                 <div class="col-6 text-end">
                                     <div class="lk d-flex justify-content-end align-items-end">
-                                        <!-- {{ product && product.owner ? product.owner.id : 'loading' }} -->
+                                        <!-- {{ product && product.owner ? product.owner.id : 'loading' }} 
+                                          {{ product }}
+                                        {{ product.like_count }}-->
 
-                                        <LikeButton @click="handleClick" :likedProductId="product.id"
-                                            :productOwnerId="product && product.owner ? product.owner.id : ''" />
-                                        <div>{{ likes }}</div>
+                                        <LikeButton v-if="loaded && product.user_id !== userStore.id"
+                                            @click="handleClick" :likedProductId="product.id"
+                                            :productOwnerId="product.user_id"
+                                            :like_count="product ? parseInt(product.like_count) : 0" />
+                                        <div v-else>
+                                            <i class="fa-solid fa-heart"></i> {{ product.like_count }}
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -31,7 +36,7 @@
                         <h2 class="mt-4">{{ product.product_name }}</h2>
                         <p>{{ product.product_description }}</p>
                         <p>{{ product.product_category }}</p>
-                        <p>like count{{ product.like_count }}</p>
+
                         <div class="rating mb-3">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
@@ -73,6 +78,8 @@ const runtimeConfig = useRuntimeConfig();
 const product = ref({})
 //const computedLikes=computed(()=>likes.value + 10)
 const likes = ref()
+const loaded = ref(false)
+const userStore = useUserStore();
 
 function handleClick() {
     likes.value = likes.value + 1
@@ -98,17 +105,21 @@ const fetchInfo = async (prodId) => {
     } catch (error) {
         console.error(error);
         product.value = {}
-        //product.value = null
-        //user.value = null;
     }
 };
 
-onBeforeMount(() => {
-    console.log('prodId', prodId)
-    //fetchProduct(prodId)
-    fetchInfo(prodId)
+onMounted(() => {
 
+    fetchInfo(prodId).then(res => loaded.value = true)
+    console.log('producft', product)
 })
+
+/*
+
+onBeforeMount(() => {
+   
+
+})*/
 
 </script>
 

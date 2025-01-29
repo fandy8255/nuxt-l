@@ -42,7 +42,7 @@ const userStore = useUserStore();
 // Set the product ID dynamically
 //const productId = ref(123); // Example product ID, replace dynamically when required
 
-const { productId , product } = defineProps(['productId', 'product'])
+const { productId } = defineProps(['productId'])
 const emit = defineEmits(['updateProductsStore'])
 
 //console.log('toktok', userStore.user_tok)

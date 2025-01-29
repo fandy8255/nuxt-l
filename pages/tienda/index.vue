@@ -15,18 +15,7 @@
         <div class="row mt-5">
           <div v-for="product in paginatedProducts" :key="product.id" class="col-sm-12 col-lg-3 p-2">
             <!--{{ product }}-->
-            <ProductCard 
-            :likeCount="product.like_count"
-            :productOwner="product.owner_id" 
-            :imgSrc="product.main_image_url" 
-            :productTitle="product.product_name"
-            :productDescription="product.product_description"
-            :prodId="product.product_id"
-            :productCategory="product.product_category"
-            :productPrice="product.product_price"
-            :username="product.owner_username" 
-            :usernamePicture="product.profile_picture"
-            :isAd="isAd" />
+            <ProductCard :product="product" :isAd="isAd" />
           </div>
         </div>
       </div>
