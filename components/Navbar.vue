@@ -37,7 +37,7 @@ async function signOut() {
     <nav v-if="isHydrated" class="navbar navbar-expand-lg w-100 position-fixed">
         <div class="container-fluid">
             <div class="d-flex" v-if="userStore.logged_in">
-                <NuxtLink to="/dashboard" class="navbar-brand">
+                <NuxtLink to="/feed" class="navbar-brand">
                     <NuxtImg src="/assets/images/panty-icon.png" width="auto" height="50" />
                 </NuxtLink>
                 <h4 class="text-light lead my-auto">Colombia Panty</h4>
@@ -65,6 +65,9 @@ async function signOut() {
                     </li>
                     <li class="nav-item">
                         <NuxtLink to="/mensajes" class="nav-link text-decoration-none"><i class="fa-regular fa-envelope fa-xl"></i></NuxtLink>
+                    </li>
+                    <li v-if="userStore.user_type==='seller'" class="nav-item">
+                        <NuxtLink to="/dashboard" class="nav-link text-decoration-none">Stats</NuxtLink>
                     </li>
                     
                     <!--<button @click="signOut" class="dropdown-item">Sign Out</button>-->

@@ -1,11 +1,11 @@
 <template>
-    <div class="card border-1 my-2 shadow-sm">
+    <div class="product_card card border-1 my-2 shadow-sm">
         <!-- {{ product }}-->
 
-        <div class="card-img-top m-0 overflow-hidden bsb-overlay-hover text-center" style="max-height: 40vh !important">
+        <div class="card-img-top m-0 overflow-hidden bsb-overlay-hover text-center" >
             <NuxtLink :to="'/tienda/' + product.id">
 
-                <NuxtImg provider="bunny" :src="product.product_url" width="300px" :quality="50"
+                <NuxtImg class="image_prod" provider="bunny" :src="product.product_url" :width="width" :quality="50"
                     placeholder="/assets/images/panty-icon.jpg" />
             </NuxtLink>
         </div>
@@ -55,8 +55,8 @@
 
 <script setup>
 
-const { product, isAd } =
-    defineProps(['product', 'isAd'])
+const { product, isAd , width } =
+    defineProps(['product', 'isAd', 'width'])
 const userStore = useUserStore();
 /*const username= useRoute().params?.username[0]*/
 const emit = defineEmits(['updateProductsStore2'])

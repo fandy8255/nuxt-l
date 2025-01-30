@@ -19,6 +19,7 @@
                             Siguiendo <i class="fa-solid fa-user"> </i> {{ followed ? followed.length : 0 }}
                         </div>
                     </div>
+
                 </div>
                 <div class="col-8">
                     <FollowButton :viewedUsername="user.username" v-if="user.username !== userStore.username" />
@@ -68,10 +69,12 @@
                                         v-if="userStore.username === username" @success="handleSuccess" />
                                 </div>
                                 <div class="row">
-                                    <div v-for="product in paginatedProducts" :key="product.id"
+                                    <div  v-for="product in paginatedProducts" :key="product.id"
                                         class="col-sm-12 col-lg-3 p-2">
+
                                         <ProductCard :product="product" :isAd="isAd" width="300px"
                                             @updateProductsStore2="updateProducts" />
+
                                     </div>
                                 </div>
                                 <!-- Pagination Controls -->
@@ -102,9 +105,11 @@
                     </div>
 
                     <!-- Contact Tab -->
+
                     <div v-if="activeTab === 'contact' && user.username !== userStore.username"
                         class="tab-pane fade show active">
                         <ContactForm :receiver="user" />
+
                     </div>
                 </div>
             </div>
@@ -126,21 +131,22 @@ const user = ref(null);
 const loading = ref(false);
 const activeTab = ref("products");
 const userStore = useUserStore();
-const isAd = ref(0);
+const isAd = ref(0)
 
 // State for pagination
 const products = ref([]);
 const currentPage = ref(1);
-const itemsPerPage = 2;
+const itemsPerPage = 8;
 const usernameSlug = ref('');
 const runtimeConfig = useRuntimeConfig();
-const username = useRoute().params.username[0];
-const followed = ref(null);
-const followers = ref(null);
+const username = useRoute().params.username[0]
+const followed = ref(null)
+const followers = ref(null)
+
 
 function test() {
-    console.log('emmitedd update store after deleting prod');
-    loadUserData();
+    console.log('emmitedd update store after deleting prod')
+    loadUserData()
 }
 
 const message = ref(null); // State for the modal message
@@ -154,8 +160,8 @@ const clearMessage = () => {
 };
 
 function updateProducts() {
-    console.log('emmitedd update store');
-    loadUserData();
+    console.log('emmitedd update store')
+    loadUserData()
 }
 
 const paginatedProducts = computed(() => {
@@ -164,35 +170,15 @@ const paginatedProducts = computed(() => {
 });
 
 const totalPages = computed(() => Math.ceil(products.value.length / itemsPerPage));
-
 const visiblePages = computed(() => {
     const pages = [];
-    const totalVisibleButtons = 5; // Number of visible pagination buttons
-    let startPage = currentPage.value - Math.floor(totalVisibleButtons / 2);
-    let endPage = currentPage.value + Math.floor(totalVisibleButtons / 2);
-
-    // Adjust startPage and endPage if they go out of bounds
-    if (startPage < 1) {
-        startPage = 1;
-        endPage = Math.min(totalVisibleButtons, totalPages.value);
-    }
-    if (endPage > totalPages.value) {
-        endPage = totalPages.value;
-        startPage = Math.max(1, endPage - totalVisibleButtons + 1);
-    }
-
-    // Generate the range of pages
-    for (let page = startPage; page <= endPage; page++) {
-        pages.push(page);
-    }
-
+    for (let i = 1; i <= totalPages.value; i++) pages.push(i);
     return pages;
 });
 
 const changePage = (page) => {
     if (page > 0 && page <= totalPages.value) {
         currentPage.value = page;
-        window.scrollTo(0, 0); // Scroll to the top of the page
     }
 };
 
@@ -261,17 +247,21 @@ const fetchFollowed = async (user) => {
     }
 };
 
+
 const fetchProducts = async () => {
     loading.value = true;
+    /*console.log('u-id', user.value.id)*/
     try {
         const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/getProducts?user_id=${user.value.id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+
             }
         });
         const data = await response.json();
+        /*console.log('products', data.data.results)*/
         products.value = data.data.results;
     } catch (error) {
         console.error(error);
@@ -284,6 +274,7 @@ const loadUserData = async () => {
     usernameSlug.value = useRoute().params.username[0];
 
     if (usernameSlug.value === userStore.username) {
+        /*console.log('fetched from store')*/
         // Use data from Pinia store for authenticated user
         user.value = {
             id: userStore.id,
@@ -295,26 +286,35 @@ const loadUserData = async () => {
             user_type: userStore.user_type,
         };
 
+
         if (userStore.user_type === "seller") {
-            products.value = Array.from(userStore.products);
+            products.value = Array.from(userStore.products)
         }
+
+        //fetchProducts()
     } else {
         // Fetch data for other users
         await fetchUser(usernameSlug.value).then(async res => {
-            await fetchFollowed(user.value);
-            await fetchFollowers(user.value);
+            await fetchFollowed(user.value)
+            await fetchFollowers(user.value)
 
             if (user.value.user_type === "seller") {
-                fetchProducts();
+                fetchProducts()
             }
-        });
+        })
+
+
+
     }
 };
 
+
 onMounted(async () => {
-    const currentUserSuper = await userStore.isAd().then(res => isAd.value = res);
-    loadUserData();
+    const currentUserSuper = await userStore.isAd().then(res => isAd.value = res)
+    loadUserData()
 });
+
+
 </script>
 
 <style scoped>
@@ -323,7 +323,8 @@ onMounted(async () => {
     color: dimgrey !important;
 }
 
-.product_card {
-    max-height: 60vh !important;
+.product_card{
+    max-height: 60vh!important;
+    
 }
 </style>
