@@ -13,7 +13,7 @@
                     </div>
                     <div class="d-flex my-2">
                         <div class="me-3">
-                            Seguidores <i class="fa-solid fa-user"></i> {{ followers ? followers.length : 0 }} 
+                            Seguidores <i class="fa-solid fa-user"></i> {{ followers ? followers.length : 0 }}
                         </div>
                         <div>
                             Siguiendo <i class="fa-solid fa-user"> </i> {{ followed ? followed.length : 0 }}
@@ -154,7 +154,11 @@ const clearMessage = () => {
 };
 
 function updateProducts() {
+    /*
     console.log('emmitedd update store');
+    if (userStore.user_type === "seller") {
+        products.value = Array.from(userStore.products);
+    }*/
     loadUserData();
 }
 

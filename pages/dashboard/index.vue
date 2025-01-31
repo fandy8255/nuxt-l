@@ -19,6 +19,7 @@
             <p>followers {{ userStore.followers }}</p>
             <p>followed {{ userStore.followed }}</p>
             <p>liked products: {{ userStore.liked_products }}</p>
+            <p>feed {{ userStore.feed }}</p>
         </div>
     </div>
 </template>

@@ -1,36 +1,36 @@
 <template>
     <div>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" :data-bs-target="`#${modalId}`">
-            Upload Files
+        <button type="button" class="btn-file btn" data-bs-toggle="modal" :data-bs-target="`#${modalId}`">
+            Crear Producto
         </button>
 
         <div class="modal fade" :id="modalId" tabindex="-1" aria-labelledby="uploadFileModalLabel" aria-hidden="true">
             <div class="modal-dialog">
-                <div class="modal-content">
+                <div class="modal-content text-start">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="uploadFileModalLabel">Upload Files</h5>
+                        <h5 class="modal-title" id="uploadFileModalLabel">Sube Tu Producto</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                             @click="resetForm"></button>
                     </div>
                     <div class="modal-body">
                         <form @submit.prevent="uploadFiles">
                             <div class="mb-3">
-                                <label for="productName" class="form-label">Product Name</label>
+                                <label for="productName" class="form-label">Nombre</label>
                                 <input type="text" class="form-control" id="productName" v-model="productName"
                                     required />
                             </div>
                             <div class="mb-3">
-                                <label for="productPrice" class="form-label">Product Price</label>
+                                <label for="productPrice" class="form-label">Precio</label>
                                 <input type="number" class="form-control" id="productPrice" v-model="productPrice"
                                     required />
                             </div>
                             <div class="mb-3">
-                                <label for="productDescription" class="form-label">Product Description</label>
+                                <label for="productDescription" class="form-label">Descripción</label>
                                 <textarea class="form-control" id="productDescription" v-model="productDescription"
                                     required></textarea>
                             </div>
                             <div class="mb-3">
-                                <label for="productCategory" class="form-label">Product Category</label>
+                                <label for="productCategory" class="form-label">Categoría</label>
                                 <select v-model="productCategory" class="form-select" id="productCategory" required>
                                     <option value="contenido">Contenido</option>
                                     <option value="panties">Panties</option>
@@ -38,11 +38,11 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="fileInput" class="form-label">Select Files</label>
+                                <label for="fileInput" class="form-label">Selecciona Fotos</label>
                                 <input type="file" class="form-control" id="fileInput" @change="handleFilesChange"
                                     multiple required />
                             </div>
-                            <button type="submit" class="btn btn-success">Submit</button>
+                            <button type="submit" class="btn btn-success">Crear</button>
                         </form>
                         <p class="mt-3">{{ uploadStatus }}</p>
                     </div>
@@ -124,8 +124,14 @@ const uploadFiles = async () => {
         if (response.ok) {
             uploadStatus.value = 'Files and product uploaded successfully!';
             const result = await response.json()
-            console.log('resulting', result.product)
+            console.log('resulting product', result.product)
             userStore.addProduct(result.product)
+            
+            let feedItem={...result.product}
+            feedItem.type="product"
+            console.log('feeditem', feedItem)
+            userStore.addToFeed(feedItem)
+        
             emit('updateProductsStore')
             document.querySelector('button.btn-close').click();
             emit('success', {
@@ -159,5 +165,14 @@ const resetForm = () => {
 <style>
 .modal-backdrop {
     z-index: 10 !important;
+}
+
+.btn-file{
+    background: rgb(242, 97, 0);
+    color: white !important;
+}
+
+.btn-file:hover{
+    background: green;
 }
 </style>

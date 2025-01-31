@@ -1,6 +1,6 @@
 <!-- components/UserImgComponent.vue -->
 <template>
-    <div class="d-flex align-items-center gap-2">
+    <div class="user-img-card d-flex align-items-center gap-2" style="width: fit-content;">
         <NuxtLink :to="'/perfil/' + username">
         <NuxtImg provider="bunny" :src="image" class="rounded-circle" width="50px" height="50px" alt="User Image"
             :quality="10" loading="lazy" placeholder="/assets/images/panty-icon.jpg" />

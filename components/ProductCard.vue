@@ -4,7 +4,6 @@
 
         <div class="card-img-top m-0 overflow-hidden bsb-overlay-hover text-center" >
             <NuxtLink :to="'/tienda/' + product.id">
-
                 <NuxtImg class="image_prod" provider="bunny" :src="product.product_url" :width="width" :quality="50"
                     placeholder="/assets/images/panty-icon.jpg" />
             </NuxtLink>
@@ -40,7 +39,7 @@
                             <p id="price" class="text-dark fs-6 fw-bold mb-0">$ {{ product.product_price }} COP</p>
                             <DeleteProductModal :productId="product.id"
                                 v-if="userStore.username === product.username || isAd"
-                                @updateProductsStore="updateProducts" @click="test" />
+                                @updateProductsStore="updateProducts" />
                             <div v-else> 
                                 <ReportModal :productId="product.id" :reporterId="userStore.id" :reportedId="product.user_id" />
                             </div>
