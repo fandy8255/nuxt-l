@@ -60,7 +60,7 @@
   const products = ref([]);
   const isAd = ref(0);
   const currentPage = ref(1);
-  const itemsPerPage = 2; // Number of products per page
+  const itemsPerPage = 4; // Number of products per page
   const loading = ref(true);
   const runtimeConfig = useRuntimeConfig();
   
@@ -79,7 +79,16 @@
   
     const parsed = await response.json();
     console.log('productssssss', parsed);
-    products.value = parsed.data.results;
+
+    const filteredProducts = parsed.data.results.filter(product => {
+        // Check if the product's username is in the blocked_users array
+        return !userStore.blocked_users.some(
+            blockedUser => blockedUser.username === product.username
+        );
+    });
+
+    // Assign the filtered products to the products ref
+    products.value = filteredProducts;
   };
   
   definePageMeta({

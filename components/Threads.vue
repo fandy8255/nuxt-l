@@ -9,21 +9,21 @@
                     <NuxtImg provider="bunny" :src="getProfileImage(thread)" class="rounded-circle me-2" width="50px"
                         height="50px" alt="User Image" :quality="10" loading="lazy"
                         placeholder="/assets/images/panty-icon.jpg" />
-                    
+
                     <div class="container d-flex align-items-center">
                         <div class="col-4">
                             <h6 class="card-title">{{ getThreadPartnerName(thread) }}</h6>
                         </div>
                         <div class="col-4">
                             <NuxtLink :to="`/mensajes/${thread.thread_id}`">
-                                <p class="card-text mb-1 text-muted">{{ thread.last_message.slice(0,50) || 'Sin mensajes' }}</p>
+                                <p class="card-text mb-1 text-muted">{{ thread.last_message.slice(0, 50) || 'Sin mensajes' }}</p>
                             </NuxtLink>
-                            
+
                         </div>
                         <div class="col-4 text-end">
                             <small class="text-muted">{{ formatDate(thread.last_updated_at) }}</small>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -68,6 +68,7 @@ const paginatedThreads = computed(() => {
 const totalPages = computed(() => Math.ceil(threads.value.length / threadsPerPage));
 
 // Fetch threads from the API
+/*
 const fetchThreads = async () => {
     try {
         const response = await fetch('https://lingerie.fandy8255.workers.dev/api/threads', {
@@ -80,14 +81,30 @@ const fetchThreads = async () => {
         if (!response.ok) {
             throw new Error('Failed to fetch threads');
         }
+        const data = await response.json()
 
-        threads.value = await response.json();
+
+        console.log('threadss gg', data)
+
+        const blockedUsernames = [
+            ...userStore.blocked_users.map(user => user.username),
+            ...userStore.blocked_by.map(user => user.username)
+        ];
+
+        // Filter threads where neither sender nor receiver is in the blocked list
+        const filteredThreads = data.filter(thread => {
+            return !blockedUsernames.includes(thread.sender_name) &&
+                   !blockedUsernames.includes(thread.receiver_name);
+        });
+
+        threads.value = filteredThreads;
+
         // console.log('response', await response.json())
     } catch (error) {
         console.error('Error fetching threads:', error);
     }
 };
-
+*/
 const changePage = (page) => {
     if (page >= 1 && page <= totalPages.value) {
         currentPage.value = page;
@@ -112,7 +129,10 @@ const getThreadPartnerName = (thread) => {
 const formatDate = (date) => new Date(date).toLocaleString();
 
 onMounted(() => {
-    fetchThreads();
+    //fetchThreads().then(res=>threads.value = userStore.threads)
+    threads.value = userStore.threads
+    console.log('threadds', threads.value)
+    //fetchThreads();
 });
 </script>
 

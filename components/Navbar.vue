@@ -64,7 +64,9 @@ async function signOut() {
                         <NuxtLink to="/usuarios" class="nav-link text-decoration-none">Usuarios</NuxtLink>
                     </li>
                     <li class="nav-item">
-                        <NuxtLink to="/mensajes" class="nav-link text-decoration-none"><i class="fa-regular fa-envelope fa-xl"></i></NuxtLink>
+                        <NuxtLink to="/mensajes" class="nav-link text-decoration-none">
+                            <i class="fa-regular fa-envelope fa-xl me-2"> </i>{{ userStore.message_count }}
+                        </NuxtLink>
                     </li>
                     <li v-if="userStore.user_type==='seller'" class="nav-item">
                         <NuxtLink to="/dashboard" class="nav-link text-decoration-none">Stats</NuxtLink>

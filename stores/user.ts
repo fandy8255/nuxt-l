@@ -18,7 +18,11 @@ export const useUserStore = defineStore('user', {
         followers: [],
         followed: [],
         liked_products: [],
-        feed: []
+        feed: [],
+        blocked_users: [],
+        blocked_by:[],
+        threads:[],
+        message_count:0
     }),
     actions: {
         setUser(userData) {
@@ -67,6 +71,7 @@ export const useUserStore = defineStore('user', {
                     console.log('No followed users found.');
                     return;
                 }
+                console.log('fetched feed')
                 const runtimeConfig = useRuntimeConfig();
                 //const userIds = followed.map(user => user.id);
                 const userId = this.id;
@@ -90,13 +95,60 @@ export const useUserStore = defineStore('user', {
                 const data = await response.json();
                 if (data.success) {
                     console.log('fetched feed from store yah')
-                    this.feed = data.data;
-                    //return this.feed
+
+                    const sortedFeed = data.data.sort((a, b) => {
+                        return new Date(b.created_at) - new Date(a.created_at);
+                    });
+                    //sort the feed before assigning it to the feed array
+                    this.feed = sortedFeed;
+                    return data.data
+                    
                 } else {
                     console.error('Error fetching data:', data.error);
                 }
             } catch (error) {
                 console.error('Error:', error.message);
+            }
+        },
+        async fetchThreads () {
+            try {
+                const runtimeConfig = useRuntimeConfig();
+                const supabase = useSupabaseClient();
+                const { data: { user } } = await supabase.auth.getUser();
+                const response = await fetch('https://lingerie.fandy8255.workers.dev/api/threads', {
+                    headers: {
+                        'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+                        'X-User': JSON.stringify(user)
+                    },
+                });
+        
+                if (!response.ok) {
+                    throw new Error('Failed to fetch threads');
+                }
+                const data = await response.json()
+        
+        
+                console.log('threadss gg', data)
+        
+                const blockedUsernames = [
+                    ...this.blocked_users.map(user => user.username),
+                    ...this.blocked_by.map(user => user.username)
+                ];
+        
+                // Filter threads where neither sender nor receiver is in the blocked list
+                const filteredThreads = data.filter(thread => {
+                    return !blockedUsernames.includes(thread.sender_name) &&
+                           !blockedUsernames.includes(thread.receiver_name);
+                });
+
+                const messageCount=filteredThreads.filter(elem=>elem.last_message_owner!==this.username)
+                this.message_count=messageCount.length
+        
+                this.threads = filteredThreads;
+        
+                // console.log('response', await response.json())
+            } catch (error) {
+                console.error('Error fetching threads:', error);
             }
         },
 
@@ -124,6 +176,52 @@ export const useUserStore = defineStore('user', {
                 }
             } catch (error) {
                 console.error('Error fetching liked products:', error.message);
+            }
+        },
+
+        async fetchBlockedUsers() {
+            try {
+                const runtimeConfig = useRuntimeConfig();
+                // Fetch blocked users from the API
+                const response = await fetch('https://lingerie.fandy8255.workers.dev/api/blocked-users', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${runtimeConfig.public.secretApiKey}`,
+                        'X-User': JSON.stringify({ id: this.id, username: this.username }), // Send current user info
+                    },
+                });
+
+                const result = await response.json();
+
+                if (result?.blocked_users) {
+                    this.blocked_users = result.blocked_users; // Update the blockedUsers state
+                }
+            } catch (error) {
+                console.error('Error fetching blocked users:', error.message);
+            }
+        },
+
+        async fetchBlockedBy() {
+            try {
+                const runtimeConfig = useRuntimeConfig();
+                // Fetch blocked users from the API
+                const response = await fetch('https://lingerie.fandy8255.workers.dev/api/blocked-by-users', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${runtimeConfig.public.secretApiKey}`,
+                        'X-User': JSON.stringify({ id: this.id, username: this.username }), // Send current user info
+                    },
+                });
+
+                const result = await response.json();
+
+                if (result?.blocked_by) {
+                    this.blocked_by = result.blocked_by; // Update the blockedUsers state
+                }
+            } catch (error) {
+                console.error('Error fetching blocked users:', error.message);
             }
         },
 
@@ -202,6 +300,9 @@ export const useUserStore = defineStore('user', {
 
                     await this.fetchLikedProducts();
                     await this.fetchFollowedData();
+                    await this.fetchBlockedUsers()
+                    await this.fetchBlockedBy()
+                    await this.fetchThreads()
                 }
             } catch (error) {
                 console.error('Error fetching user data:', error.message);
@@ -283,7 +384,7 @@ export const useUserStore = defineStore('user', {
 
         },
     }, persist: {
-        storage: piniaPluginPersistedstate.localStorage(),
-    }
+    storage: piniaPluginPersistedstate.localStorage(),
+}
 
 });

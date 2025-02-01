@@ -1,0 +1,140 @@
+<template>
+    <div>
+        <button v-if="isBlocked" @click="handleUnblock" class="btn btn-danger">
+            Unblock
+        </button>
+        <button v-else @click="handleBlock" class="btn btn-warning">
+            Block
+        </button>
+    </div>
+</template>
+
+<script setup>
+import { computed } from 'vue'; // Update the path if needed
+
+const props = defineProps({
+    viewedUsername: {
+        type: String,
+        required: true, // The username of the profile being viewed
+    },
+});
+
+const runtimeConfig = useRuntimeConfig();
+const userStore = useUserStore();
+
+// Compute whether the logged-in user has blocked the viewed user
+const isBlocked = computed(() =>
+    userStore.blocked_users.some(elem => elem.username === props.viewedUsername)
+);
+
+const isFollowing = computed(() =>
+    userStore.followed.some(elem => elem.username === props.viewedUsername)
+);
+
+// Handle block action
+const handleBlock = async () => {
+    try {
+        if(isFollowing){
+            await handleUnfollow()
+        }
+
+        const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/block-user`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`
+            },
+            body: JSON.stringify({
+                blocked_by: userStore.username,
+                blocked_user: props.viewedUsername,
+            }),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            let obj = {
+                id: data.blocked_user_id,
+                username: props.viewedUsername,
+                profile_picture: ""
+            };
+            userStore.blocked_users.push(obj); // Add the blocked user to the store
+            const filtered=userStore.feed.filter(elem=>elem.username !== props.viewedUsername)
+            userStore.feed=filtered
+        }
+    } catch (error) {
+        console.error('Error blocking user:', error.message);
+    }
+};
+
+// Handle unblock action
+const handleUnblock = async () => {
+    try {
+        const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/unblock-user`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`
+            },
+            body: JSON.stringify({
+                blocked_by: userStore.username,
+                blocked_user: props.viewedUsername,
+            }),
+        });
+
+        if (response.ok) {
+            const index = userStore.blocked_users.findIndex(elem => elem.username === props.viewedUsername);
+            if (index > -1) userStore.blocked_users.splice(index, 1); // Remove the unblocked user from the store
+            //console.log('travis',await userStore.fetchFollowedData()) 
+        }
+    } catch (error) {
+        console.error('Error unblocking user:', error.message);
+    }
+};
+
+const handleUnfollow = async () => {
+    try {
+        const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/unfollow`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`
+            },
+            body: JSON.stringify({
+                follower: userStore.username,
+                followed: props.viewedUsername,
+            }),
+        });
+
+        if (response.ok) {
+            const index = userStore.followed.findIndex(elem => elem.username === props.viewedUsername);
+            if (index > -1) userStore.followed.splice(index, 1);
+        }
+    } catch (error) {
+        console.error('Error unfollowing user:', error.message);
+    }
+};
+</script>
+
+<style scoped>
+/* Add custom styling here */
+.btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #000;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+</style>

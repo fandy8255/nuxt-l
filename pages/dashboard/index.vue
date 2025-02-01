@@ -20,6 +20,9 @@
             <p>followed {{ userStore.followed }}</p>
             <p>liked products: {{ userStore.liked_products }}</p>
             <p>feed {{ userStore.feed }}</p>
+            <p>blocked users {{ userStore.blocked_users }}</p>
+            <p>blocked by {{ userStore.blocked_by }}</p>
+            <p>message count {{ userStore.message_count }}</p>
         </div>
     </div>
 </template>
