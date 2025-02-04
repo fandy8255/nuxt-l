@@ -20,9 +20,9 @@ export const useUserStore = defineStore('user', {
         liked_products: [],
         feed: [],
         blocked_users: [],
-        blocked_by:[],
-        threads:[],
-        message_count:0
+        blocked_by: [],
+        threads: [],
+        message_count: 0
     }),
     actions: {
         setUser(userData) {
@@ -65,6 +65,7 @@ export const useUserStore = defineStore('user', {
             }
 
         },
+
         async fetchFollowedData() {
             try {
                 if (!this.followed || this.followed.length === 0) {
@@ -102,7 +103,7 @@ export const useUserStore = defineStore('user', {
                     //sort the feed before assigning it to the feed array
                     this.feed = sortedFeed;
                     return data.data
-                    
+
                 } else {
                     console.error('Error fetching data:', data.error);
                 }
@@ -110,7 +111,7 @@ export const useUserStore = defineStore('user', {
                 console.error('Error:', error.message);
             }
         },
-        async fetchThreads () {
+        async fetchThreads() {
             try {
                 const runtimeConfig = useRuntimeConfig();
                 const supabase = useSupabaseClient();
@@ -121,31 +122,31 @@ export const useUserStore = defineStore('user', {
                         'X-User': JSON.stringify(user)
                     },
                 });
-        
+
                 if (!response.ok) {
                     throw new Error('Failed to fetch threads');
                 }
                 const data = await response.json()
-        
-        
+
+
                 console.log('threadss gg', data)
-        
+
                 const blockedUsernames = [
                     ...this.blocked_users.map(user => user.username),
                     ...this.blocked_by.map(user => user.username)
                 ];
-        
+
                 // Filter threads where neither sender nor receiver is in the blocked list
                 const filteredThreads = data.filter(thread => {
                     return !blockedUsernames.includes(thread.sender_name) &&
-                           !blockedUsernames.includes(thread.receiver_name);
+                        !blockedUsernames.includes(thread.receiver_name);
                 });
 
-                const messageCount=filteredThreads.filter(elem=>elem.last_message_owner!==this.username)
-                this.message_count=messageCount.length
-        
+                const messageCount = filteredThreads.filter(elem => elem.last_message_owner !== this.username)
+                this.message_count = messageCount.length
+
                 this.threads = filteredThreads;
-        
+
                 // console.log('response', await response.json())
             } catch (error) {
                 console.error('Error fetching threads:', error);
@@ -384,7 +385,7 @@ export const useUserStore = defineStore('user', {
 
         },
     }, persist: {
-    storage: piniaPluginPersistedstate.localStorage(),
-}
+        storage: piniaPluginPersistedstate.localStorage(),
+    }
 
 });

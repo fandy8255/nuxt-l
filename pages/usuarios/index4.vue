@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- User Listing -->
-        <div v-if="loading" class="text-center mt-5" style="height: 600px !important; margin-top: 100px !important;">
+        <div v-if="pending" class="text-center mt-5" style="height: 600px !important; margin-top: 100px !important;">
             <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
@@ -52,24 +52,19 @@
                 </nav>
             </div>
         </div>
-
     </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
-//import FilterUsersComponent from '~/components/FilterUsersComponent.vue';
-//import UserCard from '~/components/UserCard.vue';
+import { ref, computed } from 'vue';
 
-const users = ref([]);
 const currentPage = ref(1);
-const itemsPerPage = 4;
-const visibleButtons = 5;
-const loading = ref(true);
+const itemsPerPage = 4; // Number of users per page
 const runtimeConfig = useRuntimeConfig();
+const nuxtApp = useNuxtApp()
 
-// Fetch users from the Cloudflare Worker
-const fetchUsers = async () => {
+// Fetch users using useAsyncData with caching
+const { data: users } = await useAsyncData(async () => {
     const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/users`, {
         method: 'GET',
         headers: {
@@ -79,13 +74,32 @@ const fetchUsers = async () => {
     });
 
     const parsed = await response.json();
-    console.log('parsed', parsed.data.results)
     users.value = parsed.data.results;
-};
+    return parsed.data.results
+},
+    {
+        transform(payload) {
+            return {
+                ...payload,
+                fetchedAt: new Date(),
+            }
+        }, getCachedData(key) {
+            const data = nuxtApp.payload.data[key] || nuxtApp.static.data[key]
 
-onMounted(async () => {
-    await fetchUsers().finally(() => (loading.value = false));
-});
+            if (!data) {
+                return
+            }
+            const expiration = new Date(data.fetchedAt)
+            expiration.setTime(expiration.getTime() + 30 * 1000)
+            const isExpired = expiration.getTime() < Date.now()
+
+            if (isExpired) {
+                return
+            }
+            return data
+        }
+    }
+);
 
 const updateUsers = (fetchedUsers) => {
     users.value = fetchedUsers;
@@ -96,31 +110,37 @@ const totalPages = computed(() => Math.ceil(users.value.length / itemsPerPage));
 const paginatedUsers = computed(() => {
     const start = (currentPage.value - 1) * itemsPerPage;
     const end = start + itemsPerPage;
-    console.log('paginated users', users.value.slice(start, end))
-    let chunk = users.value[start, end]
-    //return chunk ? users.value.slice(start, end) : users.value.slice(start)
-    if (chunk) {
-        return users.value.slice(start, end)
-    } else {
-        return users.value.slice(start)
-    }
+    return users.value.slice(start, end);
 });
 
 const visiblePages = computed(() => {
     const pages = [];
-    const half = Math.floor(visibleButtons / 2);
-    const startPage = Math.max(1, currentPage.value - half);
-    const endPage = Math.min(totalPages.value, startPage + visibleButtons - 1);
+    const totalVisibleButtons = 5; // Number of visible pagination buttons
+    let startPage = currentPage.value - Math.floor(totalVisibleButtons / 2);
+    let endPage = currentPage.value + Math.floor(totalVisibleButtons / 2);
 
+    // Adjust startPage and endPage if they go out of bounds
+    if (startPage < 1) {
+        startPage = 1;
+        endPage = Math.min(totalVisibleButtons, totalPages.value);
+    }
+    if (endPage > totalPages.value) {
+        endPage = totalPages.value;
+        startPage = Math.max(1, endPage - totalVisibleButtons + 1);
+    }
+
+    // Generate the range of pages
     for (let page = startPage; page <= endPage; page++) {
         pages.push(page);
     }
+
     return pages;
 });
 
 const changePage = (page) => {
     if (page > 0 && page <= totalPages.value) {
         currentPage.value = page;
+        window.scrollTo(0, 0); // Scroll to the top of the page
     }
 };
 </script>

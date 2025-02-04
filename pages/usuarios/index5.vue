@@ -52,25 +52,30 @@
                 </nav>
             </div>
         </div>
-
     </div>
 </template>
 
+
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-//import FilterUsersComponent from '~/components/FilterUsersComponent.vue';
-//import UserCard from '~/components/UserCard.vue';
 
-const users = ref([]);
 const currentPage = ref(1);
-const itemsPerPage = 4;
-const visibleButtons = 5;
+const itemsPerPage = 4; // Number of users per page
 const loading = ref(true);
 const runtimeConfig = useRuntimeConfig();
+const nuxtApp = useNuxtApp();
 
-// Fetch users from the Cloudflare Worker
-const fetchUsers = async () => {
-    const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/users`, {
+// Use useAsyncData with custom caching logic
+const { data: users, error } = useAsyncData('users', async () => {
+    // Try to get cached data first
+    const cached = getCachedData('users');
+    if (cached) {
+        console.log('Using cached data');
+        return cached; // Return cached data if it exists
+    }
+    console.log('not cached')
+    // If no cached data, fetch new data
+    const response = await fetch('https://lingerie.fandy8255.workers.dev/api/users', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -79,12 +84,23 @@ const fetchUsers = async () => {
     });
 
     const parsed = await response.json();
-    console.log('parsed', parsed.data.results)
-    users.value = parsed.data.results;
-};
+    const usersData = parsed.data.results;
+
+    // Cache the fetched data for later use
+    // You don't need to do this manually, as useAsyncData will automatically cache the result
+    setCachedData('users', usersData);
+
+    return usersData; // This will now be cached by useAsyncData
+}, {
+    ttl: 20 * 1 // Cache data for 20 seconds
+});
 
 onMounted(async () => {
-    await fetchUsers().finally(() => (loading.value = false));
+    if (!users.value) {
+        loading.value = true;
+        await users.value; // Wait for the data to be available
+    }
+    loading.value = false;
 });
 
 const updateUsers = (fetchedUsers) => {
@@ -92,35 +108,41 @@ const updateUsers = (fetchedUsers) => {
 };
 
 // Pagination logic
-const totalPages = computed(() => Math.ceil(users.value.length / itemsPerPage));
+const totalPages = computed(() => Math.ceil(users.value?.length / itemsPerPage));
 const paginatedUsers = computed(() => {
     const start = (currentPage.value - 1) * itemsPerPage;
     const end = start + itemsPerPage;
-    console.log('paginated users', users.value.slice(start, end))
-    let chunk = users.value[start, end]
-    //return chunk ? users.value.slice(start, end) : users.value.slice(start)
-    if (chunk) {
-        return users.value.slice(start, end)
-    } else {
-        return users.value.slice(start)
-    }
+    return users.value?.slice(start, end);
 });
 
 const visiblePages = computed(() => {
     const pages = [];
-    const half = Math.floor(visibleButtons / 2);
-    const startPage = Math.max(1, currentPage.value - half);
-    const endPage = Math.min(totalPages.value, startPage + visibleButtons - 1);
+    const totalVisibleButtons = 5; // Number of visible pagination buttons
+    let startPage = currentPage.value - Math.floor(totalVisibleButtons / 2);
+    let endPage = currentPage.value + Math.floor(totalVisibleButtons / 2);
 
+    // Adjust startPage and endPage if they go out of bounds
+    if (startPage < 1) {
+        startPage = 1;
+        endPage = Math.min(totalVisibleButtons, totalPages.value);
+    }
+    if (endPage > totalPages.value) {
+        endPage = totalPages.value;
+        startPage = Math.max(1, endPage - totalVisibleButtons + 1);
+    }
+
+    // Generate the range of pages
     for (let page = startPage; page <= endPage; page++) {
         pages.push(page);
     }
+
     return pages;
 });
 
 const changePage = (page) => {
     if (page > 0 && page <= totalPages.value) {
         currentPage.value = page;
+        window.scrollTo(0, 0); // Scroll to the top of the page
     }
 };
 </script>
