@@ -67,14 +67,20 @@ const handleFileUpload = (event) => {
     form.value.profilePicture = event.target.files[0];
 };
 
+const userStore = useUserStore();
+
 // Update profile method
 const updateProfile = async () => {
     try {
+        const timestamp = Date.now().toString(); 
+        const signature = await userStore.generateHMACSignature(timestamp);
+
         const response = await fetch("https://lingerie.fandy8255.workers.dev/api/user/update", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${runtimeConfig.public.secretApiKey}`,
+                'Authorization': `HVAC ${signature}`,
+                'X-Timestamp': timestamp,
                 "X-User-ID": user.id,
             },
             body: JSON.stringify({

@@ -43,11 +43,16 @@ const form = ref({
 });
 
 const getUserData = async (id) => {
+  
+  const timestamp = Date.now().toString();
+  const signature = await userStore.generateHMACSignature(timestamp);
+
   const response = await fetch('https://lingerie.fandy8255.workers.dev/api/user', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+      'Authorization': `HVAC ${signature}`,
+      'X-Timestamp': timestamp,
       'X-User-ID': `${id}`
     }
   });
@@ -90,13 +95,17 @@ const updateProfile = async () => {
   if (form.value.profilePicture) {
     //formData.append("profilePicture", form.value.profilePicture);
   }
-  /* */
+
   try {
+    const timestamp = Date.now().toString();
+    const signature = await userStore.generateHMACSignature(timestamp);
+
     const response = await fetch("https://lingerie.fandy8255.workers.dev/api/user/update", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+        'Authorization': `HVAC ${signature}`,
+        'X-Timestamp': timestamp,
         'X-User-ID': `${user.id.toString()}`
       },
       body: JSON.stringify({

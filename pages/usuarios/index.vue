@@ -66,20 +66,28 @@ const currentPage = ref(1);
 const itemsPerPage = 4;
 const visibleButtons = 5;
 const loading = ref(true);
-const runtimeConfig = useRuntimeConfig();
+const userStore = useUserStore();
+
+definePageMeta({
+    middleware: ['auth']
+  });
 
 // Fetch users from the Cloudflare Worker
 const fetchUsers = async () => {
+
+    const timestamp = Date.now().toString(); 
+    const signature = await userStore.generateHMACSignature(timestamp);
+
     const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/users`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+            'Authorization': `HVAC ${signature}`,
+            'X-Timestamp': timestamp,
         },
     });
 
     const parsed = await response.json();
-    console.log('parsed', parsed.data.results)
     users.value = parsed.data.results;
 };
 

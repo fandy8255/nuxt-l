@@ -74,7 +74,6 @@ import { onBeforeMount, ref, computed } from 'vue';
 
 const router = useRouter()
 const prodId = useRoute().params.product_id[0];
-const runtimeConfig = useRuntimeConfig();
 const product = ref({})
 //const computedLikes=computed(()=>likes.value + 10)
 const likes = ref()
@@ -87,13 +86,17 @@ function handleClick() {
 
 const fetchInfo = async (prodId) => {
     try {
+        const timestamp = Date.now().toString(); 
+        const signature = await userStore.generateHMACSignature(timestamp);
+
         const response = await fetch(
             `https://lingerie.fandy8255.workers.dev/api/getProducts?product_id=${prodId}`,
             {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+                    'Authorization': `HVAC ${signature}`,
+                    'X-Timestamp': timestamp,
                 },
             }
         );

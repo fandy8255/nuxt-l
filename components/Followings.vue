@@ -50,10 +50,9 @@ const followed = ref([]); // List of followed users
 const showFollowers = ref(true); // Toggle between followers and followed
 const loading = ref(false); // Loading state
 
-// Runtime config for API key
-const runtimeConfig = useRuntimeConfig();
-
 // Fetch followers
+
+/*
 async function fetchFollowers() {
     try {
         loading.value = true;
@@ -61,7 +60,8 @@ async function fetchFollowers() {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${runtimeConfig.public.secretApiKey}`,
+                'Authorization': `HVAC ${signature}`,
+                'X-Timestamp': timestamp,
             },
         });
 
@@ -84,7 +84,8 @@ async function fetchFollowed() {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${runtimeConfig.public.secretApiKey}`,
+                'Authorization': `HVAC ${signature}`,
+                'X-Timestamp': timestamp,
             },
         });
 
@@ -98,21 +99,18 @@ async function fetchFollowed() {
         loading.value = false;
     }
 }
-
+*/
 const userStore = useUserStore();
 
-// Fetch data when the component is mounted
 onMounted(() => {
     followers.value=userStore.followers
     followed.value=userStore.followed
-    /*
-    fetchFollowers();
-    fetchFollowed();*/
 });
+
 </script>
 
 <style scoped>
-/* Custom styles */
+
 .card {
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);

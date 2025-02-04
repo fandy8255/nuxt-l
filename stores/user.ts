@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { useSupabaseClient } from '#imports';
+//import crypto from 'crypto'
 
 export const useUserStore = defineStore('user', {
     state: () => ({
@@ -21,7 +22,6 @@ export const useUserStore = defineStore('user', {
         feed: [],
         blocked_users: [],
         blocked_by: [],
-        threads: [],
         message_count: 0
     }),
     actions: {
@@ -39,19 +39,47 @@ export const useUserStore = defineStore('user', {
             Object.assign(this, updatedData);
         },
 
+        async generateHMACSignature(timestamp) {
+            const runtimeConfig = useRuntimeConfig();
+            const secretKey = runtimeConfig.public.secretApiKey;
+
+            // Convert the secret key and timestamp to Uint8Array
+            const encoder = new TextEncoder();
+            const keyData = encoder.encode(secretKey);
+            const timestampData = encoder.encode(timestamp);
+
+            // Import the key for HMAC-SHA256
+            const key = await crypto.subtle.importKey(
+                'raw', keyData, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
+            );
+
+            // Generate the HMAC signature
+            const signatureBuffer = await crypto.subtle.sign('HMAC', key, timestampData);
+
+            // Convert the signature to a hexadecimal string
+            const signatureArray = Array.from(new Uint8Array(signatureBuffer));
+            const signatureHex = signatureArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+            //console.log('Generated Signature (Hex):', signatureHex);
+            return signatureHex;
+        },
+
         async isAd() {
 
             const supabase = useSupabaseClient();
             const { data: { user } } = await supabase.auth.getUser();
             if (!user) return;
 
-            const runtimeConfig = useRuntimeConfig();
+            const timestamp = Date.now().toString(); // Prevent replay attacks
+            const signature = await this.generateHMACSignature(timestamp);
+
             try {
                 const response = await fetch('https://lingerie.fandy8255.workers.dev/api/profile', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        Authorization: `Bearer ${runtimeConfig.public.secretApiKey}`,
+                        'Authorization': `HVAC ${signature}`,
+                        'X-Timestamp': timestamp,
                         'X-User': JSON.stringify(user),
                     },
                 });
@@ -72,10 +100,12 @@ export const useUserStore = defineStore('user', {
                     console.log('No followed users found.');
                     return;
                 }
-                console.log('fetched feed')
-                const runtimeConfig = useRuntimeConfig();
-                //const userIds = followed.map(user => user.id);
+               
                 const userId = this.id;
+
+                const timestamp = Date.now().toString(); // Prevent replay attacks
+                const signature = await this.generateHMACSignature(timestamp);
+                console.log('this is the signature', signature)
 
                 const response = await fetch(
                     'https://lingerie.fandy8255.workers.dev/api/fetch-followed-data',
@@ -83,7 +113,8 @@ export const useUserStore = defineStore('user', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+                            'Authorization': `HVAC ${signature}`,
+                            'X-Timestamp': timestamp,
                         },
                         body: JSON.stringify({ followedUsers: this.followed, userId }),
                     }
@@ -111,14 +142,100 @@ export const useUserStore = defineStore('user', {
                 console.error('Error:', error.message);
             }
         },
-        async fetchThreads() {
+
+        async fetchLikedProducts() {
             try {
-                const runtimeConfig = useRuntimeConfig();
+
+                if (!this.logged_in) return; // Ensure the user is logged in
+
                 const supabase = useSupabaseClient();
                 const { data: { user } } = await supabase.auth.getUser();
+                if (!user) return;
+
+                const timestamp = Date.now().toString(); // Prevent replay attacks
+                const signature = await this.generateHMACSignature(timestamp);
+
+
+                const response = await fetch('https://lingerie.fandy8255.workers.dev/api/liked-products', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `HVAC ${signature}`,
+                        'X-Timestamp': timestamp,
+                        'X-User': JSON.stringify(user),
+                    },
+                });
+
+                const result = await response.json();
+                if (result?.likedProducts) {
+                    this.liked_products = result.likedProducts; // Update the liked_products state
+                }
+            } catch (error) {
+                console.error('Error fetching liked products:', error.message);
+            }
+        },
+
+        async fetchBlockedUsers() {
+            try {
+                const timestamp = Date.now().toString(); // Prevent replay attacks
+                const signature = await this.generateHMACSignature(timestamp);
+                // Fetch blocked users from the API
+                const response = await fetch('https://lingerie.fandy8255.workers.dev/api/blocked-users', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `HVAC ${signature}`,
+                        'X-Timestamp': timestamp,
+                        'X-User': JSON.stringify({ id: this.id, username: this.username }), // Send current user info
+                    },
+                });
+
+                const result = await response.json();
+
+                if (result?.blocked_users) {
+                    this.blocked_users = result.blocked_users; // Update the blockedUsers state
+                }
+            } catch (error) {
+                console.error('Error fetching blocked users:', error.message);
+            }
+        },
+
+        async fetchBlockedBy() {
+            try {
+                const timestamp = Date.now().toString(); // Prevent replay attacks
+                const signature = await this.generateHMACSignature(timestamp);
+                // Fetch blocked users from the API
+                const response = await fetch('https://lingerie.fandy8255.workers.dev/api/blocked-by-users', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `HVAC ${signature}`,
+                        'X-Timestamp': timestamp,
+                        'X-User': JSON.stringify({ id: this.id, username: this.username }), // Send current user info
+                    },
+                });
+
+                const result = await response.json();
+
+                if (result?.blocked_by) {
+                    this.blocked_by = result.blocked_by; // Update the blockedUsers state
+                }
+            } catch (error) {
+                console.error('Error fetching blocked users:', error.message);
+            }
+        }, async fetchThreads() {
+            try {
+
+                const supabase = useSupabaseClient();
+                const { data: { user } } = await supabase.auth.getUser();
+
+                const timestamp = Date.now().toString(); // Prevent replay attacks
+                const signature = await this.generateHMACSignature(timestamp);
+
                 const response = await fetch('https://lingerie.fandy8255.workers.dev/api/threads', {
                     headers: {
-                        'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+                        'Authorization': `HVAC ${signature}`,
+                        'X-Timestamp': timestamp,
                         'X-User': JSON.stringify(user)
                     },
                 });
@@ -127,9 +244,6 @@ export const useUserStore = defineStore('user', {
                     throw new Error('Failed to fetch threads');
                 }
                 const data = await response.json()
-
-
-                console.log('threadss gg', data)
 
                 const blockedUsernames = [
                     ...this.blocked_users.map(user => user.username),
@@ -153,81 +267,8 @@ export const useUserStore = defineStore('user', {
             }
         },
 
-        async fetchLikedProducts() {
-            if (!this.logged_in) return; // Ensure the user is logged in
-
-            const supabase = useSupabaseClient();
-            const { data: { user } } = await supabase.auth.getUser();
-            if (!user) return;
-
-            const runtimeConfig = useRuntimeConfig();
-            try {
-                const response = await fetch('https://lingerie.fandy8255.workers.dev/api/liked-products', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${runtimeConfig.public.secretApiKey}`,
-                        'X-User': JSON.stringify(user),
-                    },
-                });
-
-                const result = await response.json();
-                if (result?.likedProducts) {
-                    this.liked_products = result.likedProducts; // Update the liked_products state
-                }
-            } catch (error) {
-                console.error('Error fetching liked products:', error.message);
-            }
-        },
-
-        async fetchBlockedUsers() {
-            try {
-                const runtimeConfig = useRuntimeConfig();
-                // Fetch blocked users from the API
-                const response = await fetch('https://lingerie.fandy8255.workers.dev/api/blocked-users', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${runtimeConfig.public.secretApiKey}`,
-                        'X-User': JSON.stringify({ id: this.id, username: this.username }), // Send current user info
-                    },
-                });
-
-                const result = await response.json();
-
-                if (result?.blocked_users) {
-                    this.blocked_users = result.blocked_users; // Update the blockedUsers state
-                }
-            } catch (error) {
-                console.error('Error fetching blocked users:', error.message);
-            }
-        },
-
-        async fetchBlockedBy() {
-            try {
-                const runtimeConfig = useRuntimeConfig();
-                // Fetch blocked users from the API
-                const response = await fetch('https://lingerie.fandy8255.workers.dev/api/blocked-by-users', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${runtimeConfig.public.secretApiKey}`,
-                        'X-User': JSON.stringify({ id: this.id, username: this.username }), // Send current user info
-                    },
-                });
-
-                const result = await response.json();
-
-                if (result?.blocked_by) {
-                    this.blocked_by = result.blocked_by; // Update the blockedUsers state
-                }
-            } catch (error) {
-                console.error('Error fetching blocked users:', error.message);
-            }
-        },
-
         async fetchUserData() {
-            console.log('fetched once')
+            console.log('fetched oncey ')
             if (this.logged_in) return; // Prevent duplicate fetches if data is already set
 
             const supabase = useSupabaseClient();
@@ -239,13 +280,16 @@ export const useUserStore = defineStore('user', {
                 return;
             }
 
-            const runtimeConfig = useRuntimeConfig();
+            const timestamp = Date.now().toString(); // Prevent replay attacks
+            const signature = await this.generateHMACSignature(timestamp);
+
             try {
                 const response = await fetch('https://lingerie.fandy8255.workers.dev/api/profile', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        Authorization: `Bearer ${runtimeConfig.public.secretApiKey}`,
+                        'Authorization': `HVAC ${signature}`,
+                        'X-Timestamp': timestamp,
                         'X-User': JSON.stringify(user),
                     },
                 });
@@ -266,12 +310,14 @@ export const useUserStore = defineStore('user', {
                         user_profile: '/perfil/' + result.data.username,
                     });
 
+
                     const [followersResponse, followedResponse] = await Promise.all([
                         fetch('https://lingerie.fandy8255.workers.dev/api/followers', {
                             method: 'GET',
                             headers: {
                                 'Content-Type': 'application/json',
-                                Authorization: `Bearer ${runtimeConfig.public.secretApiKey}`,
+                                'Authorization': `HVAC ${signature}`,
+                                'X-Timestamp': timestamp,
                                 'X-User': JSON.stringify(user),
                             },
                         }),
@@ -279,7 +325,8 @@ export const useUserStore = defineStore('user', {
                             method: 'GET',
                             headers: {
                                 'Content-Type': 'application/json',
-                                Authorization: `Bearer ${runtimeConfig.public.secretApiKey}`,
+                                'Authorization': `HVAC ${signature}`,
+                                'X-Timestamp': timestamp,
                                 'X-User': JSON.stringify(user),
                             },
                         }),
@@ -293,11 +340,13 @@ export const useUserStore = defineStore('user', {
                     this.followers = followersResult.followers || [];
                     this.followed = followedResult.followed || [];
 
+
                     // Fetch seller products if user is a seller
                     if (result.data.user_type === 'seller') {
                         this.fetchSellerProducts();
 
                     }
+
 
                     await this.fetchLikedProducts();
                     await this.fetchFollowedData();
@@ -311,13 +360,17 @@ export const useUserStore = defineStore('user', {
         },
         async fetchSellerProducts() {
             if (this.user_type !== 'seller') return; // Only fetch products for sellers
-            const runtimeConfig = useRuntimeConfig();
+
+            const timestamp = Date.now().toString(); // Prevent replay attacks
+            const signature = await this.generateHMACSignature(timestamp);
+
             try {
                 const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/getProducts?user_id=${this.id}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+                        'Authorization': `HVAC ${signature}`,
+                        'X-Timestamp': timestamp,
                     }
                 });
 
@@ -326,12 +379,9 @@ export const useUserStore = defineStore('user', {
                 console.log('resulted', result.data.results)
                 if (result?.data) {
                     let arr = []
-
-
-                    this.products = result.data.results; // Set the seller's products
-
+                    this.products = result.data.results;
                 }
-                // return result.data.results
+
             } catch (error) {
                 console.error('Error fetching seller products:', error.message);
             }

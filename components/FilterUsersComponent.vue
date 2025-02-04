@@ -62,12 +62,8 @@ export default {
         ubicacion: "",
       },
       toggle: false,
-      runtimeConfig: null, // Define a placeholder for runtimeConfig
+      runtimeConfig: null, 
     };
-  },
-  created() {
-    // Use useRuntimeConfig to initialize runtimeConfig
-    this.runtimeConfig = useRuntimeConfig();
   },
   methods: {
     toggleFiltros() {
@@ -81,11 +77,15 @@ export default {
       if (this.filters.location) params.append("ubicacion", this.filters.location);
 
       try {
+        const timestamp = Date.now().toString(); 
+        const signature = await userStore.generateHMACSignature(timestamp);
+
         const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/users?${params.toString()}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            'Authorization': `Bearer ${this.runtimeConfig.public.secretApiKey}`, // Access the runtimeConfig here
+            'Authorization': `HVAC ${signature}`,
+            'X-Timestamp': timestamp,
           },
         });
 

@@ -31,9 +31,11 @@ const isFollowing = computed(() =>
     userStore.followed.some(elem => elem.username === props.viewedUsername)
 );
 
-// Handle block action
 const handleBlock = async () => {
     try {
+        const timestamp = Date.now().toString(); 
+        const signature = await userStore.generateHMACSignature(timestamp);
+
         if(isFollowing){
             await handleUnfollow()
         }
@@ -42,7 +44,8 @@ const handleBlock = async () => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`
+                'Authorization': `HVAC ${signature}`,
+                'X-Timestamp': timestamp,
             },
             body: JSON.stringify({
                 blocked_by: userStore.username,
@@ -57,7 +60,7 @@ const handleBlock = async () => {
                 username: props.viewedUsername,
                 profile_picture: ""
             };
-            userStore.blocked_users.push(obj); // Add the blocked user to the store
+            userStore.blocked_users.push(obj); 
             const filtered=userStore.feed.filter(elem=>elem.username !== props.viewedUsername)
             userStore.feed=filtered
         }
@@ -66,14 +69,17 @@ const handleBlock = async () => {
     }
 };
 
-// Handle unblock action
 const handleUnblock = async () => {
     try {
+        const timestamp = Date.now().toString(); 
+        const signature = await userStore.generateHMACSignature(timestamp);
+
         const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/unblock-user`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`
+                'Authorization': `HVAC ${signature}`,
+                'X-Timestamp': timestamp,
             },
             body: JSON.stringify({
                 blocked_by: userStore.username,
@@ -83,8 +89,7 @@ const handleUnblock = async () => {
 
         if (response.ok) {
             const index = userStore.blocked_users.findIndex(elem => elem.username === props.viewedUsername);
-            if (index > -1) userStore.blocked_users.splice(index, 1); // Remove the unblocked user from the store
-            //console.log('travis',await userStore.fetchFollowedData()) 
+            if (index > -1) userStore.blocked_users.splice(index, 1); 
         }
     } catch (error) {
         console.error('Error unblocking user:', error.message);
@@ -93,11 +98,15 @@ const handleUnblock = async () => {
 
 const handleUnfollow = async () => {
     try {
+        const timestamp = Date.now().toString(); 
+        const signature = await userStore.generateHMACSignature(timestamp);
+
         const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/unfollow`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`
+                'Authorization': `HVAC ${signature}`,
+                'X-Timestamp': timestamp,
             },
             body: JSON.stringify({
                 follower: userStore.username,
@@ -116,7 +125,7 @@ const handleUnfollow = async () => {
 </script>
 
 <style scoped>
-/* Add custom styling here */
+
 .btn-warning {
     background-color: #ffc107;
     border-color: #ffc107;

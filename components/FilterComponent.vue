@@ -74,17 +74,13 @@ export default {
         maxAge: "",
         ubicacion: ""
       },
-      toggle:false
+      toggle: false
     };
-  },
-  created() {
-    // Use useRuntimeConfig to initialize runtimeConfig
-    this.runtimeConfig = useRuntimeConfig();
   },
   methods: {
 
-    toggleFiltros(){
-      this.toggle=!this.toggle;
+    toggleFiltros() {
+      this.toggle = !this.toggle;
     },
 
     async fetchFilteredProducts() {
@@ -98,21 +94,23 @@ export default {
       if (this.filters.ubicacion) params.append("ubicacion", this.filters.ubicacion);
 
       try {
+        const timestamp = Date.now().toString();
+        const signature = await userStore.generateHMACSignature(timestamp);
+
         const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/filter_products?${params.toString()}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${this.runtimeConfig.public.secretApiKey}`
+            'Authorization': `HVAC ${signature}`,
+            'X-Timestamp': timestamp,
           },
         });
 
         if (!response.ok) throw new Error("Failed to fetch products");
 
         const parsed = await response.json();
-        console.log('parsed filtered', parsed)
-        console.log('parsed results', parsed.data.results)
-        // Emit fetched products to the parent component
-        this.$emit("update-products", parsed.data.results); // Emit fetched data
+
+        this.$emit("update-products", parsed.data); // Emit fetched data
       } catch (error) {
         console.error("Error fetching products:", error.message);
         this.$emit("update-products", []); // Emit empty array on error

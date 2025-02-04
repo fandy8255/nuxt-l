@@ -21,7 +21,6 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-const runtimeConfig = useRuntimeConfig();
 
 const content = ref('');
 const isSubmitting = ref(false);
@@ -38,11 +37,15 @@ const submitPost = async () => {
     isSubmitting.value = true;
 
     try {
+        const timestamp = Date.now().toString(); 
+        const signature = await userStore.generateHMACSignature(timestamp);
+
         const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/create-post`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+                'Authorization': `HVAC ${signature}`,
+                'X-Timestamp': timestamp,
             },
             body: JSON.stringify({
                 user_id: userStore.id,
@@ -53,12 +56,12 @@ const submitPost = async () => {
         const data = await response.json();
 
         if (data.success) {
-            console.log('post22', data.result.results[0])
+            
             let feedItem={...data.result.results[0]}
             feedItem.type='post'
             feedItem.profile_picture=userStore.profile_picture
             feedItem.username=userStore.username
-            console.log('feed item', feedItem)
+            
             userStore.addToFeed(feedItem)
             emit('updateFeed')
             alert('Publicación enviada correctamente.');
@@ -75,8 +78,6 @@ const submitPost = async () => {
 };
 
 function feedUpdate(){
-    console.log('feed update triggered')
-    //feedItems.value=userStore.feed
     emit('updateFeed')
 }
 

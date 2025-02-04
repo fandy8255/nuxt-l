@@ -68,12 +68,16 @@ const paginatedThreads = computed(() => {
 const totalPages = computed(() => Math.ceil(threads.value.length / threadsPerPage));
 
 // Fetch threads from the API
-/*
+
 const fetchThreads = async () => {
     try {
+        const timestamp = Date.now().toString(); // Prevent replay attacks
+        const signature = await userStore.generateHMACSignature(timestamp);
+
         const response = await fetch('https://lingerie.fandy8255.workers.dev/api/threads', {
             headers: {
-                'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+                'Authorization': `HVAC ${signature}`,
+                'X-Timestamp': timestamp,
                 'X-User': JSON.stringify(user)
             },
         });
@@ -82,9 +86,6 @@ const fetchThreads = async () => {
             throw new Error('Failed to fetch threads');
         }
         const data = await response.json()
-
-
-        console.log('threadss gg', data)
 
         const blockedUsernames = [
             ...userStore.blocked_users.map(user => user.username),
@@ -99,12 +100,11 @@ const fetchThreads = async () => {
 
         threads.value = filteredThreads;
 
-        // console.log('response', await response.json())
     } catch (error) {
         console.error('Error fetching threads:', error);
     }
 };
-*/
+
 const changePage = (page) => {
     if (page >= 1 && page <= totalPages.value) {
         currentPage.value = page;
@@ -129,10 +129,7 @@ const getThreadPartnerName = (thread) => {
 const formatDate = (date) => new Date(date).toLocaleString();
 
 onMounted(() => {
-    //fetchThreads().then(res=>threads.value = userStore.threads)
-    threads.value = userStore.threads
-    console.log('threadds', threads.value)
-    //fetchThreads();
+    fetchThreads().then(res=>threads.value = userStore.threads)
 });
 </script>
 

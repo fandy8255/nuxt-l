@@ -40,25 +40,26 @@ import { ref, onMounted } from 'vue';
 // Reactive state for most followed and newest users
 const mostFollowed = ref([]);
 const newestUsers = ref([]);
-
-// Runtime config for API key
-const runtimeConfig = useRuntimeConfig();
+const userStore = useUserStore();
 
 // Fetch function to get top users
 async function fetchTopUsers() {
     try {
+        const timestamp = Date.now().toString(); 
+        const signature = await userStore.generateHMACSignature(timestamp);
+
         const response = await fetch('https://lingerie.fandy8255.workers.dev/api/top-users', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${runtimeConfig.public.secretApiKey}`,
+                'Authorization': `HVAC ${signature}`,
+                'X-Timestamp': timestamp,
             },
         });
 
         const result = await response.json();
 
         if (result) {
-            // Assign the arrays directly from the response
             mostFollowed.value = result.most_followed;
             newestUsers.value = result.newest_users;
         }
@@ -67,10 +68,10 @@ async function fetchTopUsers() {
     }
 }
 
-// Fetch data when the component is mounted
 onMounted(() => {
     fetchTopUsers();
 });
+
 </script>
 
 <style scoped>

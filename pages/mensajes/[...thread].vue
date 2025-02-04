@@ -49,11 +49,16 @@ const messages = ref([]);
 const newMessage = ref('');
 
 const fetchMessages = async () => {
+
     try {
+        const timestamp = Date.now().toString(); // Prevent replay attacks
+        const signature = await userStore.generateHMACSignature(timestamp);
+
         const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/thread?id=${threadId}`, {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+                'Authorization': `HVAC ${signature}`,
+                'X-Timestamp': timestamp,
                 'X-User': JSON.stringify(user),
             },
         });
@@ -64,8 +69,7 @@ const fetchMessages = async () => {
 
         let results = await response.json();
         messages.value = results.messages;
-        console.log('dd', results.messages[0])
-        console.log('dd', userStore.username)
+        
         // Find the other user based on sender and receiver usernames
         let obj = {
             username: null,
@@ -83,10 +87,14 @@ const fetchMessages = async () => {
 const sendMessage = async () => {
     if (newMessage.value.trim()) {
         try {
+            const timestamp = Date.now().toString(); // Prevent replay attacks
+            const signature = await userStore.generateHMACSignature(timestamp);
+
             const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/message`, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+                    'Authorization': `HVAC ${signature}`,
+                    'X-Timestamp': timestamp,
                     'X-User': JSON.stringify(user),
                     'Content-Type': 'application/json',
                 },

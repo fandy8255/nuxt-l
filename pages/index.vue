@@ -49,10 +49,6 @@ useSeoMeta({
     twitterCard: '',
 })
 
-  console.log('user', user.data.user)
-
-//import { useState } from 'vue';
-
 const categories = [
     { name: "Tops", image: "/images/categories/tops.jpg" },
     { name: "Bottoms", image: "/images/categories/bottoms.jpg" },
@@ -64,14 +60,7 @@ const featuredItems=[
     { name: "Vintage Denim Jacket", image: "/images/featured/jacket.jpg", price: 40 },
     { name: "Floral Summer Dress", image: "/images/featured/dress.jpg", price: 25 },
     { name: "Leather Handbag", image: "/images/featured/handbag.jpg", price: 60 }]
-
-/*
-const featuredItems=useState('featuredItems', [
-    { name: "Vintage Denim Jacket", image: "/images/featured/jacket.jpg", price: 40 },
-    { name: "Floral Summer Dress", image: "/images/featured/dress.jpg", price: 25 },
-    { name: "Leather Handbag", image: "/images/featured/handbag.jpg", price: 60 }]
-)*/
-//const featuredItems = 
+ 
 </script>
 
 <style>

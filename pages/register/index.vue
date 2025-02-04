@@ -145,14 +145,42 @@ const clearMessage = () => {
     message.value = '';
 };
 
+async function generateHMACSignature(timestamp) {
+    const runtimeConfig = useRuntimeConfig();
+    const secretKey = runtimeConfig.public.secretApiKey;
+
+    // Convert the secret key and timestamp to Uint8Array
+    const encoder = new TextEncoder();
+    const keyData = encoder.encode(secretKey);
+    const timestampData = encoder.encode(timestamp);
+
+    // Import the key for HMAC-SHA256
+    const key = await crypto.subtle.importKey(
+        'raw', keyData, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
+    );
+
+    // Generate the HMAC signature
+    const signatureBuffer = await crypto.subtle.sign('HMAC', key, timestampData);
+
+    // Convert the signature to a hexadecimal string
+    const signatureArray = Array.from(new Uint8Array(signatureBuffer));
+    const signatureHex = signatureArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+    //console.log('Generated Signature (Hex):', signatureHex);
+    return signatureHex;
+}
+
 // Register user
 const registerUser = async () => {
     try {
+        const timestamp = Date.now().toString(); // Prevent replay attacks
+        const signature = await generateHMACSignature(timestamp);
         const userChecked = await fetch('https://lingerie.fandy8255.workers.dev/api/user/check', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${runtimeConfig.public.secretApiKey}`,
+                'Authorization': `HVAC ${signature}`,
+                'X-Timestamp': timestamp,
             },
             body: JSON.stringify({
                 username: username.value,
@@ -178,7 +206,8 @@ const registerUser = async () => {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        Authorization: `Bearer ${runtimeConfig.public.secretApiKey}`,
+                        'Authorization': `HVAC ${signature}`,
+                        'X-Timestamp': timestamp,
                     },
                     body: JSON.stringify({
                         id: data.user.id,
@@ -186,7 +215,7 @@ const registerUser = async () => {
                         username: username.value,
                         user_type: userType.value,
                         age: userAge.value,
-                        ubicacion:ubicacion.value
+                        ubicacion: ubicacion.value
                     }),
                 });
 

@@ -77,14 +77,6 @@ const productCategory = ref('');
 
 const emit = defineEmits(['updateProductsStore'])
 
-/*
-const emit = defineEmits(['updatedProducts'])
-
-function emitted() {
-  emit('updatedProducts')
-}
-  */
-
 const handleFilesChange = (event) => {
 
     files.value = Array.from(event.target.files); // Store selected files in an array
@@ -111,10 +103,13 @@ const uploadFiles = async () => {
     formData.append('product_category', productCategory.value);
 
     try {
+        const timestamp = Date.now().toString(); 
+        const signature = await userStore.generateHMACSignature(timestamp);
         const response = await fetch('https://lingerie.fandy8255.workers.dev/api/uploadProduct', {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+                'Authorization': `HVAC ${signature}`,
+                'X-Timestamp': timestamp,
                 'X-User': JSON.stringify(user),
                 'X-User-s': JSON.stringify(obj)
             },
@@ -124,12 +119,10 @@ const uploadFiles = async () => {
         if (response.ok) {
             uploadStatus.value = 'Files and product uploaded successfully!';
             const result = await response.json()
-            console.log('resulting product', result.product)
             userStore.addProduct(result.product)
             
             let feedItem={...result.product}
             feedItem.type="product"
-            console.log('feeditem', feedItem)
             userStore.addToFeed(feedItem)
         
             emit('updateProductsStore')

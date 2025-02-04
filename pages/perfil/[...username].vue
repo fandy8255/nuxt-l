@@ -266,13 +266,17 @@ const changePage = (page) => {
 
 const fetchUser = async (usernameSlug) => {
     try {
+        const timestamp = Date.now().toString();
+        const signature = await userStore.generateHMACSignature(timestamp);
+
         const response = await fetch(
             `https://lingerie.fandy8255.workers.dev/api/user?username=${usernameSlug}`,
             {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+                    'Authorization': `HVAC ${signature}`,
+                    'X-Timestamp': timestamp,
                 },
             }
         );
@@ -287,13 +291,17 @@ const fetchUser = async (usernameSlug) => {
 
 const fetchFollowers = async (user) => {
     try {
+        const timestamp = Date.now().toString();
+        const signature = await userStore.generateHMACSignature(timestamp);
+
         const response = await fetch(
             `https://lingerie.fandy8255.workers.dev/api/followers`,
             {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+                    'Authorization': `HVAC ${signature}`,
+                    'X-Timestamp': timestamp,
                     'X-User': JSON.stringify(user),
                 },
             }
@@ -309,13 +317,17 @@ const fetchFollowers = async (user) => {
 
 const fetchFollowed = async (user) => {
     try {
+        const timestamp = Date.now().toString();
+        const signature = await userStore.generateHMACSignature(timestamp);
+
         const response = await fetch(
             `https://lingerie.fandy8255.workers.dev/api/followed`,
             {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+                    'Authorization': `HVAC ${signature}`,
+                    'X-Timestamp': timestamp,
                     'X-User': JSON.stringify(user),
                 },
             }
@@ -332,17 +344,21 @@ const fetchFollowed = async (user) => {
 const fetchProducts = async () => {
     loading.value = true;
     try {
+        const timestamp = Date.now().toString();
+        const signature = await userStore.generateHMACSignature(timestamp);
+
         const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/getProducts?user_id=${user.value.id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+                'Authorization': `HVAC ${signature}`,
+                'X-Timestamp': timestamp,
             }
         });
         const data = await response.json();
         products.value = data.data.results;
     } catch (error) {
-        console.error(error);
+        console.log('error fetching products')
     } finally {
         loading.value = false;
     }

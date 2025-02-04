@@ -65,9 +65,9 @@ const toggleModal = () => {
     showModal.value = !showModal.value
 }
 
-const runtimeConfig = useRuntimeConfig();
 const reportReason = ref('');
 const customReason = ref('');
+const userStore = useUserStore();
 
 const submitReport = async () => {
     const reason = reportReason.value === 'Otro' ? customReason.value : reportReason.value;
@@ -78,11 +78,15 @@ const submitReport = async () => {
     }
 
     try {
+        const timestamp = Date.now().toString(); 
+        const signature = await userStore.generateHMACSignature(timestamp);
+
         const response = await fetch('https://lingerie.fandy8255.workers.dev/api/report', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+                'Authorization': `HVAC ${signature}`,
+                'X-Timestamp': timestamp,
             },
             body: JSON.stringify({
                 product_id: props.productId,

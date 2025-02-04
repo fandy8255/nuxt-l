@@ -15,7 +15,7 @@
           <div class="row mt-5">
             <div v-for="product in paginatedProducts" :key="product.id" class="col-sm-12 col-lg-3 p-2">
               <!--{{ product }}-->
-              <ProductCard :product="product" :isAd="isAd" width="300px" />
+              <ProductCard :product="product" :isAd="false" width="300px" />
             </div>
           </div>
         </div>
@@ -62,32 +62,33 @@
   const currentPage = ref(1);
   const itemsPerPage = 4; // Number of products per page
   const loading = ref(true);
-  const runtimeConfig = useRuntimeConfig();
-  
-  // Fetch products from your Cloudflare Worker
+ 
   const fetchProducts = async () => {
+
+    const timestamp = Date.now().toString(); // Prevent replay attacks
+    const signature = await userStore.generateHMACSignature(timestamp);
+
     const response = await fetch(
       `https://lingerie.fandy8255.workers.dev/api/getProducts`,
       {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+          'Authorization': `HVAC ${signature}`,
+          'X-Timestamp': timestamp,
         },
       }
     );
   
     const parsed = await response.json();
-    console.log('productssssss', parsed);
 
     const filteredProducts = parsed.data.results.filter(product => {
-        // Check if the product's username is in the blocked_users array
+        
         return !userStore.blocked_users.some(
             blockedUser => blockedUser.username === product.username
         );
     });
 
-    // Assign the filtered products to the products ref
     products.value = filteredProducts;
   };
   
@@ -95,16 +96,14 @@
     middleware: ['auth']
   });
   
-  // Fetch products on component mount
+  
   onMounted(async () => {
-    const currentUserSuper = await userStore.isAd().then(res => isAd.value = res);
-    console.log('isAd VALUE', isAd);
     await fetchProducts().then(res => console.log('fetched')).finally(res => loading.value = false);
   });
   
   const updateProducts = (fetchedProducts) => {
     products.value = fetchedProducts;
-    console.log("products-value:", products.value);
+    console.log("products updated", products.value);
   };
   
   // Computed properties

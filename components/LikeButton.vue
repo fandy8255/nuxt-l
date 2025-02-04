@@ -28,11 +28,7 @@ const props = defineProps({
     },
 });
 
-const runtimeConfig = useRuntimeConfig();
 const userStore = useUserStore(); // Assume userStore contains the logged-in user's info
-
-// Reactive like count
-
 
 // Check if the product is already liked by the logged-in user
 const isLiked = computed(() =>
@@ -41,16 +37,18 @@ const isLiked = computed(() =>
 
 const currentLikeCount = ref(props.like_count);
 
-console.log('propslike count', props.like_count)
-
 // Handle like action
 const handleLike = async () => {
     try {
+        const timestamp = Date.now().toString(); 
+        const signature = await userStore.generateHMACSignature(timestamp);
+
         const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/like`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+                'Authorization': `HVAC ${signature}`,
+                'X-Timestamp': timestamp,
             },
             body: JSON.stringify({
                 liked_product: props.likedProductId,
@@ -71,11 +69,15 @@ const handleLike = async () => {
 // Handle unlike action
 const handleUnlike = async () => {
     try {
+        const timestamp = Date.now().toString(); 
+        const signature = await userStore.generateHMACSignature(timestamp);
+
         const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/unlike`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`,
+                'Authorization': `HVAC ${signature}`,
+                'X-Timestamp': timestamp,
             },
             body: JSON.stringify({
                 liked_product: props.likedProductId,

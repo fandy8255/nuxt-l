@@ -18,7 +18,7 @@ const props = defineProps({
         required: true, // The username of the profile being viewed
     },
 });
-const runtimeConfig = useRuntimeConfig();
+
 const userStore = useUserStore();
 
 // Compute whether the logged-in user is following the viewed user
@@ -29,11 +29,15 @@ const isFollowing = computed(() =>
 // Handle follow action
 const handleFollow = async () => {
     try {
+        const timestamp = Date.now().toString(); 
+        const signature = await userStore.generateHMACSignature(timestamp);
+
         const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/follow`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`
+                'Authorization': `HVAC ${signature}`,
+                'X-Timestamp': timestamp,
             },
             body: JSON.stringify({
                 follower: userStore.username,
@@ -58,11 +62,15 @@ const handleFollow = async () => {
 // Handle unfollow action
 const handleUnfollow = async () => {
     try {
+        const timestamp = Date.now().toString(); 
+        const signature = await userStore.generateHMACSignature(timestamp);
+
         const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/unfollow`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${runtimeConfig.public.secretApiKey}`
+                'Authorization': `HVAC ${signature}`,
+                'X-Timestamp': timestamp,
             },
             body: JSON.stringify({
                 follower: userStore.username,
