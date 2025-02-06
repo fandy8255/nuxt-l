@@ -39,6 +39,43 @@
 
 const supabase = useSupabaseClient()
 const user = await supabase.auth.getUser()
+const router= useRouter()
+
+onMounted(async () => {
+    if (user.data.user) {
+        console.log('active user')
+        console.log('user', user.data.user)
+        router.push('/dashboard')
+    }else{
+        console.log('no active user')
+        /*
+        const userStore = useUserStore();
+        
+        userStore.signOut({
+            username: '',
+            email: '',
+            id: '',
+            age: null,
+            user_type: '',
+            profile_description: '',
+            profile_picture: '',
+            ubicacion: '',
+            logged_in: false,
+            user_tok: '',
+            user_profile: '',
+            products: [],
+            followers: [],
+            followed: [],
+            liked_products: [],
+            feed: [],
+            blocked_users: [],
+            blocked_by: [],
+            message_count: 0
+        });*/
+
+    }
+})
+  
 
 useSeoMeta({
     title: 'Colombia Panty | Compra panties usados',

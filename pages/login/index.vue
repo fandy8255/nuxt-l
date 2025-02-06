@@ -24,7 +24,7 @@
                         <input v-model="password" type="password" class="form-control" id="password" required
                             minlength="8">
                         <div class="invalid-feedback">
-                           Contraseña debe tener mínimo 8 carácteres
+                            Contraseña debe tener mínimo 8 carácteres
                         </div>
                     </div>
 
@@ -102,15 +102,43 @@ const clearMessage = () => {
 // Supabase and Router
 const supabase = useSupabaseClient()
 const router = useRouter()
-const session = useSupabaseSession()
+const user = await supabase.auth.getUser()
+
 
 onMounted(async () => {
-    if (session) {
+    if (user.data.user) {
+        console.log('active user')
+        console.log('user', user.data.user)
         router.push('/dashboard')
+    }else{
+        console.log('no active user')
+        const userStore = useUserStore();
+        userStore.signOut({
+            username: '',
+            email: '',
+            id: '',
+            age: null,
+            user_type: '',
+            profile_description: '',
+            profile_picture: '',
+            ubicacion: '',
+            logged_in: false,
+            user_tok: '',
+            user_profile: '',
+            products: [],
+            followers: [],
+            followed: [],
+            liked_products: [],
+            feed: [],
+            blocked_users: [],
+            blocked_by: [],
+            message_count: 0
+        });
+
     }
 })
 
-// Open/Close Resend Modal
+
 const openResendModal = () => {
     showResendModal.value = true
 }
@@ -119,7 +147,7 @@ const closeResendModal = () => {
 }
 
 
-// Login method
+
 const loginUser = async () => {
     try {
         const { data, error } = await supabase.auth.signInWithPassword({

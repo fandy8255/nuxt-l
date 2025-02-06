@@ -1,10 +1,9 @@
 <template>
     <div v-if="!loading">
-        <!-- <NavbarAdmin v-if="is_admin" />-->
-         {{ navbarStore.is_admin }}
-        <Navbar id="navbar" :isAd="navbarStore.is_admin" /> //help me with this emit
+        <NavbarAdmin v-if="is_admin" />
+        <Navbar v-else id="navbar" />
         <div class="slot-wrapper mt-1">
-            <slot class="main-content"  />
+            <slot class="main-content" />
         </div>
         <Footer />
     </div>
@@ -12,12 +11,12 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useSupabaseClient } from '#imports';
 
 // Reactive state
 const is_admin = ref(false);
 const loading = ref(true);
 const supabase = useSupabaseClient();
-const navbarStore = useNavbarStore();
 
 // HMAC Signature Generation
 async function generateHMACSignature(timestamp) {
@@ -61,66 +60,20 @@ async function isAd() {
 
         const result = await response.json();
         console.log('Is the user an admin?', result?.data?.is_admin);
-
-        if (result.data.is_admin) {
-            return true
-        }
-        return false
-
-        // return result?.data?.is_admin || false;
+        return result?.data?.is_admin || false;
     } catch (error) {
         console.error('Error fetching admin status:', error);
         return false;
     }
 }
 
-/*
-async function updateNavbar() {
-    console.log('Updating navbar from emit ff');
-    await isAd().then(res=>{
-        is_admin.value = res;
-    })
-    
-}*/
-
 // On component mount
 onMounted(async () => {
     console.log('Layout mounted');
-    await navbarStore.updateNavbar();
-    loading.value = false;
-    /*
-    const adminStatus = await isAd().then(res => {
-        is_admin.value = res;
-        loading.value = false
-    })*/
-
-
-    /*
-    // Listen for auth state changes
-    supabase.auth.onAuthStateChange(async (event, session) => {
-        console.log('Auth state changed:', event);
-        if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') {
-
-            
-            const adminStatus = await isAd().then(res=>is_admin.value = res)
-
-            if(adminStatus){
-                await router.push('/ad/')
-            }
-            
-        }else if(event ==='SIGNED_OUT'){
-            console.log('event signed out')
-
-            const adminStatus = await isAd().then(async res=>{
-                await router.push('/')
-                is_admin.value = res
-            })
-
-        }
-    })*/
-
-
-
+    const adminStatus = await isAd().then(res=>{
+        is_admin.value = res; 
+        loading.value = false;
+    });
 });
 </script>
 
