@@ -1,8 +1,6 @@
 <template>
     <div v-if="!loading">
-        <!-- <NavbarAdmin v-if="is_admin" />-->
-         {{ navbarStore.is_admin }}
-        <Navbar id="navbar" :isAd="navbarStore.is_admin" /> //help me with this emit
+        <Navbar id="navbar" :isAd="navbarStore.is_admin" />
         <div class="slot-wrapper mt-1">
             <slot class="main-content"  />
         </div>
