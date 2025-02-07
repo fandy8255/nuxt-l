@@ -5,26 +5,26 @@
       <!-- Users Card -->
       <div class="col-md-3 mb-4">
         <div class="card text-center shadow">
-          <div class="card-body">
-            <i class="fas fa-users fa-3x mb-3 text-primary"></i>
-            <h5 class="card-title">Users</h5>
-            <p class="card-text fs-4">{{ userCount }}</p>
-          </div>
+          <NuxtLink to="/ad/users">
+            <div class="card-body">
+              <i class="fas fa-users fa-3x mb-3 text-primary"></i>
+              <h5 class="card-title">Users</h5>
+              <p class="card-text fs-4">{{ userCount }}</p>
+            </div>
+          </NuxtLink>
         </div>
       </div>
 
       <!-- Products Card -->
       <div class="col-md-3 mb-4">
         <div class="card text-center shadow">
-          <NuxtLink to="/ad/users" >
-            hey there
-            <div class="card-body">
-              <i class="fas fa-box-open fa-3x mb-3 text-success"></i>
-              <h5 class="card-title">Products</h5>
-              hey
-              <p class="card-text fs-4">{{ productCount }}</p>
-            </div>
-          </NuxtLink>
+          <div class="card-body">
+            <i class="fas fa-box-open fa-3x mb-3 text-success"></i>
+            <h5 class="card-title">Products</h5>
+            
+            <p class="card-text fs-4">{{ productCount }}</p>
+          </div>
+
         </div>
       </div>
 

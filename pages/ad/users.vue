@@ -8,48 +8,125 @@
         </div>
 
         <!-- User Table -->
-        <div v-else>
+        <div class="container-fluid" v-else>
             <div class="container">
-                <FilterUsersComponent @update-users="updateUsers" />
+                <!-- Filter Component -->
+                <FilterUsersAdvancedComponent @update-users="updateUsers" />
             </div>
 
-            <div v-if="paginatedUsers" class="container mt-4">
+            <div v-if="paginatedUsers" class="container-xl d-flex justify-content-center mt-4">
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Username</th>
+                            <th @click="sortByColumn('id')">
+                                ID
+                                <span v-if="sortBy === 'id'">
+                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
+                                </span>
+                            </th>
+                            <th>User</th>
                             <th>Email</th>
-                            <th>Profile Picture</th>
                             <th>Profile Description</th>
-                            <th>User Type</th>
-                            <th>Ubicación</th>
-                            <th>Age</th>
-                            <th>Verified</th>
-                            <th>Admin</th>
-                            <th>Banned</th>
-                            <th>Created At</th>
+                            <th @click="sortByColumn('user_type')">
+                                User Type
+                                <span v-if="sortBy === 'user_type'">
+                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
+                                </span>
+                            </th>
+                            <th @click="sortByColumn('ubicacion')">
+                                Ubicación
+                                <span v-if="sortBy === 'ubicacion'">
+                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
+                                </span>
+                            </th>
+                            <th @click="sortByColumn('age')">
+                                Age
+                                <span v-if="sortBy === 'age'">
+                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
+                                </span>
+                            </th>
+                            <th @click="sortByColumn('verified')">
+                                Verified
+                                <span v-if="sortBy === 'verified'">
+                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
+                                </span>
+                            </th>
+                            <th @click="sortByColumn('is_banned')">
+                                Banned
+                                <span v-if="sortBy === 'is_banned'">
+                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
+                                </span>
+                            </th>
+                            <th @click="sortByColumn('created_at')">
+                                Created At
+                                <span v-if="sortBy === 'created_at'">
+                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
+                                </span>
+                            </th>
                             <th>Banned Until</th>
+                            <th @click="sortByColumn('reported_user_count')">
+                                Reported Products (Seller)
+                                <span v-if="sortBy === 'reported_user_count'">
+                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
+                                </span>
+                            </th>
+                            <th @click="sortByColumn('reported_by_user_count')">
+                                Reported By User
+                                <span v-if="sortBy === 'reported_by_user_count'">
+                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
+                                </span>
+                            </th>
+                            <th @click="sortByColumn('blocked_by_count')">
+                                Blocked By Count
+                                <span v-if="sortBy === 'blocked_by_count'">
+                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
+                                </span>
+                            </th>
+                            <th @click="sortByColumn('blocked_user_count')">
+                                Blocked User Count
+                                <span v-if="sortBy === 'blocked_user_count'">
+                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
+                                </span>
+                            </th>
+                            <th @click="sortByColumn('product_count')">
+                                Product Count
+                                <span v-if="sortBy === 'product_count'">
+                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
+                                </span>
+                            </th>
+                            <th @click="sortByColumn('thread_count')">
+                                Thread Count
+                                <span v-if="sortBy === 'thread_count'">
+                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
+                                </span>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="(user, index) in paginatedUsers" :key="index">
-                            <td>{{ user.id }}</td>
-                            <td>{{ user.username }}</td>
-                            <td>{{ user.email }}</td>
                             <td>
-                                <img :src="user.profile_picture" alt="Profile Picture" class="img-thumbnail" width="50"
-                                    height="50" />
+                                <small>{{ user.id }}</small>
                             </td>
-                            <td>{{ user.profile_description }}</td>
+                            <td>
+                                <UserImgComponent :image="user.profile_picture ? user.profile_picture : ''"
+                                    :username="user.username" />
+                            </td>
+                            <td>{{ user.email }}</td>
+                            <td><!-- {{ user.profile_description && user.profile_description.length < 50 ? user.profile_description : user.profile_description.slice(50) }}-->
+                            </td>
                             <td>{{ user.user_type }}</td>
                             <td>{{ user.ubicacion }}</td>
                             <td>{{ user.age }}</td>
                             <td>{{ user.verified ? 'Yes' : 'No' }}</td>
-                            <td>{{ user.is_admin ? 'Yes' : 'No' }}</td>
                             <td>{{ user.is_banned ? 'Yes' : 'No' }}</td>
-                            <td>{{ new Date(user.created_at).toLocaleString() }}</td>
+                            <td>{{ new Date(user.created_at).toLocaleDateString('en-GB') }}</td>
                             <td>{{ user.banned_until ? new Date(user.banned_until).toLocaleString() : 'N/A' }}</td>
+                            <td>{{ user.reported_user_count }}</td>
+                            <td>{{ user.reported_by_user_count }}</td>
+                            <td>{{ user.blocked_by_count }}</td>
+                            <td>{{ user.blocked_user_count }}</td>
+                            <td>{{ user.product_count }}</td>
+                            <td>{{ user.thread_count }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -84,7 +161,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-//import FilterUsersComponent from '~/components/FilterUsersComponent.vue';
+
 const userStore = useUserStore();
 
 const users = ref([]);
@@ -93,27 +170,30 @@ const itemsPerPage = 10; // Increase items per page for better table display
 const visibleButtons = 5;
 const loading = ref(true);
 
-/*
-definePageMeta({
-    middleware: ['auth']
-});
-*/
+// Sorting state
+const sortBy = ref(''); // Current column to sort by
+const sortDirection = ref('asc'); // Current sorting direction
 
 // Fetch users from the Cloudflare Worker
 const fetchUsers = async () => {
+    const supabase = useSupabaseClient();
+    const { data: { user } } = await supabase.auth.getUser();
     const timestamp = Date.now().toString();
-    const signature = await userStore.generateHMACSignature(timestamp);
+    const navbarStore = useNavbarStore();
+    const signature = await navbarStore.generateHMACSignature(timestamp);
 
-    const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/users`, {
+    const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/ad/users`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `HVAC ${signature}`,
             'X-Timestamp': timestamp,
+            'X-User': JSON.stringify(user),
         },
     });
 
     const parsed = await response.json();
+    console.log('admin user parsed', parsed);
     users.value = parsed.data.results;
 };
 
@@ -122,7 +202,50 @@ onMounted(async () => {
 });
 
 const updateUsers = (fetchedUsers) => {
+    console.log('got the emit');
     users.value = fetchedUsers;
+};
+
+// Handle sorting by column
+const sortByColumn = async (column) => {
+
+    const supabase = useSupabaseClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    const timestamp = Date.now().toString();
+    const navbarStore = useNavbarStore();
+    const signature = await navbarStore.generateHMACSignature(timestamp);
+
+    if (sortBy.value === column) {
+        // Toggle sorting direction if the same column is clicked again
+        sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc';
+    } else {
+        // Sort by the new column in ascending order by default
+        sortBy.value = column;
+        sortDirection.value = 'asc';
+    }
+
+    // Fetch sorted data from the API
+    const params = new URLSearchParams();
+    params.append('sortBy', sortBy.value);
+    params.append('sortDirection', sortDirection.value);
+
+    fetch(`https://lingerie.fandy8255.workers.dev/api/ad/users?${params.toString()}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `HVAC ${signature}`,
+            'X-Timestamp': timestamp,
+            'X-User': JSON.stringify(user),
+        },
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('aftersortt ', data.data.results)
+            users.value = data.data.results;
+        })
+        .catch((error) => {
+            console.error('Error sorting users:', error);
+        });
 };
 
 // Pagination logic
@@ -195,5 +318,10 @@ const changePage = (page) => {
     border-radius: 0.25rem;
     max-width: 100%;
     height: auto;
+}
+
+th {
+    cursor: pointer;
+    /* Make headers clickable */
 }
 </style>
