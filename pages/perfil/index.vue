@@ -106,31 +106,50 @@ const updateProfile = async () => {
         if (file.value) {
             formData.append('file', file.value);
         }
+        const timestamp = Date.now().toString();
+        const signature = await userStore.generateHMACSignature(timestamp);
 
         const response = await fetch('https://lingerie.fandy8255.workers.dev/api/user/update', {
             method: 'POST',
             headers: {
-                Authorization: `Bearer ${useRuntimeConfig().public.secretApiKey}`,
+                'Authorization': `HVAC ${signature}`,
+                'X-Timestamp': timestamp,
                 'X-User': JSON.stringify(userStore.user_tok),
             },
             body: formData,
         });
 
         if (response.ok) {
+            /*
             const result = await response.json();
-            const updatedData = JSON.parse(result.data);
+            console.log('result', result)*/
+            
+            const result = await response.json();
+            const updatedData = result.data
+            console.log('updated data', updatedData)
+
+            /*
+            if (updatedData.profile_picture){
+                userStore.profile_picture=updatedData.profile_picture
+            }*/
+            
 
             userStore.updateUserProfile({
-                profile_picture: updatedData.profile_picture,
-                profile_description: updatedData.profile_description,
-                ubicacion: updatedData.ubicacion,
+                profile_picture: updatedData.profile_picture ? updatedData.profile_picture : userStore.profile_picture ,
+                profile_description: updatedData.profile_description ? updatedData.profile_description : userStore.profile_description ,
+                ubicacion: updatedData.ubicacion ? updatedData.ubicacion : userStore.ubicacion,
             });
 
             message.value = { success: 'Actualizado con éxito.' };
+            
         } else {
+            console.log(await response.json())
             message.value = { failure: 'Error al actualizar el perfil.' };
         }
     } catch (error) {
+        const result = await response.json();
+        console.log('result', result)
+        console.log('error', error)
         message.value = { failure: `Error al actualizar el perfil: ${error}` };
     }
 };

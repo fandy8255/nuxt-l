@@ -7,54 +7,38 @@
             </div>
         </div>
 
-        <!-- User Table -->
+        <!-- Threads Table -->
         <div class="container-fluid" v-else>
             <div class="container">
-                <!-- Filter Component -->
-                <FilterSortSearchUsers @update-users="updateUsers" />
-               
+                <!-- Filter Component 
+                <FilterSortSearchThreads @update-threads="updateThreads" />-->
             </div>
 
-            <div v-if="paginatedUsers" class="container-fluid d-flex justify-content-center mt-4">
+            <div v-if="paginatedThreads" class="container-fluid d-flex justify-content-center mt-4">
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th @click="sortByColumn('id')">
-                                ID
-                                <span v-if="sortBy === 'id'">
+                            <th @click="sortByColumn('thread_id')">
+                                Thread ID
+                                <span v-if="sortBy === 'thread_id'">
                                     {{ sortDirection === 'asc' ? '▲' : '▼' }}
                                 </span>
                             </th>
-                            <th>User</th>
-                            <th>Email</th>
-                            <th>Profile Description</th>
-                            <th @click="sortByColumn('user_type')">
-                                User Type
-                                <span v-if="sortBy === 'user_type'">
+                            <th @click="sortByColumn('thread_title')">
+                                Title
+                                <span v-if="sortBy === 'thread_title'">
                                     {{ sortDirection === 'asc' ? '▲' : '▼' }}
                                 </span>
                             </th>
-                            <th @click="sortByColumn('ubicacion')">
-                                Ubicación
-                                <span v-if="sortBy === 'ubicacion'">
+                            <th @click="sortByColumn('sender_username')">
+                                Sender
+                                <span v-if="sortBy === 'sender_username'">
                                     {{ sortDirection === 'asc' ? '▲' : '▼' }}
                                 </span>
                             </th>
-                            <th @click="sortByColumn('age')">
-                                Age
-                                <span v-if="sortBy === 'age'">
-                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
-                                </span>
-                            </th>
-                            <th @click="sortByColumn('verified')">
-                                Verified
-                                <span v-if="sortBy === 'verified'">
-                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
-                                </span>
-                            </th>
-                            <th @click="sortByColumn('is_banned')">
-                                Banned
-                                <span v-if="sortBy === 'is_banned'">
+                            <th @click="sortByColumn('receiver_username')">
+                                Receiver
+                                <span v-if="sortBy === 'receiver_username'">
                                     {{ sortDirection === 'asc' ? '▲' : '▼' }}
                                 </span>
                             </th>
@@ -64,78 +48,46 @@
                                     {{ sortDirection === 'asc' ? '▲' : '▼' }}
                                 </span>
                             </th>
-                            <th>Banned Until</th>
-                            <th @click="sortByColumn('reported_user_count')">
-                                Reported A User
-                                <span v-if="sortBy === 'reported_user_count'">
+                            <th @click="sortByColumn('last_updated_at')">
+                                Last Updated
+                                <span v-if="sortBy === 'last_updated_at'">
                                     {{ sortDirection === 'asc' ? '▲' : '▼' }}
                                 </span>
                             </th>
-                            <th @click="sortByColumn('reported_by_user_count')">
-                                Reported By User
-                                <span v-if="sortBy === 'reported_by_user_count'">
+                            <th @click="sortByColumn('message_count')">
+                                Messages
+                                <span v-if="sortBy === 'message_count'">
                                     {{ sortDirection === 'asc' ? '▲' : '▼' }}
                                 </span>
                             </th>
-                            <th @click="sortByColumn('blocked_by_count')">
-                                Blocked By Count
-                                <span v-if="sortBy === 'blocked_by_count'">
+                            <th @click="sortByColumn('is_deleted')">
+                                Deleted
+                                <span v-if="sortBy === 'is_deleted'">
                                     {{ sortDirection === 'asc' ? '▲' : '▼' }}
                                 </span>
-                            </th>
-                            <th @click="sortByColumn('blocked_user_count')">
-                                Blocked User Count
-                                <span v-if="sortBy === 'blocked_user_count'">
-                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
-                                </span>
-                            </th>
-                            <th @click="sortByColumn('product_count')">
-                                Product Count
-                                <span v-if="sortBy === 'product_count'">
-                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
-                                </span>
-                            </th>
-                            <th @click="sortByColumn('thread_count')">
-                                Thread Count
-                                <span v-if="sortBy === 'thread_count'">
-                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
-                                </span>
-                            </th>
-                            <th>
-                                Ban
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(user, index) in paginatedUsers" :key="index">
-                            <td style="width: 1000px ;">
-                                <small>{{ user.id }}</small>
+                        <tr v-for="(thread, index) in paginatedThreads" :key="index">
+                            <td>
+                                <small>{{ thread.thread_id }}</small>
+                            </td>
+                            <td>{{ thread.thread_title }}</td>
+                            <td>
+                                <UserImgComponent :image="thread.sender_profile_picture"
+                                    :username="thread.sender_username" />
+                                <small>{{ thread.sender_username }}</small>
                             </td>
                             <td>
-                                <UserImgComponent :image="user.profile_picture ? user.profile_picture : ''"
-                                    :username="user.username" />
+                                <UserImgComponent :image="thread.receiver_profile_picture"
+                                    :username="thread.receiver_username" />
+                                <small>{{ thread.receiver_username }}</small>
                             </td>
-                            <td>{{ user.email }}</td>
-                            <td><!-- {{ user.profile_description && user.profile_description.length < 50 ? user.profile_description : user.profile_description.slice(50) }}-->
-                            </td>
-                            <td>{{ user.user_type }}</td>
-                            <td>{{ user.ubicacion }}</td>
-                            <td>{{ user.age }}</td>
-                            <td>{{ user.verified ? 'Yes' : 'No' }}</td>
-                            <td>{{ user.is_banned ? 'Yes' : 'No' }}</td>
-                            <td>{{ new Date(user.created_at).toLocaleDateString('en-GB') }}</td>
-                            <td>{{ user.banned_until ? new Date(user.banned_until).toLocaleString() : 'N/A' }}</td>
-                            <td>{{ user.reported_user_count }}</td>
-                            <td>{{ user.reported_by_user_count }}</td>
-                            <td>{{ user.blocked_by_count }}</td>
-                            <td>{{ user.blocked_user_count }}</td>
-                            <td>{{ user.product_count }}</td>
-                            <td>{{ user.thread_count }}</td>
-                            <td> 
-                                <BanComponent :userId="user.id"  v-if="!user.is_banned"/>
-                                <UnbanComponent :userId="user.id" v-else />
-                                
-                            </td>
+                            <td>{{ new Date(thread.created_at).toLocaleDateString('en-GB') }}</td>
+                            <td>{{ new Date(thread.last_updated_at).toLocaleDateString('en-GB') }}</td>
+                            <td>{{ thread.message_count }}</td>
+                            <td>{{ thread.is_deleted ? 'Yes' : 'No' }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -170,28 +122,28 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+//import { useSupabaseClient } from '~/supabase'; // Adjust the import based on your project structure
+//import { useNavbarStore } from '~/stores/navbar'; // Adjust the import based on your project structure
 
-//const userStore = useUserStore();
-
-const users = ref([]);
+const threads = ref([]);
 const currentPage = ref(1);
-const itemsPerPage = 10; // Increase items per page for better table display
-const visibleButtons = 5;
+const itemsPerPage = 10; // Number of threads per page
+const visibleButtons = 5; // Number of pagination buttons to show
 const loading = ref(true);
 
 // Sorting state
 const sortBy = ref(''); // Current column to sort by
 const sortDirection = ref('asc'); // Current sorting direction
 
-// Fetch users from the Cloudflare Worker
-const fetchUsers = async () => {
+// Fetch threads from the Cloudflare Worker
+const fetchThreads = async () => {
     const supabase = useSupabaseClient();
     const { data: { user } } = await supabase.auth.getUser();
     const timestamp = Date.now().toString();
     const navbarStore = useNavbarStore();
     const signature = await navbarStore.generateHMACSignature(timestamp);
 
-    const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/ad/users`, {
+    const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/ad/threads`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -202,18 +154,20 @@ const fetchUsers = async () => {
     });
 
     const parsed = await response.json();
-    console.log('admin user parsed', parsed);
-    users.value = parsed.data.results;
+    console.log('admin threads parsed', parsed.data);
+    threads.value = parsed.data.results;
 };
 
 onMounted(async () => {
-    await fetchUsers().finally(() => (loading.value = false));
+    await fetchThreads().finally(() => (loading.value = false));
 });
 
-const updateUsers = (fetchedUsers) => {
+
+const updateThreads = (fetchedThreads) => {
     console.log('got the emit');
-    users.value = fetchedUsers;
+    threads.value = fetchedThreads;
 };
+
 
 const sortByColumn = (column) => {
     if (sortBy.value === column) {
@@ -225,8 +179,8 @@ const sortByColumn = (column) => {
         sortDirection.value = 'asc';
     }
 
-    // Perform sorting on the users array
-    users.value.sort((a, b) => {
+    // Perform sorting on the threads array
+    threads.value.sort((a, b) => {
         let valA = a[column];
         let valB = b[column];
 
@@ -245,11 +199,11 @@ const sortByColumn = (column) => {
 };
 
 // Pagination logic
-const totalPages = computed(() => Math.ceil(users.value.length / itemsPerPage));
-const paginatedUsers = computed(() => {
+const totalPages = computed(() => Math.ceil(threads.value.length / itemsPerPage));
+const paginatedThreads = computed(() => {
     const start = (currentPage.value - 1) * itemsPerPage;
     const end = start + itemsPerPage;
-    return users.value.slice(start, end);
+    return  threads.value.length < end? threads.value : threads.value.slice(start, end);
 });
 
 const visiblePages = computed(() => {

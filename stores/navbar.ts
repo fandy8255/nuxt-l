@@ -25,10 +25,16 @@ export const useNavbarStore = defineStore('navbar', {
 
             return signatureHex;
         },
-
-        async updateNavbar() {
+        async getUser(){
             const supabase = useSupabaseClient();
             const { data: { user } } = await supabase.auth.getUser();
+            return user
+
+        },
+
+        async isAd() {
+            const user=await this.getUser()
+            
             if (!user) {
                 this.is_admin = false;
                 return;
@@ -52,9 +58,10 @@ export const useNavbarStore = defineStore('navbar', {
             if (result.data.is_admin) {
                 console.log('hitted navbarstore, user is admin')
                 this.is_admin= true
-                return
+                return true
             }
             this.is_admin=false
+            return false
 
             // this.is_admin = result?.data?.is_admin || false;
         },

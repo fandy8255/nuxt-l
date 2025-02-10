@@ -64,62 +64,13 @@ const session = useSupabaseSession();
 const is_admin = ref(false);
 const loading = ref(true);
 const supabase = useSupabaseClient();
+const navbarStore = useNavbarStore();
 
-// HMAC Signature Generation
-async function generateHMACSignature(timestamp) {
-    const runtimeConfig = useRuntimeConfig();
-    const secretKey = runtimeConfig.public.secretApiKey;
-
-    const encoder = new TextEncoder();
-    const keyData = encoder.encode(secretKey);
-    const timestampData = encoder.encode(timestamp);
-
-    const key = await crypto.subtle.importKey(
-        'raw', keyData, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
-    );
-
-    const signatureBuffer = await crypto.subtle.sign('HMAC', key, timestampData);
-
-    const signatureArray = Array.from(new Uint8Array(signatureBuffer));
-    const signatureHex = signatureArray.map(b => b.toString(16).padStart(2, '0')).join('');
-
-    return signatureHex;
-}
-
-// Check if user is admin
-async function isAdmin() {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return false;
-
-    const timestamp = Date.now().toString(); // Prevent replay attacks
-    const signature = await generateHMACSignature(timestamp);
-
-    try {
-        const response = await fetch('https://lingerie.fandy8255.workers.dev/api/profile', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `HVAC ${signature}`,
-                'X-Timestamp': timestamp,
-                'X-User': JSON.stringify(user),
-            },
-        });
-
-        const result = await response.json();
-        console.log('Is the user an admin?', result?.data?.is_admin);
-        return result?.data?.is_admin || false;
-    } catch (error) {
-        console.error('Error fetching admin status:', error);
-        return false;
-    }
-}
-
-// On component mount
 onMounted(async () => {
     isHydrated.value = true;
-    const adminStatus = await isAdmin();
-    is_admin.value = adminStatus; // Update reactive state
-    loading.value = false; // Hide loading state
+    const adminStatus=navbarStore.isAd()
+    is_admin.value = adminStatus; 
+    loading.value = false; 
 });
 
 // Sign out function

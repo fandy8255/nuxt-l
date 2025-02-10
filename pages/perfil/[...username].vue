@@ -57,7 +57,11 @@
                             </div>
                         </div>
                         <div class="col-8">
-                            <div class="d-flex gap-2">
+                            <div class="d-flex" v-if="navbarStore.isAd()">
+                                <BanComponent class="p-2" :userId="user.id"  v-if="!user.is_banned"/>
+                                <UnbanComponent :userId="user.id" v-else />
+                            </div>
+                            <div class="d-flex gap-2" v-else>
                                 <FollowButton v-if="user.username !== userStore.username"
                                     :viewedUsername="user.username" />
                                 <BlockComponent v-if="user.username !== userStore.username"
@@ -183,6 +187,7 @@ const user = ref(null);
 const loading = ref(true);
 const activeTab = ref("products");
 const userStore = useUserStore();
+const navbarStore = useNavbarStore();
 const isAd = ref(0);
 
 // State for pagination

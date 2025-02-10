@@ -147,17 +147,17 @@ const userStore = useUserStore();
 const navbarStore = useNavbarStore();
 const router = useRouter();
 const isHydrated = ref(false);
-const session = useSupabaseSession()
+//const session = useSupabaseSession()
 const { isAd } = defineProps(['isAd'])
-//const emit = defineEmits(['updateNavbar']);
 
 
-onMounted(() => {
+onMounted(async () => {
     isHydrated.value = true;
-    console.log('logged in?', userStore.logged_in);
-    checkSession();
+    await navbarStore.isAd()
+    //checkSession();
 });
 
+/*
 async function checkSession() {
     const currentRoute = router.currentRoute.value; // Get the current route
     console.log('Current route:', currentRoute.path); // Debug the current route
@@ -166,7 +166,7 @@ async function checkSession() {
         console.log('No active session, clearing user store and redirecting...');
 
         // Clear the user store
-        /*
+        
         userStore.signOut({
             username: '',
             email: '',
@@ -187,11 +187,12 @@ async function checkSession() {
             blocked_users: [],
             blocked_by: [],
             message_count: 0
-        });*/
+        });
 
         //router.push('/')
     }
 }
+*/
 
 async function signOut() {
     const { error } = await useSupabaseClient().auth.signOut();
@@ -218,12 +219,8 @@ async function signOut() {
         message_count: 0
     });
 
-    await navbarStore.updateNavbar()
+    await navbarStore.isAd()
 
-    //router.push('/');
-    //emit('updateNavbar');
-
-    // Redirect to the homepage
     router.push('/');
 }
 

@@ -7,15 +7,16 @@
             </div>
         </div>
 
-        <!-- User Table -->
+        <!-- Products Table -->
         <div class="container-fluid" v-else>
             <div class="container">
-                <!-- Filter Component -->
-                <FilterSortSearchUsers @update-users="updateUsers" />
-               
+                <!-- Filter Component (if applicable) -->
+                <!-- <FilterProductsAdvancedComponent @update-products="updateProducts" /> -->
+                <!-- <FilterSortSearch @update-products="updateProducts"/> -->
+                <FilterSortSearchProducts @update-products="updateProducts"/>
             </div>
 
-            <div v-if="paginatedUsers" class="container-fluid d-flex justify-content-center mt-4">
+            <div v-if="paginatedProducts" class="container-fluid d-flex justify-content-center mt-4">
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
@@ -25,36 +26,45 @@
                                     {{ sortDirection === 'asc' ? '▲' : '▼' }}
                                 </span>
                             </th>
-                            <th>User</th>
-                            <th>Email</th>
-                            <th>Profile Description</th>
-                            <th @click="sortByColumn('user_type')">
-                                User Type
-                                <span v-if="sortBy === 'user_type'">
+                            <th>
+                                User
+                            </th>
+                            <th @click="sortByColumn('product_name')">
+                                Product Name
+                                <span v-if="sortBy === 'product_name'">
                                     {{ sortDirection === 'asc' ? '▲' : '▼' }}
                                 </span>
                             </th>
-                            <th @click="sortByColumn('ubicacion')">
-                                Ubicación
-                                <span v-if="sortBy === 'ubicacion'">
+                            <th>
+                                Product pic
+                            </th>
+                            <th @click="sortByColumn('product_price')">
+                                Price
+                                <span v-if="sortBy === 'product_price'">
+                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
+                                </span>
+                            </th>
+                            <th @click="sortByColumn('product_category')">
+                                Category
+                                <span v-if="sortBy === 'product_category'">
+                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
+                                </span>
+                            </th>
+                            <th @click="sortByColumn('username')">
+                                Seller
+                                <span v-if="sortBy === 'username'">
                                     {{ sortDirection === 'asc' ? '▲' : '▼' }}
                                 </span>
                             </th>
                             <th @click="sortByColumn('age')">
-                                Age
+                                Seller Age
                                 <span v-if="sortBy === 'age'">
                                     {{ sortDirection === 'asc' ? '▲' : '▼' }}
                                 </span>
                             </th>
-                            <th @click="sortByColumn('verified')">
-                                Verified
-                                <span v-if="sortBy === 'verified'">
-                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
-                                </span>
-                            </th>
-                            <th @click="sortByColumn('is_banned')">
-                                Banned
-                                <span v-if="sortBy === 'is_banned'">
+                            <th @click="sortByColumn('ubicacion')">
+                                Seller Location
+                                <span v-if="sortBy === 'ubicacion'">
                                     {{ sortDirection === 'asc' ? '▲' : '▼' }}
                                 </span>
                             </th>
@@ -64,78 +74,52 @@
                                     {{ sortDirection === 'asc' ? '▲' : '▼' }}
                                 </span>
                             </th>
-                            <th>Banned Until</th>
-                            <th @click="sortByColumn('reported_user_count')">
-                                Reported A User
-                                <span v-if="sortBy === 'reported_user_count'">
+                            <th @click="sortByColumn('report_count')">
+                                Reports
+                                <span v-if="sortBy === 'report_count'">
                                     {{ sortDirection === 'asc' ? '▲' : '▼' }}
                                 </span>
                             </th>
-                            <th @click="sortByColumn('reported_by_user_count')">
-                                Reported By User
-                                <span v-if="sortBy === 'reported_by_user_count'">
-                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
-                                </span>
-                            </th>
-                            <th @click="sortByColumn('blocked_by_count')">
-                                Blocked By Count
-                                <span v-if="sortBy === 'blocked_by_count'">
-                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
-                                </span>
-                            </th>
-                            <th @click="sortByColumn('blocked_user_count')">
-                                Blocked User Count
-                                <span v-if="sortBy === 'blocked_user_count'">
-                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
-                                </span>
-                            </th>
-                            <th @click="sortByColumn('product_count')">
-                                Product Count
-                                <span v-if="sortBy === 'product_count'">
-                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
-                                </span>
-                            </th>
-                            <th @click="sortByColumn('thread_count')">
-                                Thread Count
-                                <span v-if="sortBy === 'thread_count'">
+                            <th @click="sortByColumn('like_count')">
+                                Likes
+                                <span v-if="sortBy === 'like_count'">
                                     {{ sortDirection === 'asc' ? '▲' : '▼' }}
                                 </span>
                             </th>
                             <th>
-                                Ban
+                                Is Visible
+                            </th>
+                            <th>
+                                Delete
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(user, index) in paginatedUsers" :key="index">
-                            <td style="width: 1000px ;">
-                                <small>{{ user.id }}</small>
+                        <tr v-for="(product, index) in paginatedProducts" :key="index">
+                            <td>
+                                <small>{{ product.id }}</small>
                             </td>
                             <td>
-                                <UserImgComponent :image="user.profile_picture ? user.profile_picture : ''"
-                                    :username="user.username" />
+                                <UserImgComponent :image="product.profile_picture ? product.profile_picture : ''" :username="product.username"/>
                             </td>
-                            <td>{{ user.email }}</td>
-                            <td><!-- {{ user.profile_description && user.profile_description.length < 50 ? user.profile_description : user.profile_description.slice(50) }}-->
+
+                            <td>
+                                {{product.product_name}}
                             </td>
-                            <td>{{ user.user_type }}</td>
-                            <td>{{ user.ubicacion }}</td>
-                            <td>{{ user.age }}</td>
-                            <td>{{ user.verified ? 'Yes' : 'No' }}</td>
-                            <td>{{ user.is_banned ? 'Yes' : 'No' }}</td>
-                            <td>{{ new Date(user.created_at).toLocaleDateString('en-GB') }}</td>
-                            <td>{{ user.banned_until ? new Date(user.banned_until).toLocaleString() : 'N/A' }}</td>
-                            <td>{{ user.reported_user_count }}</td>
-                            <td>{{ user.reported_by_user_count }}</td>
-                            <td>{{ user.blocked_by_count }}</td>
-                            <td>{{ user.blocked_user_count }}</td>
-                            <td>{{ user.product_count }}</td>
-                            <td>{{ user.thread_count }}</td>
-                            <td> 
-                                <BanComponent :userId="user.id"  v-if="!user.is_banned"/>
-                                <UnbanComponent :userId="user.id" v-else />
-                                
+                            <td>
+                                <ProductImgComponent :image="product.product_url ? product.product_url : ''" :username="product.product_name" :id="product.id"/>
                             </td>
+                            <!--<td>{{ product.product_name }}</td>-->
+                            <td>${{ product.product_price }}</td>
+                            <td>{{ product.product_category }}</td>
+                            <td>{{ product.username }}</td>
+                            <td>{{ product.age }}</td>
+                            <td>{{ product.ubicacion }}</td>
+                            <td>{{ new Date(product.created_at).toLocaleDateString('en-GB') }}</td>
+                            <td>{{ product.report_count }}</td>
+                            <td>{{ product.like_count }}</td>
+                            <td><ToggleProductVisibility :productId="product.id" :isVisible="product.is_visible"/> </td>
+                            <td> <DeleteProductAd :productId="product.id" /> </td>
                         </tr>
                     </tbody>
                 </table>
@@ -173,7 +157,7 @@ import { ref, computed, onMounted } from 'vue';
 
 //const userStore = useUserStore();
 
-const users = ref([]);
+const products = ref([]);
 const currentPage = ref(1);
 const itemsPerPage = 10; // Increase items per page for better table display
 const visibleButtons = 5;
@@ -184,14 +168,14 @@ const sortBy = ref(''); // Current column to sort by
 const sortDirection = ref('asc'); // Current sorting direction
 
 // Fetch users from the Cloudflare Worker
-const fetchUsers = async () => {
+const fetchProducts = async () => {
     const supabase = useSupabaseClient();
     const { data: { user } } = await supabase.auth.getUser();
     const timestamp = Date.now().toString();
     const navbarStore = useNavbarStore();
     const signature = await navbarStore.generateHMACSignature(timestamp);
 
-    const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/ad/users`, {
+    const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/ad/products`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -202,17 +186,17 @@ const fetchUsers = async () => {
     });
 
     const parsed = await response.json();
-    console.log('admin user parsed', parsed);
-    users.value = parsed.data.results;
+    console.log('fetched products', parsed.data.results);
+    products.value = parsed.data.results;
 };
 
 onMounted(async () => {
-    await fetchUsers().finally(() => (loading.value = false));
+    await fetchProducts().finally(() => (loading.value = false));
 });
 
-const updateUsers = (fetchedUsers) => {
-    console.log('got the emit');
-    users.value = fetchedUsers;
+const updateProducts = (fetchedProducts) => {
+    console.log('got the products emit');
+    products.value = fetchedProducts;
 };
 
 const sortByColumn = (column) => {
@@ -226,7 +210,7 @@ const sortByColumn = (column) => {
     }
 
     // Perform sorting on the users array
-    users.value.sort((a, b) => {
+    products.value.sort((a, b) => {
         let valA = a[column];
         let valB = b[column];
 
@@ -245,11 +229,11 @@ const sortByColumn = (column) => {
 };
 
 // Pagination logic
-const totalPages = computed(() => Math.ceil(users.value.length / itemsPerPage));
-const paginatedUsers = computed(() => {
+const totalPages = computed(() => Math.ceil(products.value.length / itemsPerPage));
+const paginatedProducts = computed(() => {
     const start = (currentPage.value - 1) * itemsPerPage;
     const end = start + itemsPerPage;
-    return users.value.slice(start, end);
+    return products.value.slice(start, end);
 });
 
 const visiblePages = computed(() => {

@@ -18,12 +18,14 @@
       <!-- Products Card -->
       <div class="col-md-3 mb-4">
         <div class="card text-center shadow">
-          <div class="card-body">
-            <i class="fas fa-box-open fa-3x mb-3 text-success"></i>
-            <h5 class="card-title">Products</h5>
-            
-            <p class="card-text fs-4">{{ productCount }}</p>
-          </div>
+          <NuxtLink to="/ad/products">
+            <div class="card-body">
+              <i class="fas fa-box-open fa-3x mb-3 text-success"></i>
+              <h5 class="card-title">Products</h5>
+
+              <p class="card-text fs-4">{{ productCount }}</p>
+            </div>
+          </NuxtLink>
 
         </div>
       </div>
@@ -31,11 +33,13 @@
       <!-- Threads Card -->
       <div class="col-md-3 mb-4">
         <div class="card text-center shadow">
-          <div class="card-body">
-            <i class="fas fa-comments fa-3x mb-3 text-warning"></i>
-            <h5 class="card-title">Threads</h5>
-            <p class="card-text fs-4">{{ threadCount }}</p>
-          </div>
+          <NuxtLink to="/ad/threads">
+            <div class="card-body">
+              <i class="fas fa-comments fa-3x mb-3 text-warning"></i>
+              <h5 class="card-title">Threads</h5>
+              <p class="card-text fs-4">{{ threadCount }}</p>
+            </div>
+          </NuxtLink>
         </div>
       </div>
 
