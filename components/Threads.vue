@@ -2,31 +2,38 @@
     <div>
         <div class="container">
             <h3 class="my-4">Mis Conversaciones</h3>
-            <div v-if="threads.length === 0" class="alert alert-info">No tienes conversaciones aún.</div>
-            <div v-for="thread in paginatedThreads" :key="thread.thread_id" class="card mb-2">
-                <div class="card-body d-flex align-items-center">
+            <div v-if="loading">
+                Loading
+            </div>
+            <div v-else>
 
-                    <NuxtImg provider="bunny" :src="getProfileImage(thread)" class="rounded-circle me-2" width="50px"
-                        height="50px" alt="User Image" :quality="10" loading="lazy"
-                        placeholder="/assets/images/panty-icon.jpg" />
+                <div v-if="threads && threads.length === 0" class="alert alert-info">No tienes conversaciones aún.</div>
+                <div v-for="thread in paginatedThreads" :key="thread.thread_id" class="card mb-2">
+                    <div class="card-body d-flex align-items-center">
 
-                    <div class="container d-flex align-items-center">
-                        <div class="col-4">
-                            <h6 class="card-title">{{ getThreadPartnerName(thread) }}</h6>
+                        <NuxtImg provider="bunny" :src="getProfileImage(thread)" class="rounded-circle me-2"
+                            width="50px" height="50px" alt="User Image" :quality="10" loading="lazy"
+                            placeholder="/assets/images/panty-icon.jpg" />
+
+                        <div class="container d-flex align-items-center">
+                            <div class="col-4">
+                                <h6 class="card-title">{{ getThreadPartnerName(thread) }}</h6>
+                            </div>
+                            <div class="col-4">
+                                <NuxtLink :to="`/mensajes/${thread.thread_id}`">
+                                    <p class="card-text mb-1 text-muted">{{ thread.last_message.slice(0, 50) || 'Sin mensajes' }}</p>
+                                </NuxtLink>
+
+                            </div>
+                            <div class="col-4 text-end">
+                                <small class="text-muted">{{ formatDate(thread.last_updated_at) }}</small>
+                            </div>
                         </div>
-                        <div class="col-4">
-                            <NuxtLink :to="`/mensajes/${thread.thread_id}`">
-                                <p class="card-text mb-1 text-muted">{{ thread.last_message.slice(0, 50) || 'Sin mensajes' }}</p>
-                            </NuxtLink>
-
-                        </div>
-                        <div class="col-4 text-end">
-                            <small class="text-muted">{{ formatDate(thread.last_updated_at) }}</small>
-                        </div>
-
                     </div>
                 </div>
+
             </div>
+
 
         </div>
 
@@ -55,6 +62,7 @@ const runtimeConfig = useRuntimeConfig();
 const supabase = useSupabaseClient();
 const { data: { user } } = await supabase.auth.getUser();
 const userStore = useUserStore();
+const loading = ref(true)
 
 const threads = ref([]);
 const threadsPerPage = 3;
@@ -95,7 +103,7 @@ const fetchThreads = async () => {
         // Filter threads where neither sender nor receiver is in the blocked list
         const filteredThreads = data.filter(thread => {
             return !blockedUsernames.includes(thread.sender_name) &&
-                   !blockedUsernames.includes(thread.receiver_name);
+                !blockedUsernames.includes(thread.receiver_name);
         });
 
         threads.value = filteredThreads;
@@ -129,7 +137,11 @@ const getThreadPartnerName = (thread) => {
 const formatDate = (date) => new Date(date).toLocaleString();
 
 onMounted(() => {
-    fetchThreads().then(res=>threads.value = userStore.threads)
+
+    fetchThreads().then(res =>{
+        //threads.value = userStore.threads
+        loading.value=false
+    })
 });
 </script>
 

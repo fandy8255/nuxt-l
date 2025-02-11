@@ -19,16 +19,17 @@ const router = useRouter()
 
 const contactForm = ref({ title: "", message: "" });
 
-const supabase = useSupabaseClient();
-const { data: { user } } = await supabase.auth.getUser();
 const { receiver } = defineProps(['receiver'])
+const userStore = useUserStore()
 
 const submitContactForm = async () => {
 
     try {
         const timestamp = Date.now().toString(); 
         const signature = await userStore.generateHMACSignature(timestamp);
-        
+        const user = await userStore.getUser()
+        console.log('user is ', user)
+
         const formData = {
             title: contactForm.value.title,
             content: contactForm.value.message,
@@ -55,7 +56,7 @@ const submitContactForm = async () => {
         contactForm.value.message = "";
     } catch (error) {
         //console.error("Error sending message:", error.message);
-        console.error("Error sending message:")
+        console.error("Error sending message:", error)
     }
 };
 </script>

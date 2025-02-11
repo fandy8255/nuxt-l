@@ -39,6 +39,13 @@ export const useUserStore = defineStore('user', {
             Object.assign(this, updatedData);
         },
 
+        async getUser(){
+            const supabase = useSupabaseClient();
+            const { data: { user } } = await supabase.auth.getUser();
+            return user
+
+        },
+
         async generateHMACSignature(timestamp) {
             const runtimeConfig = useRuntimeConfig();
             const secretKey = runtimeConfig.public.secretApiKey;
@@ -66,8 +73,8 @@ export const useUserStore = defineStore('user', {
 
         async isAd() {
 
-            const supabase = useSupabaseClient();
-            const { data: { user } } = await supabase.auth.getUser();
+            const user=await this.getUser()
+            
             if (!user) return;
 
             const timestamp = Date.now().toString(); // Prevent replay attacks

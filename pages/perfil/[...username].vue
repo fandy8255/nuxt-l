@@ -57,7 +57,8 @@
                             </div>
                         </div>
                         <div class="col-8">
-                            <div class="d-flex" v-if="navbarStore.isAd()">
+            
+                            <div class="d-flex" v-if="isAd">
                                 <BanComponent class="p-2" :userId="user.id"  v-if="!user.is_banned"/>
                                 <UnbanComponent :userId="user.id" v-else />
                             </div>
@@ -187,7 +188,6 @@ const user = ref(null);
 const loading = ref(true);
 const activeTab = ref("products");
 const userStore = useUserStore();
-const navbarStore = useNavbarStore();
 const isAd = ref(0);
 
 // State for pagination

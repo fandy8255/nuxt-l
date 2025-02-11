@@ -60,11 +60,8 @@
                                     {{ sortDirection === 'asc' ? '▲' : '▼' }}
                                 </span>
                             </th>
-                            <th @click="sortByColumn('is_deleted')">
-                                Deleted
-                                <span v-if="sortBy === 'is_deleted'">
-                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
-                                </span>
+                            <th>
+                                Thread
                             </th>
                         </tr>
                     </thead>
@@ -77,17 +74,21 @@
                             <td>
                                 <UserImgComponent :image="thread.sender_profile_picture"
                                     :username="thread.sender_username" />
-                                <small>{{ thread.sender_username }}</small>
+                                
                             </td>
                             <td>
                                 <UserImgComponent :image="thread.receiver_profile_picture"
                                     :username="thread.receiver_username" />
-                                <small>{{ thread.receiver_username }}</small>
+                                
                             </td>
                             <td>{{ new Date(thread.created_at).toLocaleDateString('en-GB') }}</td>
                             <td>{{ new Date(thread.last_updated_at).toLocaleDateString('en-GB') }}</td>
                             <td>{{ thread.message_count }}</td>
-                            <td>{{ thread.is_deleted ? 'Yes' : 'No' }}</td>
+                            <td>
+                                <NuxtLink :to="`/ad/mensajes/${thread.thread_id}`">
+                                    Thread
+                                </NuxtLink>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -203,7 +204,7 @@ const totalPages = computed(() => Math.ceil(threads.value.length / itemsPerPage)
 const paginatedThreads = computed(() => {
     const start = (currentPage.value - 1) * itemsPerPage;
     const end = start + itemsPerPage;
-    return  threads.value.length < end? threads.value : threads.value.slice(start, end);
+    return threads.value.length < end ? threads.value : threads.value.slice(start, end);
 });
 
 const visiblePages = computed(() => {
