@@ -12,6 +12,7 @@
             <div class="container">
                 <!-- Filter Component 
                 <FilterSortSearchThreads @update-threads="updateThreads" />-->
+                <FilterSortSearchThreads @update-threads="updateThreads" />
             </div>
 
             <div v-if="paginatedThreads" class="container-fluid d-flex justify-content-center mt-4">
@@ -63,6 +64,12 @@
                             <th>
                                 Thread
                             </th>
+                            <th>
+                                Receiver Threads
+                            </th>
+                            <th>
+                                Sender Threads
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -87,6 +94,16 @@
                             <td>
                                 <NuxtLink :to="`/ad/mensajes/${thread.thread_id}`">
                                     Thread
+                                </NuxtLink>
+                            </td>
+                            <td>
+                                <NuxtLink :to="`/ad/mensajes/user/${thread.receiver}`">
+                                    Receiver Threads
+                                </NuxtLink>
+                            </td>
+                            <td>
+                                <NuxtLink :to="`/ad/mensajes/user/${thread.sender}`">
+                                    Sender Threads
                                 </NuxtLink>
                             </td>
                         </tr>
@@ -165,7 +182,7 @@ onMounted(async () => {
 
 
 const updateThreads = (fetchedThreads) => {
-    console.log('got the emit');
+    console.log('got the emit from threads', fetchThreads);
     threads.value = fetchedThreads;
 };
 
@@ -204,7 +221,8 @@ const totalPages = computed(() => Math.ceil(threads.value.length / itemsPerPage)
 const paginatedThreads = computed(() => {
     const start = (currentPage.value - 1) * itemsPerPage;
     const end = start + itemsPerPage;
-    return threads.value.length < end ? threads.value : threads.value.slice(start, end);
+    //return threads.value.length < end ? threads.value : threads.value.slice(start, end);
+    return threads.value
 });
 
 const visiblePages = computed(() => {

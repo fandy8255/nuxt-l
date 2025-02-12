@@ -5,8 +5,8 @@
             <div class="row mb-3">
                 <div class="col">
                     <div class="input-group">
-                        <input type="text" class="form-control" v-model="searchQuery" placeholder="Search products...">
-                        <button class="btn btn-outline-secondary" @click="fetchProducts">
+                        <input type="text" class="form-control" v-model="searchQuery" placeholder="Search thread title...">
+                        <button class="btn btn-outline-secondary" @click="fetchThreads">
                             <i class="bi bi-filter"></i> Buscar
                         </button>
                     </div>
@@ -29,31 +29,8 @@
 
                             <!-- Basic Filters -->
                             <div class="mb-3">
-                                <label class="form-label">Category</label>
-                                <select class="form-select" v-model="filters.product_category">
-                                    <option value="">All</option>
-                                    <option value="contenido">Contenido</option>
-                                    <option value="panties">Panties</option>
-                                    <option value="tangas">Tangas</option>
-                                </select>
-                            </div>
-
-                            <!-- Price Range -->
-                            <div class="row mb-3">
-                                <div class="col">
-                                    <label class="form-label">Min Price</label>
-                                    <input type="number" class="form-control" v-model="filters.minPrice">
-                                </div>
-                                <div class="col">
-                                    <label class="form-label">Max Price</label>
-                                    <input type="number" class="form-control" v-model="filters.maxPrice">
-                                </div>
-                            </div>
-
-                            <!-- Seller Location -->
-                            <div class="mb-3">
-                                <label class="form-label">Seller Location</label>
-                                <select class="form-select" v-model="filters.ubicacion">
+                                <label class="form-label">Sender Location</label>
+                                <select class="form-select" v-model="filters.senderLocation">
                                     <option value="">All</option>
                                     <option value="Colombia">Colombia</option>
                                     <option value="España">España</option>
@@ -63,7 +40,18 @@
                                 </select>
                             </div>
 
-                            <!-- Seller Age Range -->
+                            <div class="mb-3">
+                                <label class="form-label">Receiver Location</label>
+                                <select class="form-select" v-model="filters.receiverLocation">
+                                    <option value="">All</option>
+                                    <option value="Colombia">Colombia</option>
+                                    <option value="España">España</option>
+                                    <option value="Argentina">Argentina</option>
+                                    <option value="Peru">Peru</option>
+                                    <option value="México">México</option>
+                                </select>
+                            </div>
+
                             <div class="row mb-3">
                                 <div class="col">
                                     <label class="form-label">Seller Min Age</label>
@@ -75,43 +63,28 @@
                                 </div>
                             </div>
 
-                            <!-- Report Counts -->
-                            <div class="row mb-3">
-                                <div class="col">
-                                    <label class="form-label">Report Count</label>
-                                    <div class="d-flex gap-2">
-                                        <input type="number" class="form-control" v-model="filters.minReports"
-                                            placeholder="Min">
-                                        <input type="number" class="form-control" v-model="filters.maxReports"
-                                            placeholder="Max">
-                                    </div>
-                                </div>
+                            <div class="mb-3">
+                                <label class="form-label">User Type</label>
+                                <select class="form-select" v-model="filters.userType">
+                                    <option value="">All</option>
+                                    <option value="seller">Seller</option>
+                                    <option value="buyer">Buyer</option>
+                                </select>
                             </div>
 
                             <!-- Like Counts -->
                             <div class="row mb-3">
                                 <div class="col">
-                                    <label class="form-label">Like Count</label>
+                                    <label class="form-label">Message Count</label>
                                     <div class="d-flex gap-2">
-                                        <input type="number" class="form-control" v-model="filters.minLikes"
+                                        <input type="number" class="form-control" v-model="filters.minMessageCount"
                                             placeholder="Min">
-                                        <input type="number" class="form-control" v-model="filters.maxLikes"
+                                        <input type="number" class="form-control" v-model="filters.maxMessageCount"
                                             placeholder="Max">
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Created At Range -->
-                            <div class="row mb-3">
-                                <div class="col">
-                                    <label class="form-label">Created After</label>
-                                    <input type="date" class="form-control" v-model="filters.minCreatedAt">
-                                </div>
-                                <div class="col">
-                                    <label class="form-label">Created Before</label>
-                                    <input type="date" class="form-control" v-model="filters.maxCreatedAt">
-                                </div>
-                            </div>
 
                             <div class="modal-footer">
                                 <button type="button" @click="closeModal" class="btn btn-primary">Apply Filters</button>
@@ -130,12 +103,10 @@
                         <span class="me-2">Sort by:</span>
                         <select class="form-select form-select-sm w-auto me-2 p-2" v-model="sortField"
                             @change="setSortField">
-                            <option value="product_name">Product Name</option>
-                            <option value="product_price">Price</option>
-                            <option value="product_category">Category</option>
+                            
                             <option value="created_at">Created At</option>
-                            <option value="report_count">Report Count</option>
-                            <option value="like_count">Like Count</option>
+                            <option value="last_updated_at">Last Updated At</option>
+                            <option value="message_count">Message Count</option>
                         </select>
                         <button class="btn btn-sm btn-outline-secondary" @click="toggleSortDirection">
                             <i> {{ sortDirection === 'asc' ? '▲' : '▼' }} </i>
@@ -144,7 +115,7 @@
                 </div>
             </div>
 
-            <button class="compBtn btn p-2 text-light btn-primary" @click="fetchProducts">Enviar</button>
+            <button class="compBtn btn p-2 text-light btn-primary" @click="fetchThreads">Enviar</button>
 
         </div>
     </div>
@@ -152,28 +123,22 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
-const emit = defineEmits(['update-products'])
+const emit = defineEmits(['update-threads'])
 
 const searchQuery = ref('')
 const sortField = ref('created_at')
 const sortDirection = ref('desc')
 const loading = ref(false)
 let params = new URLSearchParams()
-const {isCNT} = defineProps(['isCNT'])
 
 const filters = reactive({
-    product_category: '',
-    minPrice: '',
-    maxPrice: '',
-    ubicacion: '',
+    senderLocation: '',
+    receiverLocation: '',
     minAge: '',
     maxAge: '',
-    minReports: '',
-    maxReports: '',
-    minLikes: '',
-    maxLikes: '',
-    minCreatedAt: '',
-    maxCreatedAt: ''
+    userType: '',
+    minMessageCount: '',
+    maxMessageCount: '',
 })
 
 function test(e) {
@@ -204,17 +169,16 @@ const clearAllFilters = () => {
     params = new URLSearchParams()
 }
 
-const fetchProducts = async () => {
+const fetchThreads = async () => {
     loading.value = true
     applyParams()
     try {
-        const supabase = useSupabaseClient()
         const timestamp = Date.now().toString()
         const navbarStore = useNavbarStore()
         const signature = await navbarStore.generateHMACSignature(timestamp)
-        const { data: { user } } = await supabase.auth.getUser()
-        const url= isCNT ? `https://lingerie.fandy8255.workers.dev/api/ad/products?cntUser=1&${params.toString()}` : `https://lingerie.fandy8255.workers.dev/api/ad/products?${params.toString()}`
-        const response = await fetch(url, {
+        const user = await navbarStore.getUser()
+
+        const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/ad/threads?${params.toString()}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -225,13 +189,13 @@ const fetchProducts = async () => {
         })
 
         const parsed = await response.json()
-        console.log('parsed data', parsed)
-        console.log('query', url)
-        emit("update-products", parsed.data.results)
+        console.log('parsed data', parsed.data.results)
+        console.log('query', `https://lingerie.fandy8255.workers.dev/api/ad/threads?${params.toString()}`)
+        emit("update-threads", parsed.data.results)
         clearAllFilters()
     } catch (error) {
         console.error("Error:", error)
-        emit("update-products", [])
+        emit("update-threads", [])
     } finally {
         loading.value = false
     }

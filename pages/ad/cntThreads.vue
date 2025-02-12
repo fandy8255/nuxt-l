@@ -7,64 +7,39 @@
             </div>
         </div>
 
-        <!-- Products Table -->
+        <!-- Threads Table -->
         <div class="container-fluid" v-else>
             <div class="container">
-                <!-- Filter Component (if applicable) -->
-                <!-- <FilterProductsAdvancedComponent @update-products="updateProducts" /> -->
-                <!-- <FilterSortSearch @update-products="updateProducts"/> -->
-                <FilterSortSearchProducts @update-products="updateProducts" :isCNT="false" />
+                <!-- Filter Component 
+                <FilterSortSearchThreads @update-threads="updateThreads" />-->
+                <FilterSortSearchThreads @update-threads="updateThreads" />
             </div>
 
-            <div v-if="paginatedProducts" class="container-fluid d-flex justify-content-center mt-4">
+            <div v-if="paginatedThreads" class="container-fluid d-flex justify-content-center mt-4">
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th @click="sortByColumn('id')">
-                                ID
-                                <span v-if="sortBy === 'id'">
+                            <th @click="sortByColumn('thread_id')">
+                                Thread ID
+                                <span v-if="sortBy === 'thread_id'">
                                     {{ sortDirection === 'asc' ? '▲' : '▼' }}
                                 </span>
                             </th>
-                            <th>
-                                User
-                            </th>
-                            <th @click="sortByColumn('product_name')">
-                                Product Name
-                                <span v-if="sortBy === 'product_name'">
+                            <th @click="sortByColumn('thread_title')">
+                                Title
+                                <span v-if="sortBy === 'thread_title'">
                                     {{ sortDirection === 'asc' ? '▲' : '▼' }}
                                 </span>
                             </th>
-                            <th>
-                                Product pic
-                            </th>
-                            <th @click="sortByColumn('product_price')">
-                                Price
-                                <span v-if="sortBy === 'product_price'">
+                            <th @click="sortByColumn('sender_username')">
+                                Sender
+                                <span v-if="sortBy === 'sender_username'">
                                     {{ sortDirection === 'asc' ? '▲' : '▼' }}
                                 </span>
                             </th>
-                            <th @click="sortByColumn('product_category')">
-                                Category
-                                <span v-if="sortBy === 'product_category'">
-                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
-                                </span>
-                            </th>
-                            <th @click="sortByColumn('username')">
-                                Seller
-                                <span v-if="sortBy === 'username'">
-                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
-                                </span>
-                            </th>
-                            <th @click="sortByColumn('age')">
-                                Seller Age
-                                <span v-if="sortBy === 'age'">
-                                    {{ sortDirection === 'asc' ? '▲' : '▼' }}
-                                </span>
-                            </th>
-                            <th @click="sortByColumn('ubicacion')">
-                                Seller Location
-                                <span v-if="sortBy === 'ubicacion'">
+                            <th @click="sortByColumn('receiver_username')">
+                                Receiver
+                                <span v-if="sortBy === 'receiver_username'">
                                     {{ sortDirection === 'asc' ? '▲' : '▼' }}
                                 </span>
                             </th>
@@ -74,52 +49,63 @@
                                     {{ sortDirection === 'asc' ? '▲' : '▼' }}
                                 </span>
                             </th>
-                            <th @click="sortByColumn('report_count')">
-                                Reports
-                                <span v-if="sortBy === 'report_count'">
+                            <th @click="sortByColumn('last_updated_at')">
+                                Last Updated
+                                <span v-if="sortBy === 'last_updated_at'">
                                     {{ sortDirection === 'asc' ? '▲' : '▼' }}
                                 </span>
                             </th>
-                            <th @click="sortByColumn('like_count')">
-                                Likes
-                                <span v-if="sortBy === 'like_count'">
+                            <th @click="sortByColumn('message_count')">
+                                Messages
+                                <span v-if="sortBy === 'message_count'">
                                     {{ sortDirection === 'asc' ? '▲' : '▼' }}
                                 </span>
                             </th>
                             <th>
-                                Is Visible
+                                Thread
                             </th>
                             <th>
-                                Delete
+                                Receiver Threads
+                            </th>
+                            <th>
+                                Sender Threads
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(product, index) in paginatedProducts" :key="index">
+                        <tr v-for="(thread, index) in paginatedThreads" :key="index">
                             <td>
-                                <small>{{ product.id }}</small>
+                                <small>{{ thread.thread_id }}</small>
+                            </td>
+                            <td>{{ thread.thread_title }}</td>
+                            <td>
+                                <UserImgComponent :image="thread.sender_profile_picture"
+                                    :username="thread.sender_username" />
+                                
                             </td>
                             <td>
-                                <UserImgComponent :image="product.profile_picture ? product.profile_picture : ''" :username="product.username"/>
+                                <UserImgComponent :image="thread.receiver_profile_picture"
+                                    :username="thread.receiver_username" />
+                                
                             </td>
-
+                            <td>{{ new Date(thread.created_at).toLocaleDateString('en-GB') }}</td>
+                            <td>{{ new Date(thread.last_updated_at).toLocaleDateString('en-GB') }}</td>
+                            <td>{{ thread.message_count }}</td>
                             <td>
-                                {{product.product_name}}
+                                <NuxtLink :to="`/ad/mensajes/${thread.thread_id}`">
+                                    Thread
+                                </NuxtLink>
                             </td>
                             <td>
-                                <ProductImgComponent :image="product.product_url ? product.product_url : ''" :username="product.product_name" :id="product.id"/>
+                                <NuxtLink :to="`/ad/mensajes/user/${thread.receiver}`">
+                                    Receiver Threads
+                                </NuxtLink>
                             </td>
-                            <!--<td>{{ product.product_name }}</td>-->
-                            <td>${{ product.product_price }}</td>
-                            <td>{{ product.product_category }}</td>
-                            <td>{{ product.username }}</td>
-                            <td>{{ product.age }}</td>
-                            <td>{{ product.ubicacion }}</td>
-                            <td>{{ new Date(product.created_at).toLocaleDateString('en-GB') }}</td>
-                            <td>{{ product.report_count }}</td>
-                            <td>{{ product.like_count }}</td>
-                            <td><ToggleProductVisibility :productId="product.id" :isVisible="product.is_visible"/> </td>
-                            <td> <DeleteProductAd :productId="product.id" /> </td>
+                            <td>
+                                <NuxtLink :to="`/ad/mensajes/user/${thread.sender}`">
+                                    Sender Threads
+                                </NuxtLink>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -154,28 +140,28 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+//import { useSupabaseClient } from '~/supabase'; // Adjust the import based on your project structure
+//import { useNavbarStore } from '~/stores/navbar'; // Adjust the import based on your project structure
 
-//const userStore = useUserStore();
-
-const products = ref([]);
+const threads = ref([]);
 const currentPage = ref(1);
-const itemsPerPage = 10; // Increase items per page for better table display
-const visibleButtons = 5;
+const itemsPerPage = 10; // Number of threads per page
+const visibleButtons = 5; // Number of pagination buttons to show
 const loading = ref(true);
 
 // Sorting state
 const sortBy = ref(''); // Current column to sort by
 const sortDirection = ref('asc'); // Current sorting direction
 
-// Fetch users from the Cloudflare Worker
-const fetchProducts = async () => {
+// Fetch threads from the Cloudflare Worker
+const fetchThreads = async () => {
     const supabase = useSupabaseClient();
     const { data: { user } } = await supabase.auth.getUser();
     const timestamp = Date.now().toString();
     const navbarStore = useNavbarStore();
     const signature = await navbarStore.generateHMACSignature(timestamp);
 
-    const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/ad/products`, {
+    const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/ad/threads?cntUser=1`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -186,18 +172,20 @@ const fetchProducts = async () => {
     });
 
     const parsed = await response.json();
-    console.log('fetched products', parsed.data.results);
-    products.value = parsed.data.results;
+    console.log('admin threads parsed', parsed.data);
+    threads.value = parsed.data.results;
 };
 
 onMounted(async () => {
-    await fetchProducts().finally(() => (loading.value = false));
+    await fetchThreads().finally(() => (loading.value = false));
 });
 
-const updateProducts = (fetchedProducts) => {
-    console.log('got the products emit');
-    products.value = fetchedProducts;
+
+const updateThreads = (fetchedThreads) => {
+    console.log('got the emit from threads', fetchThreads);
+    threads.value = fetchedThreads;
 };
+
 
 const sortByColumn = (column) => {
     if (sortBy.value === column) {
@@ -209,8 +197,8 @@ const sortByColumn = (column) => {
         sortDirection.value = 'asc';
     }
 
-    // Perform sorting on the users array
-    products.value.sort((a, b) => {
+    // Perform sorting on the threads array
+    threads.value.sort((a, b) => {
         let valA = a[column];
         let valB = b[column];
 
@@ -229,11 +217,12 @@ const sortByColumn = (column) => {
 };
 
 // Pagination logic
-const totalPages = computed(() => Math.ceil(products.value.length / itemsPerPage));
-const paginatedProducts = computed(() => {
+const totalPages = computed(() => Math.ceil(threads.value.length / itemsPerPage));
+const paginatedThreads = computed(() => {
     const start = (currentPage.value - 1) * itemsPerPage;
     const end = start + itemsPerPage;
-    return products.value.slice(start, end);
+    //return threads.value.length < end ? threads.value : threads.value.slice(start, end);
+    return threads.value
 });
 
 const visiblePages = computed(() => {

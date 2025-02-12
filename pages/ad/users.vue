@@ -27,7 +27,6 @@
                             </th>
                             <th>User</th>
                             <th>Email</th>
-                            <th>Profile Description</th>
                             <th @click="sortByColumn('user_type')">
                                 User Type
                                 <span v-if="sortBy === 'user_type'">
@@ -104,11 +103,14 @@
                             <th>
                                 Ban
                             </th>
+                            <th>
+                                Threads
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="(user, index) in paginatedUsers" :key="index">
-                            <td style="width: 1000px ;">
+                            <td style="width:700px;">
                                 <small>{{ user.id }}</small>
                             </td>
                             <td>
@@ -116,8 +118,6 @@
                                     :username="user.username" />
                             </td>
                             <td>{{ user.email }}</td>
-                            <td><!-- {{ user.profile_description && user.profile_description.length < 50 ? user.profile_description : user.profile_description.slice(50) }}-->
-                            </td>
                             <td>{{ user.user_type }}</td>
                             <td>{{ user.ubicacion }}</td>
                             <td>{{ user.age }}</td>
@@ -135,6 +135,11 @@
                                 <BanComponent :userId="user.id"  v-if="!user.is_banned"/>
                                 <UnbanComponent :userId="user.id" v-else />
                                 
+                            </td>
+                            <td>
+                                <NuxtLink class="text-decoration-none" :to="`/ad/mensajes/user/${user.id}`">
+                                    <small>User Threads</small>
+                                </NuxtLink>
                             </td>
                         </tr>
                     </tbody>

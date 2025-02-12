@@ -13,7 +13,7 @@
                 <!-- Filter Component (if applicable) -->
                 <!-- <FilterProductsAdvancedComponent @update-products="updateProducts" /> -->
                 <!-- <FilterSortSearch @update-products="updateProducts"/> -->
-                <FilterSortSearchProducts @update-products="updateProducts" :isCNT="false" />
+                <FilterSortSearchProducts @update-products="updateProducts" :isCNT="true" />
             </div>
 
             <div v-if="paginatedProducts" class="container-fluid d-flex justify-content-center mt-4">
@@ -175,7 +175,7 @@ const fetchProducts = async () => {
     const navbarStore = useNavbarStore();
     const signature = await navbarStore.generateHMACSignature(timestamp);
 
-    const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/ad/products`, {
+    const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/ad/products?cntUser=1`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -195,7 +195,7 @@ onMounted(async () => {
 });
 
 const updateProducts = (fetchedProducts) => {
-    console.log('got the products emit');
+    console.log('got the products emit from cnt');
     products.value = fetchedProducts;
 };
 

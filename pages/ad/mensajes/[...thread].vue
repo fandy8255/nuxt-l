@@ -42,7 +42,7 @@
 
 <script setup>
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router'; // Adjust the import based on your project structure
+//import { useRoute } from 'vue-router'; // Adjust the import based on your project structure
 //import { useNavbarStore } from '~/stores/navbar'; // Adjust the import based on your project structure
 
 const threadId = useRoute().params.thread[0].toString();
