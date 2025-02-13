@@ -110,10 +110,10 @@ export default {
 
         const parsed = await response.json();
 
-        this.$emit("update-products", parsed.data); // Emit fetched data
+        this.$emit("update-products", parsed.data); 
       } catch (error) {
-        console.error("Error fetching products:", error.message);
-        this.$emit("update-products", []); // Emit empty array on error
+        
+        this.$emit("update-products", []); 
       }
     },
   },

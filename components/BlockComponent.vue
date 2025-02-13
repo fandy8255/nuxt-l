@@ -65,7 +65,7 @@ const handleBlock = async () => {
             userStore.feed=filtered
         }
     } catch (error) {
-        console.error('Error blocking user:');
+        
     }
 };
 
@@ -92,7 +92,7 @@ const handleUnblock = async () => {
             if (index > -1) userStore.blocked_users.splice(index, 1); 
         }
     } catch (error) {
-        console.error('Error unblocking user:');
+        
     }
 };
 
@@ -119,7 +119,7 @@ const handleUnfollow = async () => {
             if (index > -1) userStore.followed.splice(index, 1);
         }
     } catch (error) {
-        console.error('Error unfollowing user:');
+        
     }
 };
 </script>

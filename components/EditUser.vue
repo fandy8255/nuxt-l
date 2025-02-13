@@ -152,21 +152,18 @@ const updateProfile = async () => {
         if (response.ok) {
             const result = await response.json();
             const updatedData = result.data;
-            console.log('updated data', updatedData);
             message.value = { success: 'Actualizado con éxito.' };
         } else {
-            console.log(await response.json());
             message.value = { failure: 'Error al actualizar el perfil.' };
         }
     } catch (error) {
-        console.log('error', error);
         message.value = { failure: `Error al actualizar el perfil: ${error}` };
     }
 };
 </script>
 
 <style scoped>
-/* Custom Styles */
+
 .modal-content {
     padding: 20px;
     border-radius: 10px;

@@ -3,9 +3,7 @@
         <section id="main-carousel" class="splide" v-if="useState('featuredProducts')">
             <div class="splide__track">
                 <ul class="splide__list mx-5">
-                    <li class="splide__slide" v-for="featuredItem in featuredItems"
-                        :key="featuredItem.title">
-                        <!--featuredProducts defined in tienda/index page -->
+                    <li class="splide__slide" v-for="featuredItem in featuredItems" :key="featuredItem.title">
                         <div class="container">
                             
                         </div>
@@ -13,15 +11,12 @@
                 </ul>
             </div>
         </section>
-
-
     </div>
-
 </template>
 
 <script setup>
 
-import { onMounted, onUpdated } from 'vue';
+import { onMounted } from 'vue';
 
 import Splide from '@splidejs/splide';
 
@@ -37,9 +32,8 @@ onMounted(async () => {
             },
         }
     });
-
     main.mount();
-    console.log('featured mounted')
+
 })
 
 </script>
@@ -52,11 +46,8 @@ onMounted(async () => {
 }
 
 @media only screen and (max-width: 600px) {
-
     .card {
         width: 90vw !important;
     }
-
-
 }
 </style>

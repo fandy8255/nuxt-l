@@ -54,7 +54,7 @@ const submitContactForm = async () => {
         contactForm.value.name = "";
         contactForm.value.message = "";
     } catch (error) {
-        console.error("Error sending message:")
+        
     }
 };
 </script>

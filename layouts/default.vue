@@ -11,8 +11,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-// Reactive state
-const is_admin = ref(false);
 const loading = ref(true);
 const navbarStore = useNavbarStore();
 

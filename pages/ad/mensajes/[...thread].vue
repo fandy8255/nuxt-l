@@ -4,18 +4,11 @@
         <div class="messages" v-if="!loading">
             <h4 class="p-3">Messages between sender: {{ threadInfo.sender}} and receiver {{threadInfo.receiver }}</h4>
             <div v-if="messages" v-for="message in messages" :key="message.message_id" class="message">
-               <!-- {{ message }}-->
+       
                 <div class="message-header">
-                    <!--
-                    <UserImgComponent :image="message.sender_profile_picture" :username="message.sender_username" />-->
-
                     <UserImgComponent
                             :image="message.message_owner === message.sender_id ? message.sender_profile_picture : message.receiver_profile_picture"
                             :username="message.message_owner === message.sender_id ? message.sender_username : message.receiver_username" />
-
-                    <!--
-                    <span class="sender-name">{{ message.sender_username }}</span>
-                    <span class="receiver-name">→ {{ message.receiver_username }}</span>-->
                 </div>
                 <p class="message-content">{{ message.content }}</p>
                 <small class="message-time">{{ formatDate(message.created_at) }}</small>
@@ -42,12 +35,9 @@
 
 <script setup>
 import { onMounted, ref } from 'vue';
-//import { useRoute } from 'vue-router'; // Adjust the import based on your project structure
-//import { useNavbarStore } from '~/stores/navbar'; // Adjust the import based on your project structure
 
 const threadId = useRoute().params.thread[0].toString();
 const navbarStore = useNavbarStore();
-
 const messages = ref([]);
 const newMessage = ref('');
 const threadInfo = ref({});
@@ -55,7 +45,7 @@ const loading=ref(true)
 
 const fetchMessages = async () => {
     try {
-        const timestamp = Date.now().toString(); // Prevent replay attacks
+        const timestamp = Date.now().toString(); 
         const signature = await navbarStore.generateHMACSignature(timestamp);
         const user = await navbarStore.getUser();
 
@@ -80,14 +70,13 @@ const fetchMessages = async () => {
         threadInfo.value=obj
         messages.value = results.messages;
     } catch (error) {
-        console.error('Error fetching messages:', error);
     }
 };
 
 const sendMessage = async () => {
     if (newMessage.value.trim()) {
         try {
-            const timestamp = Date.now().toString(); // Prevent replay attacks
+            const timestamp = Date.now().toString(); 
             const signature = await navbarStore.generateHMACSignature(timestamp);
             const user = await navbarStore.getUser();
 
@@ -106,13 +95,13 @@ const sendMessage = async () => {
             });
 
             if (response.ok) {
-                await fetchMessages(); // Refresh messages after sending
-                newMessage.value = ''; // Clear the input field
+                await fetchMessages(); 
+                newMessage.value = ''; 
             } else {
                 throw new Error('Failed to send message');
             }
         } catch (error) {
-            console.error('Error sending message:', error);
+            
         }
     }
 };
@@ -148,7 +137,6 @@ onMounted(async () => {
     border: 1px solid #ccc;
     border-radius: 10px;
     background-color: #f9f9f9;
-    /* Neutral background for all messages */
 }
 
 .message-header {

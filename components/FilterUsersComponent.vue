@@ -92,7 +92,6 @@ export default {
         const parsed = await response.json();
         this.$emit("update-users", parsed.data.results);
       } catch (error) {
-        console.error("Error fetching users:", error.message);
         this.$emit("update-users", []);
       }
     },

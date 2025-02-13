@@ -116,10 +116,8 @@
                             <div class="modal-footer">
                                 <button type="button" @click="closeModal" class="btn btn-primary">Apply Filters</button>
                             </div>
-
                         </div>
                     </div>
-
                 </div>
             </div>
 
@@ -177,13 +175,11 @@ const filters = reactive({
 })
 
 function test(e) {
-    console.log('test', e.target.value)
     sortField.value = e.target.value
 }
 
 const setSortField = (e) => {
     sortField.value = e.target.value
-    console.log('set sort value to ', sortField.value)
 }
 
 const toggleSortDirection = () => {
@@ -225,12 +221,9 @@ const fetchProducts = async () => {
         })
 
         const parsed = await response.json()
-        console.log('parsed data', parsed)
-        console.log('query', url)
         emit("update-products", parsed.data.results)
         clearAllFilters()
     } catch (error) {
-        console.error("Error:", error)
         emit("update-products", [])
     } finally {
         loading.value = false
@@ -241,7 +234,6 @@ const closeModal = () => {
     const modal = bootstrap.Modal.getInstance(
         document.getElementById("filtersModal")
     );
-    console.log('filters after closing modal', filters)
     modal.hide()
 }
 
@@ -254,7 +246,6 @@ const applyParams = () => {
     })
     params.append('sortBy', sortField.value)
     params.append('sortDirection', sortDirection.value)
-    console.log('params before fetch', params)
 }
 </script>
 

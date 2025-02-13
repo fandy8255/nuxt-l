@@ -1,4 +1,4 @@
-<!-- components/TopUsersList.vue -->
+
 <template>
     <div class="container mb-4">
         <!-- Most Followed Users Section -->
@@ -37,12 +37,10 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-// Reactive state for most followed and newest users
 const mostFollowed = ref([]);
 const newestUsers = ref([]);
 const userStore = useUserStore();
 
-// Fetch function to get top users
 async function fetchTopUsers() {
     try {
         const timestamp = Date.now().toString(); 
@@ -64,7 +62,6 @@ async function fetchTopUsers() {
             newestUsers.value = result.newest_users;
         }
     } catch (error) {
-        console.error('Error fetching top users:', error.message);
     }
 }
 
@@ -75,7 +72,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Add custom styles if needed */
+
 .container {
     max-width: 800px;
     margin: 0 auto;

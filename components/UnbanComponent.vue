@@ -31,13 +31,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
 
 const modalId = 'unbanUserModal';
 const navbarStore = useNavbarStore();
-
 const { userId } = defineProps(['userId']);
-//const emit = defineEmits(['updateUsersStore']);
 
 const unbanUser = async () => {
     try {
@@ -53,7 +50,7 @@ const unbanUser = async () => {
                     'Content-Type': 'application/json',
                     'Authorization': `HVAC ${signature}`,
                     'X-Timestamp': timestamp,
-                    'X-User': JSON.stringify(user), // Include admin user data
+                    'X-User': JSON.stringify(user), 
                 },
                 body: JSON.stringify({
                     userId: userId,
@@ -66,15 +63,9 @@ const unbanUser = async () => {
                 document.getElementById(`${modalId}_${userId}`)
             );
             modal.hide();
-
-            //emit('updateUsersStore'); // Emit event to update the users list in the parent component
         } else {
-            console.error(
-                `Failed to unban user: ${response.status} - ${await response.text()}`
-            );
         }
     } catch (error) {
-        console.error('Error while unbanning user:', error.message);
     }
 };
 </script>

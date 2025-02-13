@@ -104,7 +104,6 @@ const submitReport = async () => {
             alert(data.message);
         }
     } catch (error) {
-        console.error('Error al enviar el reporte:', error);
         alert('Hubo un error. Inténtalo nuevamente.');
     }
 

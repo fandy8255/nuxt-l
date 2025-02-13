@@ -45,29 +45,24 @@ const environment = runtimeConfig.public.dev;
 
 
 onMounted(async () => {
-    if (environment === "production") {
-        console.log('tested production')
-    } if (environment === "development") {
-        console.log('tested development')
-    }
 
     if (user.data.user) {
-        if (environment === 'development') {
-            console.log('active user')
-            console.log('user',)
-        }
-        router.push('/dashboard')
+        router.push('/feed')
     } else {
-        console.log('no active user')
+
+        if (environment === "development") {
+            console.log('no active user')
+        }
+
     }
 })
 
 
 useSeoMeta({
-    title: 'Colombia Panty | Compra panties usados',
-    ogTitle: 'Colombia Panty | Compra panties usados',
-    description: 'Compra y venta de panties usados de Colombianas',
-    ogDescription: 'Compra y venta de panties usados de Colombianas',
+    title: 'Latin Panty | Compra panties usados',
+    ogTitle: 'Latin Panty | Compra panties usados',
+    description: 'Compra y venta de panties usados de Latinas',
+    ogDescription: 'Compra y venta de panties usados de Latinas',
     ogImage: '',
     twitterCard: '',
 })

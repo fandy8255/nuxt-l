@@ -31,10 +31,7 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
-
         </div>
 
         <!-- Pagination -->
@@ -55,10 +52,8 @@
 </template>
 
 <script setup>
-//import { NuxtLink } from '#build/components';
 import { ref, computed, onMounted } from 'vue';
 
-const runtimeConfig = useRuntimeConfig();
 const supabase = useSupabaseClient();
 const { data: { user } } = await supabase.auth.getUser();
 const userStore = useUserStore();
@@ -74,8 +69,6 @@ const paginatedThreads = computed(() => {
 });
 
 const totalPages = computed(() => Math.ceil(threads.value.length / threadsPerPage));
-
-// Fetch threads from the API
 
 const fetchThreads = async () => {
     try {
@@ -100,7 +93,6 @@ const fetchThreads = async () => {
             ...userStore.blocked_by.map(user => user.username)
         ];
 
-        // Filter threads where neither sender nor receiver is in the blocked list
         const filteredThreads = data.filter(thread => {
             return !blockedUsernames.includes(thread.sender_name) &&
                 !blockedUsernames.includes(thread.receiver_name);
@@ -120,7 +112,7 @@ const changePage = (page) => {
 };
 
 const getProfileImage = (thread) => {
-    // Use the receiver's profile if the logged-in user is the sender, and vice versa
+    
     const partnerIsReceiver = thread.sender === userStore.id;
     return partnerIsReceiver
         ? thread.receiver_profile_picture
@@ -128,7 +120,7 @@ const getProfileImage = (thread) => {
 };
 
 const getThreadPartnerName = (thread) => {
-    // Use the receiver's name if the logged-in user is the sender, and vice versa
+    
     const partnerIsReceiver = thread.sender === userStore.id;
     return partnerIsReceiver
         ? thread.receiver_name
@@ -139,7 +131,7 @@ const formatDate = (date) => new Date(date).toLocaleString();
 onMounted(() => {
 
     fetchThreads().then(res =>{
-        //threads.value = userStore.threads
+        
         loading.value=false
     })
 });

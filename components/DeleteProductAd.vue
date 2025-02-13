@@ -65,22 +65,16 @@ const deleteProduct = async () => {
         );
 
         if (response.ok) {
-           
             const modal = bootstrap.Modal.getInstance(
                 document.getElementById(`${modalId}_${productId}`)
             );
-
-            //userStore.deleteProduct(productId)
-            //emit('updateProductsStore')
             modal.hide(); 
 
         } else {
-            console.error(
-                `Failed to delete product: ${response.status} - ${await response.text()}`
-            );
+            
         }
     } catch (error) {
-        console.error('Error while deleting product:', error.message);
+
     }
 };
 </script>

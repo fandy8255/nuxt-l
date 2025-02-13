@@ -130,6 +130,8 @@ const sortField = ref('created_at')
 const sortDirection = ref('desc')
 const loading = ref(false)
 let params = new URLSearchParams()
+const runtimeConfig = useRuntimeConfig();
+const environment = runtimeConfig.public.dev;
 
 const filters = reactive({
     senderLocation: '',
@@ -142,13 +144,11 @@ const filters = reactive({
 })
 
 function test(e) {
-    console.log('test', e.target.value)
     sortField.value = e.target.value
 }
 
 const setSortField = (e) => {
     sortField.value = e.target.value
-    console.log('set sort value to ', sortField.value)
 }
 
 const toggleSortDirection = () => {
@@ -189,12 +189,12 @@ const fetchThreads = async () => {
         })
 
         const parsed = await response.json()
-        console.log('parsed data', parsed.data.results)
-        console.log('query', `https://lingerie.fandy8255.workers.dev/api/ad/threads?${params.toString()}`)
+        if(environment==="development"){
+            console.log('query', `https://lingerie.fandy8255.workers.dev/api/ad/threads?${params.toString()}`)
+        }
         emit("update-threads", parsed.data.results)
         clearAllFilters()
     } catch (error) {
-        console.error("Error:", error)
         emit("update-threads", [])
     } finally {
         loading.value = false
@@ -205,7 +205,6 @@ const closeModal = () => {
     const modal = bootstrap.Modal.getInstance(
         document.getElementById("filtersModal")
     );
-    console.log('filters after closing modal', filters)
     modal.hide()
 }
 
@@ -218,7 +217,6 @@ const applyParams = () => {
     })
     params.append('sortBy', sortField.value)
     params.append('sortDirection', sortDirection.value)
-    console.log('params before fetch', params)
 }
 </script>
 

@@ -4,7 +4,7 @@
         <div class="container">
             <div class="row justify-content-md-center">
                 <div class="col-12 col-md-10 col-lg-8 col-xl-7">
-                    <h3 class="fs-5 mb-2 text-secondary text-center text-uppercase">Nuestras Stats</h3>
+                    <h3 class="fs-5 mb-2 text-secondary text-center text-uppercase">Nuestras Estadísticas</h3>
                     <h2 class="display-5 mb-5 mb-xl-9 text-center">Algunos de nuestros logros</h2>
                 </div>
             </div>

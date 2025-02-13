@@ -59,7 +59,7 @@
 </template>
 
 <script setup>
-//import { NuxtLink } from '#build/components';
+
 import { ref, computed, onMounted } from 'vue';
 
 const navbarStore = useNavbarStore();
@@ -77,8 +77,6 @@ const paginatedThreads = computed(() => {
 });
 
 const totalPages = computed(() => Math.ceil(threads.value.length / threadsPerPage));
-
-// Fetch threads from the API
 
 const fetchThreads = async () => {
     try {
@@ -98,12 +96,9 @@ const fetchThreads = async () => {
             throw new Error('Failed to fetch threads');
         }
         const data = await response.json()
-        console.log('threads from user with id ', userId)
-        console.log('threads from user with id data ', data)
         threads.value = data
 
     } catch (error) {
-        console.error('Error fetching threads:', error);
     }
 };
 
@@ -114,7 +109,7 @@ const changePage = (page) => {
 };
 
 const getProfileImage = (thread) => {
-    // Use the receiver's profile if the logged-in user is the sender, and vice versa
+    
     const partnerIsReceiver = thread.sender === userId;
     return partnerIsReceiver
         ? thread.receiver_profile_picture
@@ -122,7 +117,7 @@ const getProfileImage = (thread) => {
 };
 
 const getThreadPartnerName = (thread) => {
-    // Use the receiver's name if the logged-in user is the sender, and vice versa
+    
     const partnerIsReceiver = thread.sender === userId;
     return partnerIsReceiver
         ? thread.receiver_name
@@ -133,7 +128,6 @@ const formatDate = (date) => new Date(date).toLocaleString();
 onMounted(() => {
 
     fetchThreads().then(res => {
-        //threads.value = userStore.threads
         loading.value = false
     })
 });

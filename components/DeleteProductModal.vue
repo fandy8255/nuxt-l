@@ -74,12 +74,10 @@ const deleteProduct = async () => {
             modal.hide(); 
 
         } else {
-            console.error(
-                `Failed to delete product: ${response.status} - ${await response.text()}`
-            );
+            
         }
     } catch (error) {
-        console.error('Error while deleting product:', error.message);
+        
     }
 };
 </script>

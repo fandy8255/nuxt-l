@@ -54,7 +54,6 @@
 
 <script setup>
 import { ref } from 'vue';
-const runtimeConfig = useRuntimeConfig();
 
 const userStore = useUserStore();
 const username = userStore.username;
@@ -68,7 +67,7 @@ const obj = {
 };
 
 const modalId = 'uploadFileModal';
-const files = ref([]); // Array to hold multiple files
+const files = ref([]); 
 const uploadStatus = ref('');
 const productName = ref('');
 const productPrice = ref('');
@@ -78,9 +77,8 @@ const productCategory = ref('');
 const emit = defineEmits(['updateProductsStore'])
 
 const handleFilesChange = (event) => {
-
-    files.value = Array.from(event.target.files); // Store selected files in an array
-    console.log('changing files', files.value)
+    files.value = Array.from(event.target.files);
+    
 };
 
 
@@ -90,11 +88,9 @@ const uploadFiles = async () => {
         return;
     }
 
-    console.log('final files', files.value)
-
     const formData = new FormData();
     files.value.forEach((file, index) => {
-        formData.append('file', file); // Append each file with a unique key
+        formData.append('file', file); 
     });
     formData.append('product_name', productName.value);
     formData.append('username', username);

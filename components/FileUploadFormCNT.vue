@@ -69,9 +69,8 @@
 <script setup>
 import { ref } from 'vue';
 
-
 const modalId = 'uploadFileModal';
-const files = ref([]); // Array to hold multiple files
+const files = ref([]); 
 const uploadStatus = ref('');
 const productName = ref('');
 const productPrice = ref('');
@@ -81,18 +80,13 @@ const cntUser = ref('');
 const loading=ref(true)
 const users = ref([]);
 const navbarStore = useNavbarStore();
-//const emit = defineEmits(['updateProductsStore'])
 
 
 function test(e){
-    console.log('change', e.target.value)
-    console.log(cntUser.value)
 }
 
 const handleFilesChange = (event) => {
-
-    files.value = Array.from(event.target.files); // Store selected files in an array
-    console.log('changing files', files.value)
+    files.value = Array.from(event.target.files); 
 };
 
 
@@ -102,11 +96,9 @@ const uploadFiles = async () => {
         return;
     }
 
-    console.log('final files', files.value)
-
     const formData = new FormData();
     files.value.forEach((file, index) => {
-        formData.append('file', file); // Append each file with a unique key
+        formData.append('file', file);
     });
     formData.append('product_name', productName.value);
     formData.append('username', username);
@@ -130,27 +122,13 @@ const uploadFiles = async () => {
 
         if (response.ok) {
             uploadStatus.value = 'Files and product uploaded successfully!';
-            const result = await response.json()
-
             document.querySelector('button.btn-close').click();
-            /*
-            emit('success', {
-                success: true,
-                text: 'El producto ha sido subido exitosamente.',
-            });*/
-
 
         } else {
             uploadStatus.value = `Failed: ${response.status} - ${await response.text()}`;
         }
     } catch (error) {
-        console.error('error', error)
-        /*
-        emit('success', {
-            success: false,
-            text: 'El producto no pudo ser subido',
-        });*/
-        uploadStatus.value = `Error: ${error.message}`;
+        uploadStatus.value = `Error`;
     }
 };
 
@@ -172,7 +150,6 @@ const fetchUsers = async () => {
     });
 
     const parsed = await response.json();
-    console.log('cnt users parsed gg', parsed.data.results);
     users.value = parsed.data.results;
 };
 

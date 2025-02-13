@@ -10,26 +10,23 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'; // Update the path if needed
+import { computed } from 'vue';
 
 const props = defineProps({
     viewedUsername: {
         type: String,
-        required: true, // The username of the profile being viewed
+        required: true,
     },
 });
 
 const userStore = useUserStore();
-
-// Compute whether the logged-in user is following the viewed user
 const isFollowing = computed(() =>
     userStore.followed.some(elem => elem.username === props.viewedUsername)
 );
 
-// Handle follow action
 const handleFollow = async () => {
     try {
-        const timestamp = Date.now().toString(); 
+        const timestamp = Date.now().toString();
         const signature = await userStore.generateHMACSignature(timestamp);
 
         const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/follow`, {
@@ -55,14 +52,14 @@ const handleFollow = async () => {
             userStore.followed.push(obj);
         }
     } catch (error) {
-        console.error('Error following user:', error.message);
+
     }
 };
 
-// Handle unfollow action
+
 const handleUnfollow = async () => {
     try {
-        const timestamp = Date.now().toString(); 
+        const timestamp = Date.now().toString();
         const signature = await userStore.generateHMACSignature(timestamp);
 
         const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/unfollow`, {
@@ -83,11 +80,8 @@ const handleUnfollow = async () => {
             if (index > -1) userStore.followed.splice(index, 1);
         }
     } catch (error) {
-        console.error('Error unfollowing user:', error.message);
     }
 };
 </script>
 
-<style scoped>
-/* Add custom styling here */
-</style>
+<style scoped></style>

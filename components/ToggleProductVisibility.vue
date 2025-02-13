@@ -33,14 +33,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-//import { useNavbarStore } from '~/stores/navbar'; // Adjust the import based on your project structure
 
 const modalId = 'hideProductModal';
 const navbarStore = useNavbarStore();
 
 const { productId, isVisible } = defineProps(['productId', 'isVisible']);
-//const emit = defineEmits(['updateProductsStore']);
 
 const toggleProductVisibility = async () => {
     try {
@@ -56,7 +53,7 @@ const toggleProductVisibility = async () => {
                     'Content-Type': 'application/json',
                     'Authorization': `HVAC ${signature}`,
                     'X-Timestamp': timestamp,
-                    'X-User': JSON.stringify(user), // Include admin user data
+                    'X-User': JSON.stringify(user), 
                 },
                 body: JSON.stringify({
                     productId: productId,
@@ -70,12 +67,11 @@ const toggleProductVisibility = async () => {
             );
             modal.hide();
 
-            //emit('updateProductsStore'); // Emit event to update the products list in the parent component
         } else {
-            console.error('Failed to toggle product visibility:', await response.text());
+            
         }
     } catch (error) {
-        console.error('Error while toggling product visibility:', error.message);
+        
     }
 };
 </script>

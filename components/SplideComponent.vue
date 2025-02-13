@@ -6,7 +6,6 @@
                 <Splide id="main-carousel" :options="mainOptions" ref="mainCarousel" aria-label="Main Gallery">
                     <SplideSlide v-for="(image, index) in images" :key="'main-' + index" >
                         <div class="container splide-li-slide d-flex">
-                          <!--  <img :src="image" :alt="'Image ' + index" class="main-gallery-img" />-->
                           <NuxtImg provider="bunny" :src="image.image_url" height="700px" width="auto" :quality="60" placeholder="/assets/images/panty-icon.png" />
                         </div>
                     </SplideSlide>
@@ -18,7 +17,6 @@
                 <Splide id="thumbnail-carousel" :options="thumbnailOptions" ref="thumbnailCarousel"
                     aria-label="Thumbnail Gallery">
                     <SplideSlide v-for="(image, index) in images" :key="'thumb-' + index">
-                       <!--  <img :src="image" :alt="'Thumbnail ' + index" class="thumbnail-img" />-->
                        <NuxtImg provider="bunny" :src="image.image_url" height="auto" width="60px" :quality="50" placeholder="/assets/images/panty-icon.png" />
                     </SplideSlide>
                 </Splide>
@@ -40,11 +38,9 @@ defineProps({
     },
 });
 
-// Refs
 const mainCarousel = ref(null);
 const thumbnailCarousel = ref(null);
 
-// Options
 const mainOptions = {
     type: 'fade',
     rewind: true,
@@ -62,7 +58,6 @@ const thumbnailOptions = {
     isNavigation: true,
 };
 
-// Sync galleries on mount
 onMounted(() => {
     const main = mainCarousel.value?.splide;
     const thumbnails = thumbnailCarousel.value?.splide;
@@ -105,8 +100,8 @@ onMounted(() => {
 /* Center the unordered list of thumbnails */
 #thumbnail-carousel .splide__list {
     display: flex;
-    justify-content: center; /* Center the list horizontally */
-    align-items: center; /* Center items vertically if needed */
+    justify-content: center; 
+    align-items: center; 
 }
 
 /* Optional: Add spacing between thumbnail items */

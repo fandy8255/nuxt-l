@@ -56,14 +56,12 @@ export const useNavbarStore = defineStore('navbar', {
             const result = await response.json();
 
             if (result.data.is_admin) {
-                console.log('hitted navbarstore, user is admin')
+                
                 this.is_admin= true
                 return true
             }
             this.is_admin=false
             return false
-
-            // this.is_admin = result?.data?.is_admin || false;
         },
     }
 });

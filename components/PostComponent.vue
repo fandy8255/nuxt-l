@@ -18,7 +18,6 @@
 </template>
 
 
-
 <script setup>
 import { ref, computed } from 'vue';
 
@@ -70,7 +69,6 @@ const submitPost = async () => {
             alert(data.message || 'Error al enviar la publicación.');
         }
     } catch (error) {
-        console.error('Error al enviar la publicación:', error);
         alert('Hubo un error. Inténtalo nuevamente.');
     } finally {
         isSubmitting.value = false;
@@ -81,15 +79,14 @@ function feedUpdate(){
     emit('updateFeed')
 }
 
-
-const message = ref(null); // State for the modal message
+const message = ref(null); 
 
 const handleSuccess = (data) => {
-    message.value = data; // Set the modal message
+    message.value = data; 
 };
 
 const clearMessage = () => {
-    message.value = null; // Clear the modal message
+    message.value = null; 
 };
 
 </script>
@@ -98,7 +95,6 @@ const clearMessage = () => {
 <style scoped>
 .post-form {
     max-width: 700px;
-    /*width: 100%;*/
     margin: 0 auto;
 }
 </style>

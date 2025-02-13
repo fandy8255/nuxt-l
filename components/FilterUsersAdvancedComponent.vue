@@ -174,13 +174,9 @@
               'X-User': JSON.stringify(user),
             },
           });
-  
           const parsed = await response.json();
-          console.log(`https://lingerie.fandy8255.workers.dev/api/ad/users?${params.toString()}`)
-          console.log('parsed advanced filtered', parsed);
           this.$emit("update-users", parsed.data.results);
         } catch (error) {
-          console.error("Error fetching users:", error.message);
           this.$emit("update-users", []);
         }
       },

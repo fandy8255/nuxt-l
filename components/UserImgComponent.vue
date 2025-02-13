@@ -1,4 +1,4 @@
-<!-- components/UserImgComponent.vue -->
+
 <template>
     <div class="user-img-card d-flex align-items-center gap-2" style="width: fit-content;">
         <NuxtLink :to="'/perfil/' + username">
@@ -23,7 +23,7 @@ defineProps({
 </script>
 
 <style scoped>
-/* Ensure image stays small and rounded */
+
 .rounded-circle {
     object-fit: cover;
 }

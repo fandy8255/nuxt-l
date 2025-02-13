@@ -26,7 +26,6 @@ defineProps({
 </script>
 
 <style scoped>
-/* Ensure image stays small and rounded */
 .rounded-circle {
     object-fit: cover;
 }

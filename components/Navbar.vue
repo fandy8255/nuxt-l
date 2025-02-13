@@ -147,56 +147,18 @@ const userStore = useUserStore();
 const navbarStore = useNavbarStore();
 const router = useRouter();
 const isHydrated = ref(false);
-//const session = useSupabaseSession()
 const { isAd } = defineProps(['isAd'])
 
 
 onMounted(async () => {
     isHydrated.value = true;
-    await navbarStore.isAd()
-    //checkSession();
 });
 
-/*
-async function checkSession() {
-    const currentRoute = router.currentRoute.value; // Get the current route
-    console.log('Current route:', currentRoute.path); // Debug the current route
-
-    if (!session.value) {
-        console.log('No active session, clearing user store and redirecting...');
-
-        // Clear the user store
-        
-        userStore.signOut({
-            username: '',
-            email: '',
-            id: '',
-            age: null,
-            user_type: '',
-            profile_description: '',
-            profile_picture: '',
-            ubicacion: '',
-            logged_in: false,
-            user_tok: '',
-            user_profile: '',
-            products: [],
-            followers: [],
-            followed: [],
-            liked_products: [],
-            feed: [],
-            blocked_users: [],
-            blocked_by: [],
-            message_count: 0
-        });
-
-        //router.push('/')
-    }
-}
-*/
 
 async function signOut() {
     const { error } = await useSupabaseClient().auth.signOut();
-    if (error) console.error('Sign-out error:', error);
+    if (error){
+    } 
     userStore.signOut({
         username: '',
         email: '',
@@ -231,16 +193,10 @@ async function signOut() {
 <style scoped>
 a:hover,
 button:hover {
-    /*color: white !important;*/
     color: rgb(13, 0, 255)
 }
 
-.router-link-active {
-    /*color: rgb(13, 0, 255)*/
-}
-
 .nav-link {
-    /*font-family: "Fira Sans", sans-serif;*/
     font-weight: 600;
     font-style: normal;
     color: white !important;

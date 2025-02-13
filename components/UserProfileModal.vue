@@ -49,12 +49,10 @@
 <script setup>
 import { ref, watch } from "vue";
 
-// Props
 defineProps({
     user: Object,
 });
 
-// Reactive form data
 const form = ref({
     description: "",
     ubicacion: "",
@@ -62,14 +60,12 @@ const form = ref({
 });
 
 
-// File upload handler
 const handleFileUpload = (event) => {
     form.value.profilePicture = event.target.files[0];
 };
 
 const userStore = useUserStore();
 
-// Update profile method
 const updateProfile = async () => {
     try {
         const timestamp = Date.now().toString(); 
@@ -86,7 +82,7 @@ const updateProfile = async () => {
             body: JSON.stringify({
                 description: form.value.description,
                 ubicacion: form.value.ubicacion,
-                profilePicture: "profile_pic_url", // Actualizar lógica según backend
+                profilePicture: "profile_pic_url", 
             }),
         });
 
@@ -94,10 +90,9 @@ const updateProfile = async () => {
             alert("Perfil actualizado con éxito");
         } else {
             const errorData = await response.json();
-            alert(errorData.error || "Error al actualizar el perfil");
+            alert("Error al actualizar el perfil");
         }
     } catch (error) {
-        console.error("Error al actualizar el perfil:", error);
     }
 };
 </script>

@@ -28,7 +28,6 @@
 import { Splide, SplideSlide, SplideTrack, Options } from '@splidejs/vue-splide';
 import '@splidejs/vue-splide/css';
 import { defineComponent } from 'vue';
-//import { generateSlides } from '../utils';
 
 export default defineComponent({
     name: 'FeaturedItems',

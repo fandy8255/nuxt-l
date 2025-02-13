@@ -67,26 +67,20 @@
 
 <script setup>
 
-import { hydrate, ref } from 'vue';
+import { ref } from 'vue';
 const email = ref('');
 const subscriptionSuccess = ref(false);
 const userStore = useUserStore();
 const isHydrated = ref(false);
 
-// Links para las secciones de categorías y modelos
 const categories = ['Hombres', 'Mujeres', 'Niños', 'Accesorios'];
 const models = ['Vintage', 'Casual', 'Formal', 'Deportiva'];
 
-
 onMounted(() => {
     isHydrated.value = true;
-    console.log('logged in?', userStore.logged_in)
 });
 
-
-// Función para manejar la suscripción
 const subscribe = () => {
-    // Aquí puedes agregar lógica para enviar el correo a tu backend
     subscriptionSuccess.value = true;
     setTimeout(() => (subscriptionSuccess.value = false), 3000);
 };
@@ -96,8 +90,6 @@ const subscribe = () => {
 
 h5{
     text-align: center !important;
-    /*align-content: center !important;
-    justify-content: center !important;*/
 }
 
 footer{

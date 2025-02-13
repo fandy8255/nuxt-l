@@ -73,15 +73,19 @@ const banUser = async () => {
             const modal = bootstrap.Modal.getInstance(
                 document.getElementById(`${modalId}_${userId}`)
             );
-            console.log('modal', modal)
+
             modal.hide();
 
         } else {
-            console.error('failed to ban')
+            if(environment==="development"){
+                console.error('failed to ban')
+            } 
             
         }
     } catch (error) {
-        console.error('Error while banning user:', error.message);
+        if(environment==="development"){
+            console.error('Error while banning user:', error.message);
+        }
     }
 };
 </script>

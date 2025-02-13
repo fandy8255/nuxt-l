@@ -1,9 +1,7 @@
 <template>
   <div class="card border-1 my-2 shadow-sm">
-
     <div class="card-img-top m-0 overflow-hidden bsb-overlay-hover text-center" style="max-height: 40vh !important">
       <NuxtLink :to="'/perfil/' + username">
-        <!--<img class="img-fluid bsb-scale bsb-hover-scale-up" loading="lazy" :src="imgSrc" alt="Business">-->
         <NuxtImg provider="bunny" :src="profilePicture" width="300px" :quality="50"
           placeholder="/assets/images/panty-icon.jpg" />
       </NuxtLink>
@@ -16,14 +14,12 @@
 
       <div class="p-xl-1 p-sm-1">
         <h5>{{ username }}</h5>
-        <p>{{parseDescription(profileDescription) }}</p>
-            <!--<p style="width: fit-content;" class="fs-bolder bg-light px-3 py-1 rounded">{{ productCategory }}</p>-->
-            <div class="d-flex justify-content-between flex-lg-wrap">
+        <p>{{ parseDescription(profileDescription) }}</p>
 
-              <!-- <DeleteProductModal v-if="userStore.username===username" />-->
-              <span v-if="verified" class="badge bg-success">Verificado</span>
-              <span v-else class="badge bg-danger">No Verificado</span>
-            </div>
+        <div class="d-flex justify-content-between flex-lg-wrap">
+          <span v-if="verified" class="badge bg-success">Verificado</span>
+          <span v-else class="badge bg-danger">No Verificado</span>
+        </div>
 
       </div>
     </div>
@@ -33,8 +29,6 @@
 
 <script setup>
 
-
-
 const { username, profilePicture, profileDescription, age, verified, ubicacion } = defineProps([
   "username",
   "profilePicture",
@@ -43,16 +37,16 @@ const { username, profilePicture, profileDescription, age, verified, ubicacion }
   "ubicacion"
 ]);
 
-function parseDescription(profileDescription){
-  if (profileDescription){
-    if(profileDescription.length >150){
+function parseDescription(profileDescription) {
+  if (profileDescription) {
+    if (profileDescription.length > 150) {
       return profileDescription.slice(0, 150) + '...'
     }
-    else{
+    else {
       return profileDescription
     }
   }
-  return 
+  return
 }
 
 </script>
@@ -63,9 +57,9 @@ function parseDescription(profileDescription){
   background: #f8f9fa;
 }
 
-.category{
-    background: #ff2fe7b0 !important;
-    color: white !important;
-    z-index: 100 !important;
+.category {
+  background: #ff2fe7b0 !important;
+  color: white !important;
+  z-index: 100 !important;
 }
 </style>

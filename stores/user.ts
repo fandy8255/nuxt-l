@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import { useSupabaseClient } from '#imports';
-//import crypto from 'crypto'
 
 export const useUserStore = defineStore('user', {
     state: () => ({
@@ -33,13 +32,13 @@ export const useUserStore = defineStore('user', {
             this.followed = followed;
         },
         signOut(userData) {
-            Object.assign(this, userData, { logged_in: false, products: [] }); // Reset products on sign-out
+            Object.assign(this, userData, { logged_in: false, products: [] });
         },
         updateUserProfile(updatedData) {
             Object.assign(this, updatedData);
         },
 
-        async getUser(){
+        async getUser() {
             const supabase = useSupabaseClient();
             const { data: { user } } = await supabase.auth.getUser();
             return user
@@ -50,34 +49,29 @@ export const useUserStore = defineStore('user', {
             const runtimeConfig = useRuntimeConfig();
             const secretKey = runtimeConfig.public.secretApiKey;
 
-            // Convert the secret key and timestamp to Uint8Array
             const encoder = new TextEncoder();
             const keyData = encoder.encode(secretKey);
             const timestampData = encoder.encode(timestamp);
 
-            // Import the key for HMAC-SHA256
             const key = await crypto.subtle.importKey(
                 'raw', keyData, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
             );
 
-            // Generate the HMAC signature
             const signatureBuffer = await crypto.subtle.sign('HMAC', key, timestampData);
 
-            // Convert the signature to a hexadecimal string
             const signatureArray = Array.from(new Uint8Array(signatureBuffer));
             const signatureHex = signatureArray.map(b => b.toString(16).padStart(2, '0')).join('');
 
-            //console.log('Generated Signature (Hex):', signatureHex);
             return signatureHex;
         },
 
         async isAd() {
 
-            const user=await this.getUser()
-            
+            const user = await this.getUser()
+
             if (!user) return;
 
-            const timestamp = Date.now().toString(); // Prevent replay attacks
+            const timestamp = Date.now().toString(); 
             const signature = await this.generateHMACSignature(timestamp);
 
             try {
@@ -102,17 +96,18 @@ export const useUserStore = defineStore('user', {
         },
 
         async fetchFollowedData() {
+            const runtimeConfig = useRuntimeConfig();
+            const environment = runtimeConfig.public.dev;
             try {
+
                 if (!this.followed || this.followed.length === 0) {
-                    console.log('No followed users found.');
                     return;
                 }
-               
+
                 const userId = this.id;
 
-                const timestamp = Date.now().toString(); // Prevent replay attacks
+                const timestamp = Date.now().toString(); 
                 const signature = await this.generateHMACSignature(timestamp);
-                console.log('this is the signature', signature)
 
                 const response = await fetch(
                     'https://lingerie.fandy8255.workers.dev/api/fetch-followed-data',
@@ -133,33 +128,41 @@ export const useUserStore = defineStore('user', {
 
                 const data = await response.json();
                 if (data.success) {
-                    console.log('fetched feed from store yah')
 
                     const sortedFeed = data.data.sort((a, b) => {
                         return new Date(b.created_at) - new Date(a.created_at);
                     });
-                    //sort the feed before assigning it to the feed array
+
                     this.feed = sortedFeed;
                     return data.data
 
                 } else {
-                    console.error('Error fetching data:', data.error);
+                    if (environment === "development") {
+                        console.error('Error fetching data:', data.error);
+                    }
                 }
             } catch (error) {
-                console.error('Error:', error.message);
+                if (environment === "development") {
+                    console.error('Error:', error.message);
+                }
+
             }
         },
 
         async fetchLikedProducts() {
+
+            const runtimeConfig = useRuntimeConfig();
+            const environment = runtimeConfig.public.dev;
+
             try {
 
-                if (!this.logged_in) return; // Ensure the user is logged in
+                if (!this.logged_in) return; 
 
                 const supabase = useSupabaseClient();
                 const { data: { user } } = await supabase.auth.getUser();
                 if (!user) return;
 
-                const timestamp = Date.now().toString(); // Prevent replay attacks
+                const timestamp = Date.now().toString(); 
                 const signature = await this.generateHMACSignature(timestamp);
 
 
@@ -175,64 +178,78 @@ export const useUserStore = defineStore('user', {
 
                 const result = await response.json();
                 if (result?.likedProducts) {
-                    this.liked_products = result.likedProducts; // Update the liked_products state
+                    this.liked_products = result.likedProducts; 
                 }
             } catch (error) {
-                console.error('Error fetching liked products:', error.message);
+                if (environment === "development") {
+                    console.error('Error fetching liked products:', error.message);
+                }
+                
             }
         },
 
         async fetchBlockedUsers() {
+            const runtimeConfig = useRuntimeConfig();
+            const environment = runtimeConfig.public.dev;
             try {
-                const timestamp = Date.now().toString(); // Prevent replay attacks
+                const timestamp = Date.now().toString(); 
                 const signature = await this.generateHMACSignature(timestamp);
-                // Fetch blocked users from the API
+                
                 const response = await fetch('https://lingerie.fandy8255.workers.dev/api/blocked-users', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `HVAC ${signature}`,
                         'X-Timestamp': timestamp,
-                        'X-User': JSON.stringify({ id: this.id, username: this.username }), // Send current user info
+                        'X-User': JSON.stringify({ id: this.id, username: this.username }), 
                     },
                 });
 
                 const result = await response.json();
 
                 if (result?.blocked_users) {
-                    this.blocked_users = result.blocked_users; // Update the blockedUsers state
+                    this.blocked_users = result.blocked_users; 
                 }
             } catch (error) {
-                console.error('Error fetching blocked users:', error.message);
+                if (environment === "development") {
+                    console.error('Error fetching blocked users:', error.message);
+                }
+                
             }
         },
 
         async fetchBlockedBy() {
+            const runtimeConfig = useRuntimeConfig();
+            const environment = runtimeConfig.public.dev;
             try {
-                const timestamp = Date.now().toString(); // Prevent replay attacks
+                const timestamp = Date.now().toString(); 
                 const signature = await this.generateHMACSignature(timestamp);
-                // Fetch blocked users from the API
+                
                 const response = await fetch('https://lingerie.fandy8255.workers.dev/api/blocked-by-users', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `HVAC ${signature}`,
                         'X-Timestamp': timestamp,
-                        'X-User': JSON.stringify({ id: this.id, username: this.username }), // Send current user info
+                        'X-User': JSON.stringify({ id: this.id, username: this.username }), 
                     },
                 });
 
                 const result = await response.json();
 
                 if (result?.blocked_by) {
-                    this.blocked_by = result.blocked_by; // Update the blockedUsers state
+                    this.blocked_by = result.blocked_by; 
                 }
             } catch (error) {
-                console.error('Error fetching blocked users:', error.message);
+                if (environment === "development") {
+                    console.error('Error fetching blocked users:', error.message);
+                }
+                
             }
         }, async fetchThreads() {
+            const runtimeConfig = useRuntimeConfig();
+            const environment = runtimeConfig.public.dev;
             try {
-
                 const supabase = useSupabaseClient();
                 const { data: { user } } = await supabase.auth.getUser();
 
@@ -264,18 +281,22 @@ export const useUserStore = defineStore('user', {
                 });
 
                 const messageCount = filteredThreads.filter(elem => elem.last_message_owner !== this.username)
-                this.message_count = messageCount.length
-
+                this.message_count = messageCount.lengt
                 this.threads = filteredThreads;
 
-                // console.log('response', await response.json())
             } catch (error) {
-                console.error('Error fetching threads:', error);
+                if (environment === "development") {
+                    console.error('Error fetching threads:', error);
+                }
+                
             }
         },
 
         async fetchUserData() {
-            console.log('fetched oncey ')
+
+            const runtimeConfig = useRuntimeConfig();
+            const environment = runtimeConfig.public.dev;
+            
             if (this.logged_in) return; // Prevent duplicate fetches if data is already set
 
             const supabase = useSupabaseClient();
@@ -347,13 +368,10 @@ export const useUserStore = defineStore('user', {
                     this.followers = followersResult.followers || [];
                     this.followed = followedResult.followed || [];
 
-
-                    // Fetch seller products if user is a seller
                     if (result.data.user_type === 'seller') {
                         this.fetchSellerProducts();
 
                     }
-
 
                     await this.fetchLikedProducts();
                     await this.fetchFollowedData();
@@ -362,13 +380,19 @@ export const useUserStore = defineStore('user', {
                     await this.fetchThreads()
                 }
             } catch (error) {
-                console.error('Error fetching user data:', error.message);
+                if (environment === "development") {
+                    console.error('Error fetching user data:', error);
+                }
             }
         },
         async fetchSellerProducts() {
-            if (this.user_type !== 'seller') return; // Only fetch products for sellers
 
-            const timestamp = Date.now().toString(); // Prevent replay attacks
+            const runtimeConfig = useRuntimeConfig();
+            const environment = runtimeConfig.public.dev;
+
+            if (this.user_type !== 'seller') return; 
+
+            const timestamp = Date.now().toString(); 
             const signature = await this.generateHMACSignature(timestamp);
 
             try {
@@ -383,55 +407,45 @@ export const useUserStore = defineStore('user', {
 
                 const result = await response.json();
 
-                console.log('resulted', result.data.results)
                 if (result?.data) {
                     let arr = []
                     this.products = result.data.results;
                 }
 
             } catch (error) {
-                console.error('Error fetching seller products:', error.message);
+                if (environment === "development") {
+                    console.error('Error fetching seller products:', error);
+                }
             }
         },
         addToFeed(item) {
-            console.log('addedd product to feed', item)
+            
             if (this.user_type !== 'seller' && item.type === 'product') {
-                console.error('Only sellers can add products.');
                 return;
             }
-
-            // Validate the product object
             if (!item || !item.id) {
                 console.error('Invalid item object');
                 return;
             }
 
-            // Add the product to the products array
             this.feed.unshift(item);
         },
         addProduct(product) {
             if (this.user_type !== 'seller') {
-                console.error('Only sellers can add products.');
                 return;
             }
 
-            // Validate the product object
             if (!product || !product.id || !product.product_name || !product.product_price || !product.product_category) {
-                console.error('Invalid product object. A product must have an id, name, and price.');
                 return;
             }
 
-            // Add the product to the products array
             this.products.unshift(product);
         },
 
         deleteProduct(productId) {
             if (this.user_type !== 'seller') {
-                console.error('Only sellers can delete products.');
                 return;
             }
-
-
             const productIndex = this.products.findIndex(product => product.id === productId);
             if (productIndex === -1) {
                 console.error('Product not found.');
