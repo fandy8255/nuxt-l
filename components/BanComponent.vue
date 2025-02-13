@@ -82,7 +82,8 @@ const banUser = async () => {
             console.error(
                 `Failed to ban user: ${response.status} - ${await response.text()}`
             );*/
-            console.error('failed to ban user', await response.message)
+            console.error('failed to ban')
+            
         }
     } catch (error) {
         console.error('Error while banning user:', error.message);
