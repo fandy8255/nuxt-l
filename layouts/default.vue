@@ -16,10 +16,11 @@ const is_admin = ref(false);
 const loading = ref(true);
 const navbarStore = useNavbarStore();
 
-// On component mount
 onMounted(async () => {
-    console.log('Layout mounted');
-    await navbarStore.isAd().then(res=>console.log('user is an admin? ', res))
+    
+    await navbarStore.isAd(res=>{
+        loading.value=false
+    })
     loading.value = false;
 
 });
