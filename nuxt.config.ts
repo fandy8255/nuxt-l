@@ -7,7 +7,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       baseUrl: process.env.SUPABASE_URL || 'http://localhost:3000',
-      secretApiKey:process.env.SECRET_API_KEY
+      secretApiKey:process.env.SECRET_API_KEY,
+      dev:process.env.ENVIRONMENT
     },
   },
 
@@ -63,11 +64,6 @@ export default defineNuxtConfig({
           src: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js',
           tagPosition: 'bodyClose'
         },
-        /*
-        {
-          src: 'splide.min.js',
-          tagPosition: 'bodyClose'
-        }*/
       ]
     }
   },

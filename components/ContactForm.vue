@@ -28,7 +28,6 @@ const submitContactForm = async () => {
         const timestamp = Date.now().toString(); 
         const signature = await userStore.generateHMACSignature(timestamp);
         const user = await userStore.getUser()
-        console.log('user is ', user)
 
         const formData = {
             title: contactForm.value.title,
@@ -55,8 +54,7 @@ const submitContactForm = async () => {
         contactForm.value.name = "";
         contactForm.value.message = "";
     } catch (error) {
-        //console.error("Error sending message:", error.message);
-        console.error("Error sending message:", error)
+        console.error("Error sending message:")
     }
 };
 </script>

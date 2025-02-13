@@ -1,28 +1,28 @@
 <template>
     <div>
         <button v-if="isBlocked" @click="handleUnblock" class="btn btn-danger">
-            Unblock
+            Desbloquear
         </button>
         <button v-else @click="handleBlock" class="btn btn-warning">
-            Block
+            Bloquear
         </button>
     </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'; // Update the path if needed
+import { computed } from 'vue'; 
 
 const props = defineProps({
     viewedUsername: {
         type: String,
-        required: true, // The username of the profile being viewed
+        required: true, 
     },
 });
 
 const runtimeConfig = useRuntimeConfig();
 const userStore = useUserStore();
 
-// Compute whether the logged-in user has blocked the viewed user
+
 const isBlocked = computed(() =>
     userStore.blocked_users.some(elem => elem.username === props.viewedUsername)
 );
@@ -65,7 +65,7 @@ const handleBlock = async () => {
             userStore.feed=filtered
         }
     } catch (error) {
-        console.error('Error blocking user:', error.message);
+        console.error('Error blocking user:');
     }
 };
 
@@ -92,7 +92,7 @@ const handleUnblock = async () => {
             if (index > -1) userStore.blocked_users.splice(index, 1); 
         }
     } catch (error) {
-        console.error('Error unblocking user:', error.message);
+        console.error('Error unblocking user:');
     }
 };
 
@@ -119,7 +119,7 @@ const handleUnfollow = async () => {
             if (index > -1) userStore.followed.splice(index, 1);
         }
     } catch (error) {
-        console.error('Error unfollowing user:', error.message);
+        console.error('Error unfollowing user:');
     }
 };
 </script>

@@ -40,9 +40,8 @@ import { ref } from 'vue';
 
 const modalId = 'banUserModal';
 const navbarStore = useNavbarStore();
-
 const { userId } = defineProps(['userId']);
-//const emit = defineEmits(['updateUsersStore']);
+
 
 const bannedUntil = ref('');
 
@@ -60,7 +59,7 @@ const banUser = async () => {
                     'Content-Type': 'application/json',
                     'Authorization': `HVAC ${signature}`,
                     'X-Timestamp': timestamp,
-                    'X-User': JSON.stringify(user), // Include admin user data
+                    'X-User': JSON.stringify(user), 
                 },
                 body: JSON.stringify({
                     userId: userId,
@@ -76,12 +75,7 @@ const banUser = async () => {
             console.log('modal', modal)
             modal.hide();
 
-            //emit('updateUsersStore');
         } else {
-            /*
-            console.error(
-                `Failed to ban user: ${response.status} - ${await response.text()}`
-            );*/
             console.error('failed to ban')
             
         }
