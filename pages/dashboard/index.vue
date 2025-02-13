@@ -7,7 +7,8 @@
         </div>
         <div v-else>
             <h1 class="text-center mb-4">User Dashboard</h1>
-            <h1>Welcome, {{ userStore.username }}!</h1>
+            <h1>Bienvenido {{ userStore.username }}!</h1>
+            <!--
             <p>id: {{ userStore.id }}</p>
             <p>Age: {{ userStore.age }}</p>
             <p>User Type {{ userStore.user_type }}</p>
@@ -22,14 +23,13 @@
             <p>feed {{ userStore.feed }}</p>
             <p>blocked users {{ userStore.blocked_users }}</p>
             <p>blocked by {{ userStore.blocked_by }}</p>
-            <p>message count {{ userStore.message_count }}</p>
+            <p>message count {{ userStore.message_count }}</p>-->
         </div>
     </div>
 </template>
 
 <script setup>
 import { onMounted } from 'vue';
-import { useUserStore } from '~/stores/user';
 
 const userStore = useUserStore();
 
@@ -40,7 +40,6 @@ onMounted(() => {
 
 
 <style scoped>
-/* Add optional custom styles for the dashboard */
 .card {
     border-radius: 12px;
 }

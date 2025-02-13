@@ -81,9 +81,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-//import { useUserStore } from '~/stores/user';
-//import MessageModal from '~/components/MessageModal.vue';
-
 const userStore = useUserStore();
 const file = ref(null);
 const message = ref('');
@@ -120,19 +117,9 @@ const updateProfile = async () => {
         });
 
         if (response.ok) {
-            /*
-            const result = await response.json();
-            console.log('result', result)*/
             
             const result = await response.json();
             const updatedData = result.data
-            console.log('updated data', updatedData)
-
-            /*
-            if (updatedData.profile_picture){
-                userStore.profile_picture=updatedData.profile_picture
-            }*/
-            
 
             userStore.updateUserProfile({
                 profile_picture: updatedData.profile_picture ? updatedData.profile_picture : userStore.profile_picture ,
@@ -143,13 +130,10 @@ const updateProfile = async () => {
             message.value = { success: 'Actualizado con éxito.' };
             
         } else {
-            console.log(await response.json())
             message.value = { failure: 'Error al actualizar el perfil.' };
         }
     } catch (error) {
         const result = await response.json();
-        console.log('result', result)
-        console.log('error', error)
         message.value = { failure: `Error al actualizar el perfil: ${error}` };
     }
 };
@@ -158,7 +142,6 @@ onMounted(() => {
     if (userStore.logged_in) {
         loading.value = false;
     } else {
-        // Optionally fetch user data here if the store is empty
         loading.value = false;
     }
 });

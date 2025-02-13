@@ -59,16 +59,13 @@ const message = ref('');
 const clearMessage = () => {
     message.value = '';
 };
-//const emit = defineEmits(['updateNavbar']);
 const navbarStore = useNavbarStore();
 
-// Supabase and Router
 const supabase = useSupabaseClient()
 const router = useRouter()
 
 const loginUser = async () => {
     try {
-        // Step 1: Attempt Supabase login
         const { data, error } = await supabase.auth.signInWithPassword({
             email: email.value,
             password: password.value
@@ -84,7 +81,6 @@ const loginUser = async () => {
                     message.value = { success: 'Incorrect Credentials' };
                 }
             })
-            // Redirect admin to admin page
         }, 3000);
 
     } catch (error) {

@@ -45,8 +45,7 @@
                 </form>
             </div>
         </div>
-
-        <!-- Resend Confirmation Modal -->
+        
         <div v-if="showResendModal" class="modal d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -64,7 +63,6 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <!--<button type="button" class="btn btn-secondary" @click="closeResendModal">Close</button>-->
                         <button type="button" class="btn btn-primary" @click="resendConfirmationEmail">Enviar</button>
                     </div>
                 </div>
@@ -79,16 +77,15 @@ import { useSupabaseClient } from '#imports'
 import { useRouter } from 'vue-router'
 
 useSeoMeta({
-    title: 'Colombia Panty | Login',
-    ogTitle: 'Colombia Panty | Login',
-    description: 'Ingresa y compra panties usados de Colombianas',
-    ogDescription: 'Compra panties usados de Colombianas',
+    title: 'Latin Panty | Login',
+    ogTitle: 'Latin Panty | Login',
+    description: 'Ingresa y compra panties usados de Latinas',
+    ogDescription: 'Compra panties usados de Latinas',
     ogImage: '',
     twitterCard: '',
 })
 
 
-// State variables
 const email = ref('')
 const password = ref('')
 const resendEmail = ref('')
@@ -98,8 +95,6 @@ const clearMessage = () => {
     message.value = '';
 };
 
-
-// Supabase and Router
 const supabase = useSupabaseClient()
 const router = useRouter()
 const user = await supabase.auth.getUser()
@@ -107,11 +102,8 @@ const user = await supabase.auth.getUser()
 
 onMounted(async () => {
     if (user.data.user) {
-        console.log('active user')
-        console.log('user', user.data.user)
         router.push('/dashboard')
     }else{
-        console.log('no active user')
         const userStore = useUserStore();
         userStore.signOut({
             username: '',
@@ -138,15 +130,12 @@ onMounted(async () => {
     }
 })
 
-
 const openResendModal = () => {
     showResendModal.value = true
 }
 const closeResendModal = () => {
     showResendModal.value = false
 }
-
-
 
 const loginUser = async () => {
     try {
@@ -168,23 +157,16 @@ const loginUser = async () => {
     }
 }
 
-// Forgot password method
 const forgotPassword = async () => {
     try {
         const { data, error } = await supabase.auth.resetPasswordForEmail(email.value)
-
         if (error) throw error
-
-        //alert('Password reset email sent. Check your inbox.')
         message.value = { success: 'Te hemos enviado un email de confirmación, porfavor revisa tu correo' };
     } catch (error) {
         message.value = { failure: 'Hubo un problema reenviando el correo de confirmación' };
-        //console.error('Password reset error:', error.message)
-        // alert(error.message)
     }
 }
 
-// Resend confirmation email method
 const resendConfirmationEmail = async () => {
     try {
         const { error } = await supabase.auth.resend({
@@ -200,8 +182,6 @@ const resendConfirmationEmail = async () => {
         message.value = { success: 'Te hemos enviado un email de confirmación, porfavor revisa tu correo' };
         closeResendModal()
     } catch (error) {
-        //console.error('Resend error:', error.message)
-        //alert(error.message)
         message.value = { failure: 'Hubo un problema reenviando el correo de confirmación' };
     }
 }

@@ -15,10 +15,7 @@
                                 </div>
                                 <div class="col-6 text-end">
                                     <div class="lk d-flex justify-content-end align-items-end">
-                                        <!-- {{ product && product.owner ? product.owner.id : 'loading' }} 
-                                          {{ product }}
-                                        {{ product.like_count }}-->
-
+                                      
                                         <LikeButton v-if="loaded && product.user_id !== userStore.id"
                                             @click="handleClick" :likedProductId="product.id"
                                             :productOwnerId="product.user_id"
@@ -32,7 +29,6 @@
                             </div>
                         </div>
 
-                        <!-- {{ product && product.owner ? product.owner.profile_picture : 'none' }}-->
                         <h2 class="mt-4">{{ product.product_name }}</h2>
                         <p>{{ product.product_description }}</p>
                         <p>{{ product.product_category }}</p>
@@ -70,12 +66,10 @@
 </template>
 
 <script setup>
-import { onBeforeMount, ref, computed } from 'vue';
+import {ref} from 'vue';
 
-const router = useRouter()
 const prodId = useRoute().params.product_id[0];
 const product = ref({})
-//const computedLikes=computed(()=>likes.value + 10)
 const likes = ref()
 const loaded = ref(false)
 const userStore = useUserStore();
@@ -102,27 +96,17 @@ const fetchInfo = async (prodId) => {
         );
         if (!response.ok) throw new Error('Failed to fetch info data');
         const result = await response.json();
-        console.log('info', result)
         product.value = result.data;
         likes.value = result.data.like_count
     } catch (error) {
-        console.error(error);
         product.value = {}
     }
 };
 
 onMounted(() => {
-
     fetchInfo(prodId).then(res => loaded.value = true)
-    console.log('producft', product)
 })
 
-/*
-
-onBeforeMount(() => {
-   
-
-})*/
 
 </script>
 

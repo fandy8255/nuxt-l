@@ -91,7 +91,6 @@ const isAgeValid = ref(false);
 const userAge = ref(18);
 const message = ref('');
 
-const runtimeConfig = useRuntimeConfig();
 const supabase = useSupabaseClient();
 const router = useRouter();
 
@@ -105,17 +104,14 @@ useSeoMeta({
 })
 
 onMounted(async () => {
-
     const { data: sessionData } = await supabase.auth.getSession();
     const user = sessionData?.session?.user;
-
     if (user) {
         router.push('/dashboard')
     }
-
 })
 
-// Age validation
+
 const validateAge = () => {
     const birthDate = new Date(dateOfBirth.value)
     const today = new Date()
@@ -130,17 +126,14 @@ const validateAge = () => {
     userAge.value = age
 }
 
-// Form validation
+
 const isFormValid = computed(() => {
     return email.value.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/) &&
         password.value.length >= 8 &&
         password.value === confirmPassword.value &&
         isAgeValid.value
-
-    /*username.value.length >= 3 &&*/
 })
 
-// Clear message modal
 const clearMessage = () => {
     message.value = '';
 };
@@ -149,31 +142,26 @@ async function generateHMACSignature(timestamp) {
     const runtimeConfig = useRuntimeConfig();
     const secretKey = runtimeConfig.public.secretApiKey;
 
-    // Convert the secret key and timestamp to Uint8Array
     const encoder = new TextEncoder();
     const keyData = encoder.encode(secretKey);
     const timestampData = encoder.encode(timestamp);
 
-    // Import the key for HMAC-SHA256
     const key = await crypto.subtle.importKey(
         'raw', keyData, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
     );
 
-    // Generate the HMAC signature
     const signatureBuffer = await crypto.subtle.sign('HMAC', key, timestampData);
 
-    // Convert the signature to a hexadecimal string
     const signatureArray = Array.from(new Uint8Array(signatureBuffer));
     const signatureHex = signatureArray.map(b => b.toString(16).padStart(2, '0')).join('');
 
-    //console.log('Generated Signature (Hex):', signatureHex);
     return signatureHex;
 }
 
-// Register user
+
 const registerUser = async () => {
     try {
-        const timestamp = Date.now().toString(); // Prevent replay attacks
+        const timestamp = Date.now().toString(); 
         const signature = await generateHMACSignature(timestamp);
         const userChecked = await fetch('https://lingerie.fandy8255.workers.dev/api/user/check', {
             method: 'POST',

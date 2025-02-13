@@ -137,9 +137,7 @@ export const useUserStore = defineStore('user', {
                     return data.data
 
                 } else {
-                    if (environment === "development") {
-                        console.error('Error fetching data:', data.error);
-                    }
+                    
                 }
             } catch (error) {
                 if (environment === "development") {

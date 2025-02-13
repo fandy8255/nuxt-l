@@ -10,7 +10,6 @@
         <!-- User Table -->
         <div class="container-fluid" v-else>
             <div class="container">
-                <!-- Filter Component -->
                 <FilterSortSearchUsers @update-users="updateUsers" />
                
             </div>
@@ -95,7 +94,6 @@
                             <td>{{ user.thread_count }}</td>
                             <td> 
                                <EditUser :user="user" />
-                                <!--{{ user }}-->
 
                             </td>
                         </tr>
@@ -133,19 +131,15 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 
-//const userStore = useUserStore();
-
 const users = ref([]);
 const currentPage = ref(1);
-const itemsPerPage = 10; // Increase items per page for better table display
+const itemsPerPage = 10;
 const visibleButtons = 5;
 const loading = ref(true);
 
-// Sorting state
-const sortBy = ref(''); // Current column to sort by
-const sortDirection = ref('asc'); // Current sorting direction
+const sortBy = ref(''); 
+const sortDirection = ref('asc');
 
-// Fetch users from the Cloudflare Worker
 const fetchUsers = async () => {
     const supabase = useSupabaseClient();
     const { data: { user } } = await supabase.auth.getUser();
@@ -164,7 +158,6 @@ const fetchUsers = async () => {
     });
 
     const parsed = await response.json();
-    console.log('admin user parsed gg', parsed);
     users.value = parsed.data.results;
 };
 
@@ -179,24 +172,19 @@ const updateUsers = (fetchedUsers) => {
 
 const sortByColumn = (column) => {
     if (sortBy.value === column) {
-        // Toggle sorting direction if the same column is clicked again
         sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc';
     } else {
-        // Sort by the new column in ascending order by default
         sortBy.value = column;
         sortDirection.value = 'asc';
     }
 
-    // Perform sorting on the users array
     users.value.sort((a, b) => {
         let valA = a[column];
         let valB = b[column];
 
-        // Handle null or undefined values
         if (valA == null) valA = "";
         if (valB == null) valB = "";
 
-        // Ensure proper comparison for strings and numbers
         if (typeof valA === "string") valA = valA.toLowerCase();
         if (typeof valB === "string") valB = valB.toLowerCase();
 

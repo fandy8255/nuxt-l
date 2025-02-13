@@ -10,9 +10,6 @@
         <!-- Products Table -->
         <div class="container-fluid" v-else>
             <div class="container">
-                <!-- Filter Component (if applicable) -->
-                <!-- <FilterProductsAdvancedComponent @update-products="updateProducts" /> -->
-                <!-- <FilterSortSearch @update-products="updateProducts"/> -->
                 <FilterSortSearchProducts @update-products="updateProducts" :isCNT="false" />
             </div>
 
@@ -155,19 +152,14 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 
-//const userStore = useUserStore();
-
 const products = ref([]);
 const currentPage = ref(1);
-const itemsPerPage = 10; // Increase items per page for better table display
+const itemsPerPage = 10; 
 const visibleButtons = 5;
 const loading = ref(true);
+const sortBy = ref(''); 
+const sortDirection = ref('asc'); 
 
-// Sorting state
-const sortBy = ref(''); // Current column to sort by
-const sortDirection = ref('asc'); // Current sorting direction
-
-// Fetch users from the Cloudflare Worker
 const fetchProducts = async () => {
     const supabase = useSupabaseClient();
     const { data: { user } } = await supabase.auth.getUser();
@@ -186,7 +178,6 @@ const fetchProducts = async () => {
     });
 
     const parsed = await response.json();
-    console.log('fetched products', parsed.data.results);
     products.value = parsed.data.results;
 };
 
@@ -195,30 +186,24 @@ onMounted(async () => {
 });
 
 const updateProducts = (fetchedProducts) => {
-    console.log('got the products emit');
     products.value = fetchedProducts;
 };
 
 const sortByColumn = (column) => {
     if (sortBy.value === column) {
-        // Toggle sorting direction if the same column is clicked again
         sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc';
     } else {
-        // Sort by the new column in ascending order by default
         sortBy.value = column;
         sortDirection.value = 'asc';
     }
 
-    // Perform sorting on the users array
     products.value.sort((a, b) => {
         let valA = a[column];
         let valB = b[column];
 
-        // Handle null or undefined values
         if (valA == null) valA = "";
         if (valB == null) valB = "";
 
-        // Ensure proper comparison for strings and numbers
         if (typeof valA === "string") valA = valA.toLowerCase();
         if (typeof valB === "string") valB = valB.toLowerCase();
 
@@ -302,6 +287,5 @@ const changePage = (page) => {
 
 th {
     cursor: pointer;
-    /* Make headers clickable */
 }
 </style>

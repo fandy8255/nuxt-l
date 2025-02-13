@@ -14,7 +14,6 @@
         <div v-if="paginatedProducts" class="container">
           <div class="row mt-5">
             <div v-for="product in paginatedProducts" :key="product.id" class="col-sm-12 col-lg-3 p-2">
-              <!--{{ product }}-->
               <ProductCard :product="product" :isAd="false" width="300px" />
             </div>
           </div>
@@ -58,14 +57,13 @@
   const userStore = useUserStore();
   
   const products = ref([]);
-  const isAd = ref(0);
   const currentPage = ref(1);
-  const itemsPerPage = 4; // Number of products per page
+  const itemsPerPage = 4; 
   const loading = ref(true);
  
   const fetchProducts = async () => {
 
-    const timestamp = Date.now().toString(); // Prevent replay attacks
+    const timestamp = Date.now().toString(); 
     const signature = await userStore.generateHMACSignature(timestamp);
 
     const response = await fetch(
@@ -103,10 +101,8 @@
   
   const updateProducts = (fetchedProducts) => {
     products.value = fetchedProducts;
-    console.log("products updated", products.value);
   };
   
-  // Computed properties
   const totalPages = computed(() => Math.ceil(products.value.length / itemsPerPage));
   const paginatedProducts = computed(() => {
     const start = (currentPage.value - 1) * itemsPerPage;
@@ -116,11 +112,10 @@
   
   const visiblePages = computed(() => {
     const pages = [];
-    const totalVisibleButtons = 5; // Number of visible pagination buttons
+    const totalVisibleButtons = 5; 
     let startPage = currentPage.value - Math.floor(totalVisibleButtons / 2);
     let endPage = currentPage.value + Math.floor(totalVisibleButtons / 2);
   
-    // Adjust startPage and endPage if they go out of bounds
     if (startPage < 1) {
       startPage = 1;
       endPage = Math.min(totalVisibleButtons, totalPages.value);
@@ -130,7 +125,6 @@
       startPage = Math.max(1, endPage - totalVisibleButtons + 1);
     }
   
-    // Generate the range of pages
     for (let page = startPage; page <= endPage; page++) {
       pages.push(page);
     }
@@ -138,7 +132,6 @@
     return pages;
   });
   
-  // Method to change page
   const changePage = (page) => {
     if (page > 0 && page <= totalPages.value) {
       currentPage.value = page;

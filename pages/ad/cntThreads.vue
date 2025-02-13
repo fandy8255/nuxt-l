@@ -10,8 +10,6 @@
         <!-- Threads Table -->
         <div class="container-fluid" v-else>
             <div class="container">
-                <!-- Filter Component 
-                <FilterSortSearchThreads @update-threads="updateThreads" />-->
                 <FilterSortSearchThreads @update-threads="updateThreads" />
             </div>
 
@@ -140,20 +138,15 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-//import { useSupabaseClient } from '~/supabase'; // Adjust the import based on your project structure
-//import { useNavbarStore } from '~/stores/navbar'; // Adjust the import based on your project structure
 
 const threads = ref([]);
 const currentPage = ref(1);
-const itemsPerPage = 10; // Number of threads per page
-const visibleButtons = 5; // Number of pagination buttons to show
+const itemsPerPage = 10; 
+const visibleButtons = 5; 
 const loading = ref(true);
+const sortBy = ref('');
+const sortDirection = ref('asc'); 
 
-// Sorting state
-const sortBy = ref(''); // Current column to sort by
-const sortDirection = ref('asc'); // Current sorting direction
-
-// Fetch threads from the Cloudflare Worker
 const fetchThreads = async () => {
     const supabase = useSupabaseClient();
     const { data: { user } } = await supabase.auth.getUser();
@@ -172,7 +165,6 @@ const fetchThreads = async () => {
     });
 
     const parsed = await response.json();
-    console.log('admin threads parsed', parsed.data);
     threads.value = parsed.data.results;
 };
 
@@ -182,31 +174,25 @@ onMounted(async () => {
 
 
 const updateThreads = (fetchedThreads) => {
-    console.log('got the emit from threads', fetchThreads);
     threads.value = fetchedThreads;
 };
 
 
 const sortByColumn = (column) => {
     if (sortBy.value === column) {
-        // Toggle sorting direction if the same column is clicked again
         sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc';
     } else {
-        // Sort by the new column in ascending order by default
         sortBy.value = column;
         sortDirection.value = 'asc';
     }
 
-    // Perform sorting on the threads array
     threads.value.sort((a, b) => {
         let valA = a[column];
         let valB = b[column];
 
-        // Handle null or undefined values
         if (valA == null) valA = "";
         if (valB == null) valB = "";
 
-        // Ensure proper comparison for strings and numbers
         if (typeof valA === "string") valA = valA.toLowerCase();
         if (typeof valB === "string") valB = valB.toLowerCase();
 
@@ -216,12 +202,10 @@ const sortByColumn = (column) => {
     });
 };
 
-// Pagination logic
 const totalPages = computed(() => Math.ceil(threads.value.length / itemsPerPage));
 const paginatedThreads = computed(() => {
     const start = (currentPage.value - 1) * itemsPerPage;
     const end = start + itemsPerPage;
-    //return threads.value.length < end ? threads.value : threads.value.slice(start, end);
     return threads.value
 });
 
@@ -291,6 +275,5 @@ const changePage = (page) => {
 
 th {
     cursor: pointer;
-    /* Make headers clickable */
 }
 </style>

@@ -2,13 +2,11 @@
     <div class="message-container container-xl card shadow-lg border-0 p-3 my-5">
         <h2 class="lead text-start container mb-3" v-if="otherUser">Conversación con: {{ otherUser.username }} </h2>
 
-        <!-- Message Display Section -->
         <div class="messages">
             <div v-if="messages" v-for="message in messages" :key="message.message_id" class="d-flex"
                 :class="{ 'justify-content-end': message.message_owner !== user.id , 'me-2':true }">
                 <div class="message"
                     :class="{ 'my-message': message.message_owner === user.id, 'other-message': message.message_owner !== user.id }">
-                    <!--{{ message }}-->
 
                     <div class="message-header">
                         <UserImgComponent
@@ -23,7 +21,6 @@
             </div>
         </div>
 
-        <!-- New Message Input Section -->
         <div class="new-message container-xl">
             <div class="row d-flex w-100">
                 <textarea v-model="newMessage" placeholder="Write your message..." class="message-input col-9 me-5"></textarea>
@@ -39,9 +36,6 @@
 import { onMounted, ref } from 'vue';
 
 const threadId = useRoute().params.thread[0].toString();
-const runtimeConfig = useRuntimeConfig();
-const supabase = useSupabaseClient();
-const { data: { user } } = await supabase.auth.getUser();
 const userStore = useUserStore();
 
 const otherUser = ref({});
@@ -51,9 +45,9 @@ const newMessage = ref('');
 const fetchMessages = async () => {
 
     try {
-        const timestamp = Date.now().toString(); // Prevent replay attacks
+        const timestamp = Date.now().toString(); 
         const signature = await userStore.generateHMACSignature(timestamp);
-
+        const user= await userStore.getUser()
         const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/thread?id=${threadId}`, {
             method: 'GET',
             headers: {
@@ -69,8 +63,7 @@ const fetchMessages = async () => {
 
         let results = await response.json();
         messages.value = results.messages;
-        
-        // Find the other user based on sender and receiver usernames
+    
         let obj = {
             username: null,
             id: null
@@ -80,14 +73,13 @@ const fetchMessages = async () => {
         obj.id = results.messages[0][currentUserIsSender ? 'receiver_id' : 'sender_id']
         otherUser.value = obj
     } catch (error) {
-        console.error('Error fetching threads:', error);
     }
 };
 
 const sendMessage = async () => {
     if (newMessage.value.trim()) {
         try {
-            const timestamp = Date.now().toString(); // Prevent replay attacks
+            const timestamp = Date.now().toString();
             const signature = await userStore.generateHMACSignature(timestamp);
 
             const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/message`, {
@@ -105,13 +97,12 @@ const sendMessage = async () => {
             });
 
             if (response.ok) {
-                await fetchMessages(); // Refresh messages after sending
-                newMessage.value = ''; // Clear the input field
+                await fetchMessages();
+                newMessage.value = ''; 
             } else {
                 throw new Error('Failed to send message');
             }
         } catch (error) {
-            console.error('Error sending message:', error);
         }
     }
 };
@@ -130,7 +121,6 @@ onMounted(async () => {
     padding: 20px;
     max-height: 75vh;
 }
-
 
 h2 {
     text-align: center;
@@ -157,13 +147,11 @@ h2 {
     background-color: #dbdbdb;
     width: 40vw;
     border: none;
-    /* Light green for the logged-in user */
     align-self: flex-start;
 }
 
 .other-message {
     background-color: #2c2c2c51;
-    /* Light blue for the other user */
     border: none;
     align-self: flex-end;
     width: 40vw;
@@ -177,7 +165,6 @@ h2 {
 
 .message-content {
     margin-top: 5px;
-    /*color: white !important;*/
     font-size: 1rem;
 }
 
@@ -195,8 +182,6 @@ h2 {
 }
 
 .message-input {
-   /* width: 100%;
-    max-width: 100%;*/
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
@@ -206,7 +191,6 @@ h2 {
 }
 
 .send-btn {
-    /*padding: 10px 20px;*/
     background-color: #5219ee;
     color: white !important;
     border: none;

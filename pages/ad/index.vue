@@ -137,8 +137,6 @@ const fetchStats = async () => {
 
     if (!response.ok) throw new Error('Failed to fetch user data');
     const data = await response.json();
-    console.log('stats', data.data)
-
     stats.value.userCount = data.data.total_users;
     stats.value.productCount = data.data.total_products;
     stats.value.threadCount = data.data.total_threads;
@@ -148,15 +146,7 @@ const fetchStats = async () => {
       console.log('has data')
     }
 
-    /*
-    if (data.value && data.value.data) {
-      stats.value.userCount = data.value.data.total_users;
-      stats.value.productCount = data.value.data.total_products;
-      stats.value.threadCount = data.value.data.total_threads;
-      stats.value.reportedProductCount = data.value.data.total_reports;
-    }*/
   } catch (err) {
-    console.error("Failed to fetch stats:", err.message);
     errorMessage.value = "Failed to load data. Please try again.";
   }
 };

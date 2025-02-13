@@ -22,7 +22,8 @@
                             <div class="d-flex my-2 text-center justify-content-center">
                                 <div class="d-flex" style="width: fit-content;">
                                     <div class="me-3">
-                                        Seguidores <i class="fa-solid fa-user"></i> {{ followers ? followers.length : 0}}
+                                        Seguidores <i class="fa-solid fa-user"></i> {{ followers ? followers.length :
+                                        0}}
                                     </div>
                                     <div>
                                         Siguiendo <i class="fa-solid fa-user"> </i> {{ followed ? followed.length : 0 }}
@@ -57,9 +58,9 @@
                             </div>
                         </div>
                         <div class="col-8">
-            
+
                             <div class="d-flex" v-if="isAd">
-                                <BanComponent class="p-2" :userId="user.id"  v-if="!user.is_banned"/>
+                                <BanComponent class="p-2" :userId="user.id" v-if="!user.is_banned" />
                                 <UnbanComponent :userId="user.id" v-else />
                             </div>
                             <div class="d-flex gap-2" v-else>
@@ -190,44 +191,35 @@ const activeTab = ref("products");
 const userStore = useUserStore();
 const isAd = ref(0);
 
-// State for pagination
 const products = ref([]);
 const currentPage = ref(1);
 const itemsPerPage = 2;
 const usernameSlug = ref('');
-const runtimeConfig = useRuntimeConfig();
 const username = useRoute().params.username[0];
 const followed = ref(null);
 const followers = ref(null);
 
 function test() {
-    console.log('emmitedd update store after deleting prod');
+    console.log('emmited');
     loadUserData();
 }
 
-const message = ref(null); // State for the modal message
+const message = ref(null); 
 
 const handleSuccess = (data) => {
-    message.value = data; // Set the modal message
+    message.value = data; 
 };
 
 const clearMessage = () => {
-    message.value = null; // Clear the modal message
+    message.value = null; 
 };
 
 function updateProducts() {
-    /*
-    console.log('emmitedd update store');
-    if (userStore.user_type === "seller") {
-        products.value = Array.from(userStore.products);
-    }*/
     loadUserData();
 }
 
-// Compute whether the logged-in user has blocked the viewed user
 const isBlocked = computed(() => {
     return userStore.blocked_users.some(elem => elem.username === username) || userStore.blocked_by.some(elem => elem.username === username)
-    console.log('user is blocked')
 })
     ;
 
@@ -240,11 +232,10 @@ const totalPages = computed(() => Math.ceil(products.value.length / itemsPerPage
 
 const visiblePages = computed(() => {
     const pages = [];
-    const totalVisibleButtons = 5; // Number of visible pagination buttons
+    const totalVisibleButtons = 5; 
     let startPage = currentPage.value - Math.floor(totalVisibleButtons / 2);
     let endPage = currentPage.value + Math.floor(totalVisibleButtons / 2);
 
-    // Adjust startPage and endPage if they go out of bounds
     if (startPage < 1) {
         startPage = 1;
         endPage = Math.min(totalVisibleButtons, totalPages.value);
@@ -254,7 +245,6 @@ const visiblePages = computed(() => {
         startPage = Math.max(1, endPage - totalVisibleButtons + 1);
     }
 
-    // Generate the range of pages
     for (let page = startPage; page <= endPage; page++) {
         pages.push(page);
     }
@@ -265,7 +255,7 @@ const visiblePages = computed(() => {
 const changePage = (page) => {
     if (page > 0 && page <= totalPages.value) {
         currentPage.value = page;
-        window.scrollTo(0, 0); // Scroll to the top of the page
+        window.scrollTo(0, 0);
     }
 };
 
@@ -289,7 +279,6 @@ const fetchUser = async (usernameSlug) => {
         const data = await response.json();
         user.value = data;
     } catch (error) {
-        console.error(error);
         user.value = null;
     }
 };
@@ -315,7 +304,7 @@ const fetchFollowers = async (user) => {
         const data = await response.json();
         followers.value = data.followers;
     } catch (error) {
-        console.error(error);
+
         followers.value = null;
     }
 };
@@ -341,7 +330,6 @@ const fetchFollowed = async (user) => {
         const data = await response.json();
         followed.value = data.followed;
     } catch (error) {
-        console.error(error);
         followed.value = null;
     }
 };
@@ -363,7 +351,6 @@ const fetchProducts = async () => {
         const data = await response.json();
         products.value = data.data.results;
     } catch (error) {
-        console.log('error fetching products')
     } finally {
         loading.value = false;
     }
@@ -373,7 +360,7 @@ const loadUserData = async () => {
     usernameSlug.value = useRoute().params.username[0];
 
     if (usernameSlug.value === userStore.username) {
-        // Use data from Pinia store for authenticated user
+       
         user.value = {
             id: userStore.id,
             username: userStore.username,
@@ -388,7 +375,7 @@ const loadUserData = async () => {
             products.value = Array.from(userStore.products);
         }
     } else {
-        // Fetch data for other users
+       
         await fetchUser(usernameSlug.value).then(async res => {
             await fetchFollowed(user.value);
             await fetchFollowers(user.value);

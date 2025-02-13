@@ -5,18 +5,17 @@
                 <Followings />
             </div>
             <div class="col-6">
-                <!-- Post Component for sending messages -->
+           
                 <PostComponent @updateFeed="updateFeed" />
 
-                <!-- Display Messages and Posts -->
                 <div id="feed_container" class="container" v-if="feedItems.length > 0">
                     <div v-for="item in paginatedFeedItems" :key="item.id" class="feed-item">
                         <div class="container" v-if="item.type === 'post'">
-                           <!-- {{ item }}-->
+                       
                             <MessageCard :message="item" />
                         </div>
                         <div v-else-if="item.type === 'product'">
-                           <!-- {{ item }}-->
+                     
                             <ProductCard :product="transformProduct(item)" :isAd="false" width="700px" />
                         </div>
                         
@@ -57,15 +56,9 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-
-// Runtime config for the API key
 const runtimeConfig = useRuntimeConfig();
-
-// Pinia store for followed users
 const userStore = useUserStore();
 const followed = userStore.followed;
-
-// Reactive state for feed items
 const feedItems = ref([]);
 
 function updateFeed(){
@@ -73,11 +66,9 @@ function updateFeed(){
     feedItems.value=userStore.feed
 }
 
-// Pagination state
 const currentPage = ref(1);
-const itemsPerPage = 2; // Number of items per page
+const itemsPerPage = 2; 
 
-// Computed properties for pagination
 const totalPages = computed(() => Math.ceil(feedItems.value.length / itemsPerPage));
 const paginatedFeedItems = computed(() => {
     const start = (currentPage.value - 1) * itemsPerPage;
@@ -87,11 +78,10 @@ const paginatedFeedItems = computed(() => {
 
 const visiblePages = computed(() => {
     const pages = [];
-    const totalVisibleButtons = 5; // Number of visible pagination buttons
+    const totalVisibleButtons = 5; 
     let startPage = currentPage.value - Math.floor(totalVisibleButtons / 2);
     let endPage = currentPage.value + Math.floor(totalVisibleButtons / 2);
 
-    // Adjust startPage and endPage if they go out of bounds
     if (startPage < 1) {
         startPage = 1;
         endPage = Math.min(totalVisibleButtons, totalPages.value);
@@ -101,7 +91,6 @@ const visiblePages = computed(() => {
         startPage = Math.max(1, endPage - totalVisibleButtons + 1);
     }
 
-    // Generate the range of pages
     for (let page = startPage; page <= endPage; page++) {
         pages.push(page);
     }
@@ -109,7 +98,6 @@ const visiblePages = computed(() => {
     return pages;
 });
 
-// Method to change page
 const changePage = (page) => {
     if (page > 0 && page <= totalPages.value) {
         currentPage.value = page;
@@ -133,10 +121,8 @@ const transformProduct = (item) => {
     };
 };
 
-// Fetch data when the component is mounted
 onMounted(() => {
     feedItems.value=Array.from(userStore.feed)
-    console.log('the feed', userStore.feed)
 });
 </script>
 

@@ -8,6 +8,5 @@
   </template>
   
   <script setup>
-  //import FileUploadForm from '~/components/FileUploadForm.vue';
   </script>
 
