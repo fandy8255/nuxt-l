@@ -41,7 +41,8 @@ import { ref } from 'vue';
 const modalId = 'banUserModal';
 const navbarStore = useNavbarStore();
 const { userId } = defineProps(['userId']);
-
+const runtimeConfig = useRuntimeConfig();
+const environment = runtimeConfig.public.dev;
 
 const bannedUntil = ref('');
 

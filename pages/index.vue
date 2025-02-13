@@ -39,24 +39,29 @@
 
 const supabase = useSupabaseClient()
 const user = await supabase.auth.getUser()
-const router= useRouter()
+const router = useRouter()
 const runtimeConfig = useRuntimeConfig();
 const environment = runtimeConfig.public.dev;
 
 
 onMounted(async () => {
+    if (environment === "production") {
+        console.log('tested production')
+    } if (environment === "development") {
+        console.log('tested development')
+    }
+
     if (user.data.user) {
-        if (environment==='development'){
+        if (environment === 'development') {
             console.log('active user')
             console.log('user',)
         }
-        
         router.push('/dashboard')
-    }else{
+    } else {
         console.log('no active user')
     }
 })
-  
+
 
 useSeoMeta({
     title: 'Colombia Panty | Compra panties usados',
@@ -74,11 +79,11 @@ const categories = [
     { name: "Accessories", image: "/images/categories/accessories.jpg" },
 ];
 
-const featuredItems=[
+const featuredItems = [
     { name: "Vintage Denim Jacket", image: "/images/featured/jacket.jpg", price: 40 },
     { name: "Floral Summer Dress", image: "/images/featured/dress.jpg", price: 25 },
     { name: "Leather Handbag", image: "/images/featured/handbag.jpg", price: 60 }]
- 
+
 </script>
 
 <style>
