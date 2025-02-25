@@ -37,7 +37,7 @@ import { onMounted, ref } from 'vue';
 
 const threadId = useRoute().params.thread[0].toString();
 const userStore = useUserStore();
-
+const user=userStore.user_tok
 const otherUser = ref({});
 const messages = ref([]);
 const newMessage = ref('');

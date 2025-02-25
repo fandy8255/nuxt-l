@@ -183,7 +183,7 @@ const registerUser = async () => {
                 email: email.value,
                 password: password.value,
                 options: {
-                    emailRedirectTo: 'https://nuxt-l2.pages.dev/confirm',
+                    emailRedirectTo: 'https://latinpanty.com/confirm',
                 },
             });
 
@@ -251,6 +251,7 @@ const registerUser = async () => {
 
 .modal-success {
     border-left: 4px solid green;
+    color: black !important;
 }
 
 .modal-failure {

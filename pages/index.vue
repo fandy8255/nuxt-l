@@ -2,7 +2,7 @@
     <div>
         <!-- Hero Section -->
         <section class="hero-section text-center py-5 "
-            style="height: 75vh; background-image: url('/assets/images/hero-banner.jpg'); background-size: cover; background-position: center;">
+            style="height: 90vh; background-image: url('/assets/images/hero-banner.jpg'); background-size: cover; background-position: center;">
             <div class="container">
                 <h1 class="display-4 fw-bold mb-4" style="color: aliceblue !important;">El Mercado #1 de Panties Usados
                     en Latinoamérica</h1>

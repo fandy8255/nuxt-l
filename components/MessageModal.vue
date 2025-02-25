@@ -12,7 +12,7 @@
             <button type="button" class="btn-close" @click="$emit('clear')" />
           </div>
           <div class="modal-body">
-            <p>{{ message.text }}</p>
+            <p>{{ message.success ? message.success : message.failure }}</p>
           </div>
           <div class="modal-footer">
             <button class="btn btn-primary" @click="$emit('clear')">
