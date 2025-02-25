@@ -58,8 +58,6 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-//import FilterUsersComponent from '~/components/FilterUsersComponent.vue';
-//import UserCard from '~/components/UserCard.vue';
 
 const users = ref([]);
 const currentPage = ref(1);
@@ -72,7 +70,6 @@ definePageMeta({
     middleware: ['auth']
   });
 
-// Fetch users from the Cloudflare Worker
 const fetchUsers = async () => {
 
     const timestamp = Date.now().toString(); 
@@ -99,7 +96,7 @@ const updateUsers = (fetchedUsers) => {
     users.value = fetchedUsers;
 };
 
-// Pagination logic
+
 const totalPages = computed(() => Math.ceil(users.value.length / itemsPerPage));
 const paginatedUsers = computed(() => {
     const start = (currentPage.value - 1) * itemsPerPage;

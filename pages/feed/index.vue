@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid">
+    <div id="main" class="container-fluid">
         <div class="row">
             <div class="col-3">
                 <Followings />
@@ -161,5 +161,9 @@ onMounted(() => {
 
 .message-card{
     width: 700px;
+}
+
+#main{
+    margin-top: 40px;
 }
 </style>

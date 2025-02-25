@@ -1,5 +1,5 @@
 <template>
-    <div class="container mt-5">
+    <div id="main" class="container mt-5">
         <div v-if="!userStore.logged_in" class="text-center">
             <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Loading...</span>
@@ -40,6 +40,10 @@ onMounted(() => {
 
 
 <style scoped>
+
+#main{
+    margin-top:40px;
+}
 .card {
     border-radius: 12px;
 }

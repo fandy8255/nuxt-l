@@ -57,13 +57,13 @@
                     <NuxtLink to="/feed" class="navbar-brand">
                         <NuxtImg src="/assets/images/panty-icon.png" width="auto" height="50" />
                     </NuxtLink>
-                    <h4 class="text-light lead my-auto">Colombia Panty</h4>
+                    <h4 class="text-light lead my-auto">Latin Panty</h4>
                 </div>
                 <div v-else class="d-flex">
                     <NuxtLink to="/" class="navbar-brand">
                         <NuxtImg src="/assets/images/panty-icon.png" width="auto" height="50" />
                     </NuxtLink>
-                    <h4 class="text-light lead my-auto">Colombia Panty</h4>
+                    <h4 class="text-light lead my-auto">Latin Panty</h4>
                 </div>
 
                 <!-- Navbar Toggler Button -->
@@ -118,14 +118,14 @@
                     </ul>
                     <ul class="navbar-nav ms-auto gap-2" v-else>
                         <li>
-                            <NuxtLink to="/contacto" class="nav-link text-decoration-none">Contacto </NuxtLink>
+                            <NuxtLink to="/landing/vendedoras" class="nav-link text-decoration-none">Vendedoras </NuxtLink>
                         </li>
                         <li>
-                            <NuxtLink to="/sobre-nosotros" class="nav-link text-decoration-none">Sobre Nosotros
+                            <NuxtLink to="/landing/tienda" class="nav-link text-decoration-none">Tienda
                             </NuxtLink>
                         </li>
                         <li>
-                            <NuxtLink to="/blog" class="nav-link text-decoration-none">Blog</NuxtLink>
+                            <NuxtLink to="/blog" class="nav-link text-decoration-none">Revista</NuxtLink>
                         </li>
                         <li>
                             <NuxtLink to="/login" class="nav-link text-decoration-none">Login</NuxtLink>

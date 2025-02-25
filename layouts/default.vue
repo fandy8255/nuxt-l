@@ -1,7 +1,7 @@
 <template>
     <div v-if="!loading">
         <Navbar id="navbar" :isAd="navbarStore.is_admin" />
-        <div class="slot-wrapper mt-1">
+        <div class="slot-wrapper">
             <slot class="main-content"  />
         </div>
         <Footer />
@@ -61,6 +61,6 @@ h2 {
 }
 
 .slot-wrapper {
-    margin-top: 10px !important;
+    /*margin-top: 10px !important;*/
 }
 </style>

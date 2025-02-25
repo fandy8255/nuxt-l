@@ -6,7 +6,7 @@
 
             <div class="col-md-6 border p-5">
                 <form @submit.prevent="registerUser" class="needs-validation" novalidate>
-                    <h2 class="mb-4">Create Your Account</h2>
+                    <h2 class="mb-4">Crea tu Cuenta</h2>
 
                     <div class="mb-3">
                         <label for="email" class="form-label">Correo Electrónico</label>

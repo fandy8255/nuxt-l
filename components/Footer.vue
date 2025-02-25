@@ -55,7 +55,7 @@
 
         </div>
         <div class="container text-center">
-            <p>&copy; {{ new Date().getFullYear() }} Sustainable Clothinga. All rights reserved.</p>
+            <p>&copy; {{ new Date().getFullYear() }} Latin Panty. Todos Los Derechos Reservados.</p>
             <div>
                 <a href="#" class="text-light mx-2">Facebook</a>
                 <a href="#" class="text-light mx-2">Instagram</a>
@@ -73,8 +73,8 @@ const subscriptionSuccess = ref(false);
 const userStore = useUserStore();
 const isHydrated = ref(false);
 
-const categories = ['Hombres', 'Mujeres', 'Niños', 'Accesorios'];
-const models = ['Vintage', 'Casual', 'Formal', 'Deportiva'];
+const categories = ['Colombia', 'Argentina', 'Peru', 'Uruguay', 'Brazil', 'Ecuador'];
+const models = ['Nuevas Vendedoras', 'Vendedoras Top'];
 
 onMounted(() => {
     isHydrated.value = true;
