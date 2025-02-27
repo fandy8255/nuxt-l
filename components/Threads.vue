@@ -10,7 +10,8 @@
                 <div v-if="threads && threads.length === 0" class="alert alert-info">No tienes conversaciones aún.</div>
                 <div v-for="thread in paginatedThreads" :key="thread.thread_id" class="card mb-2">
                     <div class="card-body d-flex align-items-center">
-
+                        
+                        
                         <NuxtImg provider="bunny" :src="getProfileImage(thread)" class="rounded-circle me-2"
                             width="50px" height="50px" alt="User Image" :quality="10" loading="lazy"
                             placeholder="/assets/images/panty-icon.jpg" />
@@ -21,7 +22,7 @@
                             </div>
                             <div class="col-4">
                                 <NuxtLink :to="`/mensajes/${thread.thread_id}`">
-                                    <p class="card-text mb-1 text-muted">{{ thread.last_message.slice(0, 50) || 'Sin mensajes' }}</p>
+                                    <p class="card-text mb-1 text-muted">{{ thread.last_message ? thread.last_message.slice(0, 50) : 'Sin mensajes' }}</p>
                                 </NuxtLink>
 
                             </div>
@@ -29,6 +30,7 @@
                                 <small class="text-muted">{{ formatDate(thread.last_updated_at) }}</small>
                             </div>
                         </div>
+                    
                     </div>
                 </div>
             </div>
@@ -65,6 +67,7 @@ const currentPage = ref(1);
 
 const paginatedThreads = computed(() => {
     const start = (currentPage.value - 1) * threadsPerPage;
+    console.log('paginated threads', threads.value)
     return threads.value.slice(start, start + threadsPerPage);
 });
 

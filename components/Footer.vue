@@ -8,7 +8,7 @@
                     <h5 class="fw-bold mb-3">Categorías</h5>
                     <ul class="list-unstyled">
                         <li v-for="category in categories" :key="category" class="mb-2 text-center">
-                            <NuxtLink :to="`/categorias/${category.toLowerCase()}`"
+                            <NuxtLink :to="'#'"
                                 class="text-decoration-none text-light">
                                 {{ category }}
                             </NuxtLink>
@@ -21,7 +21,7 @@
                     <h5 class="fw-bold mb-3">Modelos</h5>
                     <ul class="list-unstyled">
                         <li v-for="model in models" :key="model" class="mb-2 text-center">
-                            <NuxtLink :to="`/modelos/${model.toLowerCase()}`" class="text-decoration-none text-light">
+                            <NuxtLink :to="'#'" class="text-decoration-none text-light">
                                 {{ model }}
                             </NuxtLink>
                         </li>
@@ -33,7 +33,7 @@
                     <h5 class="fw-bold mb-3">Revista</h5>
                     <ul class="list-unstyled">
                         <li v-for="model in models" :key="model" class="mb-2 text-center">
-                            <NuxtLink :to="`/modelos/${model.toLowerCase()}`" class="text-decoration-none text-light">
+                            <NuxtLink :to="'#'" class="text-decoration-none text-light">
                                 {{ model }}
                             </NuxtLink>
                         </li>

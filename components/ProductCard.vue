@@ -83,6 +83,10 @@ const openModal = (productId, reportedId) => {
     z-index: 100 !important;
 }
 
+img{
+    width: 100% !important;
+}
+
 #price {
     color: rgb(84, 84, 84) !important;
 }

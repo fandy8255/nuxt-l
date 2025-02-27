@@ -1,40 +1,39 @@
 <template>
     <div>
         <!-- Hero Section -->
-        <section class="hero-section text-center py-5 "
-            style="height: 90vh; background-image: url('/assets/images/hero-banner.jpg'); background-size: cover; background-position: center;">
+        <section class="hero-section text-center py-xl-5 py-sm-1" style="">
             <div class="container">
-                <h1 class="display-4 fw-bold mb-4" style="color: aliceblue !important;">El Mercado #1 de Panties Usados
+                <h1 class="display-4 fw-bold mb-4 py-2" style="color: aliceblue !important;">El Mercado #1 de Panties Usados
                     en Latinoamérica</h1>
                 <div class="text-container">
-                    <p class="lead mb-4 text-light">
+                    <p class="lead mb-4 text-light banner-text">
                         Vender ropa interior usada es una excelente manera de convertir tus panties en dinero. Únete a
                         más
                         de 2,000,000 miembros reales en el mercado más grande para comprar y vender panties usados.
                     </p>
-                    <div class="stats d-flex justify-content-center gap-4 mb-5">
+                    <div class="stats d-md-flex justify-content-center gap-xl-4 gap-1 mb-5 d-none ">
                         <div class="stat-item">
                             <i class="bi bi-people-fill"></i>
-                            <h3 class="text-light">1,468,444</h3>
-                            <p class="text-light">Vendedores</p>
+                            <h3 class="banner-headings text-light">1,468,444</h3>
+                            <p class="banner-headings text-light">Vendedores</p>
                         </div>
                         <div class="stat-item">
                             <i class="bi bi-person-plus-fill"></i>
-                            <h3 class="text-light">1,854,140</h3>
-                            <p class="text-light">Compradores</p>
+                            <h3 class="banner-headings text-light">1,854,140</h3>
+                            <p class="banner-headings text-light">Compradores</p>
                         </div>
                         <div class="stat-item">
                             <i class="bi bi-camera-reels-fill"></i>
-                            <h3 class="text-light">855,612</h3>
-                            <p class="text-light">Archivos Multimedia</p>
+                            <h3 class="banner-headings text-light">855,612</h3>
+                            <p class="banner-headings text-light">Archivos Multimedia</p>
                         </div>
                         <div class="stat-item">
                             <i class="bi bi-cash-coin"></i>
-                            <h3 class="text-light">883,569</h3>
-                            <p class="text-light">Tratos Privados</p>
+                            <h3 class="banner-headings text-light">883,569</h3>
+                            <p class="banner-headings text-light">Tratos Privados</p>
                         </div>
                     </div>
-                    <button @click="ctaClick" class="btn btn-action btn-lg">Regístrate Gratis</button>
+                    <button @click="ctaClick" class="btn btn-action btn-lg mb-xl-0 mb-3 ">Regístrate Gratis</button>
                 </div>
             </div>
         </section>
@@ -46,7 +45,7 @@
                 <Stats class="mt-3" />
 
                 <!-- Two Columns -->
-                <div class="row justify-content-around border rounded p-3 mt-3">
+                <div class="row justify-content-around border rounded p-3 mt-3 gap-3">
                     <div class="col-md-5 me-5">
                         <h3 class="text-start mb-4">Para Vendedores</h3>
                         <ul class="list-unstyled">
@@ -67,7 +66,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-md-5 ms-5">
+                    <div class="col-md-5 ms-md-5 ms-0">
                         <h3 class="text-start mb-4">Para Compradores</h3>
                         <ul class="list-unstyled">
                             <li class="mb-3">
@@ -152,7 +151,8 @@
 
                                 <!-- Testimonial Text -->
                                 <p class="card-text">
-                                    "¡Latin Panty es muy divertido! Es un lugar seguro para explorar sin juicios. Como una
+                                    "¡Latin Panty es muy divertido! Es un lugar seguro para explorar sin juicios. Como
+                                    una
                                     de las mejores vendedoras, me encanta ser creativa y hacer felices a mis clientes."
                                 </p>
 
@@ -227,20 +227,20 @@
                 <h2 class="text-center mb-5 display-4 fw-bold">Conoce Nuestra Vendedoras</h2>
                 <div class="row">
                     <div class="col-md-3 my-2" v-for="seller in sellers" :key="seller.username">
-                            <div class="card text-center shadow-sm overflow-hidden seller-card">
-                                <NuxtLink :to="'/landing/vendedoras'">
-                                    <NuxtImg class="seller-image" provider="bunny" :src="seller.profilePicture"
-                                        :quality="50" placeholder="/assets/images/panty-icon.jpg"  width="300px"/>
-                                </NuxtLink>
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ seller.username }}</h5>
-                                    <p class="seller-age"><strong>Edad:</strong> {{ seller.age }}</p>
-                                    <p class="seller-location"><strong>Ubicación:</strong> {{ seller.location }}</p>
-                                    <p class="seller-description">{{ seller.description }}</p>
-                                    <button class="btn btn-outline-success btn-sm">Ver Perfil</button>
-                                </div>
+                        <div class="card text-center shadow-sm overflow-hidden seller-card">
+                            <NuxtLink :to="'/landing/vendedoras'">
+                                <NuxtImg class="seller-image" provider="bunny" :src="seller.profilePicture"
+                                    :quality="50" placeholder="/assets/images/panty-icon.jpg" width="300px" />
+                            </NuxtLink>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ seller.username }}</h5>
+                                <p class="seller-age"><strong>Edad:</strong> {{ seller.age }}</p>
+                                <p class="seller-location"><strong>Ubicación:</strong> {{ seller.location }}</p>
+                                <p class="seller-description">{{ seller.description }}</p>
+                                <button class="btn btn-outline-success btn-sm">Ver Perfil</button>
                             </div>
                         </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -280,7 +280,7 @@ const router = useRouter()
 const runtimeConfig = useRuntimeConfig();
 const environment = runtimeConfig.public.dev;
 
-function ctaClick(){
+function ctaClick() {
     router.push('/register')
 }
 
@@ -356,13 +356,17 @@ const featuredItems = [
 .text-container {
     background: rgba(109, 109, 109, 0.603);
     border-radius: 50px;
-    padding: 100px;
+    /*padding: 100px;*/
 }
 
 .hero-section {
     background: linear-gradient(to bottom right, #ff7eb9, #ff758c);
     color: white;
-    padding: 100px 0;
+    height: 90vh;
+    background-image: url('/assets/images/hero-banner.jpg');
+    background-size: cover;
+    background-position: center;
+    /*padding: 100px 0;*/
 }
 
 .stats {
@@ -412,13 +416,15 @@ const featuredItems = [
 }
 
 .testimonials-section {
-    background: #f8f9fa; /* Light background for contrast */
+    background: #f8f9fa;
+    /* Light background for contrast */
     padding: 80px 0;
 }
 
 .testimonials-section h2 {
     font-weight: bold;
-    color: #333; /* Darker color for better readability */
+    color: #333;
+    /* Darker color for better readability */
 }
 
 .testimonials-section .card {
@@ -427,17 +433,21 @@ const featuredItems = [
 }
 
 .testimonials-section .card:hover {
-    transform: translateY(-10px); /* Subtle hover effect */
+    transform: translateY(-10px);
+    /* Subtle hover effect */
 }
 
 .testimonials-section .rounded-circle {
-    border: 3px solid #fff; /* White border around the image */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    border: 3px solid #fff;
+    /* White border around the image */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    /* Soft shadow */
 }
 
 .testimonials-section .card-text {
     font-size: 1rem;
-    color: #555; /* Subtle text color */
+    color: #555;
+    /* Subtle text color */
 }
 
 .testimonials-section .text-muted {
@@ -472,5 +482,30 @@ const featuredItems = [
     background: rgb(205, 89, 213);
     color: white !important;
     z-index: 1000;
+}
+
+@media (min-width: 991.98px) {
+
+    .text-container {
+        padding: 100px;
+    }
+
+}
+
+@media (max-width: 991.98px) {
+
+    .hero-section {
+        height: 75vh;
+    }
+
+    .banner-text {
+        font-size: 16px;
+        padding: 20px;
+    }
+
+    .banner-headings {
+        font-size: 12px;
+    }
+
 }
 </style>

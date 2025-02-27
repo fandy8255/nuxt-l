@@ -1,13 +1,12 @@
-<!-- components/UserFollowList.vue -->
 <template>
     <div class="card mb-4 p-3 border-none">
         <!-- Buttons for Followers and Followed -->
         <div class="d-flex justify-content-around mb-3">
-            <button class="btn btn-outline-primary w-50 me-2" :class="{ active: showFollowers }"
+            <button class="btn w-50 me-2" :class="{ 'btn-selected': showFollowers, 'btn-unselected': !showFollowers }"
                 @click="showFollowers = true">
                 Seguidores
             </button>
-            <button class="btn btn-outline-primary w-50 ms-2" :class="{ active: !showFollowers }"
+            <button class="btn w-50 ms-2" :class="{ 'btn-selected': !showFollowers, 'btn-unselected': showFollowers }"
                 @click="showFollowers = false">
                 Siguiendo
             </button>
@@ -44,31 +43,41 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-
-const followers = ref([]); 
-const followed = ref([]); 
-const showFollowers = ref(true); 
-const loading = ref(false); 
+const followers = ref([]);
+const followed = ref([]);
+const showFollowers = ref(true);
+const loading = ref(false);
 
 const userStore = useUserStore();
 
 onMounted(() => {
-    followers.value=userStore.followers
-    followed.value=userStore.followed
+    followers.value = userStore.followers;
+    followed.value = userStore.followed;
 });
-
 </script>
 
 <style scoped>
-
 .card {
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.btn-outline-primary.active {
-    background-color: #0d6efd;
-    color: white;
+/* Selected Button Styles */
+.btn-selected {
+    background-color: rgb(205, 89, 213) !important;
+    color: white !important;
+    border: 1px solid rgb(205, 89, 213) !important;
+}
+
+/* Unselected Button Styles */
+.btn-unselected {
+    background-color: white !important;
+    color: rgb(205, 89, 213) !important;
+    border: 1px solid rgb(205, 89, 213) !important;
+}
+
+.btn {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .overflow-y-auto {

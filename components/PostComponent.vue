@@ -4,7 +4,7 @@
             <MessageModal :message="message" @clear="clearMessage" style="z-index: 105 !important;" />
         </div>
         <form @submit.prevent="submitPost" class="post-form text-end">
-            <textarea v-model="content" placeholder="Escribe tu publicación..." class="form-control" rows="4"
+            <textarea v-model="content" placeholder="Escribe tu publicación..." class="form-control w-100" rows="6"
                 required></textarea>
             <div class="d-flex align-items-center gap-2 mt-2 justify-content-end">
                 <FileUploadForm v-if="userStore.user_type === 'seller'" @success="handleSuccess" @updateProductsStore="feedUpdate"/>
@@ -94,7 +94,8 @@ const clearMessage = () => {
 
 <style scoped>
 .post-form {
-    max-width: 700px;
+    /*max-width: 700px;*/
+    width: 100%;
     margin: 0 auto;
 }
 </style>

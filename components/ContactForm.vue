@@ -8,7 +8,7 @@
             <label for="message" class="form-label">Mensaje</label>
             <textarea id="message" class="form-control" rows="5" v-model="contactForm.message" required></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary text-light">Enviar</button>
     </form>
 </template>
 

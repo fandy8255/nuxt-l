@@ -1,6 +1,6 @@
 <template>
   <div class="card border-1 my-2 shadow-sm">
-    <div class="card-img-top m-0 overflow-hidden bsb-overlay-hover text-center" style="max-height: 40vh !important">
+    <div class="card-img-top m-0 overflow-hidden bsb-overlay-hover text-center" >
       <NuxtLink :to="'/perfil/' + username">
         <NuxtImg provider="bunny" :src="profilePicture" width="300px" :quality="50"
           placeholder="/assets/images/panty-icon.jpg" />
@@ -61,5 +61,9 @@ function parseDescription(profileDescription) {
   background: #ff2fe7b0 !important;
   color: white !important;
   z-index: 100 !important;
+}
+
+img{
+  width: 100% !important;
 }
 </style>

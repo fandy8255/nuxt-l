@@ -52,7 +52,7 @@ const handleFollow = async () => {
             userStore.followed.push(obj);
         }
     } catch (error) {
-
+        console.log('error', error)
     }
 };
 

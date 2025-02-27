@@ -95,6 +95,7 @@ export default {
 
       try {
         const timestamp = Date.now().toString();
+        const userStore = useUserStore();
         const signature = await userStore.generateHMACSignature(timestamp);
 
         const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/filter_products?${params.toString()}`, {

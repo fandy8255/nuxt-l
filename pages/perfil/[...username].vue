@@ -23,7 +23,7 @@
                                 <div class="d-flex" style="width: fit-content;">
                                     <div class="me-3">
                                         Seguidores <i class="fa-solid fa-user"></i> {{ followers ? followers.length :
-                                        0}}
+                                            0 }}
                                     </div>
                                     <div>
                                         Siguiendo <i class="fa-solid fa-user"> </i> {{ followed ? followed.length : 0 }}
@@ -43,7 +43,7 @@
                             <MessageModal :message="message" @clear="clearMessage" style="z-index: 105 !important;" />
                         </div>
                         <!-- Profile Section -->
-                        <div class="col-4 p-2 text-center">
+                        <div class="col-md-4 col-sm-12 p-2 text-center">
                             <div class="container border rounded text-center">
                                 <NuxtImg provider="bunny" :src="user.profile_picture" height="auto" width="300px"
                                     :quality="50" placeholder="/assets/images/panty-icon.png" />
@@ -57,7 +57,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-8">
+                        <div class="col-md-8 col-sm-12">
 
                             <div class="d-flex" v-if="isAd">
                                 <BanComponent class="p-2" :userId="user.id" v-if="!user.is_banned" />
@@ -124,7 +124,7 @@
                                         </div>
                                         <!-- Pagination Controls -->
                                         <nav aria-label="Page navigation" class="mt-4 bg-light">
-                                            <ul class="pagination justify-content-start bg-light">
+                                            <ul class="pagination justify-content-center flex-wrap">
                                                 <li class="page-item" :class="{ disabled: currentPage === 1 }">
                                                     <button class="page-link" @click="changePage(1)">Primero</button>
                                                 </li>
@@ -153,7 +153,7 @@
 
                             <!-- Contact Tab -->
                             <div v-if="activeTab === 'contact' && user.username !== userStore.username"
-                                class="tab-pane fade show active">
+                                class="tab-pane fade show active pb-3">
                                 <ContactForm :receiver="user" />
                             </div>
                         </div>
@@ -204,14 +204,14 @@ function test() {
     loadUserData();
 }
 
-const message = ref(null); 
+const message = ref(null);
 
 const handleSuccess = (data) => {
-    message.value = data; 
+    message.value = data;
 };
 
 const clearMessage = () => {
-    message.value = null; 
+    message.value = null;
 };
 
 function updateProducts() {
@@ -232,7 +232,7 @@ const totalPages = computed(() => Math.ceil(products.value.length / itemsPerPage
 
 const visiblePages = computed(() => {
     const pages = [];
-    const totalVisibleButtons = 5; 
+    const totalVisibleButtons = 5;
     let startPage = currentPage.value - Math.floor(totalVisibleButtons / 2);
     let endPage = currentPage.value + Math.floor(totalVisibleButtons / 2);
 
@@ -360,7 +360,7 @@ const loadUserData = async () => {
     usernameSlug.value = useRoute().params.username[0];
 
     if (usernameSlug.value === userStore.username) {
-       
+
         user.value = {
             id: userStore.id,
             username: userStore.username,
@@ -375,7 +375,7 @@ const loadUserData = async () => {
             products.value = Array.from(userStore.products);
         }
     } else {
-       
+
         await fetchUser(usernameSlug.value).then(async res => {
             await fetchFollowed(user.value);
             await fetchFollowers(user.value);
@@ -395,6 +395,50 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.pagination {
+    flex-wrap: wrap;
+    /* Allow pagination items to wrap on small screens */
+}
+
+.page-item {
+    margin: 2px;
+    /* Add spacing between pagination items */
+}
+
+.page-link {
+    padding: 0.5rem 0.75rem;
+    /* Adjust padding for smaller screens */
+    font-size: 0.875rem;
+    /* Reduce font size for smaller screens */
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #fff;
+    border-color: #dee2e6;
+}
+
+@media (max-width: 767.98px) {
+    .pagination {
+        justify-content: center;
+        /* Center pagination on small screens */
+    }
+
+    .page-link {
+        padding: 0.375rem 0.5rem;
+        /* Further reduce padding for very small screens */
+        font-size: 0.75rem;
+        /* Further reduce font size for very small screens */
+    }
+}
+
 #contact-title,
 #products-title {
     color: dimgrey !important;
@@ -402,5 +446,9 @@ onMounted(async () => {
 
 .product_card {
     max-height: 60vh !important;
+}
+
+img {
+    width: 100% !important;
 }
 </style>

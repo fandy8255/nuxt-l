@@ -1,44 +1,40 @@
 <template>
     <div id="main" class="container-fluid">
         <div class="row">
-            <div class="col-3">
+            <div class="col-sm-12 col-md-3">
                 <Followings />
             </div>
-            <div class="col-6">
-           
+            <div class="col-sm-12 col-md-6">
                 <PostComponent @updateFeed="updateFeed" />
 
                 <div id="feed_container" class="container" v-if="feedItems.length > 0">
                     <div v-for="item in paginatedFeedItems" :key="item.id" class="feed-item">
-                        <div class="container" v-if="item.type === 'post'">
-                       
-                            <MessageCard :message="item" />
+                        <div class="container p-0" v-if="item.type === 'post'">
+                            <MessageCard :message="item" class="w-100 d-flex" />
                         </div>
                         <div v-else-if="item.type === 'product'">
-                     
-                            <ProductCard :product="transformProduct(item)" :isAd="false" width="700px" />
+                            <ProductCard :product="transformProduct(item)" :isAd="false" width="1000px" />
                         </div>
-                        
                     </div>
 
                     <!-- Pagination Controls -->
                     <nav aria-label="Page navigation" class="mt-4 bg-light">
-                        <ul class="pagination justify-content-start bg-light">
+                        <ul class="pagination justify-content-center flex-wrap">
                             <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                                <button class="page-link" @click="changePage(1)">First</button>
+                                <button class="page-link" @click="changePage(1)">Primero</button>
                             </li>
                             <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                                <button class="page-link" @click="changePage(currentPage - 1)">Previous</button>
+                                <button class="page-link" @click="changePage(currentPage - 1)">Anterior</button>
                             </li>
                             <li v-for="page in visiblePages" :key="page" class="page-item"
                                 :class="{ active: page === currentPage }">
                                 <button class="page-link" @click="changePage(page)">{{ page }}</button>
                             </li>
                             <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                                <button class="page-link" @click="changePage(currentPage + 1)">Next</button>
+                                <button class="page-link" @click="changePage(currentPage + 1)">Siguiente</button>
                             </li>
                             <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                                <button class="page-link" @click="changePage(totalPages)">Last</button>
+                                <button class="page-link" @click="changePage(totalPages)">Último</button>
                             </li>
                         </ul>
                     </nav>
@@ -47,7 +43,7 @@
                     <p>No items to display in your feed.</p>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-sm-12 col-md-3">
                 <TopUsers />
             </div>
         </div>
@@ -61,13 +57,13 @@ const userStore = useUserStore();
 const followed = userStore.followed;
 const feedItems = ref([]);
 
-function updateFeed(){
-    console.log('feed update triggered 2nd time')
-    feedItems.value=userStore.feed
+function updateFeed() {
+    console.log('feed update triggered 2nd time');
+    feedItems.value = userStore.feed;
 }
 
 const currentPage = ref(1);
-const itemsPerPage = 2; 
+const itemsPerPage = 2;
 
 const totalPages = computed(() => Math.ceil(feedItems.value.length / itemsPerPage));
 const paginatedFeedItems = computed(() => {
@@ -78,7 +74,7 @@ const paginatedFeedItems = computed(() => {
 
 const visiblePages = computed(() => {
     const pages = [];
-    const totalVisibleButtons = 5; 
+    const totalVisibleButtons = 5;
     let startPage = currentPage.value - Math.floor(totalVisibleButtons / 2);
     let endPage = currentPage.value + Math.floor(totalVisibleButtons / 2);
 
@@ -122,17 +118,17 @@ const transformProduct = (item) => {
 };
 
 onMounted(() => {
-    feedItems.value=Array.from(userStore.feed)
+    feedItems.value = Array.from(userStore.feed);
 });
 </script>
 
 <style scoped>
 .feed-item {
     border: none;
-    padding: 1rem;
+    padding: 0;
     margin-bottom: 1rem;
     border-radius: 8px;
-    width: fit-content;
+    width: 100%;
 }
 
 #feed_container {
@@ -140,6 +136,7 @@ onMounted(() => {
     flex-direction: column !important;
     justify-content: center !important;
     align-items: center !important;
+    padding: 0;
 }
 
 .feed-item h3 {
@@ -155,15 +152,43 @@ onMounted(() => {
 }
 
 .product_card {
-    max-height: 80vh !important;
-    max-width: 60vw !important;
+    max-height: 90vh !important;
 }
 
-.message-card{
-    width: 700px;
+.message-card {
+    width: 100%;
 }
 
-#main{
+#main {
     margin-top: 40px;
+}
+
+img {
+    width: 800px !important;
+}
+
+/* Pagination Styles */
+.pagination {
+    flex-wrap: wrap; /* Allow pagination items to wrap on small screens */
+}
+
+.page-item {
+    margin: 2px; /* Add spacing between pagination items */
+}
+
+.page-link {
+    padding: 0.5rem 0.75rem; /* Adjust padding for smaller screens */
+    font-size: 0.875rem; /* Reduce font size for smaller screens */
+}
+
+@media (max-width: 767.98px) {
+    .pagination {
+        justify-content: center; /* Center pagination on small screens */
+    }
+
+    .page-link {
+        padding: 0.375rem 0.5rem; /* Further reduce padding for very small screens */
+        font-size: 0.75rem; /* Further reduce font size for very small screens */
+    }
 }
 </style>
