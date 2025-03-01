@@ -99,7 +99,7 @@
                         </NuxtLink>
                     </li>
                     <li>
-                        <NuxtLink to="/blog" class="nav-link text-decoration-none" @click="closeNavbar">Revista</NuxtLink>
+                        <NuxtLink to="/revista" class="nav-link text-decoration-none" @click="closeNavbar">Revista</NuxtLink>
                     </li>
                     <li>
                         <NuxtLink to="/login" class="nav-link text-decoration-none" @click="closeNavbar">Login</NuxtLink>

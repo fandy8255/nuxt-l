@@ -3,7 +3,8 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: process.env.ENVIRONMENT === 'development' },
   ssr: true,
-  modules: ['@nuxt/image', '@nuxtjs/supabase', '@pinia/nuxt', "pinia-plugin-persistedstate"],
+  modules: ['@nuxt/image', '@nuxtjs/supabase', '@pinia/nuxt', "pinia-plugin-persistedstate" , '@nuxt/content'],
+  
   runtimeConfig: {
     public: {
       baseUrl: process.env.SUPABASE_URL || 'http://localhost:3000',
@@ -16,7 +17,7 @@ export default defineNuxtConfig({
     redirectOptions: {
       login: '/login',
       callback: '/confirm',
-      exclude: ['/', '/register', '/login', '/ad/bogaloo', '/landing/vendedoras', '/landing/tienda' ],
+      exclude: ['/', '/register', '/login', '/ad/bogaloo', '/landing/vendedoras', '/landing/tienda', '/revista/article', '/revista' ],
     }
   },
 
