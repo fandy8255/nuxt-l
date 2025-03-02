@@ -33,7 +33,7 @@ onMounted(async () => {
 }
 
 p {
-    color: rgb(47, 45, 45) !important;
+    color: rgb(47, 45, 45) 
 }
 
 #navbar {
@@ -43,21 +43,23 @@ p {
 }
 
 a {
-    color: rgb(0, 0, 0) !important;
+    color: rgb(0, 0, 0)
 }
 
 a:hover {
-    color: blue !important;
+    color: rgb(0, 0, 0) !important;
+    text-decoration: none !important;
 }
 
 h2 {
+    
     font-weight: 500;
     font-style: normal;
 }
 
 * {
     color: rgb(59, 59, 59) !important;
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 .slot-wrapper {

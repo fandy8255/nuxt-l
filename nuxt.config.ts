@@ -17,7 +17,8 @@ export default defineNuxtConfig({
     redirectOptions: {
       login: '/login',
       callback: '/confirm',
-      exclude: ['/', '/register', '/login', '/ad/bogaloo', '/landing/vendedoras', '/landing/tienda', '/revista/article', '/revista' ],
+      exclude: ['/', '/register', '/login', '/ad/bogaloo', '/landing/vendedoras', '/landing/tienda', '/revista/article',
+         '/revista', '/revista/article2' , '/revista/article3' , '/revista/article4' , '/revista/article5' , '/revista/article6' ],
     }
   },
 

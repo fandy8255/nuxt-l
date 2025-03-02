@@ -1,9 +1,12 @@
 ---
 title: Article Two
-description: 'and fetch your Markdown, JSON, YAML and CSV files through a MongoDB like API, acting as a Git-based Headless CMS.'
-image: 'https://res.cloudinary.com/redfern-web/image/upload/v1599840408/redfern-dev/png/nuxt.png'
+description: CMS HRRH ER
+image: 'https://i.ibb.co/gMy3hvNs/2.jpg'
 tags: ['VueJS', 'Nuxt']
-published: '2020-09-01'
+published: true
+featured: true
+category: Instagram
+date: '2025-02-03'
 ---
 
 ## Getting started

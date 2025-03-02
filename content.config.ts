@@ -13,7 +13,11 @@ export default defineContentConfig({
         schema: z.object({
           tags: z.array(z.string()),
           image: z.string(),
-          date: z.date()
+          date: z.string(), //or z.date()
+          category: z.string(),
+          description: z.string(),
+          published:z.boolean(),
+          featured: z.boolean()
         })
       })
   }

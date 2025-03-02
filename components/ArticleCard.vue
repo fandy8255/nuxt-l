@@ -5,8 +5,9 @@
             <div id="toccc">
                 <!-- {{ toc }} -->
             </div>
-            <figure class="card-img-top m-0 overflow-hidden bsb-overlay-hover">
+            <figure id="card-main-head" class="card-img-top m-0 overflow-hidden bsb-overlay-hover">
                 <NuxtLink :to="'/revista/' + artPath">
+                    <!--{{ imgSrc }}-->
                     <img class="img-fluid bsb-scale bsb-hover-scale-up" loading="lazy" :src="imgSrc" alt="Business">
                 </NuxtLink>
                 <figcaption>
@@ -24,12 +25,11 @@
                 <div class="entry-header mb-3">
                     <ul class="entry-meta list-unstyled d-flex mb-2">
                         <li>
-                            <a class="link-primary text-decoration-none" href="#!">Business</a>
+                            <a class="link-primary text-decoration-none" href="#!">{{ category }}</a>
                         </li>
                     </ul>
                     <h2 class="card-title entry-title h4 mb-0">
-                        <a class="link-dark text-decoration-none" href="#!">Overcoming Challenges to
-                            Make a Living Online</a>
+                        <a class="link-dark text-decoration-none" href="#!">{{ title }}</a>
                     </h2>
                 </div>
                 <p class="card-text entry-summary text-secondary">
@@ -47,7 +47,7 @@
                                 <path
                                     d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
                             </svg>
-                            <span class="ms-2 fs-7">7 Feb 2023</span>
+                            <span class="ms-2 fs-7">{{ formatDate(date) }}</span>
                         </a>
                     </li>
                     <li>
@@ -74,11 +74,30 @@
 
 <script setup>
 
-const { imgSrc, articleDescription, artPath, toc } = defineProps(['imgSrc', 'articleDescription', 'artPath', 'toc'])
+const { title, imgSrc, articleDescription, artPath, toc, category, date } = defineProps(['title', 'imgSrc', 'articleDescription', 'artPath', 'toc', 'category', 'date'])
 //const { } = defineProps(['articleDescription'])
 
 console.log('testing')
 
+const formatDate = (dateString) => {
+    
+  // Split the date string into year, month, and day
+  const [year, month, day] = dateString.split('-');
+
+  // Create a Date object in local time
+  const date = new Date(year, month - 1, day); // Note: Months are 0-indexed in JavaScript
+
+  // Format the date
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+};
+
 </script>
 
-<style scoped></style>
+
+<style scoped>
+
+#card-main-head{
+    max-height: 25vh;
+}
+
+</style>
