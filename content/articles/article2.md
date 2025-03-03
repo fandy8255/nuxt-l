@@ -4,7 +4,7 @@ description: CMS HRRH ER
 image: 'https://i.ibb.co/gMy3hvNs/2.jpg'
 tags: ['VueJS', 'Nuxt']
 published: true
-featured: true
+featured: false
 category: Instagram
 date: '2025-02-03'
 ---

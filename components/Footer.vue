@@ -93,7 +93,8 @@ h5{
 }
 
 footer{
-    background: rgb(205, 89, 213) !important;
+    /*background: rgb(205, 89, 213) !important;*/
+    background:rgba(219, 74, 132) !important;
 }
 
 footer ul {

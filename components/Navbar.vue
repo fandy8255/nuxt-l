@@ -5,7 +5,7 @@
                 <NuxtLink :to=" userStore.logged_in ? '/feed' : '/' " class="navbar-brand">
                     <NuxtImg src="/assets/images/panty-icon.png" width="auto" height="50" />
                 </NuxtLink>
-                <h4 class="text-light lead my-auto ms-2">Latin Panty</h4>
+                <h4 class="text-light lead my-auto ms-2 fw-bolder">Latin Panty</h4>
             </div>
 
             <!-- Navbar Toggler Button -->
@@ -185,7 +185,9 @@ button:hover {
 
 nav {
     position: sticky !important;
-    background: rgb(205, 89, 213) !important;
+    /*background: rgb(205, 89, 213) !important;*/
+    background:rgba(206, 206, 206, 0.95) !important;
+    background:rgba(219, 74, 132) !important;
     margin: 0;
 }
 

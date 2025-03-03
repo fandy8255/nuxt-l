@@ -1,109 +1,160 @@
 <template>
     <div>
-        <div class="flex justify-center mt-5">
-            <div class="container-xl">
-                <div class="row justify-content-md-center">
-                    <div class="col-12">
-                        <h3 class="fs-6 text-secondary mb-2 text-uppercase text-center">Our News</h3>
-                        <h2 class="display-5 mb-4 mb-md-5 text-center">Here is our blog's latest company news about
-                            regularly publishing fresh content.</h2>
-                        <section class="hero-section text-center py-xl-5 py-sm-1">
-                            <div class="container">
-                                <h1 class="display-4 fw-bold mb-4 py-2" style="color: aliceblue !important;">Revista
-                                    Latin Panty</h1>
-                                <div class="text-container">
-                                    <p class="lead mb-4 text-light banner-text">Revisa Nuestros Posts</p>
-                                    <div class="stats d-md-flex justify-content-center gap-xl-4 gap-1 mb-5 d-none">
-                                        <div class="stat-item">
-                                            <i class="bi bi-people-fill"></i>
-                                            <h3 class="banner-headings text-light">Colombianas Onlyfans</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
+        <!-- Hero Section with Parallax -->
+        <div class="hero-section text-center d-flex justify-content-center align-items-center mb-5">
+            <div class="parallax-bg"></div>
+            <div class="hero-content">
+                <h1 class="display-2 fw-bold text-white mb-4">Revista Latin Panty</h1>
+                <p class="lead text-light mb-4">Revisa Nuestros Posts</p>
+                <div class="stats d-flex justify-content-center gap-4">
+                    <div class="stat-item">
+                        <i class="fas fa-users fa-2x text-white"></i>
+                        <h3 class="text-white mt-2">Colombianas Onlyfans</h3>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div v-if="articles" class="container overflow-hidden mt-5">
-                <div class="row gy-4 gy-lg-0">
-                    <div v-for="article in articles" :key="article.title" class="col-sm-12 col-lg-4">
-                        <ArticleCard :date="article.date" :title="article.title" :category="article.category"
-                            :imgSrc="article.image" :articleDescription="article.description"
-                            :artPath="article.stem.split('/')[1]" :toc="article.body.toc.links" />
-                    </div>
+        <!-- Featured Articles 
+        <div class="container-fluid p-3 px-5">
+            <FeaturedArticles :featuredArticles="featuredArticles" />
+        </div>-->
+
+        <div class="container-fluid px-5">
+            <FeaturedArticlesSplide :featuredArticles="featuredArticles" />
+        </div>
+
+        
+
+        <!-- Categories Section -->
+        <div class="margins container-fluid px-5">
+            <Categories :categories="categories" @select-category="handleCategorySelect" />
+        </div>
+
+        <!-- All Articles -->
+        <div v-if="articles" class="margins container-fluid p-5 px-5">
+            <h2 class="text-start">Publicaciones</h2>
+            <div class="row gy-4 mx-0">
+                <div v-for="article in articles" :key="article.title" class="col-sm-12 col-md-6 col-lg-3">
+                    <ArticleCard :date="article.date" :title="article.title" :category="article.category"
+                        :imgSrc="article.image" :articleDescription="article.description"
+                        :artPath="article.stem.split('/')[1]" :toc="article.body.toc.links" :cardHeight="'50vh'" />
                 </div>
+            </div>
 
-                <!-- Pagination Controls -->
-                <nav aria-label="Page navigation" class="mt-4 bg-light">
-                    <ul class="pagination justify-content-center flex-wrap">
-                        <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                            <button class="page-link" @click="changePage(1)">Primero</button>
-                        </li>
-                        <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                            <button class="page-link" @click="changePage(currentPage - 1)">Anterior</button>
-                        </li>
-                        <li v-for="page in visiblePages" :key="page" class="page-item"
-                            :class="{ active: page === currentPage }">
-                            <button class="page-link" @click="changePage(page)">{{ page }}</button>
-                        </li>
-                        <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                            <button class="page-link" @click="changePage(currentPage + 1)">Siguiente</button>
-                        </li>
-                        <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                            <button class="page-link" @click="changePage(totalPages)">Último</button>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-            <div v-else>
-                No articles found
-            </div>
+            <!-- Pagination Controls -->
+            <nav aria-label="Page navigation" class="mt-5 mb-5">
+                <ul class="pagination justify-content-center flex-wrap">
+                    <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                        <button class="page-link" @click="changePage(1)">Primero</button>
+                    </li>
+                    <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                        <button class="page-link" @click="changePage(currentPage - 1)">Anterior</button>
+                    </li>
+                    <li v-for="page in visiblePages" :key="page" class="page-item"
+                        :class="{ active: page === currentPage }">
+                        <button class="page-link" @click="changePage(page)">{{ page }}</button>
+                    </li>
+                    <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                        <button class="page-link" @click="changePage(currentPage + 1)">Siguiente</button>
+                    </li>
+                    <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                        <button class="page-link" @click="changePage(totalPages)">Último</button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div v-else class="text-center mt-5">
+            <p class="text-muted">No articles found</p>
         </div>
     </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import FeaturedArticles from '~/components/FeaturedArticles.vue';
+import Categories from '~/components/Categories.vue';
 
 const articles = ref([]);
+const featuredArticles = ref([]);
 const currentPage = ref(1);
-const itemsPerPage = 3; // Number of articles per page
-const totalArticles = ref(0); // Total number of articles (for pagination)
+const itemsPerPage = 6;
+const totalArticles = ref(0);
+const selectedCategory = ref('');
 
-// Fetch articles with backend pagination
+const categories = [
+    { category: 'Instagram', img: '/assets/images/hero-banner.jpg' },
+    { category: 'Onlyfans', img: '/assets/images/hero-banner.jpg' },
+    { category: 'shoes', img: '/assets/images/hero-banner.jpg' },
+    { category: 'shorts', img: '/assets/images/hero-banner.jpg' },
+    { category: 'more', img: '/assets/images/hero-banner.jpg' },
+    { category: 'other', img: '/assets/images/hero-banner.jpg' },
+];
+
+useHead({
+    link: [
+        {
+            rel: 'stylesheet',
+            href: 'https://unpkg.com/bs-brain@2.0.4/components/blogs/blog-3/assets/css/blog-3.css',
+        },
+        {
+            rel: 'stylesheet',
+            href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css',
+        },
+    ],
+});
+
 const fetchArticles = async (page) => {
     const skip = (page - 1) * itemsPerPage;
-    const { data } = await useAsyncData('blog', () =>
-        queryCollection('blog')
-            .where('published', '=', true)
-            .order('date', 'DESC')
-            .skip(skip)
-            .limit(itemsPerPage)
-            .all()
-    );
+    const query = queryCollection('blog')
+        .where('published', '=', true)
+        .order('date', 'DESC')
+        .skip(skip)
+        .limit(itemsPerPage);
+
+    if (selectedCategory.value) {
+        query.where('category', '=', selectedCategory.value);
+    }
+
+    const { data } = await useAsyncData('blog', () => query.all());
     articles.value = data.value;
 
-    // Fetch total number of articles for pagination
     const { data: totalData } = await useAsyncData('total', () =>
-        queryCollection('blog').count()
+        queryCollection('blog')
+            .where('published', '=', true)
+            .where('category', '=', selectedCategory.value)
+            .count()
     );
     totalArticles.value = totalData.value;
 };
 
-// Fetch articles on mount
+const fetchFeaturedArticles = async () => {
+    const { data } = await useAsyncData('featured', () =>
+        queryCollection('blog')
+            .where('featured', '=', true)
+            .order('date', 'DESC')
+            .limit(6)
+            .all()
+    );
+    featuredArticles.value = data.value;
+};
+
+const handleCategorySelect = (category) => {
+    selectedCategory.value = category;
+    fetchArticles(currentPage.value);
+};
+
 onMounted(async () => {
     await fetchArticles(currentPage.value);
+    await fetchFeaturedArticles();
     window.scrollTo(0, 0);
 });
 
-// Pagination logic
 const totalPages = computed(() => Math.ceil(totalArticles.value / itemsPerPage));
 
 const visiblePages = computed(() => {
     const pages = [];
-    const totalVisibleButtons = 5; // Number of visible page buttons
+    const totalVisibleButtons = 5;
     let startPage = currentPage.value - Math.floor(totalVisibleButtons / 2);
     let endPage = currentPage.value + Math.floor(totalVisibleButtons / 2);
 
@@ -126,55 +177,94 @@ const visiblePages = computed(() => {
 const changePage = async (page) => {
     if (page > 0 && page <= totalPages.value) {
         currentPage.value = page;
-        await fetchArticles(page); // Fetch articles for the new page
-        window.scrollTo(0, 0); // Scroll to the top of the page
+        await fetchArticles(page);
+        window.scrollTo(0, 0);
     }
 };
 </script>
 
-<style>
+<style scoped>
+
+/*
+h2{
+    font-weight: 2rem;
+    font-style: italic !important;
+    font-size: 70px !important;
+}*/
+
+.margins{
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+/* Hero Section with Parallax */
 .hero-section {
-    background: linear-gradient(to bottom right, #ff7eb9, #ff758c);
+    position: relative;
+    height: 70vh;
     color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+.parallax-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
     background-image: url('/assets/images/hero-banner.jpg');
     background-size: cover;
     background-position: center;
+    z-index: -1;
+    /*transform: translateZ(-1px) scale(2);*/
+    /* Parallax effect */
 }
 
-a {
-    color: azure;
+.hero-content {
+    z-index: 1;
+}
+
+.hero-section h1 {
+    font-size: 4rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-section p {
+    font-size: 1.75rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.stats {
+    margin-top: 20px;
+}
+
+.stat-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px 25px;
+    border-radius: 15px;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.stat-item:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* All Articles */
+#publicaciones {
+    /*font-size: 3rem;*/
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 40px;
 }
 
 /* Pagination Styles */
 .pagination {
     flex-wrap: wrap;
-    /* Allow pagination items to wrap on small screens */
 }
 
-.page-item {
-    margin: 2px;
-    /* Add spacing between pagination items */
-}
-
-.page-link {
-    padding: 0.5rem 0.75rem;
-    /* Adjust padding for smaller screens */
-    font-size: 0.875rem;
-    /* Reduce font size for smaller screens */
-}
-
-@media (max-width: 767.98px) {
-    .pagination {
-        justify-content: center;
-        /* Center pagination on small screens */
-    }
-
-    .page-link {
-        padding: 0.375rem 0.5rem;
-        /* Further reduce padding for very small screens */
-        font-size: 0.75rem;
-        /* Further reduce font size for very small screens */
-    }
-}
 </style>
