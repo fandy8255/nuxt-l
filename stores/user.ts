@@ -38,6 +38,14 @@ export const useUserStore = defineStore('user', {
         updateUserProfile(updatedData) {
             Object.assign(this, updatedData);
         },
+
+        async test(){
+            const { data, error } = await useFetch('/api/test');
+
+            console.log('tests', data)
+            return data
+        },
+
         async generateHMACSignature(timestamp) {
         
             const { data, error } = await useFetch('/api/hmac', {
@@ -48,7 +56,7 @@ export const useUserStore = defineStore('user', {
 
             if (error.value) {
                // console.error('Error generating HMAC signature:', error.value);
-                throw new Error('Failed to generate HMAC signature');
+                throw new Error('Failed to generate HMAC signature', error.value);
             }
 
             return data
@@ -337,11 +345,10 @@ export const useUserStore = defineStore('user', {
 
             const timestamp = Date.now().toString(); // Prevent replay attacks
             const signature = await this.generateHMACSignature(timestamp);
-            return signature
+            
             if (environment === "development") {
                 console.log('generated HMAC', signature)
             }
-            
 
             try {
                 const response = await fetch('https://lingerie.fandy8255.workers.dev/api/profile', {

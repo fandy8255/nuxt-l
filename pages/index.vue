@@ -282,6 +282,7 @@ const router = useRouter()
 const runtimeConfig = useRuntimeConfig();
 const environment = runtimeConfig.public.dev;
 const baseUrl = 'https://latinpanty.com'
+const userStore=useUserStore()
 
 function ctaClick() {
     router.push('/register')
@@ -289,6 +290,9 @@ function ctaClick() {
 
 
 onMounted(async () => {
+
+    const test=await userStore.test()
+    console.log('test', test)
 
     if (user.data.user) {
         router.push('/feed')
