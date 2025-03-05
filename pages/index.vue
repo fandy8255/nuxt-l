@@ -291,7 +291,8 @@ function ctaClick() {
 
 onMounted(async () => {
 
-    const test=await userStore.test()
+    const timestamp = Date.now().toString();
+    const test=await userStore.test(timestamp)
     console.log('test', test)
 
     if (user.data.user) {

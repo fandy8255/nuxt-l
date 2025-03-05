@@ -39,7 +39,7 @@ export const useUserStore = defineStore('user', {
             Object.assign(this, updatedData);
         },
 
-        async test(){
+        async test(timestamp){
             /*
             //PASSED 
             const { data, error } = await useFetch('/api/test');
@@ -47,7 +47,11 @@ export const useUserStore = defineStore('user', {
             console.log('tests', data)
             return data*/
 
-            const { data, error } = await useFetch('/api/hmac');
+            //const { data, error } = await useFetch('/api/hmac');
+
+            const { data, error } = await useFetch('/api/hmac', {
+                query: { timestamp },
+            });
 
             return data
         },
