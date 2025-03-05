@@ -4,6 +4,8 @@ export default defineEventHandler(async (event) => {
     try {
         const runtimeConfig = useRuntimeConfig();
         const secretKey = runtimeConfig.secretApiKey;
+        return secretKey;
+        /*
         console.log('blawan', secretKey)
 
         // Get the timestamp from the query parameters
@@ -21,7 +23,7 @@ export default defineEventHandler(async (event) => {
         hmac.update(timestamp);
         const signature = hmac.digest('hex');
 
-        return { secretKey, signature };
+        return { secretKey, signature };*/
 
     } catch (error) {
         console.log(error)

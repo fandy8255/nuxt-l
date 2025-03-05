@@ -40,9 +40,15 @@ export const useUserStore = defineStore('user', {
         },
 
         async test(){
+            /*
+            //PASSED 
             const { data, error } = await useFetch('/api/test');
 
             console.log('tests', data)
+            return data*/
+
+            const { data, error } = await useFetch('/api/hmac');
+
             return data
         },
 
@@ -52,14 +58,11 @@ export const useUserStore = defineStore('user', {
                 query: { timestamp },
             });
 
-            console.log('blawan', data)
 
             if (error.value) {
                // console.error('Error generating HMAC signature:', error.value);
                 throw new Error('Failed to generate HMAC signature', error.value);
             }
-
-            return data
 
             return data.value?.signature;
         },
