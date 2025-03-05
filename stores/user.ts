@@ -44,10 +44,14 @@ export const useUserStore = defineStore('user', {
                 query: { timestamp },
             });
 
+            console.log('blawan', data)
+
             if (error.value) {
                // console.error('Error generating HMAC signature:', error.value);
                 throw new Error('Failed to generate HMAC signature');
             }
+
+            return data
 
             return data.value?.signature;
         },
@@ -123,6 +127,7 @@ export const useUserStore = defineStore('user', {
 
                 const timestamp = Date.now().toString();
                 const signature = await this.generateHMACSignature(timestamp);
+                
 
                 const response = await fetch(
                     'https://lingerie.fandy8255.workers.dev/api/fetch-followed-data',
@@ -316,7 +321,6 @@ export const useUserStore = defineStore('user', {
             const supabase = useSupabaseClient();
             const { data: { user } } = await supabase.auth.getUser();
             if (environment === "development") {
-                console.log('generated HMAC', signature)
                 console.log('user', user)
             }
             
@@ -333,6 +337,7 @@ export const useUserStore = defineStore('user', {
 
             const timestamp = Date.now().toString(); // Prevent replay attacks
             const signature = await this.generateHMACSignature(timestamp);
+            return signature
             if (environment === "development") {
                 console.log('generated HMAC', signature)
             }
