@@ -315,7 +315,12 @@ export const useUserStore = defineStore('user', {
 
             const supabase = useSupabaseClient();
             const { data: { user } } = await supabase.auth.getUser();
-            console.log('user', user)
+            if (environment === "development") {
+                console.log('generated HMAC', signature)
+                console.log('user', user)
+            }
+            
+           
             if (!user) {
                 console.log('no user found')
                 return;
@@ -328,7 +333,10 @@ export const useUserStore = defineStore('user', {
 
             const timestamp = Date.now().toString(); // Prevent replay attacks
             const signature = await this.generateHMACSignature(timestamp);
-            console.log('generated HMAC', signature)
+            if (environment === "development") {
+                console.log('generated HMAC', signature)
+            }
+            
 
             try {
                 const response = await fetch('https://lingerie.fandy8255.workers.dev/api/profile', {
@@ -401,7 +409,7 @@ export const useUserStore = defineStore('user', {
                     await this.fetchThreads()
                 }
             } catch (error) {
-                console.error('Error fetching user data:', error);
+                //console.error('Error fetching user data:', error);
                 if (environment === "development") {
                     console.error('Error fetching user data:', error);
                 }
