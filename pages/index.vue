@@ -282,7 +282,6 @@ const router = useRouter()
 const runtimeConfig = useRuntimeConfig();
 const environment = runtimeConfig.public.dev;
 const baseUrl = 'https://latinpanty.com'
-const userStore= useUserStore()
 
 function ctaClick() {
     router.push('/register')
@@ -290,10 +289,6 @@ function ctaClick() {
 
 
 onMounted(async () => {
-    /*
-    const timestamp = Date.now().toString();
-    const test=await userStore.generateHMACSignature(timestamp)*/
-    console.log(test)
 
     if (user.data.user) {
         router.push('/feed')
