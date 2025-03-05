@@ -51,7 +51,7 @@ export default defineNuxtConfig({
 
   image: {
     bunny: {
-      baseURL: "baseurl",
+      baseURL: "https://lingerie.b-cdn.net",
     },
   },
 

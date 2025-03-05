@@ -119,6 +119,7 @@ useSeoMeta({
     canonical: `${baseUrl}/landing/tienda`, // Canonical URL for SEO
 
     // Structured Data (JSON-LD)
+    /*
     script: [
         {
             type: 'application/ld+json',
@@ -155,7 +156,7 @@ useSeoMeta({
                 })),
             }),
         },
-    ],
+    ],*/
 });
 
 </script>

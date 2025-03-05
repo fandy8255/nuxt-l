@@ -291,9 +291,11 @@ function ctaClick() {
 
 onMounted(async () => {
 
+    
     const timestamp = Date.now().toString();
-    const test=await userStore.test(timestamp)
+    const test=await userStore.generateHMACSignature(timestamp)
     console.log('test', test)
+    
 
     if (user.data.user) {
         router.push('/feed')
@@ -384,6 +386,7 @@ useSeoMeta({
     canonical: `${baseUrl}`, // Canonical URL for SEO
 
     // Structured Data (JSON-LD)
+    /*
     script: [
         {
             type: 'application/ld+json',
@@ -402,13 +405,13 @@ useSeoMeta({
                         url: `${baseUrl}/assets/images/panty-icon.png`, // Replace with your logo URL
                     },
                 },
-                /*
+                
                 potentialAction: {
                     '@type': 'SearchAction',
                     
                     target: `${baseUrl}/search?q={search_term_string}`,
                     'query-input': 'required name=search_term_string',
-                },*/
+                },
             }),
         },
         {
@@ -426,7 +429,7 @@ useSeoMeta({
                 ],
             }),
         },
-    ],
+    ],*/
 });
 
 </script>

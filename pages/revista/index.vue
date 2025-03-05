@@ -260,6 +260,7 @@ useSeoMeta({
     rating: 'adult',
 
     // Structured Data (JSON-LD)
+    /*
     script: [
         {
             type: 'application/ld+json',
@@ -280,7 +281,7 @@ useSeoMeta({
                 },
             }),
         },
-    ],
+    ],*/
 });
 </script>
 

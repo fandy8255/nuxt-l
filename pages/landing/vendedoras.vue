@@ -127,6 +127,7 @@ useSeoMeta({
     canonical: `${baseUrl}/landing/vendedoras`, // Canonical URL for SEO
 
     // Structured Data (JSON-LD)
+    /*
     script: [
         {
             type: 'application/ld+json',
@@ -163,7 +164,7 @@ useSeoMeta({
                 })),
             }),
         },
-    ],
+    ],*/
 });
 
 </script>
