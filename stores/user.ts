@@ -39,23 +39,6 @@ export const useUserStore = defineStore('user', {
             Object.assign(this, updatedData);
         },
 
-        async test(timestamp){
-            /*
-            //PASSED 
-            const { data, error } = await useFetch('/api/test');
-
-            console.log('tests', data)
-            return data*/
-
-            //const { data, error } = await useFetch('/api/hmac');
-
-            const { data, error } = await useFetch('/api/hmac', {
-                query: { timestamp },
-            });
-
-            return data
-        },
-
         async generateHMACSignature(timestamp) {
         
             const { data, error } = await useFetch('/api/hmac', {
@@ -65,7 +48,7 @@ export const useUserStore = defineStore('user', {
 
             if (error.value) {
                // console.error('Error generating HMAC signature:', error.value);
-                throw new Error('Failed to generate HMAC signature', error.value);
+                throw new Error('Failed to generate HMAC signature');
             }
 
             return data.value?.signature;
@@ -77,27 +60,6 @@ export const useUserStore = defineStore('user', {
             return user
 
         },
-        /*
-        async generateHMACSignature(timestamp) {
-            const runtimeConfig = useRuntimeConfig();
-            const secretKey = runtimeConfig.secretApiKey;
-            console.log('key', secretKey)
-
-            const encoder = new TextEncoder();
-            const keyData = encoder.encode(secretKey);
-            const timestampData = encoder.encode(timestamp);
-
-            const key = await crypto.subtle.importKey(
-                'raw', keyData, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
-            );
-
-            const signatureBuffer = await crypto.subtle.sign('HMAC', key, timestampData);
-
-            const signatureArray = Array.from(new Uint8Array(signatureBuffer));
-            const signatureHex = signatureArray.map(b => b.toString(16).padStart(2, '0')).join('');
-
-            return signatureHex;
-        },*/
 
         async isAd() {
 
@@ -215,7 +177,7 @@ export const useUserStore = defineStore('user', {
                 }
             } catch (error) {
                 if (environment === "development") {
-                    console.error('Error fetching liked products:', error.message);
+                    //console.error('Error fetching liked products:', error.message);
                 }
 
             }
@@ -245,7 +207,7 @@ export const useUserStore = defineStore('user', {
                 }
             } catch (error) {
                 if (environment === "development") {
-                    console.error('Error fetching blocked users:', error.message);
+                    //console.error('Error fetching blocked users:', error.message);
                 }
 
             }
@@ -275,7 +237,7 @@ export const useUserStore = defineStore('user', {
                 }
             } catch (error) {
                 if (environment === "development") {
-                    console.error('Error fetching blocked users:', error.message);
+                    //console.error('Error fetching blocked users:', error.message);
                 }
 
             }
@@ -319,7 +281,7 @@ export const useUserStore = defineStore('user', {
 
             } catch (error) {
                 if (environment === "development") {
-                    console.error('Error fetching threads:', error);
+                    //console.error('Error fetching threads:', error);
                 }
 
             }
@@ -336,7 +298,7 @@ export const useUserStore = defineStore('user', {
             const supabase = useSupabaseClient();
             const { data: { user } } = await supabase.auth.getUser();
             if (environment === "development") {
-                console.log('user', user)
+               // console.log('user', user)
             }
             
            
@@ -354,7 +316,7 @@ export const useUserStore = defineStore('user', {
             const signature = await this.generateHMACSignature(timestamp);
             
             if (environment === "development") {
-                console.log('generated HMAC', signature)
+                //console.log('generated HMAC', signature)
             }
 
             try {
@@ -369,8 +331,7 @@ export const useUserStore = defineStore('user', {
                 });
 
                 const result = await response.json();
-                console.log('resulted', result)
-                console.log('user', user)
+                
                 if (result?.data) {
                     this.setUser({
                         username: result.data.username,
@@ -430,7 +391,7 @@ export const useUserStore = defineStore('user', {
             } catch (error) {
                 //console.error('Error fetching user data:', error);
                 if (environment === "development") {
-                    console.error('Error fetching user data:', error);
+                    //console.error('Error fetching user data:', error);
                 }
             }
         },
@@ -463,7 +424,7 @@ export const useUserStore = defineStore('user', {
 
             } catch (error) {
                 if (environment === "development") {
-                    console.error('Error fetching seller products:', error);
+                    //console.error('Error fetching seller products:', error);
                 }
             }
         },

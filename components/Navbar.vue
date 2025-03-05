@@ -141,7 +141,7 @@ function closeNavbar() {
 async function signOut() {
     const { error } = await useSupabaseClient().auth.signOut();
     if (error) {
-        console.error(error);
+        //console.error(error);
     }
     userStore.signOut({
         username: '',

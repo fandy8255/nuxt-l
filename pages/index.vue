@@ -290,19 +290,13 @@ function ctaClick() {
 
 
 onMounted(async () => {
-
     
-    const timestamp = Date.now().toString();
-    const test=await userStore.generateHMACSignature(timestamp)
-    console.log('test', test)
-    
-
     if (user.data.user) {
         router.push('/feed')
     } else {
 
         if (environment === "development") {
-            console.log('no active user')
+            //console.log('no active user')
         }
 
     }

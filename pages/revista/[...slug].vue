@@ -59,15 +59,6 @@ const slug = useRoute().params.slug[0].toString();
 //const { data } = await useAsyncData(() => queryCollection('content').path('/articles/' + slug).first());
 const { data } = await useAsyncData(() => queryCollection('blog').path('/articles/' + slug).first());
 
-/*
-useHead({
-    link: [
-        {
-            rel: 'stylesheet',
-            href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css',
-        },
-    ],
-});*/
 
 console.log('art data', data)
 
@@ -197,7 +188,6 @@ useSeoMeta({
     margin-top: 20px;
 }
 
-/* Table of Contents Styling */
 #toc-column {
     position: relative;
 }
@@ -205,11 +195,9 @@ useSeoMeta({
 .toc-container {
     position: sticky;
     top: 100px;
-    /* Adjust based on your header height */
     max-height: calc(100vh - 120px);
-    /* Adjust based on your layout */
     overflow-y: auto;
-    /* Make TOC scrollable if content exceeds height */
+    
 }
 
 #toc-ul {
