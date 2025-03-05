@@ -65,6 +65,12 @@ const visibleButtons = 5;
 const loading = ref(true);
 const userStore = useUserStore();
 
+useSeoMeta({
+  title: 'Latin Panty | Uusarios',
+  description: 'Latin Panty | Usuarios',
+  robots: 'noindex', 
+});
+
 definePageMeta({
     middleware: ['auth']
 });

@@ -3,7 +3,8 @@
         <!-- Hero Section -->
         <section class="hero-section text-center py-xl-5 py-sm-1" style="">
             <div class="container">
-                <h1 class="display-4 fw-bold mb-4 py-2" style="color: aliceblue !important;">El Mercado #1 de Panties Usados
+                <h1 class="display-4 fw-bold mb-4 py-2" style="color: aliceblue !important;">El Mercado #1 de Panties
+                    Usados
                     en Latinoamérica</h1>
                 <div class="text-container">
                     <p class="lead mb-4 text-light banner-text">
@@ -37,6 +38,7 @@
                 </div>
             </div>
         </section>
+
 
         <section class="features-section py-5">
             <div class="container">
@@ -279,6 +281,8 @@ const user = await supabase.auth.getUser()
 const router = useRouter()
 const runtimeConfig = useRuntimeConfig();
 const environment = runtimeConfig.public.dev;
+const baseUrl = 'https://latinpanty.com'
+const userStore= useUserStore()
 
 function ctaClick() {
     router.push('/register')
@@ -286,6 +290,10 @@ function ctaClick() {
 
 
 onMounted(async () => {
+    /*
+    const timestamp = Date.now().toString();
+    const test=await userStore.generateHMACSignature(timestamp)*/
+    console.log(test)
 
     if (user.data.user) {
         router.push('/feed')
@@ -296,16 +304,6 @@ onMounted(async () => {
         }
 
     }
-})
-
-
-useSeoMeta({
-    title: 'Latin Panty | Compra y vende panties usados en latinoamérica',
-    ogTitle: 'Latin Panty | Compra panties y tangas usadas',
-    description: 'Compra y venta de panties usados de Latinas en Colombia, México, Perú, España, USA, Argentina, Bolivia, Paraguay, Uruguay , Brazil',
-    ogDescription: 'Compra y venta de panties usados de Latinas en Colombia, México, Perú, España, USA, Argentina, Bolivia, Paraguay, Uruguay , Brazil',
-    ogImage: '',
-    twitterCard: '',
 })
 
 const categories = [
@@ -349,6 +347,87 @@ const featuredItems = [
     { name: "Vintage Denim Jacket", image: "/images/featured/jacket.jpg", price: 40 },
     { name: "Floral Summer Dress", image: "/images/featured/dress.jpg", price: 25 },
     { name: "Leather Handbag", image: "/images/featured/handbag.jpg", price: 60 }]
+
+useSeoMeta({
+    // Basic Meta Tags
+    title: 'Latin Panty | Compra y Vende Panties Usados en Latinoamérica',
+    description: 'Únete al mercado #1 de panties usados en Latinoamérica. Más de 2,000,000 miembros reales compran y venden panties, medias, y contenido exclusivo. ¡Regístrate gratis y comienza hoy!',
+    charset: 'utf-8',
+    viewport: 'width=device-width, initial-scale=1.0',
+    robots: 'index, follow',
+    keywords: 'panties usados, vender panties, comprar panties, ropa interior usada, mercado latino, contenido exclusivo, medias usadas, tangas usadas, vendedoras latinas',
+    author: 'Latin Panty',
+    themeColor: '#ffffff',
+
+    // Open Graph (OG) Meta Tags
+    ogTitle: 'Latin Panty | Compra y Vende Panties Usados en Latinoamérica',
+    ogDescription: 'Únete al mercado #1 de panties usados en Latinoamérica. Más de 2,000,000 miembros reales compran y venden panties, medias, y contenido exclusivo. ¡Regístrate gratis y comienza hoy!',
+    ogImage: '/assets/images/hero-banner.jpg', // Replace with your homepage banner image
+    ogUrl: `${baseUrl}`, // Replace with your website URL
+    ogType: 'website',
+    ogLocale: 'es_US',
+    ogLocaleAlternate: [
+        'es_MX', 'es_AR', 'es_CO', 'es_CL', 'es_PE', 'es_VE', 'es_EC', 'es_GT', 'es_CU', 'es_BO', 'es_DO', 'es_HN', 'es_PY', 'es_SV', 'es_NI', 'es_CR', 'es_PR', 'es_ES', 'es_UY', 'es_PA',
+    ],
+    ogSiteName: 'Latin Panty',
+    ogDeterminer: 'auto',
+
+    // Twitter Meta Tags
+    twitterCard: 'summary_large_image',
+    twitterTitle: 'Latin Panty | Compra y Vende Panties Usados en Latinoamérica',
+    twitterDescription: 'Únete al mercado #1 de panties usados en Latinoamérica. Más de 2,000,000 miembros reales compran y venden panties, medias, y contenido exclusivo. ¡Regístrate gratis y comienza hoy!',
+    twitterImage: '/assets/images/hero-banner.jpg', // Replace with your homepage banner image
+    twitterSite: '@latinpanty6969xxx',
+    twitterCreator: '@latinpanty6969xxx',
+
+    // Additional Meta Tags
+    canonical: `${baseUrl}`, // Canonical URL for SEO
+
+    // Structured Data (JSON-LD)
+    script: [
+        {
+            type: 'application/ld+json',
+            innerHTML: JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'WebSite',
+                name: 'Latin Panty',
+                description: 'El mercado #1 de panties usados en Latinoamérica. Compra y vende panties, medias, y contenido exclusivo en una comunidad segura y anónima.',
+                url: `${baseUrl}`,
+                image: '/assets/images/hero-banner.jpg', // Replace with your homepage banner image
+                publisher: {
+                    '@type': 'Organization',
+                    name: 'Latin Panty',
+                    logo: {
+                        '@type': 'ImageObject',
+                        url: `${baseUrl}/assets/images/panty-icon.png`, // Replace with your logo URL
+                    },
+                },
+                /*
+                potentialAction: {
+                    '@type': 'SearchAction',
+                    
+                    target: `${baseUrl}/search?q={search_term_string}`,
+                    'query-input': 'required name=search_term_string',
+                },*/
+            }),
+        },
+        {
+            type: 'application/ld+json',
+            innerHTML: JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'Organization',
+                name: 'Latin Panty',
+                url: `${baseUrl}`,
+                logo: `${baseUrl}/assets/images/panty-icon.png`, // Replace with your logo URL
+                sameAs: [
+                    'https://facebook.com/latinpanty',
+                    'https://twitter.com/latinpanty',
+                    'https://instagram.com/latinpanty',
+                ],
+            }),
+        },
+    ],
+});
 
 </script>
 
@@ -479,7 +558,7 @@ const featuredItems = [
 }
 
 .btn-action {
-    background: rgb(205, 89, 213);
+    background: rgba(219, 74, 132) !important;
     color: white !important;
     z-index: 1000;
 }

@@ -1,45 +1,37 @@
 <template>
     <div>
+        <!-- Hero Section -->
         <div v-if="loaded">
-            <div class="hero-section text-center d-flex justify-content-center align-items-center mb-5">
-                <div class="parallax-bg"></div>
-                <div class="hero-content">
-                    <h1 class="display-3 fw-bold text-white mb-4">Revista Latin Panty</h1>
-                    <div class="text-container p-5 mt-3">
-                        <p class="text-light mb-4" style="font-size: 1.25rem; max-width: 900px; margin: 0 auto;">
-                            Descubre el mundo de las estrellas latinas más candentes y exclusivas. En Latin
-                            Panty, te llevamos detrás de cámaras para conocer a tus modelos favoritas, sus
-                            historias y sus secretos mejor guardados. ¡Suscríbete ahora y accede a contenido exclusivo,
-                            entrevistas íntimas, fotos y videos que no encontrarás en ningún otro lugar!
-                        </p>
-                        <!--
-                        <div class="stats d-flex justify-content-center gap-4 mt-4">
-                            <div class="stat-item d-flex align-items-center gap-3">
-                                <i class="fas fa-heart fa-2x text-white"></i>
-                                <h3 class="text-white mt-2">Latinas</h3>
-                            </div>
-                        </div>-->
-                        <!-- Call-to-Action Button -->
-                        <a href="/suscribirse" class="cta btn btn-lg text-light fw-bolder mt-4"
-                            style="font-size: 1.1rem; padding: 10px 30px; background:rgba(219, 74, 132) !important;">
-                            Suscríbete Ahora
-                        </a>
+            <div class="hero-section">
+                <div class="banner-img">
+                    <NuxtImg :src="bannerData.image" :alt="bannerData.alt" class="banner-image"
+                        placeholder="/assets/images/placeholder.jpg" />
+                </div>
+                <div class="hero-content p-5">
+                    <h1 class="display-2 fw-bold text-white mb-4">{{ categoryName.toUpperCase() }}</h1>
+                    <p class="lead text-light mb-4">{{ bannerData.caption }}</p>
+                    <div class="stats d-flex justify-content-center gap-4">
+                        <div class="stat-item">
+                            <i class="fas fa-users fa-2x text-white"></i>
+                            <h3 class="text-white mt-2">Colombianas Onlyfans</h3>
+                        </div>
                     </div>
                 </div>
             </div>
-
-
 
             <div class="container-fluid">
                 <FeaturedArticlesSplide :featuredArticles="featuredArticles" />
             </div>
 
+            <!-- Tags Section -->
 
 
+            <!-- All Articles -->
             <div v-if="allArticles.length > 0" class="container-fluid px-5 mt-5">
                 <h2 class="text-start">Publicaciones</h2>
-                <!-- Include the Tags component -->
-                <Tags :tags="tags" @select-tag="handleTagSelect" />
+                <div class="margins container-fluid">
+                    <Tags :tags="tags" @select-tag="handleTagSelect" />
+                </div>
                 <div class="row gy-4 mx-0">
                     <div v-for="article in paginatedArticles" :key="article.title" class="col-sm-12 col-md-6 col-lg-3">
                         <ArticleCard :date="article.date" :title="article.title" :category="article.category"
@@ -48,8 +40,9 @@
                     </div>
                 </div>
 
+                <!-- Pagination Controls -->
                 <nav aria-label="Page navigation" class="mt-5 mb-5">
-                    <ul class="pagination justify-content-start flex-wrap">
+                    <ul class="pagination justify-content-center flex-wrap">
                         <li class="page-item" :class="{ disabled: currentPage === 1 }">
                             <button class="page-link" @click="changePage(1)">Primero</button>
                         </li>
@@ -72,13 +65,7 @@
             <div v-else class="text-center mt-5">
                 <p class="text-muted">No articles found</p>
             </div>
-
-            <div class="margins container-fluid">
-                <CategoriesSplide :categories="categories" />
-            </div>
-
         </div>
-
         <div v-else>
             <div class="text-center mt-5" style="height: 600px !important; margin-top: 100px !important;">
                 <div class="spinner-border text-primary" role="status">
@@ -91,17 +78,17 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import Tags from '~/components/Tags.vue'; // Import the Tags component
+import { useRoute } from 'vue-router';
 
+const route = useRoute();
+const categoryName = ref(route.params.categoryName[0]);
 const allArticles = ref([]); // Store all fetched articles
-const featuredArticles = ref([]);
-const currentPage = ref(1);
-const itemsPerPage = 6; // Number of articles per page
-const selectedCategory = ref('');
-const router = useRouter();
-const categories = ref([]);
-const loaded = ref(false);
 const tags = ref({});
+const currentPage = ref(1);
+const itemsPerPage = 4; // Number of articles per page
+const banners = ref([]);
+const loaded = ref(false);
+const featuredArticles = ref([]);
 const selectedTag = ref('todos'); // Default to 'todos' to show all articles
 const baseUrl = 'https://latinpanty.com'
 
@@ -118,18 +105,32 @@ useHead({
     ],
 });
 
-
-
-// Fetch categories
-const fetchCategories = async () => {
+// Fetch banner data from the JSON file
+const fetchBanners = async () => {
     const { data } = await useFetch('/assets/magazine/category-banners.json');
-    categories.value = data.value;
+    banners.value = data.value;
 };
 
-// Fetch all articles
+// Find the banner data for the current category
+const bannerData = computed(() => {
+    const banner = banners.value.find((banner) => {
+        const bannerCategory = banner.category.toLowerCase().trim();
+        const currentCategory = categoryName.value.toLowerCase().trim();
+        return bannerCategory === currentCategory;
+    });
+
+    return banner || {
+        image: '/assets/images/panty-icon.jpg',
+        alt: 'Default Banner',
+        caption: 'Categoría: ' + categoryName.value,
+    };
+});
+
+// Fetch all articles for the category
 const fetchAllArticles = async () => {
     const query = queryCollection('blog')
         .where('published', '=', true)
+        .where('category', '=', categoryName.value)
         .order('date', 'DESC');
 
     const { data } = await useAsyncData('blog', () => query.all());
@@ -151,6 +152,7 @@ const fetchAllArticles = async () => {
 const fetchFeaturedArticles = async () => {
     const { data } = await useAsyncData('featured', () =>
         queryCollection('blog')
+            .where('category', '=', categoryName.value)
             .where('featured', '=', true)
             .order('date', 'DESC')
             .limit(6)
@@ -210,35 +212,34 @@ const visiblePages = computed(() => {
 const changePage = (page) => {
     if (page > 0 && page <= totalPages.value) {
         currentPage.value = page;
-        // window.scrollTo(0, 0);
+        //window.scrollTo(0, 0);
     }
 };
 
 onMounted(async () => {
-    await fetchAllArticles(); // Fetch all articles once
+    await fetchBanners(); // Fetch banner data
+    await fetchAllArticles(); // Fetch all articles for the category
     await fetchFeaturedArticles();
-    await fetchCategories();
     loaded.value = true;
-    //window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
 });
 
-// SEO Meta Tags
 useSeoMeta({
     // Basic Meta Tags
-    title: 'Latin Panty Revista | Descubre a las Estrellas Latinas',
-    description: 'Descubre el mundo de las estrellas latinas más candentes y exclusivas. En Latin Panty, te llevamos detrás de cámaras para conocer a tus modelos favoritas, sus historias y sus secretos mejor guardados. ¡Suscríbete ahora!',
+    title: `Latin Panty Revista | Latinas ${categoryName.value.toUpperCase()}`,
+    description: bannerData.value.caption || `Explora las mejores publicaciones sobre ${categoryName.value} en Latin Panty Revista.`,
     charset: 'utf-8',
     viewport: 'width=device-width, initial-scale=1.0',
     robots: 'index, follow',
-    keywords: 'Latinas, OnlyFans, Instagram, Modelos, Revista, Entrevistas, Fotos, Videos',
+    keywords: `${categoryName.value}, Latinas, OnlyFans, Instagram, Modelos, ${Object.keys(tags.value).join(', ')}`,
     author: 'Latin Panty',
     themeColor: '#ffffff',
 
     // Open Graph (OG) Meta Tags
-    ogTitle: 'Latin Panty Revista | Descubre a las Estrellas Latinas',
-    ogDescription: 'Descubre el mundo de las estrellas latinas más candentes y exclusivas. En Latin Panty, te llevamos detrás de cámaras para conocer a tus modelos favoritas, sus historias y sus secretos mejor guardados. ¡Suscríbete ahora!',
-    ogImage: '/assets/images/hero-banner.jpg', // Replace with your homepage banner image
-    ogUrl: `${baseUrl}/revista`, // Replace with your website URL
+    ogTitle: `Latin Panty Revista | ${categoryName.value.toUpperCase()}`,
+    ogDescription: bannerData.value.caption || `Explora las mejores publicaciones sobre ${categoryName.value} en Latin Panty Revista.`,
+    ogImage: bannerData.value.image || '/assets/images/panty-icon.jpg',
+    ogUrl: `${baseUrl}/revista/${categoryName.value}`,
     ogType: 'website',
     ogLocale: 'es_US',
     ogLocaleAlternate: [
@@ -249,14 +250,14 @@ useSeoMeta({
 
     // Twitter Meta Tags
     twitterCard: 'summary_large_image',
-    twitterTitle: 'Latin Panty Revista | Descubre a las Estrellas Latinas',
-    twitterDescription: 'Descubre el mundo de las estrellas latinas más candentes y exclusivas. En Latin Panty, te llevamos detrás de cámaras para conocer a tus modelos favoritas, sus historias y sus secretos mejor guardados. ¡Suscríbete ahora!',
-    twitterImage: '/assets/images/hero-banner.jpg', // Replace with your homepage banner image
+    twitterTitle: `Latin Panty Revista | ${categoryName.value.toUpperCase()}`,
+    twitterDescription: bannerData.value.caption || `Explora las mejores publicaciones sobre ${categoryName.value} en Latin Panty Revista.`,
+    twitterImage: bannerData.value.image || '/assets/images/panty-icon.jpg',
     twitterSite: '@latinpanty6969xxx',
     twitterCreator: '@latinpanty6969xxx',
 
     // Additional Meta Tags
-    canonical: `${baseUrl}/revista`, // Canonical URL for SEO
+    canonical: `${baseUrl}/revista/${categoryName.value}`,
     rating: 'adult',
 
     // Structured Data (JSON-LD)
@@ -265,37 +266,25 @@ useSeoMeta({
             type: 'application/ld+json',
             innerHTML: JSON.stringify({
                 '@context': 'https://schema.org',
-                '@type': 'WebSite',
-                name: 'Latin Panty Revista',
-                description: 'Descubre el mundo de las estrellas latinas más candentes y exclusivas. En Latin Panty, te llevamos detrás de cámaras para conocer a tus modelos favoritas, sus historias y sus secretos mejor guardados. ¡Suscríbete ahora!',
-                url: `${baseUrl}/revista`,
-                image: '/assets/images/hero-banner.jpg', // Replace with your homepage banner image
-                publisher: {
-                    '@type': 'Organization',
-                    name: 'Latin Panty Revista',
-                    logo: {
-                        '@type': 'ImageObject',
-                        url: `${baseUrl}/assets/images/panty-icon.png`, // Replace with your logo URL
-                    },
+                '@type': 'CollectionPage',
+                name: `Latin Panty Revista | ${categoryName.value.toUpperCase()}`,
+                description: bannerData.value.caption || `Explora las mejores publicaciones sobre ${categoryName.value} en Latin Panty Revista.`,
+                image: bannerData.value.image || '/assets/images/panty-icon.jpg',
+                url: `${baseUrl}/revista/${categoryName.value}`,
+                about: {
+                    '@type': 'Category',
+                    name: categoryName.value.toUpperCase(),
+                    description: `Categoría dedicada a ${categoryName.value} en Latin Panty Revista.`,
                 },
             }),
         },
     ],
 });
+
+
 </script>
 
-
 <style scoped>
-.cta:hover {
-    color: white !important;
-}
-
-.margins {
-    margin-top: 60px;
-    margin-bottom: 60px;
-}
-
-/* Hero Section with Parallax */
 .hero-section {
     position: relative;
     height: 70vh;
@@ -307,61 +296,42 @@ useSeoMeta({
     overflow: hidden;
 }
 
-.parallax-bg {
+.banner-img {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('/assets/images/hero-banner.jpg');
-    background-size: cover;
-    background-position: center;
     z-index: -1;
-    /*transform: translateZ(-1px) scale(2);*/
-    /* Parallax effect */
+}
+
+.banner-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .hero-content {
     z-index: 1;
-}
-
-.hero-section h1 {
-    font-size: 4rem;
-    font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.hero-section p {
-    font-size: 1.75rem;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent overlay */
+    /*padding: 20px;*/
+    border-radius: 10px;
 }
 
 .stats {
     margin-top: 20px;
 }
 
-.text-container {
+.stat-item {
     background: rgba(255, 255, 255, 0.1);
     padding: 15px 25px;
     border-radius: 15px;
     transition: transform 0.3s ease, background 0.3s ease;
 }
 
-.text-container:hover {
+.stat-item:hover {
     transform: scale(1.1);
     background: rgba(255, 255, 255, 0.2);
-}
-
-/* All Articles */
-#publicaciones {
-    /*font-size: 3rem;*/
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 40px;
-}
-
-/* Pagination Styles */
-.pagination {
-    flex-wrap: wrap;
 }
 </style>

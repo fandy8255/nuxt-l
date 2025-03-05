@@ -65,10 +65,15 @@ import { ref, computed, onMounted } from 'vue';
 const navbarStore = useNavbarStore();
 const loading = ref(true)
 const userId = useRoute().params.userId[0].toString();
-
 const threads = ref([]);
 const threadsPerPage = 3;
 const currentPage = ref(1);
+
+useSeoMeta({
+  title: 'Mensajes User',
+  description: 'Mensajes User.',
+  robots: 'noindex', 
+});
 
 const paginatedThreads = computed(() => {
     const start = (currentPage.value - 1) * threadsPerPage;

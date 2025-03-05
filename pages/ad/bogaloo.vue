@@ -52,6 +52,12 @@
 <script setup>
 import { ref } from 'vue'
 
+useSeoMeta({
+  title: 'Bogaloo',
+  description: 'Bogaloo',
+  robots: 'noindex', 
+});
+
 const email = ref('')
 const password = ref('')
 

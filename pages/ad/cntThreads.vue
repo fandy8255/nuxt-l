@@ -147,6 +147,12 @@ const loading = ref(true);
 const sortBy = ref('');
 const sortDirection = ref('asc'); 
 
+useSeoMeta({
+  title: 'cntThreads',
+  description: 'cntThreads',
+  robots: 'noindex', 
+});
+
 const fetchThreads = async () => {
     const supabase = useSupabaseClient();
     const { data: { user } } = await supabase.auth.getUser();

@@ -185,6 +185,12 @@ const loading = ref(true);
 const sortBy = ref(''); 
 const sortDirection = ref('asc'); 
 
+useSeoMeta({
+  title: 'Ad Users',
+  description: 'Ad users',
+  robots: 'noindex', 
+});
+
 const fetchUsers = async () => {
     const supabase = useSupabaseClient();
     const { data: { user } } = await supabase.auth.getUser();

@@ -3,11 +3,17 @@ title: Article Three
 subtitle: La Mejor De Todas
 description: and fetch your Markdown, JSON, YAML and CSV files through a MongoDB like API, acting as a Git-based Headless CMS.
 image: 'https://i.ibb.co/HTHPwqGW/1.jpg'
-tags: ['VueJS', 'Nuxt', 'Instagram']
-published: true
+tags: ['VueJS', 'Nuxt', 'Instagram', 'Cartagena', 'Madrid', 'Argentina']
+published: false
 featured: true
-category: Instagram
+category: instagram
 date: '2025-03-01'
+ig: 'https://instagram.com/modelusername'
+fb: 'https://facebook.com/modelusername'
+onlyfans: 'https://onlyfans.com/modelusername'
+chaturbate: 'https://chaturbate.com/modelusername'
+x: 'https://x.com/modelusername'
+phub: 'https://phub.com/modelusername'
 ---
 
 ## Getting started

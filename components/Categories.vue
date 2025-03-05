@@ -3,9 +3,13 @@
       <h2 class="text-start">Categories</h2>
       <div class="row gy-4">
         <div v-for="(category, index) in categories" :key="index" class="col-sm-6 col-md-4 col-lg-3">
-          <div class="category-card" :style="{ backgroundImage: `url(${category.img})` }" @click="selectCategory(category.category)">
-            <div class="category-name text-light">{{ category.category }}</div>
+          <NuxtLink :to="`revista/category/${category.category.toLowerCase()}`" >
+            <div class="category-card border rounded" :style="{ backgroundImage: `url(${category.image})` }">
+            <div class="category-name text-light rounded">
+              {{ category.category.toUpperCase() }}</div>
           </div>
+          </NuxtLink>
+          
         </div>
       </div>
     </div>
@@ -19,11 +23,14 @@
     },
   });
   
+  
   const emit = defineEmits(['select-category']);
   
   const selectCategory = (category) => {
     emit('select-category', category); // Emit the selected category to the parent
   };
+
+
   </script>
   
   <style scoped>
@@ -56,6 +63,8 @@
   }
   
   .category-name {
+    background: rgba(128, 128, 128, 0.619);
+    padding: 15px;
     position: absolute;
     top: 50%;
     left: 50%;

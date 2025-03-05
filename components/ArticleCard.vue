@@ -6,14 +6,17 @@
             <div id="toccc">
                 <!-- {{ toc }} -->
             </div>
-            <figure id="card-main-head" class="card-img-top m-0 overflow-hidden bsb-overlay-hover" :style="{height: cardHeight }">
+            <figure id="card-main-head" class="card-img-top m-0 overflow-hidden bsb-overlay-hover"
+                :style="{ height: cardHeight }">
                 <NuxtLink :to="'/revista/' + artPath">
                     <!--{{ imgSrc }}-->
-                    <NuxtImg class="bsb-scale bsb-hover-scale-up" loading="lazy" :src="imgSrc" alt="Business" style="width:100%;"  />
+                    <NuxtImg class="bsb-scale bsb-hover-scale-up" loading="lazy" :src="imgSrc" alt="Business"
+                        style="width:100%;" />
                 </NuxtLink>
                 <figcaption>
-                    <svg  xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white"
-                        class="bi bi-eye text-light bsb-hover-fadeInLeft" viewBox="0 0 16 16" style="color: white !important;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white"
+                        class="bi bi-eye text-light bsb-hover-fadeInLeft" viewBox="0 0 16 16"
+                        style="color: white !important;">
                         <path
                             d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
                         <path
@@ -26,7 +29,9 @@
                 <div class="entry-header mb-3">
                     <ul class="entry-meta list-unstyled d-flex mb-2">
                         <li>
-                            <a class="link-primary text-decoration-none" href="#!">{{ category }}</a>
+                            <h6 class="link-primary text-decoration-none" style="color: blue;">
+                                {{ category.charAt(0).toUpperCase() + category.slice(1) }}
+                            </h6>
                         </li>
                     </ul>
                     <h2 class="card-title entry-title h4 mb-0">
@@ -75,29 +80,28 @@
 
 <script setup>
 
-const { title, imgSrc, articleDescription, artPath, toc, category, date , cardHeight } = defineProps(['title', 'imgSrc', 'articleDescription', 'artPath', 'toc', 'category', 'date' ,'cardHeight'])
+const { title, imgSrc, articleDescription, artPath, toc, category, date, cardHeight } = defineProps(['title', 'imgSrc', 'articleDescription', 'artPath', 'toc', 'category', 'date', 'cardHeight'])
 //const { } = defineProps(['articleDescription'])
 
 console.log('testing')
 
 const formatDate = (dateString) => {
 
-  // Split the date string into year, month, and day
-  const [year, month, day] = dateString.split('-');
+    // Split the date string into year, month, and day
+    const [year, month, day] = dateString.split('-');
 
-  // Create a Date object in local time
-  const date = new Date(year, month - 1, day); // Note: Months are 0-indexed in JavaScript
+    // Create a Date object in local time
+    const date = new Date(year, month - 1, day); // Note: Months are 0-indexed in JavaScript
 
-  // Format the date
-  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    // Format the date
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 };
 
 </script>
 
 
 <style scoped>
-.card-body{
+.card-body {
     /*background: rgb(200, 200, 200) !important;*/
 }
-
 </style>

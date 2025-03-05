@@ -62,6 +62,13 @@ const currentPage = ref(1);
 const itemsPerPage = 4;
 const loading = ref(true);
 
+useSeoMeta({
+  title: 'Latin Panty | Tienda',
+  description: 'Latin Panty | Tienda',
+  robots: 'noindex', 
+});
+
+
 const fetchProducts = async () => {
     const timestamp = Date.now().toString();
     const signature = await userStore.generateHMACSignature(timestamp);

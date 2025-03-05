@@ -160,6 +160,12 @@ const loading = ref(true);
 const sortBy = ref(''); 
 const sortDirection = ref('asc'); 
 
+useSeoMeta({
+  title: 'cntProducts',
+  description: 'cntProducts',
+  robots: 'noindex', 
+});
+
 const fetchProducts = async () => {
     const supabase = useSupabaseClient();
     const { data: { user } } = await supabase.auth.getUser();

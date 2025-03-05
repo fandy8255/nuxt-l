@@ -199,6 +199,12 @@ const username = useRoute().params.username[0];
 const followed = ref(null);
 const followers = ref(null);
 
+useSeoMeta({
+  title: `Perfil: ${username}`,
+  description: 'This is my page description.',
+  robots: 'noindex', // Prevent indexing
+});
+
 function test() {
     console.log('emmited');
     loadUserData();

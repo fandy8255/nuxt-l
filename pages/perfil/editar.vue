@@ -32,6 +32,12 @@ import { ref, onMounted } from "vue";
 const supabase = useSupabaseClient()
 const { data: { user } } = await supabase.auth.getUser() 
 
+useSeoMeta({
+  title: `Editar`,
+  description: 'Editar',
+  robots: 'noindex', 
+});
+
 const userObj = ref({});
 const form = ref({
   username: "",

@@ -107,6 +107,12 @@
 import { ref, onMounted } from "vue";
 const userStore= useUserStore()
 
+useSeoMeta({
+  title: 'Ad',
+  description: 'Ad',
+  robots: 'noindex', 
+});
+
 const stats = ref({
   userCount: 0,
   productCount: 0,

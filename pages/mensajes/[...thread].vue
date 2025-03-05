@@ -42,6 +42,12 @@ const otherUser = ref({});
 const messages = ref([]);
 const newMessage = ref('');
 
+useSeoMeta({
+  title: `Mensajes con ${otherUser.username}`,
+  description: 'Mensajes',
+  robots: 'noindex', // Prevent indexing
+});
+
 const fetchMessages = async () => {
 
     try {

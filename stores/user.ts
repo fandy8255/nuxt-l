@@ -24,6 +24,7 @@ export const useUserStore = defineStore('user', {
         message_count: 0
     }),
     actions: {
+
         setUser(userData) {
             Object.assign(this, userData, { logged_in: true });
         },
@@ -37,6 +38,19 @@ export const useUserStore = defineStore('user', {
         updateUserProfile(updatedData) {
             Object.assign(this, updatedData);
         },
+        async generateHMACSignature(timestamp) {
+        
+            const { data, error } = await useFetch('/api/hmac', {
+                query: { timestamp },
+            });
+
+            if (error.value) {
+               // console.error('Error generating HMAC signature:', error.value);
+                throw new Error('Failed to generate HMAC signature');
+            }
+
+            return data.value?.signature;
+        },
 
         async getUser() {
             const supabase = useSupabaseClient();
@@ -44,10 +58,11 @@ export const useUserStore = defineStore('user', {
             return user
 
         },
-
+        /*
         async generateHMACSignature(timestamp) {
             const runtimeConfig = useRuntimeConfig();
-            const secretKey = runtimeConfig.public.secretApiKey;
+            const secretKey = runtimeConfig.secretApiKey;
+            console.log('key', secretKey)
 
             const encoder = new TextEncoder();
             const keyData = encoder.encode(secretKey);
@@ -63,7 +78,7 @@ export const useUserStore = defineStore('user', {
             const signatureHex = signatureArray.map(b => b.toString(16).padStart(2, '0')).join('');
 
             return signatureHex;
-        },
+        },*/
 
         async isAd() {
 
@@ -71,7 +86,7 @@ export const useUserStore = defineStore('user', {
 
             if (!user) return;
 
-            const timestamp = Date.now().toString(); 
+            const timestamp = Date.now().toString();
             const signature = await this.generateHMACSignature(timestamp);
 
             try {
@@ -106,7 +121,7 @@ export const useUserStore = defineStore('user', {
 
                 const userId = this.id;
 
-                const timestamp = Date.now().toString(); 
+                const timestamp = Date.now().toString();
                 const signature = await this.generateHMACSignature(timestamp);
 
                 const response = await fetch(
@@ -137,11 +152,11 @@ export const useUserStore = defineStore('user', {
                     return data.data
 
                 } else {
-                    
+
                 }
             } catch (error) {
                 if (environment === "development") {
-                    console.error('Error:', error.message);
+                    //console.error('Error:', error.message);
                 }
 
             }
@@ -154,13 +169,13 @@ export const useUserStore = defineStore('user', {
 
             try {
 
-                if (!this.logged_in) return; 
+                if (!this.logged_in) return;
 
                 const supabase = useSupabaseClient();
                 const { data: { user } } = await supabase.auth.getUser();
                 if (!user) return;
 
-                const timestamp = Date.now().toString(); 
+                const timestamp = Date.now().toString();
                 const signature = await this.generateHMACSignature(timestamp);
 
 
@@ -176,13 +191,13 @@ export const useUserStore = defineStore('user', {
 
                 const result = await response.json();
                 if (result?.likedProducts) {
-                    this.liked_products = result.likedProducts; 
+                    this.liked_products = result.likedProducts;
                 }
             } catch (error) {
                 if (environment === "development") {
                     console.error('Error fetching liked products:', error.message);
                 }
-                
+
             }
         },
 
@@ -190,29 +205,29 @@ export const useUserStore = defineStore('user', {
             const runtimeConfig = useRuntimeConfig();
             const environment = runtimeConfig.public.dev;
             try {
-                const timestamp = Date.now().toString(); 
+                const timestamp = Date.now().toString();
                 const signature = await this.generateHMACSignature(timestamp);
-                
+
                 const response = await fetch('https://lingerie.fandy8255.workers.dev/api/blocked-users', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `HVAC ${signature}`,
                         'X-Timestamp': timestamp,
-                        'X-User': JSON.stringify({ id: this.id, username: this.username }), 
+                        'X-User': JSON.stringify({ id: this.id, username: this.username }),
                     },
                 });
 
                 const result = await response.json();
 
                 if (result?.blocked_users) {
-                    this.blocked_users = result.blocked_users; 
+                    this.blocked_users = result.blocked_users;
                 }
             } catch (error) {
                 if (environment === "development") {
                     console.error('Error fetching blocked users:', error.message);
                 }
-                
+
             }
         },
 
@@ -220,29 +235,29 @@ export const useUserStore = defineStore('user', {
             const runtimeConfig = useRuntimeConfig();
             const environment = runtimeConfig.public.dev;
             try {
-                const timestamp = Date.now().toString(); 
+                const timestamp = Date.now().toString();
                 const signature = await this.generateHMACSignature(timestamp);
-                
+
                 const response = await fetch('https://lingerie.fandy8255.workers.dev/api/blocked-by-users', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `HVAC ${signature}`,
                         'X-Timestamp': timestamp,
-                        'X-User': JSON.stringify({ id: this.id, username: this.username }), 
+                        'X-User': JSON.stringify({ id: this.id, username: this.username }),
                     },
                 });
 
                 const result = await response.json();
 
                 if (result?.blocked_by) {
-                    this.blocked_by = result.blocked_by; 
+                    this.blocked_by = result.blocked_by;
                 }
             } catch (error) {
                 if (environment === "development") {
                     console.error('Error fetching blocked users:', error.message);
                 }
-                
+
             }
         }, async fetchThreads() {
             const runtimeConfig = useRuntimeConfig();
@@ -286,7 +301,7 @@ export const useUserStore = defineStore('user', {
                 if (environment === "development") {
                     console.error('Error fetching threads:', error);
                 }
-                
+
             }
         },
 
@@ -294,12 +309,17 @@ export const useUserStore = defineStore('user', {
 
             const runtimeConfig = useRuntimeConfig();
             const environment = runtimeConfig.public.dev;
-            
+            console.log('fetching user data')
+
             if (this.logged_in) return; // Prevent duplicate fetches if data is already set
 
             const supabase = useSupabaseClient();
             const { data: { user } } = await supabase.auth.getUser();
-            if (!user) return;
+            console.log('user', user)
+            if (!user) {
+                console.log('no user found')
+                return;
+            }
 
             if (this.products.length > 0) {
                 console.log('Products are already loaded:', this.products);
@@ -308,6 +328,7 @@ export const useUserStore = defineStore('user', {
 
             const timestamp = Date.now().toString(); // Prevent replay attacks
             const signature = await this.generateHMACSignature(timestamp);
+            console.log('generated HMAC', signature)
 
             try {
                 const response = await fetch('https://lingerie.fandy8255.workers.dev/api/profile', {
@@ -321,6 +342,8 @@ export const useUserStore = defineStore('user', {
                 });
 
                 const result = await response.json();
+                console.log('resulted', result)
+                console.log('user', user)
                 if (result?.data) {
                     this.setUser({
                         username: result.data.username,
@@ -378,6 +401,7 @@ export const useUserStore = defineStore('user', {
                     await this.fetchThreads()
                 }
             } catch (error) {
+                console.error('Error fetching user data:', error);
                 if (environment === "development") {
                     console.error('Error fetching user data:', error);
                 }
@@ -388,9 +412,9 @@ export const useUserStore = defineStore('user', {
             const runtimeConfig = useRuntimeConfig();
             const environment = runtimeConfig.public.dev;
 
-            if (this.user_type !== 'seller') return; 
+            if (this.user_type !== 'seller') return;
 
-            const timestamp = Date.now().toString(); 
+            const timestamp = Date.now().toString();
             const signature = await this.generateHMACSignature(timestamp);
 
             try {
@@ -417,7 +441,7 @@ export const useUserStore = defineStore('user', {
             }
         },
         addToFeed(item) {
-            
+
             if (this.user_type !== 'seller' && item.type === 'product') {
                 return;
             }

@@ -8,7 +8,7 @@ export const useNavbarStore = defineStore('navbar', {
     actions: {
         async generateHMACSignature(timestamp) {
             const runtimeConfig = useRuntimeConfig();
-            const secretKey = runtimeConfig.public.secretApiKey;
+            const secretKey = runtimeConfig.secretApiKey;
 
             const encoder = new TextEncoder();
             const keyData = encoder.encode(secretKey);

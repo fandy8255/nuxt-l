@@ -1,1 +1,9 @@
-
+User-agent: *
+Disallow: /dashboard
+Disallow: /mensajes
+Disallow: /perfil
+Disallow: /user
+Disallow: /tienda
+Disallow: /usuarios
+Disallow: /feed
+Disallow: /ad

@@ -3,10 +3,16 @@ title: Article Two
 description: CMS HRRH ER
 image: 'https://i.ibb.co/gMy3hvNs/2.jpg'
 tags: ['VueJS', 'Nuxt']
-published: true
+published: false
 featured: false
-category: Instagram
+category: instagram
 date: '2025-02-03'
+ig: 'https://instagram.com/modelusername'
+fb: 'https://facebook.com/modelusername'
+onlyfans: 'https://onlyfans.com/modelusername'
+chaturbate: 'https://chaturbate.com/modelusername'
+x: 'https://x.com/modelusername'
+phub: 'https://phub.com/modelusername'
 ---
 
 ## Getting started

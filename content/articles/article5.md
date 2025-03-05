@@ -4,10 +4,16 @@ subtitle: La Mejor De Todas
 description: and fetch your Markdown, JSON, YAML and CSV files through a MongoDB like API, acting as a Git-based Headless CMS.
 image: 'https://i.ibb.co/HTHPwqGW/1.jpg'
 tags: ['VueJS', 'Nuxt', 'Onlyfans']
-published: true
+published: false
 featured: true
-category: Onlyfans
+category: onlyfans
 date: '2025-03-06'
+ig: 'https://instagram.com/modelusername'
+fb: 'https://facebook.com/modelusername'
+onlyfans: 'https://onlyfans.com/modelusername'
+chaturbate: 'https://chaturbate.com/modelusername'
+x: 'https://x.com/modelusername'
+phub: 'https://phub.com/modelusername'
 ---
 
 ## Getting started

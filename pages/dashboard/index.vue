@@ -36,6 +36,13 @@ const userStore = useUserStore();
 onMounted(() => {
     userStore.fetchUserData();
 });
+
+useSeoMeta({
+  title: 'Dashboard',
+  description: 'Dashboard',
+  robots: 'noindex', 
+});
+
 </script>
 
 

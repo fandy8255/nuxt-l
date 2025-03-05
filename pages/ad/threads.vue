@@ -147,6 +147,12 @@ const loading = ref(true);
 const sortBy = ref(''); 
 const sortDirection = ref('asc'); 
 
+useSeoMeta({
+  title: 'Ad Threads',
+  description: 'Ad Threads',
+  robots: 'noindex', 
+});
+
 const fetchThreads = async () => {
     const supabase = useSupabaseClient();
     const { data: { user } } = await supabase.auth.getUser();

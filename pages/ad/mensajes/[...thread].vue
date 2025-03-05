@@ -43,6 +43,12 @@ const newMessage = ref('');
 const threadInfo = ref({});
 const loading=ref(true)
 
+useSeoMeta({
+  title: 'Mensajes Thread',
+  description: 'Mensajes Thraed',
+  robots: 'noindex', 
+});
+
 const fetchMessages = async () => {
     try {
         const timestamp = Date.now().toString(); 

@@ -46,7 +46,6 @@
                         </div>
                         <div class="container">
                             Some more info
-
                         </div>
                     </div>
 
@@ -59,9 +58,7 @@
             </div>
 
         </div>
-        <div class="row">
-            Comments
-        </div>
+        
     </div>
 </template>
 
@@ -73,6 +70,7 @@ const product = ref({})
 const likes = ref()
 const loaded = ref(false)
 const userStore = useUserStore();
+
 
 function handleClick() {
     likes.value = likes.value + 1
@@ -106,6 +104,13 @@ const fetchInfo = async (prodId) => {
 onMounted(() => {
     fetchInfo(prodId).then(res => loaded.value = true)
 })
+
+useSeoMeta({
+  title: `Producto: ${product.product_name}`,
+  description: `Descripción: ${product.product_description}`,
+  robots: 'noindex', 
+});
+
 
 
 </script>

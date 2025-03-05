@@ -86,6 +86,12 @@ const file = ref(null);
 const message = ref('');
 const loading = ref(true);
 
+useSeoMeta({
+  title: `Perfil`,
+  description: 'Perfil',
+  robots: 'noindex', 
+});
+
 const clearMessage = () => {
     message.value = '';
 };

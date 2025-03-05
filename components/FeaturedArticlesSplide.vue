@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper px-5">
+    <div class="px-5">
         <h2 id="autoplay-example-heading">Artículos Sugeridos</h2>
 
         <Splide aria-labelledby="autoplay-example-heading" :options="options" :has-track="false">
@@ -78,11 +78,17 @@ export default defineComponent({
 </script>
 
 <style scoped>
+/*
 .wrapper {
     margin-bottom: 100px !important;
-}
+}*/
 
 .splide__track {
     /* Add any custom styles for the track here */
+}
+
+.splide__progress__bar{
+    margin-top: 10px;
+    background:rgba(219, 74, 132) !important;
 }
 </style>

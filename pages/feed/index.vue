@@ -57,6 +57,12 @@ const userStore = useUserStore();
 const followed = userStore.followed;
 const feedItems = ref([]);
 
+useSeoMeta({
+  title: 'Feed',
+  description: 'Feed',
+  robots: 'noindex', // Prevent indexing
+});
+
 function updateFeed() {
     console.log('feed update triggered 2nd time');
     feedItems.value = userStore.feed;
