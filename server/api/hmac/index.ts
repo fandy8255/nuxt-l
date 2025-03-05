@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
         // Get the timestamp from the query parameters
         const { timestamp } = getQuery(event);
 
-        return {timestamp, secretKey}
+        //return {timestamp, secretKey}
 
         /*
 
@@ -27,9 +27,12 @@ export default defineEventHandler(async (event) => {
         hmac.update(timestamp);
         const signature = hmac.digest('hex');
 
+        return {signature}
+
         return { secretKey, signature };
 
     } catch (error) {
+        return error
         console.log(error)
 
     }
