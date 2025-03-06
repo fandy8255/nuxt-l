@@ -378,52 +378,7 @@ useSeoMeta({
 
     // Additional Meta Tags
     canonical: `${baseUrl}`, // Canonical URL for SEO
-
-    // Structured Data (JSON-LD)
-    /*
-    script: [
-        {
-            type: 'application/ld+json',
-            innerHTML: JSON.stringify({
-                '@context': 'https://schema.org',
-                '@type': 'WebSite',
-                name: 'Latin Panty',
-                description: 'El mercado #1 de panties usados en Latinoamérica. Compra y vende panties, medias, y contenido exclusivo en una comunidad segura y anónima.',
-                url: `${baseUrl}`,
-                image: '/assets/images/hero-banner.jpg', // Replace with your homepage banner image
-                publisher: {
-                    '@type': 'Organization',
-                    name: 'Latin Panty',
-                    logo: {
-                        '@type': 'ImageObject',
-                        url: `${baseUrl}/assets/images/panty-icon.png`, // Replace with your logo URL
-                    },
-                },
-                
-                potentialAction: {
-                    '@type': 'SearchAction',
-                    
-                    target: `${baseUrl}/search?q={search_term_string}`,
-                    'query-input': 'required name=search_term_string',
-                },
-            }),
-        },
-        {
-            type: 'application/ld+json',
-            innerHTML: JSON.stringify({
-                '@context': 'https://schema.org',
-                '@type': 'Organization',
-                name: 'Latin Panty',
-                url: `${baseUrl}`,
-                logo: `${baseUrl}/assets/images/panty-icon.png`, // Replace with your logo URL
-                sameAs: [
-                    'https://facebook.com/latinpanty',
-                    'https://twitter.com/latinpanty',
-                    'https://instagram.com/latinpanty',
-                ],
-            }),
-        },
-    ],*/
+    
 });
 
 </script>

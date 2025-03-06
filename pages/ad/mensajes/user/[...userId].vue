@@ -69,6 +69,11 @@ const threads = ref([]);
 const threadsPerPage = 3;
 const currentPage = ref(1);
 
+definePageMeta({
+  middleware: ["ad"]
+})
+
+
 useSeoMeta({
   title: 'Mensajes User',
   description: 'Mensajes User.',

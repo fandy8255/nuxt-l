@@ -28,7 +28,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-100">
+                    <button type="submit" class="btn btn-primary w-100 text-light" >
                         Ingresa
                     </button>
 
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" @click="resendConfirmationEmail">Enviar</button>
+                        <button type="button" class="btn btn-primary text-light" @click="resendConfirmationEmail">Enviar</button>
                     </div>
                 </div>
             </div>
@@ -98,13 +98,13 @@ const clearMessage = () => {
 const supabase = useSupabaseClient()
 const router = useRouter()
 const user = await supabase.auth.getUser()
+const userStore = useUserStore();
 
 
 onMounted(async () => {
     if (user.data.user) {
         router.push('/dashboard')
     }else{
-        const userStore = useUserStore();
         userStore.signOut({
             username: '',
             email: '',

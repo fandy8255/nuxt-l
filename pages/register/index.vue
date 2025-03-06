@@ -67,7 +67,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-100" :disabled="!isFormValid">
+                    <button type="submit" class="btn btn-primary w-100 text-light" :disabled="!isFormValid">
                         Regístrate
                     </button>
                 </form>
@@ -93,6 +93,7 @@ const message = ref('');
 
 const supabase = useSupabaseClient();
 const router = useRouter();
+const userStore = useUserStore();
 
 useSeoMeta({
     title: 'Latin Panty | Regístrate',
@@ -138,31 +139,11 @@ const clearMessage = () => {
     message.value = '';
 };
 
-async function generateHMACSignature(timestamp) {
-    const runtimeConfig = useRuntimeConfig();
-    const secretKey = runtimeConfig.public.secretApiKey;
-
-    const encoder = new TextEncoder();
-    const keyData = encoder.encode(secretKey);
-    const timestampData = encoder.encode(timestamp);
-
-    const key = await crypto.subtle.importKey(
-        'raw', keyData, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
-    );
-
-    const signatureBuffer = await crypto.subtle.sign('HMAC', key, timestampData);
-
-    const signatureArray = Array.from(new Uint8Array(signatureBuffer));
-    const signatureHex = signatureArray.map(b => b.toString(16).padStart(2, '0')).join('');
-
-    return signatureHex;
-}
-
 
 const registerUser = async () => {
     try {
         const timestamp = Date.now().toString(); 
-        const signature = await generateHMACSignature(timestamp);
+        const signature = await userStore.generateHMACSignature(timestamp);
         const userChecked = await fetch('https://lingerie.fandy8255.workers.dev/api/user/check', {
             method: 'POST',
             headers: {

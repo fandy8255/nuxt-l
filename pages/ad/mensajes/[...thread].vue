@@ -43,6 +43,11 @@ const newMessage = ref('');
 const threadInfo = ref({});
 const loading=ref(true)
 
+definePageMeta({
+  middleware: ["ad"]
+})
+
+
 useSeoMeta({
   title: 'Mensajes Thread',
   description: 'Mensajes Thraed',

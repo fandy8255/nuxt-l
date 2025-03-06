@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
     
         return { signature: signatureHex };
       } catch (error) {
-        console.error('Error in HMAC route:', error);
+        //console.error('Error in HMAC route:', error);
         throw createError({
           statusCode: 500,
           statusMessage: 'Internal Server Error',

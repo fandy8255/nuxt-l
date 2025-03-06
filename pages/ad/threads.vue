@@ -147,6 +147,11 @@ const loading = ref(true);
 const sortBy = ref(''); 
 const sortDirection = ref('asc'); 
 
+definePageMeta({
+  middleware: ["ad"]
+})
+
+
 useSeoMeta({
   title: 'Ad Threads',
   description: 'Ad Threads',

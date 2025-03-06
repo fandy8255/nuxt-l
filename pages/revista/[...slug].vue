@@ -1,6 +1,7 @@
 <template>
     <div id="main-article-container">
         <div class="container-xl">
+            <PopupOptIn/>
             <!-- Hero Section -->
             <SimpleHeroArticle class="mt-1" :imgUrl="data.image" :title="data.title" :subtitle="data.meta.subtitle" />
 

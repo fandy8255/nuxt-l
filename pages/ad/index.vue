@@ -107,6 +107,10 @@
 import { ref, onMounted } from "vue";
 const userStore= useUserStore()
 
+definePageMeta({
+  middleware: ["ad"]
+})
+
 useSeoMeta({
   title: 'Ad',
   description: 'Ad',

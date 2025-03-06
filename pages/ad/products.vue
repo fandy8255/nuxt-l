@@ -160,6 +160,11 @@ const loading = ref(true);
 const sortBy = ref(''); 
 const sortDirection = ref('asc'); 
 
+definePageMeta({
+  middleware: ["ad"]
+})
+
+
 useSeoMeta({
   title: 'Ad Products',
   description: 'ad products',

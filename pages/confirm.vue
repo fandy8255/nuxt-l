@@ -4,7 +4,7 @@
             <br>
             <br>
             <br>
-            <div class="container">
+            <div class="container p-4">
                 <h1>Tu cuenta ha sido confirmada</h1>
             </div>
         </div>
@@ -26,7 +26,10 @@ useSeoMeta({
 })
 
 onMounted(()=>{
-    router.push('/login')
+    setTimeout(()=>{
+        router.push('/login')
+    },3000)
+   
 })
     
 </script>

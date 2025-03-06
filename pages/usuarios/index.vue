@@ -13,10 +13,12 @@
 
             <div v-if="paginatedUsers" class="container">
                 <div class="row mt-5">
-                    <div v-for="(user, index) in paginatedUsers" :key="index" class="col-sm-12 col-lg-3 p-2">
+                    <div v-for="user in paginatedUsers" :key="user.id" class="col-sm-12 col-lg-3 p-2">
+
                         <UserCard :username="user.username" :profilePicture="user.profile_picture"
                             :profileDescription="user.profile_description" :ubicacion="user.ubicacion"
                             :verified="user.verified" />
+
                     </div>
                 </div>
             </div>
@@ -30,6 +32,7 @@
 
             <!-- Pagination Controls -->
             <div class="container">
+
                 <nav aria-label="Page navigation" class="mt-4">
                     <ul class="pagination justify-content-center flex-wrap">
                         <li class="page-item" :class="{ disabled: currentPage === 1 }">
@@ -60,15 +63,15 @@ import { ref, computed, onMounted } from 'vue';
 
 const users = ref([]);
 const currentPage = ref(1);
-const itemsPerPage = 4;
+const itemsPerPage = 3;
 const visibleButtons = 5;
 const loading = ref(true);
 const userStore = useUserStore();
 
 useSeoMeta({
-  title: 'Latin Panty | Uusarios',
-  description: 'Latin Panty | Usuarios',
-  robots: 'noindex', 
+    title: 'Latin Panty | Uusarios',
+    description: 'Latin Panty | Usuarios',
+    robots: 'noindex',
 });
 
 definePageMeta({
@@ -129,16 +132,20 @@ const changePage = (page) => {
 <style scoped>
 /* Pagination Styles */
 .pagination {
-    flex-wrap: wrap; /* Allow pagination items to wrap on small screens */
+    flex-wrap: wrap;
+    /* Allow pagination items to wrap on small screens */
 }
 
 .page-item {
-    margin: 2px; /* Add spacing between pagination items */
+    margin: 2px;
+    /* Add spacing between pagination items */
 }
 
 .page-link {
-    padding: 0.5rem 0.75rem; /* Adjust padding for smaller screens */
-    font-size: 0.875rem; /* Reduce font size for smaller screens */
+    padding: 0.5rem 0.75rem;
+    /* Adjust padding for smaller screens */
+    font-size: 0.875rem;
+    /* Reduce font size for smaller screens */
 }
 
 .pagination .page-item.active .page-link {
@@ -156,20 +163,23 @@ const changePage = (page) => {
 
 @media (max-width: 900px) {
     .pagination {
-        justify-content: center; /* Center pagination on small screens */
+        justify-content: center;
+        /* Center pagination on small screens */
     }
 
     .page-link {
-        padding: 0.375rem 0.5rem; /* Further reduce padding for very small screens */
-        font-size: 0.75rem; /* Further reduce font size for very small screens */
+        padding: 0.375rem 0.5rem;
+        /* Further reduce padding for very small screens */
+        font-size: 0.75rem;
+        /* Further reduce font size for very small screens */
     }
 
-    img{
+    img {
         max-height: 100vh;
     }
 }
 
-img{
+img {
     max-height: 60vh;
 }
 </style>

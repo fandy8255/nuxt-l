@@ -1,6 +1,7 @@
 <template>
     <div v-if="!loading">
         <Navbar id="navbar" :isAd="navbarStore.is_admin" />
+        <PopupAge />
         <div class="slot-wrapper">
             <slot class="main-content"  />
         </div>

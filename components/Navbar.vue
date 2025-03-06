@@ -84,7 +84,7 @@
                                 <NuxtLink :to="userStore.user_profile" class="dropdown-item" @click="closeNavbar">Perfil</NuxtLink>
                             </li>
                             <li>
-                                <button @click="signOut" class="dropdown-item">Sign Out</button>
+                                <button @click="signOut" class="dropdown-item">Salir</button>
                             </li>
                         </ul>
                     </li>

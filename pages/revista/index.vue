@@ -104,6 +104,8 @@ const loaded = ref(false);
 const tags = ref({});
 const selectedTag = ref('todos'); // Default to 'todos' to show all articles
 const baseUrl = 'https://latinpanty.com'
+const userStore = useUserStore();
+
 
 useHead({
     link: [
@@ -215,6 +217,8 @@ const changePage = (page) => {
 };
 
 onMounted(async () => {
+    const userr= await userStore.getUser()
+    console.log('userr', userr)
     await fetchAllArticles(); // Fetch all articles once
     await fetchFeaturedArticles();
     await fetchCategories();
@@ -259,29 +263,6 @@ useSeoMeta({
     canonical: `${baseUrl}/revista`, // Canonical URL for SEO
     rating: 'adult',
 
-    // Structured Data (JSON-LD)
-    /*
-    script: [
-        {
-            type: 'application/ld+json',
-            innerHTML: JSON.stringify({
-                '@context': 'https://schema.org',
-                '@type': 'WebSite',
-                name: 'Latin Panty Revista',
-                description: 'Descubre el mundo de las estrellas latinas más candentes y exclusivas. En Latin Panty, te llevamos detrás de cámaras para conocer a tus modelos favoritas, sus historias y sus secretos mejor guardados. ¡Suscríbete ahora!',
-                url: `${baseUrl}/revista`,
-                image: '/assets/images/hero-banner.jpg', // Replace with your homepage banner image
-                publisher: {
-                    '@type': 'Organization',
-                    name: 'Latin Panty Revista',
-                    logo: {
-                        '@type': 'ImageObject',
-                        url: `${baseUrl}/assets/images/panty-icon.png`, // Replace with your logo URL
-                    },
-                },
-            }),
-        },
-    ],*/
 });
 </script>
 

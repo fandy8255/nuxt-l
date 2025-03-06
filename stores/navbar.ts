@@ -7,25 +7,20 @@ export const useNavbarStore = defineStore('navbar', {
     }),
     actions: {
         async generateHMACSignature(timestamp) {
-            const runtimeConfig = useRuntimeConfig();
-            const secretKey = runtimeConfig.secretApiKey;
 
-            const encoder = new TextEncoder();
-            const keyData = encoder.encode(secretKey);
-            const timestampData = encoder.encode(timestamp);
+            const { data, error } = await useFetch('/api/hmac', {
+                query: { timestamp },
+            });
 
-            const key = await crypto.subtle.importKey(
-                'raw', keyData, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
-            );
 
-            const signatureBuffer = await crypto.subtle.sign('HMAC', key, timestampData);
+            if (error.value) {
+                // console.error('Error generating HMAC signature:', error.value);
+                throw new Error('Failed to generate HMAC signature');
+            }
 
-            const signatureArray = Array.from(new Uint8Array(signatureBuffer));
-            const signatureHex = signatureArray.map(b => b.toString(16).padStart(2, '0')).join('');
-
-            return signatureHex;
+            return data.value?.signature;
         },
-        async getUser(){
+        async getUser() {
             const supabase = useSupabaseClient();
             const { data: { user } } = await supabase.auth.getUser();
             return user
@@ -33,8 +28,8 @@ export const useNavbarStore = defineStore('navbar', {
         },
 
         async isAd() {
-            const user=await this.getUser()
-            
+            const user = await this.getUser()
+
             if (!user) {
                 this.is_admin = false;
                 return;
@@ -56,11 +51,11 @@ export const useNavbarStore = defineStore('navbar', {
             const result = await response.json();
 
             if (result.data.is_admin) {
-                
-                this.is_admin= true
+
+                this.is_admin = true
                 return true
             }
-            this.is_admin=false
+            this.is_admin = false
             return false
         },
     }

@@ -1,5 +1,6 @@
 <template>
-    <footer v-if="isHydrated" class="text-light py-5" style="display: flex !important; flex-direction: column !important;">
+    <footer v-if="isHydrated" class="text-light py-5"
+        style="display: flex !important; flex-direction: column !important;">
         <div class="container">
             <!-- Footer Links -->
             <div class="row text-center text-md-start">
@@ -8,8 +9,7 @@
                     <h5 class="fw-bold mb-3">Categorías</h5>
                     <ul class="list-unstyled">
                         <li v-for="category in categories" :key="category" class="mb-2 text-center">
-                            <NuxtLink :to="'#'"
-                                class="text-decoration-none text-light">
+                            <NuxtLink :to="'#'" class="text-decoration-none text-light">
                                 {{ category }}
                             </NuxtLink>
                         </li>
@@ -17,38 +17,50 @@
                 </div>
 
                 <!-- Modelos -->
-                <div class="col-12 col-md-4 mb-4">
+                <div class="col-12 col-md-4 mb-4" v-if="userStore.logged_in" >
                     <h5 class="fw-bold mb-3">Modelos</h5>
                     <ul class="list-unstyled">
-                        <li v-for="model in models" :key="model" class="mb-2 text-center">
-                            <NuxtLink :to="'#'" class="text-decoration-none text-light">
-                                {{ model }}
+                        <li class="mb-2 text-center">
+                            <NuxtLink :to="`/usuarios`" class="text-decoration-none text-light">
+                                Vendedoras
+                            </NuxtLink>
+                        </li>
+                        <li class="mb-2 text-center">
+                            <NuxtLink :to="`/tienda`" class="text-decoration-none text-light">
+                                Tienda
+                            </NuxtLink>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-12 col-md-4 mb-4" v-else >
+                    <h5 class="fw-bold mb-3">Modelos</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2 text-center">
+                            <NuxtLink :to="`/landing/vendedoras`" class="text-decoration-none text-light">
+                                Vendedoras
+                            </NuxtLink>
+                        </li>
+                        <li class="mb-2 text-center">
+                            <NuxtLink :to="`/landing/tienda`" class="text-decoration-none text-light">
+                                Tienda
                             </NuxtLink>
                         </li>
                     </ul>
                 </div>
 
                 <!-- Newsletter -->
-                <div class="col-12 col-md-4 mb-4" v-if="userStore.logged_in">
-                    <h5 class="fw-bold mb-3">Revista</h5>
+                <div class="col-12 col-md-4 mb-4">
+                    <NuxtLink :to="`/revista`" class="text-decoration-none text-light">
+                        <h5 class="fw-bold mb-3">Revista</h5>
+                    </NuxtLink>
                     <ul class="list-unstyled">
-                        <li v-for="model in models" :key="model" class="mb-2 text-center">
-                            <NuxtLink :to="'#'" class="text-decoration-none text-light">
-                                {{ model }}
+                        <li v-for="category in magCategories" :key="category" class="mb-2 text-center">
+                            <NuxtLink :to="`/revista/category/${category}`" class="text-decoration-none text-light">
+                                {{ category.charAt(0).toUpperCase() + category.slice(1) }}
                             </NuxtLink>
                         </li>
                     </ul>
-                </div>
-                <div class="col-12 col-md-4 mb-4" v-else >
-                    <h5 class="fw-bold mb-3">Suscríbete a nuestro Newsletter</h5>
-                    <form @submit.prevent="subscribe">
-                        <div class="mb-3">
-                            <input v-model="email" type="email" placeholder="Ingresa tu correo" class="form-control"
-                                required />
-                        </div>
-                        <button type="submit" class="btn btn-success w-100">Suscribirse</button>
-                    </form>
-                    <p v-if="subscriptionSuccess" class="mt-3 text-success">¡Gracias por suscribirte!</p>
                 </div>
             </div>
 
@@ -74,7 +86,7 @@ const userStore = useUserStore();
 const isHydrated = ref(false);
 
 const categories = ['Colombia', 'Argentina', 'Peru', 'Uruguay', 'Brazil', 'Ecuador'];
-const models = ['Nuevas Vendedoras', 'Vendedoras Top'];
+const magCategories = ['onlyfans', 'instagram'];
 
 onMounted(() => {
     isHydrated.value = true;
@@ -87,14 +99,13 @@ const subscribe = () => {
 </script>
 
 <style scoped>
-
-h5{
+h5 {
     text-align: center !important;
 }
 
-footer{
+footer {
     /*background: rgb(205, 89, 213) !important;*/
-    background:rgba(219, 74, 132) !important;
+    background: rgba(219, 74, 132) !important;
 }
 
 footer ul {
