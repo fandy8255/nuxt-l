@@ -24,6 +24,7 @@
             <p>blocked users {{ userStore.blocked_users }}</p>
             <p>blocked by {{ userStore.blocked_by }}</p>
             <p>message count {{ userStore.message_count }}</p>-->
+            <Orders />
         </div>
     </div>
 </template>

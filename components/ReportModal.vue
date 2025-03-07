@@ -55,8 +55,8 @@ import { ref, defineProps } from 'vue';
 
 const props = defineProps({
     productId: String,
-    reporterId: Number,
-    reportedId: Number,
+    reporterId: String,
+    reportedId: String,
 });
 
 const showModal = ref(false)

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="container">
-            <MessageModal :message="message" @clear="clearMessage" style="z-index: 105 !important;" />
+            <!--<MessageModal :message="message" @clear="clearMessage" style="z-index: 105 !important;" />-->
         </div>
         <form @submit.prevent="submitPost" class="post-form text-end">
             <textarea v-model="content" placeholder="Escribe tu publicación..." class="form-control w-100" rows="6"
@@ -79,7 +79,7 @@ function feedUpdate(){
     emit('updateFeed')
 }
 
-const message = ref(null); 
+const message = ref({}); 
 
 const handleSuccess = (data) => {
     message.value = data; 

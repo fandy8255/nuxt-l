@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Comprar Button -->
-        <button class="btn btn-primary" @click="openModal">
+        <button class="btn btn-primary text-light" @click="openModal">
             Comprar
         </button>
 
@@ -12,7 +12,7 @@
                 <div class="container text-end">
                     <button class="btn btn-md bg-danger text-light p-1" @click="closeModal">Cerrar</button>
                 </div>
-                
+
                 <!-- Purchase Status Bar -->
                 <div class="purchase-status-bar mb-4">
                     <div v-for="(stage, index) in stages" :key="index"
@@ -25,42 +25,43 @@
                 <div v-if="currentStage === 0" class="stage-content">
                     <h3 class="mb-4 fw-bolder text-start">Información de Envío</h3>
                     <form @submit.prevent="nextStage">
-                        <div class="mb-3 text-start">
+                        <div class="mb-1 text-start">
                             <label for="fullName" class="form-label fw-bold">Nombre Completo</label>
                             <input type="text" class="form-control" id="fullName" v-model="formData.fullName" required
                                 placeholder="Ingresa tu nombre completo" />
                         </div>
-                        <div class="mb-3 text-start">
-                            <label for="address" class="form-label fw-bold">Dirección</label>
-                            <input type="text" class="form-control" id="address" v-model="formData.shipping_address"
-                                required placeholder="Ingresa tu dirección" />
-                        </div>
-                        <div class="mb-3 text-start">
-                            <label for="zipcode" class="form-label fw-bold">Código Postal</label>
-                            <input type="text" class="form-control" id="zipcode" v-model="formData.shipping_zipcode"
-                                required placeholder="Ingresa tu código postal" />
-                        </div>
-                        <div class="mb-3 text-start">
+                        <div class="mb-1 text-start">
                             <label for="country" class="form-label fw-bold">País</label>
                             <input type="text" class="form-control" id="country" v-model="formData.shipping_country"
                                 required placeholder="Ingresa tu país" />
                         </div>
-                        <div class="mb-3 text-start">
+                        <div class="mb-1 text-start">
                             <label for="department" class="form-label fw-bold">Departamento/Municipalidad</label>
                             <input type="text" class="form-control" id="department"
                                 v-model="formData.shipping_municipality" required
                                 placeholder="Ingresa tu departamento o municipalidad" />
                         </div>
-                        <button type="submit" class="btn btn-secondary w-100 text-light">Siguiente</button>
+                        <div class="mb-1 text-start">
+                            <label for="address" class="form-label fw-bold">Dirección</label>
+                            <input type="text" class="form-control" id="address" v-model="formData.shipping_address"
+                                required placeholder="Ingresa tu dirección" />
+                        </div>
+                        <div class="mb-1 text-start">
+                            <label for="zipcode" class="form-label fw-bold">Código Postal</label>
+                            <input type="text" class="form-control" id="zipcode" v-model="formData.shipping_zipcode"
+                                required placeholder="Ingresa tu código postal" />
+                        </div>
+
+                        <button type="submit" class="btn btn-secondary w-100 text-light mt-5">Siguiente</button>
                     </form>
                 </div>
 
                 <!-- Stage 2: Review Product Details -->
                 <div v-if="currentStage === 1" class="stage-content">
-                    <h3 class="mb-4 fw-bolder text-start">Revisar Detalles de la Orden</h3>
+                    <h3 class="mb-3 fw-bolder text-start">Revisa Detalles de la Orden</h3>
                     <div class="container d-flex gap-2">
                         <div class="row w-100">
-                            <div class="mb-1 text-start col-6">
+                            <div class="mb-1 text-start col-12 col-md-6">
                                 <label for="paymentMethod" class="form-label fw-bold">Método de Pago</label>
                                 <select class="form-select" id="paymentMethod" v-model="formData.payment_method"
                                     required>
@@ -74,19 +75,19 @@
                                         min="1" required />
                                     <p class="mt-2 fw-bold">Precio: ${{ product.product_price * formData.quantity }}</p>
                                 </div>
-                            </div>
-                            <div class="col-6">
+                            </div> 
+                            <div class="col-12 col-md-6">
                                 <div>
-                                    <NuxtImg provider="bunny" :src="product.product_url" height="auto" width="300px"
-                                        :quality="50" placeholder="/assets/images/panty-icon.png" />
+                                    <div id="img-container">
+                                        <NuxtImg provider="bunny" :src="product.product_url" height="auto" width="300px"
+                                            :quality="50" placeholder="/assets/images/panty-icon.png" />
+                                    </div>
+
                                     <h4>{{ product.product_name }}</h4>
                                     <p class="text-muted">{{ product.product_description }}</p>
                                 </div>
-
                             </div>
-
                         </div>
-
                     </div>
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-secondary text-light" @click="prevStage">Anterior</button>
@@ -96,23 +97,45 @@
 
                 <!-- Stage 3: Confirmation -->
                 <div v-if="currentStage === 2" class="stage-content">
-                    <h3 class="mb-4">Confirmar Compra</h3>
-                    <p>He acordado el método de pago con el vendedor y deseo seguir con la compra.</p>
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="checkbox" v-model="formData.agreeToTerms" required />
-                        <label class="form-check-label">Acepto los términos</label>
+                    <h3 class="mb-3 fw-bolder text-start">Confirmacion</h3>
+                    <ul class="text-decoration-none text-start list-style-none">
+                        <li class="mb-1 text-decoration-none">
+                            <p class="fw-bold">Producto: {{ product.product_name }}</p>
+                        </li>
+                        <li class="mb-1">
+                            <p class="fw-bold">Descripción: {{ product.product_description }}</p>
+                        </li>
+                        <li class="mb-1">
+                            <p class="fw-bold">Precio Total: {{ product.product_price * formData.quantity }}</p>
+                        </li>
+
+                    </ul>
+
+                    <div class="container w-100"
+                        style="display: flex; flex-direction: column; align-items: flex-start !important; justify-content: flex-end !important; width: 100% !important; height: 80%;">
+                        <p class="text-start fs-italic">He acordado el método de pago con el vendedor y deseo seguir con
+                            la
+                            compra.</p>
+                        <div class="form-check mb-3 text-start">
+                            <input class="form-check-input" type="checkbox" v-model="formData.agreeToTerms" required />
+                            <label class="form-check-label">Acepto los términos</label>
+                        </div>
+                        <div class="mb-3 text-start w-100">
+                            <label for="notes" class="form-label">Notas Adicionales</label>
+                            <textarea class="form-control" id="notes" v-model="formData.notes"
+                                placeholder="Ingresa notas adicionales (opcional)"></textarea>
+                        </div>
+
                     </div>
-                    <div class="mb-3 text-start">
-                        <label for="notes" class="form-label">Notas Adicionales</label>
-                        <textarea class="form-control" id="notes" v-model="formData.notes"
-                            placeholder="Ingresa notas adicionales (opcional)"></textarea>
-                    </div>
+
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-secondary text-light" @click="prevStage">Anterior</button>
-                        <button class="btn btn-primary text-light" :disabled="!formData.agreeToTerms" @click="submitOrder">
+                        <button class="btn btn-primary text-light" :disabled="!formData.agreeToTerms"
+                            @click="submitOrder">
                             Confirmar Compra
                         </button>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -186,13 +209,18 @@ const submitOrder = () => {
 </script>
 
 <style scoped>
+#img-container {
+    height: 40vh;
+    overflow-y: hidden;
+}
+
 .modal-overlay {
     position: fixed;
     z-index: 1000;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
@@ -203,20 +231,11 @@ const submitOrder = () => {
     background: rgb(240, 240, 240);
     padding: 20px;
     border-radius: 8px;
-    /*width: 90%;
-    max-width: 500px;*/
+    height: 77vh;
+    width: 90%;
     max-width: 60vw;
-    position: relative;
-}
-
-.modal-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
+    overflow-y: auto;
+    /* Make modal content scrollable */
 }
 
 .purchase-status-bar {
@@ -236,9 +255,6 @@ const submitOrder = () => {
 .status-step.active {
     border-bottom-color: #2f2f2f;
     color: #2f2f2f;
-    /*
-    border-bottom-color: #007bff;
-    color: #007bff;*/
 }
 
 .status-step.completed {
@@ -250,16 +266,6 @@ const submitOrder = () => {
     text-align: center;
 }
 
-.product-details {
-    margin-bottom: 20px;
-}
-
-.product-image {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-}
-
 .quantity-price {
     display: flex;
     flex-direction: column;
@@ -269,5 +275,39 @@ const submitOrder = () => {
 
 .btn {
     margin: 5px;
+}
+
+/* Responsive Styles */
+@media (max-width: 900px) {
+    .modal-content {
+        max-width: 100vw;
+        /* Make modal wider on small screens */
+        padding: 5px;
+        /* Reduce padding on small screens */
+    }
+
+    .form-label {
+        font-size: 0.875rem;
+        /* Reduce label font size on small screens */
+    }
+
+    .status-step {
+        font-size: 0.875rem;
+        /* Reduce font size for status steps on small screens */
+        padding: 5px;
+        /* Reduce padding for status steps */
+    }
+
+    .stage-content {
+        padding: 0 10px;
+        /* Reduce padding for stage content */
+    }
+
+    #img-container {
+        margin: 0;
+        padding: 0;
+        height: auto;
+        width: 70vw;
+    }
 }
 </style>

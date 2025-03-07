@@ -1,10 +1,21 @@
 <template>
     <nav v-if="isHydrated" class="navbar navbar-expand-lg navbar-dark bg-dark w-100 position-fixed">
         <div class="container-fluid">
+            <!-- Logo and Brand Name -->
             <div class="d-flex align-items-center">
-                <NuxtLink :to=" userStore.logged_in ? '/feed' : '/' " class="navbar-brand">
-                    <NuxtImg src="/assets/images/panty-icon.png" width="auto" height="50" />
-                </NuxtLink>
+                <div v-if="isAd">
+                    <NuxtLink :to="'/ad'" class="navbar-brand">
+                        <NuxtImg src="/assets/images/panty-icon.png" width="auto" height="50" />
+                    </NuxtLink>
+                </div>
+                <div v-else>
+                    <NuxtLink v-if="userStore.logged_in" :to="'/feed'" class="navbar-brand">
+                        <NuxtImg src="/assets/images/panty-icon.png" width="auto" height="50" />
+                    </NuxtLink>
+                    <NuxtLink v-else :to="'/'" class="navbar-brand">
+                        <NuxtImg src="/assets/images/panty-icon.png" width="auto" height="50" />
+                    </NuxtLink>
+                </div>
                 <h4 class="text-light lead my-auto ms-2 fw-bolder">Latin Panty</h4>
             </div>
 
@@ -14,29 +25,29 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
+            <!-- Navbar Links -->
             <div class="collapse navbar-collapse" id="navbarNav" ref="navbarCollapse">
                 <ul class="navbar-nav ms-auto gap-2 me-2" v-if="isAd">
                     <li class="nav-item">
-                        <NuxtLink to="/tienda" class="nav-link text-decoration-none" @click="closeNavbar">Products</NuxtLink>
+                        <NuxtLink to="/tienda" class="nav-link text-decoration-none" @click="closeNavbar">Products
+                        </NuxtLink>
                     </li>
                     <li class="nav-item">
-                        <NuxtLink to="/usuarios" class="nav-link text-decoration-none" @click="closeNavbar">Usuarios</NuxtLink>
+                        <NuxtLink to="/usuarios" class="nav-link text-decoration-none" @click="closeNavbar">Usuarios
+                        </NuxtLink>
                     </li>
                     <li class="nav-item">
                         <NuxtLink to="/mensajes" class="nav-link text-decoration-none" @click="closeNavbar">
                             <i class="fa-regular fa-envelope fa-xl me-2"></i>
                         </NuxtLink>
                     </li>
-
                     <li class="nav-item dropdown">
                         <div class="d-flex nav-link dropdown-toggle" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            <div
-                                style="display: flex !important; flex-direction: column; justify-content: center; align-items: center; padding: 0; color: aliceblue !important;">
+                            <div class="d-flex flex-column justify-content-center align-items-center text-light">
                                 Admin
                             </div>
                         </div>
-
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li>
                                 <NuxtLink to="/perfil" class="dropdown-item" @click="closeNavbar">Cuenta</NuxtLink>
@@ -50,38 +61,42 @@
 
                 <ul class="navbar-nav ms-auto gap-2 me-2" v-else-if="userStore.logged_in">
                     <li class="nav-item">
-                        <NuxtLink to="/tienda" class="nav-link text-decoration-none" @click="closeNavbar">Tienda</NuxtLink>
+                        <NuxtLink to="/tienda" class="nav-link text-decoration-none" @click="closeNavbar">Tienda
+                        </NuxtLink>
                     </li>
                     <li class="nav-item">
-                        <NuxtLink to="/usuarios" class="nav-link text-decoration-none" @click="closeNavbar">Usuarios</NuxtLink>
+                        <NuxtLink to="/usuarios" class="nav-link text-decoration-none" @click="closeNavbar">Usuarios
+                        </NuxtLink>
                     </li>
                     <li class="nav-item">
                         <NuxtLink to="/mensajes" class="nav-link text-decoration-none" @click="closeNavbar">
-                            <i class="fa-regular fa-envelope fa-xl me-2"> </i>{{ userStore.message_count }}
+                            <i class="fa-regular fa-envelope fa-xl me-2"></i>{{ userStore.message_count }}
                         </NuxtLink>
                     </li>
                     <li v-if="userStore.user_type === 'seller'" class="nav-item">
-                        <NuxtLink to="/dashboard" class="nav-link text-decoration-none" @click="closeNavbar">Stats</NuxtLink>
+                        <NuxtLink to="/dashboard" class="nav-link text-decoration-none" @click="closeNavbar">Stats
+                        </NuxtLink>
                     </li>
-
                     <li class="nav-item dropdown">
                         <div class="d-flex nav-link dropdown-toggle" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <NuxtImg provider="bunny" :src="userStore.profile_picture" class="rounded-circle me-2"
                                 width="40px" height="40px" alt="User Image" :quality="10" loading="lazy"
                                 placeholder="/assets/images/panty-icon.jpg" />
-                            <div
-                                style="display: flex !important; flex-direction: column; justify-content: center; align-items: center;padding: 0; color: aliceblue !important;">
+                            <div class="d-flex flex-column justify-content-center align-items-center text-light">
                                 {{ userStore.username }}
                             </div>
                         </div>
-
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li>
                                 <NuxtLink to="/perfil" class="dropdown-item" @click="closeNavbar">Cuenta</NuxtLink>
                             </li>
                             <li>
-                                <NuxtLink :to="userStore.user_profile" class="dropdown-item" @click="closeNavbar">Perfil</NuxtLink>
+                                <NuxtLink :to="userStore.user_profile" class="dropdown-item" @click="closeNavbar">Perfil
+                                </NuxtLink>
+                            </li>
+                            <li>
+                                <NuxtLink to="/compras" class="dropdown-item" @click="closeNavbar">Mis Compras</NuxtLink>
                             </li>
                             <li>
                                 <button @click="signOut" class="dropdown-item">Salir</button>
@@ -92,17 +107,20 @@
 
                 <ul class="navbar-nav ms-auto gap-2" v-else>
                     <li>
-                        <NuxtLink to="/landing/vendedoras" class="nav-link text-decoration-none" @click="closeNavbar">Vendedoras </NuxtLink>
+                        <NuxtLink to="/landing/vendedoras" class="nav-link text-decoration-none" @click="closeNavbar">
+                            Vendedoras</NuxtLink>
                     </li>
                     <li>
                         <NuxtLink to="/landing/tienda" class="nav-link text-decoration-none" @click="closeNavbar">Tienda
                         </NuxtLink>
                     </li>
                     <li>
-                        <NuxtLink to="/revista" class="nav-link text-decoration-none" @click="closeNavbar">Revista</NuxtLink>
+                        <NuxtLink to="/revista" class="nav-link text-decoration-none" @click="closeNavbar">Revista
+                        </NuxtLink>
                     </li>
                     <li>
-                        <NuxtLink to="/login" class="nav-link text-decoration-none" @click="closeNavbar">Login</NuxtLink>
+                        <NuxtLink to="/login" class="nav-link text-decoration-none" @click="closeNavbar">Login
+                        </NuxtLink>
                     </li>
                 </ul>
             </div>
@@ -112,7 +130,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+/*import { useRouter } from 'vue-router';*/
 
 const userStore = useUserStore();
 const navbarStore = useNavbarStore();
@@ -129,19 +147,20 @@ onMounted(async () => {
 
 // Method to close the navbar
 function closeNavbar() {
+    
     if (navbarCollapse.value) {
-        // Use Bootstrap's JavaScript API to hide the navbar
         const collapseInstance = new bootstrap.Collapse(navbarCollapse.value, {
             toggle: false, // Ensure it only hides
         });
         collapseInstance.hide(); // Hide the navbar
     }
+  // console.log('closed navbar')
 }
 
 async function signOut() {
     const { error } = await useSupabaseClient().auth.signOut();
     if (error) {
-        //console.error(error);
+        console.error(error);
     }
     userStore.signOut({
         username: '',
@@ -174,7 +193,7 @@ async function signOut() {
 <style scoped>
 a:hover,
 button:hover {
-    color: rgb(13, 0, 255)
+    color: rgb(13, 0, 255);
 }
 
 .nav-link {
@@ -185,16 +204,15 @@ button:hover {
 
 nav {
     position: sticky !important;
-    /*background: rgb(205, 89, 213) !important;*/
-    background:rgba(206, 206, 206, 0.95) !important;
-    background:rgba(219, 74, 132) !important;
+    background: rgba(219, 74, 132) !important;
+    height: 76px;
     margin: 0;
 }
 
 li {
     display: flex;
     flex-direction: column;
-    align-items: left;
+    align-items: center;
     justify-content: center;
 }
 
@@ -208,7 +226,7 @@ i {
 
 @media (max-width: 991.98px) {
     .navbar-collapse {
-        background-color: rgb(205, 89, 213);
+        background: rgba(219, 74, 132) !important;
         padding: 10px;
         border-radius: 5px;
     }
@@ -220,6 +238,11 @@ i {
     .nav-item {
         width: 100%;
         text-align: start !important;
+    }
+
+    .dropdown-menu {
+        text-align: end;
+        /* Align dropdown menu to the right on small screens */
     }
 }
 </style>

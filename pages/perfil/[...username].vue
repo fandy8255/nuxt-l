@@ -4,7 +4,7 @@
             <div v-if="isBlocked">
                 <div class="row">
                     <div class="col-12">
-                        <MessageModal :message="message" @clear="clearMessage" style="z-index: 105 !important;" />
+                        <MessageModal :message="message"  @clear="clearMessage" style="z-index: 105 !important;" />
                     </div>
 
                     <div class="col-12 p-1 text-center justify-content-center mb-5">
@@ -118,6 +118,7 @@
                                         <div class="row">
                                             <div v-for="product in paginatedProducts" :key="product.id"
                                                 class="col-sm-12 col-lg-3 p-2">
+                                                <!--{{ product }}-->
                                                 <ProductCard :product="product" :isAd="isAd" width="300px"
                                                     @updateProductsStore2="updateProducts" />
                                             </div>
@@ -206,9 +207,9 @@ useSeoMeta({
 });
 
 function test() {
-    console.log('emmited');
     loadUserData();
 }
+
 
 const message = ref(null);
 

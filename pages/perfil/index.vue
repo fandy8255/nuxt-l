@@ -7,7 +7,7 @@
             </div>
         </div>
         <div v-else>
-            <MessageModal :message="message" @clear="clearMessage" />
+           <!-- <MessageModal :message="message" @clear="clearMessage" />-->
 
             <div v-if="userStore.logged_in" class="card shadow-lg border-0 p-3">
                 <div class="card-body">
@@ -83,7 +83,9 @@
 import { ref, onMounted } from 'vue';
 const userStore = useUserStore();
 const file = ref(null);
+/*
 const message = ref('');
+*/
 const loading = ref(true);
 
 useSeoMeta({
@@ -92,9 +94,10 @@ useSeoMeta({
   robots: 'noindex', 
 });
 
+/*
 const clearMessage = () => {
     message.value = '';
-};
+};*/
 
 const handleFileChange = (event) => {
     file.value = event.target.files[0];
@@ -133,14 +136,14 @@ const updateProfile = async () => {
                 ubicacion: updatedData.ubicacion ? updatedData.ubicacion : userStore.ubicacion,
             });
 
-            message.value = { success: 'Actualizado con éxito.' };
+           // message.value = { success: 'Actualizado con éxito.' };
             
         } else {
-            message.value = { failure: 'Error al actualizar el perfil.' };
+           // message.value = { failure: 'Error al actualizar el perfil.' };
         }
     } catch (error) {
         const result = await response.json();
-        message.value = { failure: `Error al actualizar el perfil: ${error}` };
+       // message.value = { failure: `Error al actualizar el perfil: ${error}` };
     }
 };
 

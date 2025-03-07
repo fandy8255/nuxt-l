@@ -172,6 +172,7 @@ export const useUserStore = defineStore('user', {
                 });
 
                 const result = await response.json();
+                
                 if (result?.likedProducts) {
                     this.liked_products = result.likedProducts;
                 }
@@ -291,7 +292,7 @@ export const useUserStore = defineStore('user', {
 
             const runtimeConfig = useRuntimeConfig();
             const environment = runtimeConfig.public.dev;
-            console.log('fetching user data')
+            //console.log('fetching user data')
 
             if (this.logged_in) return; // Prevent duplicate fetches if data is already set
 
@@ -303,12 +304,12 @@ export const useUserStore = defineStore('user', {
             
            
             if (!user) {
-                console.log('no user found')
+               // console.log('no user found')
                 return;
             }
 
             if (this.products.length > 0) {
-                console.log('Products are already loaded:', this.products);
+                //console.log('Products are already loaded:', this.products);
                 return;
             }
 
@@ -434,13 +435,14 @@ export const useUserStore = defineStore('user', {
                 return;
             }
             if (!item || !item.id) {
-                console.error('Invalid item object');
+                //console.error('Invalid item object');
                 return;
             }
 
             this.feed.unshift(item);
         },
         addProduct(product) {
+            //console.log('product from store is', product)
             if (this.user_type !== 'seller') {
                 return;
             }
@@ -448,6 +450,9 @@ export const useUserStore = defineStore('user', {
             if (!product || !product.id || !product.product_name || !product.product_price || !product.product_category) {
                 return;
             }
+
+            product.profile_picture=this.profile_picture;
+            //console.log('product after', product)
 
             this.products.unshift(product);
         },

@@ -1,12 +1,12 @@
 <template>
     <div class="container-fluid mt-2">
-        <div class="row w-100">
+        <div v-if="loaded" class="row">
             <!-- Left Column: Product Details -->
             <div class="col-sm-12 col-lg-4 mt-5">
-                <div class="container">
-                    <div style="position: relative; top: 10px; left: 10px">
+                <div class="container-xl">
+                    <div class="product-details">
                         <!-- User Image and Like Button -->
-                        <div class="d-flex">
+                        <div class="d-flex mb-4">
                             <div class="row w-100">
                                 <div class="col-6">
                                     <UserImgComponent v-if="loaded" :image="product.profile_picture"
@@ -27,23 +27,42 @@
                         </div>
 
                         <!-- Product Name and Description -->
-                        <h2 class="mt-4 product-name">{{ product.product_name }}</h2>
+                        <h2 class="product-name">{{ product.product_name }}</h2>
                         <p class="product-description">{{ product.product_description }}</p>
-                        <p class="product-category">{{ product.product_category }}</p>
+
+                        <!-- Product Category -->
+                        <div class="product-info mb-3">
+                            <h4 class="info-label">Categoría</h4>
+                            <p class="info-value">{{ product.product_category }}</p>
+                        </div>
+
+                        <!-- Product Stock -->
+                        <div class="product-info mb-3">
+                            <h4 class="info-label">Stock/Cantidad</h4>
+                            <p class="info-value">{{ product.product_stock }}</p>
+                        </div>
+
+                        <!-- Product Price -->
+                        <div class="product-info mb-4">
+                            <h4 class="info-label">Precio</h4>
+                            <p class="info-value">${{ product.product_price }} {{ product.product_currency.toUpperCase()
+                                }}</p>
+                        </div>
 
                         <!-- Rating -->
-                        <div class="rating mb-3">
+                        <div class="rating mb-4">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="far fa-star"></i>
-                            <span>(4.0)</span>
+                            <span class="rating-text">(4.0)</span>
                         </div>
 
                         <!-- Payment Info -->
-                        <div class="payment-info mb-3">
-                            <i class="fas fa-credit-card"></i> Payment Methods: Credit Card, PayPal
+                        <div class="payment-info mb-4">
+                            <i class="fas fa-credit-card"></i>
+                            <span class="payment-text">Métodos de Pago: Tarjeta de Crédito, PayPal</span>
                         </div>
 
                         <!-- Order Component -->
@@ -58,24 +77,27 @@
                 <SplideComponent :images="product.images" />
             </div>
         </div>
+        <div v-else>
+            <!-- Loading State -->
+            <div class="text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-/*
-import { useRoute } from 'vue-router';
-import { useUserStore } from '@/stores/userStore'
-import UserImgComponent from '@/components/UserImgComponent.vue';
-import LikeButton from '@/components/LikeButton.vue';
-import SplideComponent from '@/components/SplideComponent.vue';
-import OrderComponent from '@/components/OrderComponent.vue';*/
+import { ref, onMounted } from 'vue';
+/*import { useRoute } from 'vue-router';*/
 
 const prodId = useRoute().params.product_id[0];
 const product = ref({});
 const likes = ref(0);
 const loaded = ref(false);
 const userStore = useUserStore();
+const product_name = ref('');
 
 // Fetch product info
 const fetchInfo = async (prodId) => {
@@ -97,6 +119,7 @@ const fetchInfo = async (prodId) => {
         if (!response.ok) throw new Error('Failed to fetch info data');
         const result = await response.json();
         product.value = result.data;
+        product_name.value = result.data.product_name.toString();
         likes.value = result.data.like_count;
     } catch (error) {
         console.error('Error fetching product info:', error);
@@ -134,15 +157,17 @@ const handleSubmitOrder = async (orderData) => {
 };
 
 // Fetch product info on mount
-onMounted(() => {
-    fetchInfo(prodId).then(() => (loaded.value = true));
-});
+onMounted(async () => {
+    await fetchInfo(prodId).then(() => {
+        loaded.value = true;
+        console.log('prodname', product_name);
 
-// SEO Meta
-useSeoMeta({
-    title: `Producto: ${product.product_name}`,
-    description: `Descripción: ${product.product_description}`,
-    robots: 'noindex',
+        useSeoMeta({
+            title: `Latin Panty | Producto | ${product.value.product_name}`,
+            description: `Descripción: ${product.value.product_description}`,
+            robots: 'noindex',
+        });
+    });
 });
 </script>
 
@@ -151,42 +176,70 @@ useSeoMeta({
     padding: 20px;
 }
 
+.product-details {
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 .product-name {
     font-size: 2rem;
     font-weight: bold;
     color: #333;
+    margin-bottom: 1rem;
 }
 
 .product-description {
     font-size: 1.1rem;
     color: #555;
-    margin-top: 10px;
+    margin-bottom: 1.5rem;
 }
 
-.product-category {
+.product-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.info-label {
     font-size: 1rem;
+    font-weight: 600;
     color: #777;
-    margin-top: 5px;
+    margin: 0;
+}
+
+.info-value {
+    font-size: 1rem;
+    color: #333;
+    margin: 0;
 }
 
 .rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     color: #ffc107;
     font-size: 1.2rem;
 }
 
-.rating span {
+.rating-text {
     color: #333;
-    margin-left: 5px;
+    font-size: 1rem;
 }
 
 .payment-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     font-size: 1rem;
     color: #333;
-    margin-top: 10px;
 }
 
-.payment-info i {
-    margin-right: 5px;
+.payment-text {
+    font-size: 1rem;
+    color: #333;
 }
 
 .modal-overlay {
@@ -246,10 +299,6 @@ useSeoMeta({
 
 .stage-content {
     text-align: center;
-}
-
-.product-details {
-    margin-bottom: 20px;
 }
 
 .product-image {

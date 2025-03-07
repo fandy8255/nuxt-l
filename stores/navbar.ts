@@ -14,8 +14,7 @@ export const useNavbarStore = defineStore('navbar', {
 
 
             if (error.value) {
-                // console.error('Error generating HMAC signature:', error.value);
-                throw new Error('Failed to generate HMAC signature');
+                throw new Error('Failed to generate');
             }
 
             return data.value?.signature;

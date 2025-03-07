@@ -13,6 +13,7 @@
                             <MessageCard :message="item" class="w-100 d-flex" />
                         </div>
                         <div v-else-if="item.type === 'product'">
+                            <!--{{ item }}-->
                             <ProductCard :product="transformProduct(item)" :isAd="false" width="1000px" />
                         </div>
                     </div>
@@ -64,7 +65,6 @@ useSeoMeta({
 });
 
 function updateFeed() {
-    console.log('feed update triggered 2nd time');
     feedItems.value = userStore.feed;
 }
 
@@ -119,12 +119,14 @@ const transformProduct = (item) => {
         created_at: item.created_at,
         profile_picture: item.profile_picture || '/default-profile-picture.jpg',
         username: item.username || 'Unknown User',
-        product_category: item.product_category || 'Uncategorized'
+        product_category: item.product_category || 'Uncategorized',
+        product_currency:item.product_currency.toUpperCase()
     };
 };
 
 onMounted(() => {
     feedItems.value = Array.from(userStore.feed);
+    
 });
 </script>
 

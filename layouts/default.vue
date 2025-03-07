@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!loading">
+    <div v-if="!loadingVal">
         <Navbar id="navbar" :isAd="navbarStore.is_admin" />
         <PopupAge />
         <div class="slot-wrapper">
@@ -12,15 +12,15 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-const loading = ref(true);
+const loadingVal = ref(true);
 const navbarStore = useNavbarStore();
 
 onMounted(async () => {
     
     await navbarStore.isAd(res=>{
-        loading.value=false
+        loadingVal.value=false
     })
-    loading.value = false;
+    loadingVal.value = false;
 
 });
 </script>

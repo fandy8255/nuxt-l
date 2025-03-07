@@ -10,7 +10,7 @@
                 <ul class="list-unstyled">
                     <li v-for="user in mostFollowed" :key="user.id" class="container border-bottom rounded p-1 mt-1">
                         <NuxtLink class="text-decoration-none" :to="'/perfil/' + user.username">
-                            <UserImgComponent :image="user.profile_picture" :username="user.username" />
+                            <UserImgComponent :image="user.profile_picture ? user.profile_picture : '/assets/images/panty-icon.jpg'" :username="user.username" />
                         </NuxtLink>
                     </li>
                 </ul>
@@ -25,7 +25,7 @@
                 <ul class="list-unstyled">
                     <li v-for="user in newestUsers" :key="user.id" class="container border-bottom rounded p-1 mt-1">
                         <NuxtLink class="text-decoration-none" :to="'/perfil/' + user.username">
-                            <UserImgComponent :image="user.profile_picture" :username="user.username" />
+                            <UserImgComponent :image="user.profile_picture ? user.profile_picture : '/assets/images/panty-icon.jpg'" :username="user.username" />
                         </NuxtLink>
                     </li>
                 </ul>
@@ -56,6 +56,7 @@ async function fetchTopUsers() {
         });
 
         const result = await response.json();
+        /*console.log('top users', result)*/
 
         if (result) {
             mostFollowed.value = result.most_followed;

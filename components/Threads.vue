@@ -56,6 +56,12 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 
+useSeoMeta({
+  title: 'Mensajes',
+  description: 'Mensajes',
+  robots: 'noindex', // Prevent indexing
+});
+
 const supabase = useSupabaseClient();
 const { data: { user } } = await supabase.auth.getUser();
 const userStore = useUserStore();
