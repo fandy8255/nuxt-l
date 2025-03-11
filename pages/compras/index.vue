@@ -24,7 +24,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(order, index) in orders" :key="index">
+                        <tr v-for="order in orders" :key="order.id">
                             <td>
                                 <small>{{ order.order_id }}</small>
                             </td>
@@ -35,9 +35,9 @@
                             <td>{{ order.payment_method }}</td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <img :src="order.product_owner_profile_picture" alt="Profile Picture"
-                                        class="img-thumbnail rounded-circle me-2" style="width: 40px; height: 40px;">
-                                    <span>{{ order.product_owner_username }}</span>
+                                    <UserImgComponent
+                                        :image="order.product_owner_profile_picture ? order.product_owner_profile_picture : '/assets/images/panty-icon.jpg'"
+                                        :username="order.product_owner_username" />
                                 </div>
                             </td>
                             <td>{{ new Date(order.created_at).toLocaleDateString('en-GB') }}</td>
@@ -54,18 +54,18 @@ import { ref, onMounted } from 'vue';
 
 const orders = ref([]);
 const loading = ref(true);
+const userStore = useUserStore();
 
-/*
 definePageMeta({
     middleware: ["auth"] // Ensure the user is authenticated
 });
-*/
+
 useSeoMeta({
-    title: 'My Orders',
+    title: 'Mis Pedidos',
     description: 'View your placed orders',
     robots: 'noindex', // Prevent search engines from indexing this page
 });
-
+/*
 const fetchOrders = async () => {
     const supabase = useSupabaseClient();
     const { data: { user } } = await supabase.auth.getUser();
@@ -85,10 +85,12 @@ const fetchOrders = async () => {
 
     const parsed = await response.json();
     orders.value = parsed;
-};
+};*/
 
 onMounted(async () => {
-    await fetchOrders().finally(() => (loading.value = false));
+   // await fetchOrders().finally(() => (loading.value = false));
+   orders.value=userStore.orders
+   loading.value=false
 });
 </script>
 

@@ -72,10 +72,11 @@
                                 <div class="quantity-price mb-3">
                                     <label for="quantity" class="form-label fw-bold">Cantidad:</label>
                                     <input type="number" class="form-control" id="quantity" v-model="formData.quantity"
-                                        min="1" required />
+                                        min="1" :max="product.product_stock" required />
+                                    <p v-if="quantityError" class="text-danger">{{ quantityError }}</p>
                                     <p class="mt-2 fw-bold">Precio: ${{ product.product_price * formData.quantity }}</p>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col-12 col-md-6">
                                 <div>
                                     <div id="img-container">
@@ -130,7 +131,7 @@
 
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-secondary text-light" @click="prevStage">Anterior</button>
-                        <button class="btn btn-primary text-light" :disabled="!formData.agreeToTerms"
+                        <button class="btn btn-primary text-light" :disabled="!formData.agreeToTerms || quantityError"
                             @click="submitOrder">
                             Confirmar Compra
                         </button>
@@ -155,6 +156,7 @@ const emit = defineEmits(['submit-order']);
 const isModalOpen = ref(false);
 const currentStage = ref(0);
 const stages = ['Información', 'Detalles', 'Confirmación'];
+const quantityError = ref(false);
 
 const formData = ref({
     fullName: '',
@@ -168,6 +170,16 @@ const formData = ref({
     notes: '',
 });
 
+const validateQuantity = () => {
+    if (formData.value.quantity > parseInt(props.product.product_stock)) {
+        quantityError.value = true;
+        return false;
+    } else {
+        quantityError.value = false;
+        return true;
+    }
+};
+
 const openModal = () => {
     isModalOpen.value = true;
 };
@@ -178,6 +190,10 @@ const closeModal = () => {
 };
 
 const nextStage = () => {
+
+    if (currentStage.value === 1 && !validateQuantity()) {
+        return;
+    }
     if (currentStage.value < stages.length - 1) {
         currentStage.value++;
     }
@@ -190,6 +206,9 @@ const prevStage = () => {
 };
 
 const submitOrder = () => {
+    if (!validateQuantity()) {
+        return;
+    }
     const orderData = {
         buyer_id: props.user.id,
         seller_id: props.product.user_id,

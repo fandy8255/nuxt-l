@@ -1,71 +1,129 @@
 <template>
     <div id="main" class="container mt-5">
-        <div v-if="!userStore.logged_in" class="text-center">
+        <!-- Loading Spinner -->
+        <div v-if="loading" class="text-center mt-5" style="height: 600px !important; margin-top: 100px !important;">
             <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
         </div>
+
+        <!-- Dashboard Content -->
         <div v-else>
             <h1 class="text-center mb-4">User Dashboard</h1>
             <h1>Bienvenido {{ userStore.username }}!</h1>
-            <!--
-            <p>id: {{ userStore.id }}</p>
-            <p>Age: {{ userStore.age }}</p>
-            <p>User Type {{ userStore.user_type }}</p>
-            <p>Email {{ userStore.email }}</p>
-            <p>Profile Description: {{ userStore.profile_description }}</p>
-            <img :src="userStore.profile_image" alt="Profile Image" />
-            <p>Ubicación: {{ userStore.ubicacion }}</p>
-            <p>products {{ userStore.products }}</p>
-            <p>followers {{ userStore.followers }}</p>
-            <p>followed {{ userStore.followed }}</p>
-            <p>liked products: {{ userStore.liked_products }}</p>
-            <p>feed {{ userStore.feed }}</p>
-            <p>blocked users {{ userStore.blocked_users }}</p>
-            <p>blocked by {{ userStore.blocked_by }}</p>
-            <p>message count {{ userStore.message_count }}</p>-->
-            <Orders />
+
+            <!-- Bootstrap 5 Tabs -->
+            <ul class="nav nav-tabs mb-4" id="dashboardTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders"
+                        type="button" role="tab" aria-controls="orders" aria-selected="true">
+                        Pedidos
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews"
+                        type="button" role="tab" aria-controls="reviews" aria-selected="false">
+                        Reseñas
+                    </button>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content" id="dashboardTabsContent">
+                <!-- Orders Tab -->
+                <div class="tab-pane fade show active" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+                    <Orders />
+                </div>
+
+                <!-- Reviews Tab -->
+                <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                    <Reviews />
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const userStore = useUserStore();
+const loading = ref(true);
 
-onMounted(() => {
-    userStore.fetchUserData();
+onMounted(async () => {
+    await userStore.fetchUserData();
+    loading.value = false;
 });
 
 useSeoMeta({
-  title: 'Dashboard',
-  description: 'Dashboard',
-  robots: 'noindex', 
+    title: 'Dashboard',
+    description: 'Dashboard',
+    robots: 'noindex',
 });
-
 </script>
 
-
 <style scoped>
-
-#main{
-    margin-top:40px;
-}
-.card {
-    border-radius: 12px;
+#main {
+    margin-top: 40px;
 }
 
-.list-group-item {
-    background-color: #f9f9f9;
-    border: none;
+/* Tab Styling */
+.nav-tabs {
+    border-bottom: 2px solid #dee2e6;
 }
 
-.text-primary {
-    font-weight: bold;
+.nav-tabs .nav-link {
+    color: #495057;
+    background-color: #f8f9fa;
+    border: 1px solid transparent;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
 }
 
-.shadow-sm {
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+.nav-tabs .nav-link:hover {
+    border-color: #e9ecef #e9ecef #dee2e6;
+    background-color: #e9ecef;
+}
+
+.nav-tabs .nav-link.active {
+    color: #0d6efd;
+    background-color: #fff;
+    border-color: #dee2e6 #dee2e6 #fff;
+}
+
+/* Tab Content Styling */
+.tab-content {
+    padding: 20px;
+    border: 1px solid #dee2e6;
+    border-top: none;
+    border-radius: 0 0 0.25rem 0.25rem;
+    background-color: #fff;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .nav-tabs .nav-link {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+
+    .tab-content {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .nav-tabs .nav-link {
+        padding: 0.5rem;
+        font-size: 0.8125rem;
+    }
+
+    .tab-content {
+        padding: 10px;
+    }
 }
 </style>

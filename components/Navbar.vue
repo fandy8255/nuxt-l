@@ -73,7 +73,7 @@
                             <i class="fa-regular fa-envelope fa-xl me-2"></i>{{ userStore.message_count }}
                         </NuxtLink>
                     </li>
-                    <li v-if="userStore.user_type === 'seller'" class="nav-item">
+                    <li class="nav-item">
                         <NuxtLink to="/dashboard" class="nav-link text-decoration-none" @click="closeNavbar">Stats
                         </NuxtLink>
                     </li>
@@ -181,6 +181,7 @@ async function signOut() {
         feed: [],
         blocked_users: [],
         blocked_by: [],
+        orders:[],
         message_count: 0
     });
 

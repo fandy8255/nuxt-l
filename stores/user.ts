@@ -21,6 +21,8 @@ export const useUserStore = defineStore('user', {
         feed: [],
         blocked_users: [],
         blocked_by: [],
+        orders: [],
+        reviews: [],
         message_count: 0
     }),
     actions: {
@@ -40,15 +42,15 @@ export const useUserStore = defineStore('user', {
         },
 
         async generateHMACSignature(timestamp) {
-        
+
             const { data, error } = await useFetch('/api/hmac', {
                 query: { timestamp },
             });
 
 
             if (error.value) {
-               // console.error('Error generating HMAC signature:', error.value);
-                throw new Error('Failed to generate HMAC signature');
+                
+                throw new Error('Failed to generate HM');
             }
 
             return data.value?.signature;
@@ -104,7 +106,7 @@ export const useUserStore = defineStore('user', {
 
                 const timestamp = Date.now().toString();
                 const signature = await this.generateHMACSignature(timestamp);
-                
+
 
                 const response = await fetch(
                     'https://lingerie.fandy8255.workers.dev/api/fetch-followed-data',
@@ -172,7 +174,7 @@ export const useUserStore = defineStore('user', {
                 });
 
                 const result = await response.json();
-                
+
                 if (result?.likedProducts) {
                     this.liked_products = result.likedProducts;
                 }
@@ -183,6 +185,41 @@ export const useUserStore = defineStore('user', {
 
             }
         },
+
+        async fetchOrders() {
+            const runtimeConfig = useRuntimeConfig();
+            const environment = runtimeConfig.public.dev;
+            try {
+                const supabase = useSupabaseClient();
+                const { data: { user } } = await supabase.auth.getUser();
+                const timestamp = Date.now().toString();
+                const signature = await this.generateHMACSignature(timestamp);
+
+                const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/orders`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `HVAC ${signature}`,
+                        'X-Timestamp': timestamp,
+                        'X-User': JSON.stringify(user),
+                    },
+                });
+
+                const parsed = await response.json();
+               
+                this.orders = parsed;
+              
+
+            } catch (error) {
+                if (environment === "development") {
+                    console.log('error fetching orders', error)
+                    //console.error('Error fetching liked products:', error.message);
+                }
+
+            }
+
+        },
+
 
         async fetchBlockedUsers() {
             const runtimeConfig = useRuntimeConfig();
@@ -288,6 +325,37 @@ export const useUserStore = defineStore('user', {
             }
         },
 
+        async fetchReviews() {
+            const runtimeConfig = useRuntimeConfig();
+            const environment = runtimeConfig.public.dev;
+            try {
+                const supabase = useSupabaseClient();
+                const { data: { user } } = await supabase.auth.getUser();
+                const timestamp = Date.now().toString();
+                const signature = await this.generateHMACSignature(timestamp);
+
+                const response = await fetch(`https://lingerie.fandy8255.workers.dev/api/reviews`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `HVAC ${signature}`,
+                        'X-Timestamp': timestamp,
+                        'X-User': JSON.stringify(user),
+                    },
+                });
+
+                if (!response.ok) throw new Error('Failed to fetch reviews');
+                const parsed = await response.json();
+                
+                this.reviews = parsed; // Store reviews in the userStore
+            
+            } catch (error) {
+                if (environment === "development") {
+                    
+                }
+            }
+        },
+
         async fetchUserData() {
 
             const runtimeConfig = useRuntimeConfig();
@@ -299,12 +367,12 @@ export const useUserStore = defineStore('user', {
             const supabase = useSupabaseClient();
             const { data: { user } } = await supabase.auth.getUser();
             if (environment === "development") {
-               // console.log('user', user)
+                // console.log('user', user)
             }
-            
-           
+
+
             if (!user) {
-               // console.log('no user found')
+                // console.log('no user found')
                 return;
             }
 
@@ -315,7 +383,7 @@ export const useUserStore = defineStore('user', {
 
             const timestamp = Date.now().toString(); // Prevent replay attacks
             const signature = await this.generateHMACSignature(timestamp);
-            
+
             if (environment === "development") {
                 //console.log('generated HMAC', signature)
             }
@@ -332,7 +400,7 @@ export const useUserStore = defineStore('user', {
                 });
 
                 const result = await response.json();
-                
+
                 if (result?.data) {
                     this.setUser({
                         username: result.data.username,
@@ -388,6 +456,8 @@ export const useUserStore = defineStore('user', {
                     await this.fetchBlockedUsers()
                     await this.fetchBlockedBy()
                     await this.fetchThreads()
+                    await this.fetchOrders()
+                    await this.fetchReviews()
                 }
             } catch (error) {
                 //console.error('Error fetching user data:', error);
@@ -451,10 +521,47 @@ export const useUserStore = defineStore('user', {
                 return;
             }
 
-            product.profile_picture=this.profile_picture;
-            //console.log('product after', product)
+            product.profile_picture = this.profile_picture;
+          
 
             this.products.unshift(product);
+        },
+        addToOrders(item) {
+
+
+            if (this.user_type !== 'buyer') {
+                return;
+            }
+            if (!item || !item.id) {
+               
+                return;
+            }
+
+            this.orders.unshift(item);
+        },
+        addToReviews(review) {
+            if (!review || !review.id) {
+               
+                return;
+            }
+        
+            this.reviews.unshift(review); // Add the review to the beginning of the array
+            
+        },
+        deleteFromReviews(reviewId) {
+            if (!reviewId) {
+               
+                return;
+            }
+        
+            const reviewIndex = this.reviews.findIndex(review => review.id === reviewId);
+            if (reviewIndex === -1) {
+                
+                return;
+            }
+        
+            this.reviews.splice(reviewIndex, 1); // Remove the review from the array
+            
         },
 
         deleteProduct(productId) {
@@ -463,7 +570,7 @@ export const useUserStore = defineStore('user', {
             }
             const productIndex = this.products.findIndex(product => product.id === productId);
             if (productIndex === -1) {
-                console.error('Product not found.');
+                
                 return;
             }
 

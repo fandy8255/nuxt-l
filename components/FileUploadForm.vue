@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button type="button" class="btn-file btn" data-bs-toggle="modal" :data-bs-target="`#${modalId}`">
+        <button type="button" class="btn btn-primary text-light" data-bs-toggle="modal" :data-bs-target="`#${modalId}`">
             Crear Producto
         </button>
 
@@ -62,7 +62,7 @@
                                 <input type="file" class="form-control" id="fileInput" @change="handleFilesChange"
                                     multiple required />
                             </div>
-                            <button type="submit" class="btn btn-success">Crear</button>
+                            <button type="submit" class="btn btn-primary text-light">Crear</button>
                         </form>
                         <p class="mt-3">{{ uploadStatus }}</p>
                     </div>
@@ -181,6 +181,7 @@ const resetForm = () => {
     z-index: 10 !important;
 }
 
+/*
 .btn-file {
     background: rgb(242, 97, 0);
     color: white !important;
@@ -188,5 +189,6 @@ const resetForm = () => {
 
 .btn-file:hover {
     background: green;
-}
+}*/
+
 </style>

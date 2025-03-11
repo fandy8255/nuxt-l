@@ -4,6 +4,9 @@
             <!-- Left Column: Product Details -->
             <div class="col-sm-12 col-lg-4 mt-5">
                 <div class="container-xl">
+                    <!-- Message Modal -->
+                    <MessageModal :message="message" @clear="clearMessage" style="z-index: 105 !important;" />
+
                     <div class="product-details">
                         <!-- User Image and Like Button -->
                         <div class="d-flex mb-4">
@@ -46,7 +49,7 @@
                         <div class="product-info mb-4">
                             <h4 class="info-label">Precio</h4>
                             <p class="info-value">${{ product.product_price }} {{ product.product_currency.toUpperCase()
-                                }}</p>
+                            }}</p>
                         </div>
 
                         <!-- Rating -->
@@ -65,9 +68,14 @@
                             <span class="payment-text">Métodos de Pago: Tarjeta de Crédito, PayPal</span>
                         </div>
 
-                        <!-- Order Component -->
-                        <OrderComponent :product="product" :user="userStore.user_tok"
-                            @submit-order="handleSubmitOrder" />
+                        <!-- Cancel Order or Order Component -->
+                        <div v-if="userStore.user_type === 'buyer'">
+                            <CancelOrder v-if="hasOrderForProduct" :orderId="getOrderIdForProduct"
+                                :productId="product.id" @order-canceled="handleOrderCanceled"
+                                @message="handleMessage" />
+                            <OrderComponent v-else :product="product" :user="userStore.user_tok"
+                                @submit-order="handleSubmitOrder" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -78,7 +86,6 @@
             </div>
         </div>
         <div v-else>
-            <!-- Loading State -->
             <div class="text-center">
                 <div class="spinner-border text-primary" role="status">
                     <span class="visually-hidden">Loading...</span>
@@ -89,8 +96,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-/*import { useRoute } from 'vue-router';*/
+import { ref, computed, onMounted } from 'vue';
+/*
+import { useRoute } from 'vue-router';
+import { useUserStore } from '~/stores/userStore'; // Adjust the path as needed
+import CancelOrder from '~/components/CancelOrder.vue'; // Adjust the path as needed
+import OrderComponent from '~/components/OrderComponent.vue'; // Adjust the path as needed
+*/
 
 const prodId = useRoute().params.product_id[0];
 const product = ref({});
@@ -98,6 +110,38 @@ const likes = ref(0);
 const loaded = ref(false);
 const userStore = useUserStore();
 const product_name = ref('');
+const message = ref(null);
+
+// Computed property to check if the user has an order for the current product
+const hasOrderForProduct = computed(() => {
+    if (!userStore.orders || !product.value.id) return false;
+
+    // Check if any order in the user's orders array matches the current product ID
+    return userStore.orders.some(order => order.product_id === product.value.id);
+});
+
+// Get the order ID for the current product
+const getOrderIdForProduct = computed(() => {
+    if (!userStore.orders || !product.value.id) return null;
+    //return product.value.id
+    const order = userStore.orders.find(order => order.product_id === product.value.id);
+    return order ? order.order_id : null;
+    //return order
+});
+
+// Handle the message event from the CancelOrder component
+const handleMessage = (msg) => {
+    message.value = msg;
+};
+
+// Clear the message
+const clearMessage = () => {
+    message.value = null;
+};
+
+// Handle the order-canceled event
+const handleOrderCanceled = (orderId) => {
+};
 
 // Fetch product info
 const fetchInfo = async (prodId) => {
@@ -122,7 +166,6 @@ const fetchInfo = async (prodId) => {
         product_name.value = result.data.product_name.toString();
         likes.value = result.data.like_count;
     } catch (error) {
-        console.error('Error fetching product info:', error);
         product.value = {};
     }
 };
@@ -144,15 +187,38 @@ const handleSubmitOrder = async (orderData) => {
                 'Content-Type': 'application/json',
                 'Authorization': `HVAC ${signature}`,
                 'X-Timestamp': timestamp,
+                'X-User': JSON.stringify({
+                    id: userStore.id,
+                    user_type: userStore.user_type
+                }),
             },
             body: JSON.stringify(orderData),
         });
 
         if (!response.ok) throw new Error('Failed to submit order');
         const result = await response.json();
-        console.log('Order submitted successfully:', result);
+        
+        let item=result.result.results[0]
+
+        item.product_id=product.value.id
+        item.product_name=product.value.product_name
+        item.product_owner_username=product.value.username
+        item.product_url=product.value.product_url
+        item.buyer_username=userStore.username
+        item.product_owner_profile_picture=product.value.profile_picture
+        item.order_id=item.id
+
+        userStore.addToOrders(item)
+        message.value = {
+            success: true,
+            text: 'Orden Creada',
+        };
+        
     } catch (error) {
-        console.error('Error submitting order:', error);
+        message.value = {
+            failure: true,
+            text: 'Orden No Pudo Ser Creada',
+        };
     }
 };
 
@@ -160,7 +226,6 @@ const handleSubmitOrder = async (orderData) => {
 onMounted(async () => {
     await fetchInfo(prodId).then(() => {
         loaded.value = true;
-        console.log('prodname', product_name);
 
         useSeoMeta({
             title: `Latin Panty | Producto | ${product.value.product_name}`,
@@ -170,6 +235,7 @@ onMounted(async () => {
     });
 });
 </script>
+
 
 <style scoped>
 .container-fluid {

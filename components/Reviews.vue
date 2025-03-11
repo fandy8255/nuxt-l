@@ -7,7 +7,7 @@
             </div>
         </div>
 
-        <!-- Orders Table -->
+        <!-- Reviews Table -->
         <div class="container-fluid" v-else>
             <div class="container-fluid d-flex justify-content-center mt-4">
                 <MessageModal :message="message" @clear="clearMessage" style="z-index: 105 !important;" />
@@ -15,59 +15,43 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>Producto</th>
-                            <th>Cantidad</th>
-                            <th>Total</th>
-                            <th>Estado</th>
-                            <th>Método de Pago</th>
+                            <th>Reseña</th>
+                            <th>Calificación</th>
                             <th>{{ userStore.user_type === 'seller' ? 'Comprador' : 'Vendedor' }}</th>
                             <th>Fecha</th>
-                            <th>Acciones</th>
+                            <th>Respuesta</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="order in paginatedOrders" :key="order.id">
+                        <tr v-for="review in paginatedReviews" :key="review.id">
                             <td>
-                                <ProductImgComponent :image="order.product_url ? order.product_url : ''"
-                                    :username="order.product_name" :id="order.product_id" />
+                                <div>
+                                    <strong>{{ review.review_title }}</strong>
+                                    <!--<p>{{ review.review_description }}</p>-->
+                                </div>
                             </td>
                             <td>
-                                {{ order.quantity }}
+                                {{ review.rating }} ⭐
                             </td>
-                            <td>${{ order.total_price }}</td>
-                            <td>{{ order.order_status }}</td>
-                            <td>{{ order.payment_method }}</td>
                             <td>
                                 <div class="d-flex align-items-center">
                                     <UserImgComponent :image="userStore.user_type === 'seller' ?
-                                        (order.buyer_profile_picture || '/assets/images/panty-icon.jpg') :
-                                        (order.product_owner_profile_picture || '/assets/images/panty-icon.jpg')"
+                                        (review.reviewed_by_profile_picture || '/assets/images/panty-icon.jpg') :
+                                        (review.reviewed_user_profile_picture || '/assets/images/panty-icon.jpg')"
                                         :username="userStore.user_type === 'seller' ?
-                                            order.buyer_username :
-                                            order.product_owner_username" />
+                                            review.reviewed_by_username :
+                                            review.reviewed_user_username" />
                                 </div>
                             </td>
-                            <td>{{ new Date(order.created_at).toLocaleDateString('en-GB') }}</td>
-                            <td style="height: 75.5px;">
-                                <!-- Render CancelOrder for buyers if order_status is 'pending' -->
-                                <CancelOrder v-if="userStore.user_type === 'buyer' && order.order_status === 'pending'"
-                                    :orderId="order.order_id" :productId="order.product_id"
-                                    @order-canceled="handleOrderCanceled" @message="handleMessage" />
-
-                                <!-- Render CancelOrder and AcceptOrder for sellers if order_status is 'pending' -->
-                                <div class="d-flex gap-1" v-if="userStore.user_type === 'seller'">
-                                    <CancelOrder :orderId="order.order_id" :productId="order.product_id"
-                                        @order-canceled="handleOrderCanceled" @message="handleMessage" />
-                                    <AcceptOrder v-if="order.order_status === 'pending'" :orderId="order.order_id"
-                                        :productId="order.product_id" @order-accepted="handleOrderAccepted"
-                                        @message="handleMessage" />
+                            <td>{{ new Date(review.created_at).toLocaleDateString('en-GB') }}</td>
+                            <td>
+                                <div v-if="review.review_reply">
+                                    <strong>Respuesta:</strong>
+                                    <p>{{ review.review_reply }}</p>
                                 </div>
-
-                                <!-- Render SubmitReview for buyers if order_status is 'accepted' and no review exists -->
-                                <SubmitReview
-                                    v-if="userStore.user_type === 'buyer' && order.order_status === 'accepted' && !hasReviewForOrder(order.order_id) && !hasReviewForUser(order.seller_id)"
-                                    :orderId="order.order_id" :reviewedUserId="order.seller_id"
-                                    @review-submitted="handleReviewSubmitted" @message="handleMessage" />
+                                <div v-else>
+                                    <p>Sin respuesta</p>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -104,14 +88,14 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 
-const orders = ref([]);
+const reviews = ref([]);
 const loading = ref(true);
 const userStore = useUserStore();
 const message = ref(null);
 
 // Pagination state
 const currentPage = ref(1);
-const itemsPerPage = 2; // Number of orders per page
+const itemsPerPage = 5; // Number of reviews per page
 const visibleButtons = 5; // Number of visible pagination buttons
 
 // Handle the message event
@@ -124,42 +108,12 @@ const clearMessage = () => {
     message.value = null;
 };
 
-// Handle the order-canceled event
-const handleOrderCanceled = (orderId) => {
-    orders.value = orders.value.filter(order => order.order_id !== orderId);
-};
-
-// Handle the order-accepted event
-const handleOrderAccepted = (orderId) => {
-    const order = orders.value.find(order => order.order_id === orderId);
-    if (order) {
-        order.order_status = 'accepted';
-    }
-};
-
-// Handle the review-submitted event
-const handleReviewSubmitted = (reviewId) => {
-    const order = orders.value.find(order => order.order_id === reviewId);
-    if (order) {
-        order.has_review = true; // Mark the order as reviewed
-    }
-};
-
-// Check if a review exists for the order in the userStore.reviews array
-const hasReviewForOrder = (orderId) => {
-    return userStore.reviews.some(review => review.order_id === orderId);
-};
-
-const hasReviewForUser = (sellerId) => {
-    return userStore.reviews.some(review => review.reviewed_user === sellerId);
-};
-
 // Pagination logic
-const totalPages = computed(() => Math.ceil(orders.value.length / itemsPerPage));
-const paginatedOrders = computed(() => {
+const totalPages = computed(() => Math.ceil(reviews.value.length / itemsPerPage));
+const paginatedReviews = computed(() => {
     const start = (currentPage.value - 1) * itemsPerPage;
     const end = start + itemsPerPage;
-    return orders.value.slice(start, end);
+    return reviews.value.slice(start, end);
 });
 
 const visiblePages = computed(() => {
@@ -181,15 +135,10 @@ const changePage = (page) => {
 };
 
 onMounted(async () => {
-    // Fetch orders from the user store
-    orders.value = userStore.orders;
+    // Fetch reviews from the user store
+    reviews.value = userStore.reviews;
 
-    // Mark orders as reviewed if a review exists in the userStore.reviews array
-    orders.value = orders.value.map(order => ({
-        ...order,
-        has_review: hasReviewForOrder(order.order_id),
-    }));
-
+    // Mark loading as false
     loading.value = false;
 });
 </script>
@@ -201,14 +150,7 @@ onMounted(async () => {
     height: 75px;
 }
 
-/* Ensure the actions column (buttons) are aligned properly */
-.table td:last-child {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-/* Ensure the UserImgComponent and ProductImgComponent are aligned properly */
+/* Ensure the UserImgComponent is aligned properly */
 .d-flex.align-items-center {
     display: flex;
     align-items: center;
