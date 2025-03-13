@@ -9,7 +9,7 @@
 
         <!-- Orders Table -->
         <div class="container-fluid" v-else>
-            <div class="container-fluid d-flex justify-content-center mt-4">
+            <div class="container-fluid d-flex justify-content-center">
                 <MessageModal :message="message" @clear="clearMessage" style="z-index: 105 !important;" />
 
                 <table class="table table-striped table-hover">
@@ -55,7 +55,7 @@
                                     @order-canceled="handleOrderCanceled" @message="handleMessage" />
 
                                 <!-- Render CancelOrder and AcceptOrder for sellers if order_status is 'pending' -->
-                                <div class="d-flex gap-1" v-if="userStore.user_type === 'seller'">
+                                <div class="d-flex gap-1" v-if="userStore.user_type === 'seller' && order.order_status === 'pending'">
                                     <CancelOrder :orderId="order.order_id" :productId="order.product_id"
                                         @order-canceled="handleOrderCanceled" @message="handleMessage" />
                                     <AcceptOrder v-if="order.order_status === 'pending'" :orderId="order.order_id"

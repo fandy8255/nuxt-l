@@ -101,6 +101,7 @@ const submitReview = async () => {
     try {
         const timestamp = Date.now().toString();
         const signature = await userStore.generateHMACSignature(timestamp);
+        const user=await userStore.getUser()
 
         const response = await fetch('https://lingerie.fandy8255.workers.dev/api/submit-review', {
             method: 'POST',
@@ -111,7 +112,7 @@ const submitReview = async () => {
                 'X-User': JSON.stringify(userStore.user_tok),
             },
             body: JSON.stringify({
-                reviewed_by: userStore.id, // The buyer submitting the review
+                reviewed_by: user.id, // The buyer submitting the review
                 review_title: reviewTitle.value,
                 review_description: reviewDescription.value,
                 reviewed_user: props.reviewedUserId, // The seller being reviewed

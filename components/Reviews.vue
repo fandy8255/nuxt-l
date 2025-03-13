@@ -9,7 +9,7 @@
 
         <!-- Reviews Table -->
         <div class="container-fluid" v-else>
-            <div class="container-fluid d-flex justify-content-center mt-4">
+            <div class="container-fluid d-flex justify-content-center">
                 <MessageModal :message="message" @clear="clearMessage" style="z-index: 105 !important;" />
 
                 <table class="table table-striped table-hover">
@@ -23,11 +23,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="review in paginatedReviews" :key="review.id">
+                        <tr v-for="review in paginatedReviews" :key="review.review_id">
                             <td>
                                 <div>
                                     <strong>{{ review.review_title }}</strong>
-                                    <!--<p>{{ review.review_description }}</p>-->
+                                    <p>{{ review.review_description }}</p>
                                 </div>
                             </td>
                             <td>
@@ -43,14 +43,43 @@
                                             review.reviewed_user_username" />
                                 </div>
                             </td>
-                            <td>{{ new Date(review.created_at).toLocaleDateString('en-GB') }}</td>
+                            <td>{{ new Date(review.review_created_at).toLocaleDateString('en-GB') }}</td>
                             <td>
-                                <div v-if="review.review_reply">
-                                    <strong>Respuesta:</strong>
-                                    <p>{{ review.review_reply }}</p>
+                                <!-- Buyer View: Show "View Reply" button if reply exists -->
+                                <div v-if="userStore.user_type === 'buyer'">
+                                    <div v-if="review.review_reply">
+                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                            :data-bs-target="`#viewReplyModal-${review.review_id}`">
+                                            Ver Respuesta
+                                        </button>
+                                        <!-- Modal to View Reply -->
+                                        <div class="modal fade" :id="`viewReplyModal-${review.review_id}`" tabindex="-1"
+                                            aria-labelledby="viewReplyModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="viewReplyModalLabel">Respuesta del
+                                                            Vendedor</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>{{ review.review_reply }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div v-else>
+                                        <p>Sin respuesta</p>
+                                    </div>
                                 </div>
-                                <div v-else>
-                                    <p>Sin respuesta</p>
+
+                                <!-- Seller View: Embed ReviewReply Component -->
+                                <div v-if="userStore.user_type === 'seller'">
+                                   
+                                    <ReviewReply :review="review" @reply-submitted="handleReplySubmitted"
+                                        @message="handleMessage" />
                                 </div>
                             </td>
                         </tr>
@@ -87,6 +116,8 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+/*import { useUserStore } from '~/stores/userStore'; // Adjust the path as needed
+import ReviewReply from '~/components/ReviewReply.vue'; // Adjust the path as needed*/
 
 const reviews = ref([]);
 const loading = ref(true);
@@ -106,6 +137,12 @@ const handleMessage = (msg) => {
 // Clear the message
 const clearMessage = () => {
     message.value = null;
+};
+
+// Handle the reply-submitted event
+const handleReplySubmitted = (reviewId) => {
+    console.log(`Reply submitted for review ${reviewId}`);
+    // Update the UI or fetch updated reviews
 };
 
 // Pagination logic

@@ -9,8 +9,8 @@
 
         <!-- Dashboard Content -->
         <div v-else>
-            <h1 class="text-center mb-4">User Dashboard</h1>
-            <h1>Bienvenido {{ userStore.username }}!</h1>
+            <h2 class="text-start mb-4">Tu Tablero</h2>
+           <!-- <h1>Bienvenido {{ userStore.username }}!</h1>-->
 
             <!-- Bootstrap 5 Tabs -->
             <ul class="nav nav-tabs mb-4" id="dashboardTabs" role="tablist">
@@ -28,6 +28,7 @@
                 </li>
             </ul>
 
+            
             <!-- Tab Content -->
             <div class="tab-content" id="dashboardTabsContent">
                 <!-- Orders Tab -->
@@ -40,6 +41,13 @@
                     <Reviews />
                 </div>
             </div>
+
+            <!-- Gallery Component -->
+            <h2 class="text-start mb-4">{{userStore.user_type==='buyer'? 'Tu Wishlist' : ' Tus Productos'}}</h2>
+            <GalleryComponent />
+
+            <h2 v-if="userStore.user_type==='seller' " class="text-start mb-4">Tu Entrevista</h2>
+            <InterviewComponent v-if="userStore.user_type==='seller' " />
         </div>
     </div>
 </template>
@@ -69,7 +77,7 @@ useSeoMeta({
 
 /* Tab Styling */
 .nav-tabs {
-    border-bottom: 2px solid #dee2e6;
+    /*border-bottom: 2px solid #dee2e6;*/
 }
 
 .nav-tabs .nav-link {
@@ -98,9 +106,9 @@ useSeoMeta({
 /* Tab Content Styling */
 .tab-content {
     padding: 20px;
-    border: 1px solid #dee2e6;
+    /* border: 1px solid #dee2e6;
     border-top: none;
-    border-radius: 0 0 0.25rem 0.25rem;
+    border-radius: 0 0 0.25rem 0.25rem;*/
     background-color: #fff;
 }
 

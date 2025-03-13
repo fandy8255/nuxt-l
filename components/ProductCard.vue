@@ -17,8 +17,9 @@
                             </div>
                             <div class="col-6 text-end">
                                 <div class="lk d-flex justify-content-end align-items-end">
+                                   <!--{{ product }}-->
                                     <LikeButton v-if="product.user_id !== userStore.id" :likedProductId="product.id"
-                                        :productOwnerId="product.user_id" :like_count="product.like_count" />
+                                        :productOwnerId="product.user_id" :like_count="product.like_count" :productName="product.product_name" :productUrl="product.product_url" />
                                     <div v-else>
                                         <i class="fa-solid fa-heart"></i> {{ product.like_count }}
                                     </div>

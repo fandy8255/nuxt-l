@@ -4,7 +4,7 @@
             <div v-if="isBlocked">
                 <div class="row">
                     <div class="col-12">
-                        <MessageModal :message="message"  @clear="clearMessage" style="z-index: 105 !important;" />
+                        <MessageModal :message="message" @clear="clearMessage" style="z-index: 105 !important;" />
                     </div>
 
                     <div class="col-12 p-1 text-center justify-content-center mb-5">
@@ -98,6 +98,18 @@
                                     Contacto
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a id="reviews-title" class="nav-link" :class="{ active: activeTab === 'reviews' }"
+                                    @click.prevent="activeTab = 'reviews'">
+                                    Reseñas
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a id="interview-title" class="nav-link" :class="{ active: activeTab === 'interview' }"
+                                    @click.prevent="activeTab = 'interview'">
+                                    Entrevista
+                                </a>
+                            </li>
                         </ul>
 
                         <div class="tab-content mt-3">
@@ -123,6 +135,7 @@
                                                     @updateProductsStore2="updateProducts" />
                                             </div>
                                         </div>
+
                                         <!-- Pagination Controls -->
                                         <nav aria-label="Page navigation" class="mt-4 bg-light">
                                             <ul class="pagination justify-content-center flex-wrap">
@@ -136,7 +149,7 @@
                                                 <li v-for="page in visiblePages" :key="page" class="page-item"
                                                     :class="{ active: page === currentPage }">
                                                     <button class="page-link" @click="changePage(page)">{{ page
-                                                        }}</button>
+                                                    }}</button>
                                                 </li>
                                                 <li class="page-item" :class="{ disabled: currentPage === totalPages }">
                                                     <button class="page-link"
@@ -156,6 +169,13 @@
                             <div v-if="activeTab === 'contact' && user.username !== userStore.username"
                                 class="tab-pane fade show active pb-3">
                                 <ContactForm :receiver="user" />
+                            </div>
+
+                            <div v-if="activeTab === 'reviews'" class="tab-pane fade show active">
+                                <ReviewList :userId="user.id" />
+                            </div>
+                            <div v-if="activeTab === 'interview'" class="tab-pane fade show active">
+                                <InterviewComponent />
                             </div>
                         </div>
                     </div>
@@ -201,9 +221,9 @@ const followed = ref(null);
 const followers = ref(null);
 
 useSeoMeta({
-  title: `Perfil: ${username}`,
-  description: 'This is my page description.',
-  robots: 'noindex', // Prevent indexing
+    title: `Perfil: ${username}`,
+    description: 'This is my page description.',
+    robots: 'noindex', // Prevent indexing
 });
 
 function test() {
