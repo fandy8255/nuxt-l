@@ -175,7 +175,7 @@
                                 <ReviewList :userId="user.id" />
                             </div>
                             <div v-if="activeTab === 'interview'" class="tab-pane fade show active">
-                                <InterviewComponent />
+                                <InterviewList />
                             </div>
                         </div>
                     </div>
