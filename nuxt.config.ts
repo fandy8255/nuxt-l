@@ -4,9 +4,14 @@ export default defineNuxtConfig({
   ssr: true,
   modules: ['@nuxt/image', '@nuxtjs/supabase', '@pinia/nuxt', "pinia-plugin-persistedstate", '@nuxt/content', 'nuxt-gtag'],
 
+  /*
   gtag: {
     enabled: process.env.ENVIRONMENT === 'production',
     id: process.env.NUXT_PUBLIC_GTAG_ID
+  }*/
+
+  gtag: {
+    id:'G-8EPNTJ52SL'
   }
 ,
   runtimeConfig: {
