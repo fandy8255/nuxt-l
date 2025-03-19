@@ -91,7 +91,8 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import Tags from '~/components/Tags.vue'; // Import the Tags component
+/*
+import Tags from '~/components/Tags.vue'; // Import the Tags component*/
 
 const allArticles = ref([]); // Store all fetched articles
 const featuredArticles = ref([]);

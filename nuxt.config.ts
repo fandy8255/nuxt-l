@@ -2,8 +2,13 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: process.env.ENVIRONMENT === 'development' },
   ssr: true,
-  modules: ['@nuxt/image', '@nuxtjs/supabase', '@pinia/nuxt', "pinia-plugin-persistedstate", '@nuxt/content'],
+  modules: ['@nuxt/image', '@nuxtjs/supabase', '@pinia/nuxt', "pinia-plugin-persistedstate", '@nuxt/content', 'nuxt-gtag'],
 
+  gtag: {
+    enabled: process.env.ENVIRONMENT === 'production',
+    id: process.env.NUXT_PUBLIC_GTAG_ID
+  }
+,
   runtimeConfig: {
     // Server-side only
     supabaseUrl: process.env.SUPABASE_URL,
