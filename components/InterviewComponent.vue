@@ -82,11 +82,12 @@ const message = ref(null);
 
 // Suggested questions
 const suggestedQuestions = ref([
-    "What inspired you to start this business?",
-    "What challenges have you faced, and how did you overcome them?",
-    "What advice would you give to someone starting out?",
-    "What are your future goals for this business?",
-    "How do you handle customer feedback?",
+    "Que fué lo que te inspiró para iniciar en este negocio de venta de panties?",
+    "De 1-10 que tan activa es tu vida sexual?",
+    "Cual es tu método anticonceptivo de preferencia?",
+    "Que le recomendarías a alguien que quiera iniciar en este negocio?",
+    "Cuales son tus metas a largo plazo en este negocio?",
+    "Alguna vez has desarrollado una amistad con alguno de tus clientes?",
 ]);
 
 // Fetch questions from the API
@@ -119,7 +120,7 @@ const addCustomQuestion = async () => {
             isEdited: false, // Initialize isEdited flag
         });
         newQuestion.value = ''; // Clear input
-        showMessage({ success: true, text: 'Question added successfully!' });
+        showMessage({ success: true, text: 'Pregunta añadida exitosamente' });
     }
 };
 
@@ -132,7 +133,7 @@ const addSuggestedQuestion = async (question) => {
         order_: userQuestions.value.length + 1,
         isEdited: false, // Initialize isEdited flag
     });
-    showMessage({ success: true, text: 'Suggested question added successfully!' });
+    showMessage({ success: true, text: 'Pregunta añadida exitosamente' });
 };
 
 // Delete a question
@@ -161,9 +162,9 @@ const deleteQuestion = async (id) => {
         if (response.ok) {
             userQuestions.value = userQuestions.value.filter((item) => item.id !== id);
             await reorderQuestions(); // Reorder after deletion
-            showMessage({ success: true, text: 'Question deleted successfully!' });
+            showMessage({ success: true, text: 'Pregunta eliminada satisfactoriamente' });
         } else {
-            showMessage({ failure: true, text: 'Failed to delete question.' });
+            showMessage({ failure: true, text: 'Error al eliminar pregunta' });
         }
     }
 };
@@ -208,9 +209,9 @@ const saveAnswer = async (id, answer) => {
         if (questionIndex !== -1) {
             userQuestions.value[questionIndex].isEdited = false; // Reset isEdited flag
         }
-        showMessage({ success: true, text: 'Answer saved successfully!' });
+        showMessage({ success: true, text: 'Pregunta guardada satisfactoriamente' });
     } else {
-        showMessage({ failure: true, text: 'Failed to save answer.' });
+        showMessage({ failure: true, text: 'Error al guardar pregunta' });
     }
 };
 
@@ -242,9 +243,9 @@ const reorderQuestions = async () => {
     });
 
     if (response.ok) {
-        showMessage({ success: true, text: 'Questions reordered successfully!' });
+        showMessage({ success: true, text: 'Preguntas reorganizadas satisfactoriamente' });
     } else {
-        showMessage({ failure: true, text: 'Failed to reorder questions.' });
+        showMessage({ failure: true, text: 'Error al reorganizar preguntas' });
     }
 };
 

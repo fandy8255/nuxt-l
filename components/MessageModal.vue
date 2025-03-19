@@ -15,7 +15,7 @@
             <p>{{ message.text  }}</p>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-primary" @click="$emit('clear')">
+            <button class="btn btn-primary text-light" @click="$emit('clear')">
               Cerrar
             </button>
           </div>

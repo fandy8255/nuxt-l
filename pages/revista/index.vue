@@ -96,7 +96,7 @@ import Tags from '~/components/Tags.vue'; // Import the Tags component
 const allArticles = ref([]); // Store all fetched articles
 const featuredArticles = ref([]);
 const currentPage = ref(1);
-const itemsPerPage = 6; // Number of articles per page
+const itemsPerPage = 8; // Number of articles per page
 const selectedCategory = ref('');
 const router = useRouter();
 const categories = ref([]);
@@ -155,7 +155,7 @@ const fetchFeaturedArticles = async () => {
         queryCollection('blog')
             .where('featured', '=', true)
             .order('date', 'DESC')
-            .limit(6)
+            .limit(12)
             .all()
     );
     featuredArticles.value = data.value;

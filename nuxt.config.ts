@@ -19,8 +19,9 @@ export default defineNuxtConfig({
     redirectOptions: {
       login: '/login',
       callback: '/confirm',
-      exclude: ['/', '/register', '/login', '/ad/bogaloo', '/landing/vendedoras', '/landing/tienda', '/revista', '/revista/category/instagram', '/revista/category/onlyfans', '/revista/article',
-        '/revista/article2', '/revista/article3', '/revista/article4', '/revista/article5', '/revista/article6'],
+      exclude: ['/', '/register', '/login', '/ad/bogaloo', '/landing/vendedoras', '/landing/tienda', '/revista', '/revista/category/instagram', '/revista/category/onlyfans', '/revista/category/entrevistas', '/revista/entrevista-jessica-barranquillera',
+        '/revista/mistica-entrevista-venta-panties', '/revista/entrevista-amorazz-onlyfans', '/revista/entrevista-catalina-ortiz-entrevista-gordibuena', '/revista/entrevista-sofymackkk-onlyfans', '/revista/entrevista-latina_chantel-una-latina-explosiva-con-cuenta-de-onlyfans-de-tampa',
+         '/revista/antonia-chilena-onlyfans-entrevista'],
     }
   },
 

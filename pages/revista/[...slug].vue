@@ -11,8 +11,9 @@
                 <div class="col-md-3 col-12 order-md-1 order-2 mt-5" id="toc-column">
                     <div class="toc-container">
                         <ul id="toc-ul" class="border border-1">
+                           <!-- {{ data.body.toc.links }}-->
                             <li class="toc-li" :key="link.id" v-for="link in data.body.toc.links">
-                                <a class="toc-link text-decoration-none" :href="`#${link.id}`"> {{ link.id }} </a>
+                                <a class="toc-link text-decoration-none" :href="`#${link.id}`"> {{ link.text }} </a>
                             </li>
                         </ul>
                     </div>
@@ -218,7 +219,7 @@ useSeoMeta({
 }
 
 .toc-link:hover {
-    color: greenyellow !important;
+    color:  rgba(219, 74, 132) !important;
 }
 
 /* Frontmatter Details Styling */

@@ -8,7 +8,7 @@
 
             <!-- Tabs for Register and Login -->
             <h5 class="p-2 text-center">
-                Registrate Ahora o Ingresa Para Ver Todos Nuestros Artículos
+                Registrate o ingresa para ver todos nuestros artículos
             </h5>
 
             <div class="tabs">
@@ -21,7 +21,7 @@
             </div>
 
             <!-- Login Form -->
-            <div v-if="activeTab === 'login'" class="form-container">
+            <div v-if="activeTab === 'login'" class="form-container" id="login-form">
                 <form @submit.prevent="loginUser">
                     <div class="form-group">
                         <label for="login-email">Correo</label>
@@ -38,7 +38,7 @@
             </div>
 
             <!-- Register Form -->
-            <div v-else class="form-container">
+            <div v-else  class="form-container">
                 <form @submit.prevent="registerUser">
                     <div class="form-group">
                         <label for="register-email">Correo Electrónico</label>
@@ -328,7 +328,16 @@ watch(
 }
 
 .form-container {
-    margin-top: 20px;
+    padding: 20px;
+    margin-right: 30px;
+    height: 40vh !important;
+    overflow-y: auto !important;
+}
+
+#login-form{
+    margin-top: 10px;
+    height: 30vh !important;
+    overflow: hidden !important;
 }
 
 .form-group {

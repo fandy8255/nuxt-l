@@ -8,7 +8,7 @@
             
         </div>
         <div class="card-footer">
-            <small>Posted on: {{ new Date(message.created_at).toLocaleString() }}</small>
+            <small>{{ new Date(message.created_at).toLocaleString() }}</small>
         </div>
     </div>
 </template>

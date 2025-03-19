@@ -1,23 +1,15 @@
 <template>
     <div>
-        <!-- Loading Spinner -->
-        <div v-if="loading" class="text-center mt-5">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-        </div>
+        <div v-if="reviews">
 
-        <!-- Reviews List -->
-        <div v-else>
             <div v-if="paginatedReviews.length > 0">
-               <!--{{ paginatedReviews }}--> 
                 <ReviewCard v-for="review in paginatedReviews" :key="review.review_id" :review="review" />
             </div>
+
             <div v-else>
                 <p>No hay reseñas para mostrar.</p>
             </div>
 
-            <!-- Pagination Controls -->
             <nav aria-label="Page navigation" class="mt-4">
                 <ul class="pagination justify-content-center flex-wrap">
                     <li class="page-item" :class="{ disabled: currentPage === 1 }">
@@ -38,63 +30,32 @@
                     </li>
                 </ul>
             </nav>
+
+        </div>
+        <div v-else class="text-center mt-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-
-const userStore = useUserStore();
-const reviews = ref([]);
-const loading = ref(true);
-
-const props = defineProps({
-    userId: {
-        type: String,
-        required: true,
-    },
-});
-
+const { reviews } = defineProps(['reviews'])
 
 // Pagination state
 const currentPage = ref(1);
-const itemsPerPage = 5; // Number of reviews per page
-const visibleButtons = 5; // Number of visible pagination buttons
+const itemsPerPage = 5;
+const visibleButtons = 5; 
 
-// Fetch reviews from the API
-const fetchReviews = async () => {
-    try {
-        const timestamp = Date.now().toString();
-        const signature = await userStore.generateHMACSignature(timestamp);
 
-        const response = await fetch('https://lingerie.fandy8255.workers.dev/api/reviews', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `HVAC ${signature}`,
-                'X-Timestamp': timestamp,
-                'X-User': JSON.stringify({id:props.userId}),
-            },
-        });
-
-        if (!response.ok) throw new Error('Failed to fetch reviews');
-        const data = await response.json();
-        reviews.value = data;
-    } catch (error) {
-        console.error('Error fetching reviews:', error);
-    } finally {
-        loading.value = false;
-    }
-};
-
-// Pagination logic
-const totalPages = computed(() => Math.ceil(reviews.value.length / itemsPerPage));
+const totalPages = computed(() => Math.ceil(reviews.length / itemsPerPage));
 
 const paginatedReviews = computed(() => {
     const start = (currentPage.value - 1) * itemsPerPage;
     const end = start + itemsPerPage;
-    return reviews.value.slice(start, end);
+    return reviews.slice(start, end);
 });
 
 const visiblePages = computed(() => {
@@ -112,13 +73,10 @@ const visiblePages = computed(() => {
 const changePage = (page) => {
     if (page > 0 && page <= totalPages.value) {
         currentPage.value = page;
-        window.scrollTo(0, 0); // Scroll to the top of the page
+        window.scrollTo(0, 0); 
     }
 };
 
-onMounted(() => {
-    fetchReviews();
-});
 </script>
 
 <style scoped>

@@ -1,30 +1,24 @@
 <template>
-    <div class="card question-card border-1 my-2 shadow-sm">
+    <div class="card question-card border-0 my-2 shadow-sm">
         <div class="card-body">
             <!-- Question -->
             <div class="d-flex align-items-center mb-2">
+                <strong>{{ question.order_ }}.</strong> 
+                <!--
                 <div class="order-circle bg-secondary text-light me-3">
-                    {{ question.order_ }}
-                </div>
-                <h6 class="card-title mb-0">{{ question.question }}</h6>
+                    
+                </div>-->
+                <h6 class="card-title mb-0 fw-bold">{{ question.question }}</h6>
             </div>
 
             <!-- Answer -->
             <div v-if="question.answer" class="card-text small">
-                <strong>Answer:</strong>
+                <strong>Respuesta</strong>
                 <p class="mb-0">{{ question.answer }}</p>
             </div>
             <div v-else class="card-text small text-muted">
-                <p class="mb-0">No answer provided.</p>
+                <p class="mb-0">No Respondido</p>
             </div>
-        </div>
-
-        <!-- Footer with Timestamps -->
-        <div class="card-footer border-top bg-light p-2">
-            <small class="text-muted">
-                Created: {{ new Date(question.created_at).toLocaleDateString('en-GB') }} |
-                Updated: {{ new Date(question.updated_at).toLocaleDateString('en-GB') }}
-            </small>
         </div>
     </div>
 </template>

@@ -23,17 +23,33 @@
 import { ref, onMounted } from 'vue';
 /*
 import InterviewQuestionCard from './InterviewQuestionCard.vue'; // Import the InterviewQuestionCard component*/
-const userStore = useUserStore();
+//const userStore = useUserStore();
 
-const questions = ref([]);
+//const questions = ref([]);
 const loading = ref(true);
 
+const { questions } = defineProps(['questions'])
+
+/*
+const props = defineProps({
+    user: {
+        type: Object,
+        required: true,
+    },
+});*/
+
+
+
+
 // Fetch questions from the API
+
+/*
 const fetchQuestions = async () => {
     try {
         const timestamp = Date.now().toString();
         const signature = await userStore.generateHMACSignature(timestamp);
-        const user = await userStore.getUser();
+        //const user = await userStore.getUser();
+        //const user={id:userId}
 
         const response = await fetch('https://lingerie.fandy8255.workers.dev/api/interview/questions', {
             method: 'GET',
@@ -41,7 +57,7 @@ const fetchQuestions = async () => {
                 'Content-Type': 'application/json',
                 'Authorization': `HVAC ${signature}`,
                 'X-Timestamp': timestamp,
-                'X-User': JSON.stringify(user),
+                'X-User': JSON.stringify(props.user),
             },
         });
 
@@ -53,11 +69,14 @@ const fetchQuestions = async () => {
     } finally {
         loading.value = false;
     }
-};
+};*/
+
 
 onMounted(() => {
-    fetchQuestions();
+    /*fetchQuestions();*/
+    loading.value=false
 });
+
 </script>
 
 <style scoped>

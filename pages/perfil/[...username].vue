@@ -149,7 +149,7 @@
                                                 <li v-for="page in visiblePages" :key="page" class="page-item"
                                                     :class="{ active: page === currentPage }">
                                                     <button class="page-link" @click="changePage(page)">{{ page
-                                                    }}</button>
+                                                        }}</button>
                                                 </li>
                                                 <li class="page-item" :class="{ disabled: currentPage === totalPages }">
                                                     <button class="page-link"
@@ -172,10 +172,12 @@
                             </div>
 
                             <div v-if="activeTab === 'reviews'" class="tab-pane fade show active">
-                                <ReviewList :userId="user.id" />
+                                <!-- <ReviewList :userId="user.id" />-->
+                                <ReviewList :reviews="reviews" />
                             </div>
                             <div v-if="activeTab === 'interview'" class="tab-pane fade show active">
-                                <InterviewList />
+                                <!--<InterviewList :user="user" />-->
+                                <InterviewList :questions="questions" />-
                             </div>
                         </div>
                     </div>
@@ -213,6 +215,9 @@ const userStore = useUserStore();
 const isAd = ref(0);
 
 const products = ref([]);
+const reviews = ref([])
+const questions = ref([])
+
 const currentPage = ref(1);
 const itemsPerPage = 2;
 const usernameSlug = ref('');
@@ -383,6 +388,60 @@ const fetchProducts = async () => {
     }
 };
 
+const fetchQuestions = async (user) => {
+    try {
+        const timestamp = Date.now().toString();
+        const signature = await userStore.generateHMACSignature(timestamp);
+        //const user = await userStore.getUser();
+        //const user={id:userId}
+
+        const response = await fetch('https://lingerie.fandy8255.workers.dev/api/interview/questions', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `HVAC ${signature}`,
+                'X-Timestamp': timestamp,
+                'X-User': JSON.stringify(user),
+            },
+        });
+
+        if (!response.ok) throw new Error('Failed to fetch questions');
+        const data = await response.json();
+        console.log('questions data', data)
+        questions.value = data; // Data is already ordered by `order_` from the API
+    } catch (error) {
+        console.error('Error fetching questions:', error);
+    } /*finally {
+        loading.value = false;
+    }*/
+};
+
+const fetchReviews = async (user) => {
+    try {
+        const timestamp = Date.now().toString();
+        const signature = await userStore.generateHMACSignature(timestamp);
+
+        const response = await fetch('https://lingerie.fandy8255.workers.dev/api/reviews', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `HVAC ${signature}`,
+                'X-Timestamp': timestamp,
+                'X-User': JSON.stringify(user),
+            },
+        });
+
+        if (!response.ok) throw new Error('Failed to fetch reviews');
+        const data = await response.json();
+        console.log('review data', data)
+        reviews.value = data;
+    } catch (error) {
+        console.error('Error fetching reviews:', error);
+    } /*finally {
+        loading.value = false;
+    }*/
+};
+
 const loadUserData = async () => {
     usernameSlug.value = useRoute().params.username[0];
 
@@ -400,6 +459,8 @@ const loadUserData = async () => {
 
         if (userStore.user_type === "seller") {
             products.value = Array.from(userStore.products);
+            await fetchReviews(user.value)
+            await fetchQuestions(user.value)
         }
     } else {
 
@@ -408,7 +469,11 @@ const loadUserData = async () => {
             await fetchFollowers(user.value);
 
             if (user.value.user_type === "seller") {
-                fetchProducts();
+                await fetchProducts();
+                await fetchQuestions(user.value)
+                await fetchReviews(user.value)
+                
+                /** fetch reviews and fetch interviews here!! */
             }
         });
     }
