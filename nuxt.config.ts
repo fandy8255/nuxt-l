@@ -2,7 +2,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: process.env.ENVIRONMENT === 'development' },
   ssr: true,
-  modules: ['@nuxt/image', '@nuxtjs/supabase', '@pinia/nuxt', "pinia-plugin-persistedstate", '@nuxt/content', 'nuxt-gtag'],
+  modules: ['@nuxtjs/sitemap', '@nuxt/image', '@nuxtjs/supabase', '@pinia/nuxt', "pinia-plugin-persistedstate", '@nuxt/content', 'nuxt-gtag'],
 
   /*
   gtag: {
@@ -10,10 +10,21 @@ export default defineNuxtConfig({
     id: process.env.NUXT_PUBLIC_GTAG_ID
   }*/
 
+
+  site: {
+    url: process.env.NUXT_SITE_URL /*'http://localhost:3000'*/,
+    name: process.env.NUXT_SITE_NAME /* 'Latin Panty'*/
+  },
+
+  sitemap: {
+    sources: ['/api/__sitemap__/urls'],
+  },
+
   gtag: {
-    id:'G-8EPNTJ52SL'
-  }
-,
+    id: process.env.NUXT_PUBLIC_GTAG_ID
+  },
+
+
   runtimeConfig: {
     // Server-side only
     supabaseUrl: process.env.SUPABASE_URL,
@@ -29,9 +40,9 @@ export default defineNuxtConfig({
     redirectOptions: {
       login: '/login',
       callback: '/confirm',
-      exclude: ['/', '/register', '/login', '/ad/bogaloo', '/landing/vendedoras', '/landing/tienda', '/revista', '/revista/category/instagram', '/revista/category/onlyfans', '/revista/category/entrevistas', '/revista/entrevista-jessica-barranquillera',
+      exclude: ['/', '/register', '/login', '/ad/bogaloo', '/landing/vendedoras', '/landing/tienda', '/sitemap.xml', '/revista', '/revista/category/instagram', '/revista/category/onlyfans', '/revista/category/entrevistas', '/revista/entrevista-jessica-barranquillera',
         '/revista/mistica-entrevista-venta-panties', '/revista/entrevista-amorazz-onlyfans', '/revista/entrevista-catalina-ortiz-entrevista-gordibuena', '/revista/entrevista-sofymackkk-onlyfans', '/revista/entrevista-latina_chantel-una-latina-explosiva-con-cuenta-de-onlyfans-de-tampa',
-         '/revista/antonia-chilena-onlyfans-entrevista'],
+        '/revista/antonia-chilena-onlyfans-entrevista'],
     }
   },
 

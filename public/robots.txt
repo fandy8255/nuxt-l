@@ -7,3 +7,4 @@ Disallow: /tienda
 Disallow: /usuarios
 Disallow: /feed
 Disallow: /ad
+Sitemap: https://latinpanty.com/sitemap.xml
