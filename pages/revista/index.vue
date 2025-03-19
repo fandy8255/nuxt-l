@@ -99,7 +99,6 @@ const featuredArticles = ref([]);
 const currentPage = ref(1);
 const itemsPerPage = 8; // Number of articles per page
 const selectedCategory = ref('');
-const router = useRouter();
 const categories = ref([]);
 const loaded = ref(false);
 const tags = ref({});
