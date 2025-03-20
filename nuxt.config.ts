@@ -4,13 +4,6 @@ export default defineNuxtConfig({
   ssr: true,
   modules: ['@nuxtjs/sitemap', '@nuxt/image', '@nuxtjs/supabase', '@pinia/nuxt', "pinia-plugin-persistedstate", '@nuxt/content', 'nuxt-gtag'],
 
-  /*
-  gtag: {
-    enabled: process.env.ENVIRONMENT === 'production',
-    id: process.env.NUXT_PUBLIC_GTAG_ID
-  }*/
-
-
   site: {
     url: process.env.NUXT_SITE_URL /*'http://localhost:3000'*/,
     name: process.env.NUXT_SITE_NAME /* 'Latin Panty'*/
@@ -21,7 +14,7 @@ export default defineNuxtConfig({
   },
 
   gtag: {
-    id: process.env.NUXT_PUBLIC_GTAG_ID
+    id: /*process.env.NUXT_PUBLIC_GTAG_ID*/'G-8EPNTJ52SL'
   },
 
 
