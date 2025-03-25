@@ -1,5 +1,6 @@
+/*
 export default defineEventHandler(async (event) => {
-   // const { sendMail } = useNodeMailer()
+   
     const runtimeConfig = useRuntimeConfig();
     const mail = runtimeConfig.mail;
 
@@ -19,4 +20,31 @@ export default defineEventHandler(async (event) => {
       return true
     
     //return sendMail({ subject: body.subject , text: message, to: mail })
-  })
+  })*/
+
+import sgMail from '@sendgrid/mail'
+
+export default defineEventHandler(async (event) => {
+    sgMail.setApiKey(process.env.SMTP_PASSWORD!)
+
+    const body = await readBody(event)
+
+    if (!body.name || !body.email || !body.subject) {
+        throw createError({ statusCode: 400, message: 'Missing required fields' });
+      }
+
+    const msg = {
+        to: 'latinp4453@proton.me', // recipient email
+        from: 'support@latinpanty.com',
+        subject: body.subject,
+        text: body.message,
+    }
+
+    try {
+        await sgMail.send(msg)
+        return { success: true }
+    } catch (error) {
+        console.error(error)
+        throw createError({ statusCode: 500, message: "Email failed to send" })
+    }
+})
