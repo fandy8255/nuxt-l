@@ -47,10 +47,11 @@ a {
     color: rgb(0, 0, 0)
 }
 
+/*
 a:hover {
-    color: rgb(0, 0, 0) !important;
+    color: rgb(127, 2, 223) !important;
     text-decoration: none !important;
-}
+}*/
 
 h2 {
     

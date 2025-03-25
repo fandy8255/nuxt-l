@@ -5,7 +5,7 @@
             <!-- Footer Links -->
             <div class="row text-center text-md-start">
                 <!-- Categorías -->
-                <div class="col-12 col-md-4 mb-4">
+                <div class="col-12 col-md-3 mb-4">
                     <h5 class="fw-bold mb-3">Categorías</h5>
                     <ul class="list-unstyled">
                         <li v-for="category in categories" :key="category" class="mb-2 text-center">
@@ -17,7 +17,7 @@
                 </div>
 
                 <!-- Modelos -->
-                <div class="col-12 col-md-4 mb-4" v-if="userStore.logged_in" >
+                <div class="col-12 col-md-3 mb-4" v-if="userStore.logged_in">
                     <h5 class="fw-bold mb-3">Modelos</h5>
                     <ul class="list-unstyled">
                         <li class="mb-2 text-center">
@@ -33,7 +33,7 @@
                     </ul>
                 </div>
 
-                <div class="col-12 col-md-4 mb-4" v-else >
+                <div class="col-12 col-md-3 mb-4" v-else>
                     <h5 class="fw-bold mb-3">Modelos</h5>
                     <ul class="list-unstyled">
                         <li class="mb-2 text-center">
@@ -50,7 +50,7 @@
                 </div>
 
                 <!-- Newsletter -->
-                <div class="col-12 col-md-4 mb-4">
+                <div class="col-12 col-md-3 mb-4">
                     <NuxtLink :to="`/revista`" class="text-decoration-none text-light">
                         <h5 class="fw-bold mb-3">Revista</h5>
                     </NuxtLink>
@@ -62,6 +62,26 @@
                         </li>
                     </ul>
                 </div>
+
+                <div class="col-12 col-md-3 mb-4" v-if="userStore.logged_in">
+                    <h5 class="fw-bold mb-3">Contacto</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2 text-center">
+                            <h6 class="text-light"> support@latinpanty.com </h6>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-12 col-md-3 mb-4" v-else>
+                    <h5 class="fw-bold mb-3">Contáctanos</h5>
+                    <ul class="list-unstyled">
+                        <li class="text-center">
+                            <NuxtLink :to="`/contacto`" class="text-decoration-none text-light">
+                                Contacto
+                            </NuxtLink>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
 
@@ -69,6 +89,7 @@
         <div class="container text-center">
             <p>&copy; {{ new Date().getFullYear() }} Latin Panty. Todos Los Derechos Reservados.</p>
             <div>
+
                 <a href="#" class="text-light mx-2">Facebook</a>
                 <a href="#" class="text-light mx-2">Instagram</a>
                 <a href="#" class="text-light mx-2">Twitter</a>

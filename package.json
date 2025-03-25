@@ -27,5 +27,9 @@
     "vue-easy-lightbox": "^1.19.0",
     "vue-router": "latest",
     "vuedraggable": "^4.1.0"
+  },
+  "devDependencies": {
+    "nodemailer": "^6.10.0",
+    "nuxt-nodemailer": "^1.1.2"
   }
 }

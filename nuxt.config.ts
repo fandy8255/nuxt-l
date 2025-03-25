@@ -2,11 +2,22 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: process.env.ENVIRONMENT === 'development' },
   ssr: true,
-  modules: ['@nuxtjs/sitemap', '@nuxt/image', '@nuxtjs/supabase', '@pinia/nuxt', "pinia-plugin-persistedstate", '@nuxt/content', 'nuxt-gtag'],
+  modules: ['@nuxtjs/sitemap', '@nuxt/image', '@nuxtjs/supabase', '@pinia/nuxt', "pinia-plugin-persistedstate", '@nuxt/content', 'nuxt-gtag','nuxt-nodemailer'],
+
+  nodemailer: {
+    from: '"Latin Panty" <support@latinpanty.com>',
+    host: 'smtp.sendgrid.net',
+    port: 465,
+    secure: true,
+    auth: {
+      user: 'apikey',
+      pass: process.env.SMTP_PASSWORD,
+    },
+  },
 
   site: {
-    url: process.env.NUXT_SITE_URL /*'http://localhost:3000'*/,
-    name: process.env.NUXT_SITE_NAME /* 'Latin Panty'*/
+    url: process.env.NUXT_SITE_URL ,
+    name: process.env.NUXT_SITE_NAME 
   },
 
   sitemap: {
@@ -14,16 +25,19 @@ export default defineNuxtConfig({
   },
 
   gtag: {
-    id: /*process.env.NUXT_PUBLIC_GTAG_ID*/'G-8EPNTJ52SL'
+    id: 'G-8EPNTJ52SL'
   },
 
 
   runtimeConfig: {
-    // Server-side only
+    // Server-side 
+    /*SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,*/
+    mail:process.env.MAIL,
     supabaseUrl: process.env.SUPABASE_URL,
     secretApiKey: process.env.SECRET_API_KEY,
     dev: process.env.ENVIRONMENT,
-    // Public (client-side accessible)
+   /* smtpP: process.env.SMTP_P,*/
+    // Public 
     public: {
       baseUrl: process.env.PUBLIC_BASE_URL || 'http://localhost:3000',
     },
@@ -33,7 +47,7 @@ export default defineNuxtConfig({
     redirectOptions: {
       login: '/login',
       callback: '/confirm',
-      exclude: ['/', '/register', '/login', '/ad/bogaloo', '/landing/vendedoras', '/landing/tienda', '/sitemap.xml', '/revista', '/revista/category/instagram', '/revista/category/onlyfans', '/revista/category/entrevistas', '/revista/entrevista-jessica-barranquillera',
+      exclude: ['/', '/register', '/login', '/ad/bogaloo', '/landing/vendedoras', '/contacto', '/landing/tienda', '/sitemap.xml', '/revista', '/revista/category/instagram', '/revista/category/onlyfans', '/revista/category/entrevistas', '/revista/entrevista-jessica-barranquillera',
         '/revista/mistica-entrevista-venta-panties', '/revista/entrevista-amorazz-onlyfans', '/revista/entrevista-catalina-ortiz-entrevista-gordibuena', '/revista/entrevista-sofymackkk-onlyfans', '/revista/entrevista-latina_chantel-una-latina-explosiva-con-cuenta-de-onlyfans-de-tampa',
         '/revista/antonia-chilena-onlyfans-entrevista'],
     }

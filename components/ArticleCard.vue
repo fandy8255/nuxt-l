@@ -83,8 +83,6 @@
 const { title, imgSrc, articleDescription, artPath, toc, category, date, cardHeight } = defineProps(['title', 'imgSrc', 'articleDescription', 'artPath', 'toc', 'category', 'date', 'cardHeight'])
 //const { } = defineProps(['articleDescription'])
 
-console.log('testing')
-
 const formatDate = (dateString) => {
 
     // Split the date string into year, month, and day

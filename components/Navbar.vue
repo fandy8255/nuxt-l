@@ -17,6 +17,7 @@
                     </NuxtLink>
                 </div>
                 <h4 class="text-light lead my-auto ms-2 fw-bolder">Latin Panty</h4>
+                
             </div>
 
             <!-- Navbar Toggler Button -->
@@ -116,6 +117,10 @@
                     </li>
                     <li>
                         <NuxtLink to="/revista" class="nav-link text-decoration-none" @click="closeNavbar">Revista
+                        </NuxtLink>
+                    </li>
+                    <li>
+                        <NuxtLink to="/contacto" class="nav-link text-decoration-none" @click="closeNavbar">Contacto
                         </NuxtLink>
                     </li>
                     <li>
