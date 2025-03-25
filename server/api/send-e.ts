@@ -1,5 +1,5 @@
 export default defineEventHandler(async (event) => {
-    const { sendMail } = useNodeMailer()
+   // const { sendMail } = useNodeMailer()
     const runtimeConfig = useRuntimeConfig();
     const mail = runtimeConfig.mail;
 
@@ -15,6 +15,8 @@ export default defineEventHandler(async (event) => {
     if (!body.name || !body.email || !body.subject) {
         throw createError({ statusCode: 400, message: 'Missing required fields' });
       }
+
+      return true
     
-    return sendMail({ subject: body.subject , text: message, to: mail })
+    //return sendMail({ subject: body.subject , text: message, to: mail })
   })

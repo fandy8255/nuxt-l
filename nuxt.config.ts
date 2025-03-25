@@ -2,8 +2,9 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: process.env.ENVIRONMENT === 'development' },
   ssr: true,
-  modules: ['@nuxtjs/sitemap', '@nuxt/image', '@nuxtjs/supabase', '@pinia/nuxt', "pinia-plugin-persistedstate", '@nuxt/content', 'nuxt-gtag','nuxt-nodemailer'],
+  modules: ['@nuxtjs/sitemap', '@nuxt/image', '@nuxtjs/supabase', '@pinia/nuxt', "pinia-plugin-persistedstate", '@nuxt/content', 'nuxt-gtag',/*'nuxt-nodemailer'*/],
 
+  /*
   nodemailer: {
     from: '"Latin Panty" <support@latinpanty.com>',
     host: 'smtp.sendgrid.net',
@@ -13,7 +14,7 @@ export default defineNuxtConfig({
       user: 'apikey',
       pass: process.env.SMTP_PASSWORD,
     },
-  },
+  },*/
 
   site: {
     url: process.env.NUXT_SITE_URL ,
