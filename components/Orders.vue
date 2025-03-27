@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Loading Spinner -->
-        <div v-if="loading" class="text-center mt-5" style="height: 600px !important; margin-top: 100px !important;">
+        <div v-if="loading" class="text-center mt-5" style="height: 600px; margin-top: 100px;">
             <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
@@ -9,19 +9,19 @@
 
         <!-- Orders Table -->
         <div class="container-fluid" v-else>
-            <div class="container-fluid d-flex justify-content-center">
-                <MessageModal :message="message" @clear="clearMessage" style="z-index: 105 !important;" />
+            <MessageModal :message="message" @clear="clearMessage" style="z-index: 105;" />
 
-                <table class="table table-striped table-hover">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-sm">
                     <thead>
                         <tr>
                             <th>Producto</th>
-                            <th>Cantidad</th>
+                            <th class="d-none d-sm-table-cell">Cantidad</th>
                             <th>Total</th>
-                            <th>Estado</th>
-                            <th>Método de Pago</th>
+                            <th class="d-none d-md-table-cell">Estado</th>
+                            <th class="d-none d-lg-table-cell">Método</th>
                             <th>{{ userStore.user_type === 'seller' ? 'Comprador' : 'Vendedor' }}</th>
-                            <th>Fecha</th>
+                            <th class="d-none d-xl-table-cell">Fecha</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -29,45 +29,50 @@
                         <tr v-for="order in paginatedOrders" :key="order.id">
                             <td>
                                 <ProductImgComponent :image="order.product_url ? order.product_url : ''"
-                                    :username="order.product_name" :id="order.product_id" />
+                                    :username="order.product_name" :id="order.product_id" size="sm" />
                             </td>
-                            <td>
+                            <td class="d-none d-sm-table-cell">
                                 {{ order.quantity }}
                             </td>
                             <td>${{ order.total_price }}</td>
-                            <td>{{ order.order_status }}</td>
-                            <td>{{ order.payment_method }}</td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <UserImgComponent :image="userStore.user_type === 'seller' ?
-                                        (order.buyer_profile_picture || '/assets/images/panty-icon.jpg') :
-                                        (order.product_owner_profile_picture || '/assets/images/panty-icon.jpg')"
-                                        :username="userStore.user_type === 'seller' ?
-                                            order.buyer_username :
-                                            order.product_owner_username" />
-                                </div>
+                            <td class="d-none d-md-table-cell">
+                                <span class="badge" :class="statusBadgeClass(order.order_status)">
+                                    {{ order.order_status }}
+                                </span>
                             </td>
-                            <td>{{ new Date(order.created_at).toLocaleDateString('en-GB') }}</td>
-                            <td style="height: 75.5px;">
+                            <td class="d-none d-lg-table-cell">{{ order.payment_method }}</td>
+                            <td>
+                                <UserImgComponent :image="userStore.user_type === 'seller' ?
+                                    (order.buyer_profile_picture || '/assets/images/panty-icon.jpg') :
+                                    (order.product_owner_profile_picture || '/assets/images/panty-icon.jpg')"
+                                    :username="userStore.user_type === 'seller' ?
+                                        order.buyer_username :
+                                        order.product_owner_username" size="sm" />
+                            </td>
+                            <td class="d-none d-xl-table-cell">
+                                {{ new Date(order.created_at).toLocaleDateString('en-GB') }}
+                            </td>
+                            <td style="min-width: 120px; min-height: 60px;">
                                 <!-- Render CancelOrder for buyers if order_status is 'pending' -->
                                 <CancelOrder v-if="userStore.user_type === 'buyer' && order.order_status === 'pending'"
                                     :orderId="order.order_id" :productId="order.product_id"
-                                    @order-canceled="handleOrderCanceled" @message="handleMessage" />
+                                    @order-canceled="handleOrderCanceled" @message="handleMessage" size="sm" />
 
                                 <!-- Render CancelOrder and AcceptOrder for sellers if order_status is 'pending' -->
-                                <div class="d-flex gap-1" v-if="userStore.user_type === 'seller' && order.order_status === 'pending'">
+                                <div class="d-flex gap-1"
+                                    v-if="userStore.user_type === 'seller' && order.order_status === 'pending'">
                                     <CancelOrder :orderId="order.order_id" :productId="order.product_id"
-                                        @order-canceled="handleOrderCanceled" @message="handleMessage" />
+                                        @order-canceled="handleOrderCanceled" @message="handleMessage" size="sm" />
                                     <AcceptOrder v-if="order.order_status === 'pending'" :orderId="order.order_id"
                                         :productId="order.product_id" @order-accepted="handleOrderAccepted"
-                                        @message="handleMessage" />
+                                        @message="handleMessage" size="sm" />
                                 </div>
 
                                 <!-- Render SubmitReview for buyers if order_status is 'accepted' and no review exists -->
                                 <SubmitReview
                                     v-if="userStore.user_type === 'buyer' && order.order_status === 'accepted' && !hasReviewForOrder(order.order_id) && !hasReviewForUser(order.seller_id)"
                                     :orderId="order.order_id" :reviewedUserId="order.seller_id"
-                                    @review-submitted="handleReviewSubmitted" @message="handleMessage" />
+                                    @review-submitted="handleReviewSubmitted" @message="handleMessage" size="sm" />
                             </td>
                         </tr>
                     </tbody>
@@ -111,8 +116,18 @@ const message = ref(null);
 
 // Pagination state
 const currentPage = ref(1);
-const itemsPerPage = 2; // Number of orders per page
-const visibleButtons = 5; // Number of visible pagination buttons
+const itemsPerPage = 2;
+const visibleButtons = 5;
+
+// Status badge styling
+const statusBadgeClass = (status) => {
+    switch (status) {
+        case 'pending': return 'bg-warning text-dark';
+        case 'accepted': return 'bg-success text-white';
+        case 'canceled': return 'bg-danger text-white';
+        default: return 'bg-secondary text-white';
+    }
+};
 
 // Handle the message event
 const handleMessage = (msg) => {
@@ -141,11 +156,11 @@ const handleOrderAccepted = (orderId) => {
 const handleReviewSubmitted = (reviewId) => {
     const order = orders.value.find(order => order.order_id === reviewId);
     if (order) {
-        order.has_review = true; // Mark the order as reviewed
+        order.has_review = true;
     }
 };
 
-// Check if a review exists for the order in the userStore.reviews array
+// Check if a review exists for the order
 const hasReviewForOrder = (orderId) => {
     return userStore.reviews.some(review => review.order_id === orderId);
 };
@@ -181,45 +196,46 @@ const changePage = (page) => {
 };
 
 onMounted(async () => {
-    // Fetch orders from the user store
     orders.value = userStore.orders;
-
-    // Mark orders as reviewed if a review exists in the userStore.reviews array
     orders.value = orders.value.map(order => ({
         ...order,
         has_review: hasReviewForOrder(order.order_id),
     }));
-
     loading.value = false;
 });
 </script>
 
 <style scoped>
-/* Ensure table cells are vertically centered */
-.table td {
-    vertical-align: middle !important;
-    height: 75px;
+/* Table styling */
+.table {
+    font-size: 0.85rem;
 }
 
-/* Ensure the actions column (buttons) are aligned properly */
+.table-sm td,
+.table-sm th {
+    padding: 0.3rem 0.5rem;
+}
+
+/* Ensure table cells are vertically centered */
+.table td {
+    vertical-align: middle;
+}
+
+/* Action buttons styling */
 .table td:last-child {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    white-space: nowrap;
 }
 
-/* Ensure the UserImgComponent and ProductImgComponent are aligned properly */
-.d-flex.align-items-center {
-    display: flex;
-    align-items: center;
+/* Badge styling */
+.badge {
+    font-size: 0.7em;
+    padding: 0.25em 0.4em;
 }
 
-/* Optional: Add some padding to the table cells for better spacing */
-.table td {
-    padding: 0.75rem;
-}
-
-/* Pagination Styles */
+/* Pagination styling */
 .pagination {
     flex-wrap: wrap;
 }
@@ -246,7 +262,34 @@ onMounted(async () => {
     border-color: #dee2e6;
 }
 
-@media (max-width: 900px) {
+/* Responsive adjustments */
+@media (max-width: 1199.98px) {
+    .table {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .table {
+        font-size: 0.75rem;
+    }
+
+    .table-sm td,
+    .table-sm th {
+        padding: 0.25rem 0.4rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .table {
+        font-size: 0.7rem;
+    }
+
+    .table-sm td,
+    .table-sm th {
+        padding: 0.2rem 0.3rem;
+    }
+
     .pagination {
         justify-content: center;
     }

@@ -29,7 +29,7 @@
                 <div class="entry-header mb-3">
                     <ul class="entry-meta list-unstyled d-flex mb-2">
                         <li>
-                            <h6 class="link-primary text-decoration-none" style="color: blue;">
+                            <h6 class="link-primary text-decoration-none" style="color:rgb(250, 36, 122) !important;">
                                 {{ category.charAt(0).toUpperCase() + category.slice(1) }}
                             </h6>
                         </li>

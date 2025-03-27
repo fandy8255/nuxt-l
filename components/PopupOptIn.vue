@@ -1,13 +1,13 @@
 <template>
     <div v-if="showPopup" class="popup-overlay">
-        <div class="popup-content p-5 position-relative">
+        <div class="popup-container">
             <!-- Close Button -->
-            <button class="close-button" @click="closePopup">
-                &times; <!-- This is the "X" symbol -->
+            <button class="close-button ms-2" @click="closePopup">
+                &times;
             </button>
 
             <!-- Tabs for Register and Login -->
-            <h5 class="p-2 text-center">
+            <h5 class="popup-title text-center">
                 Registrate o ingresa para ver todos nuestros artículos
             </h5>
 
@@ -16,13 +16,13 @@
                     Ingresa
                 </button>
                 <button :class="{ active: activeTab === 'register' }" @click="activeTab = 'register'">
-                    Registrate
+                    Regístrate
                 </button>
             </div>
 
             <!-- Login Form -->
-            <div v-if="activeTab === 'login'" class="form-container" id="login-form">
-                <form @submit.prevent="loginUser">
+            <div v-if="activeTab === 'login'" class="form-content">
+                <form @submit.prevent="loginUser" class="form-wrapper">
                     <div class="form-group">
                         <label for="login-email">Correo</label>
                         <input v-model="loginEmail" type="email" id="login-email" required
@@ -38,8 +38,8 @@
             </div>
 
             <!-- Register Form -->
-            <div v-else  class="form-container">
-                <form @submit.prevent="registerUser">
+            <div v-else class="form-content">
+                <form @submit.prevent="registerUser" class="form-wrapper scrollable-form">
                     <div class="form-group">
                         <label for="register-email">Correo Electrónico</label>
                         <input v-model="registerEmail" type="email" id="register-email" required
@@ -226,7 +226,7 @@ const registerUser = async () => {
         const timestamp = Date.now().toString();
         const signature = await userStore.generateHMACSignature(timestamp);
 
-        const result=await fetch('https://lingerie.fandy8255.workers.dev/api/user', {
+        const result = await fetch('https://lingerie.fandy8255.workers.dev/api/user', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -276,103 +276,239 @@ watch(
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
-.popup-content {
+.popup-container {
     background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 90%;
-    width: 40vw;
+    border-radius: 12px;
     position: relative;
-    /* Required for positioning the close button */
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .close-button {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 12px;
+    right: 12px;
     background: none;
     border: none;
     font-size: 24px;
     cursor: pointer;
-    color: #000;
+    color: #666;
+    padding: 4px;
+    line-height: 1;
 }
 
 .close-button:hover {
-    color: #007bff;
+    color: #000;
+}
+
+.popup-title {
+    padding: 20px 20px 10px;
+    margin: 0;
+    font-size: 1.25rem;
+    color: #333;
 }
 
 .tabs {
     display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding: 0 20px;
 }
 
 .tabs button {
+    flex: 1;
+    padding: 12px 0;
     background: none;
     border: none;
-    padding: 10px 20px;
+    font-size: 1rem;
     cursor: pointer;
-    font-size: 16px;
+    color: #666;
+    position: relative;
+    transition: all 0.2s ease;
 }
 
 .tabs button.active {
-    border-bottom: 2px solid #007bff;
-    font-weight: bold;
+    color: #db4a84;
+    font-weight: 600;
 }
 
-.form-container {
+.tabs button.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #db4a84;
+}
+
+.form-content {
     padding: 20px;
-    margin-right: 30px;
-    height: 40vh !important;
-    overflow-y: auto !important;
+    height: 100%;
+    min-height: 300px;
+    max-height: calc(90vh - 150px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
-#login-form{
-    margin-top: 10px;
-    height: 30vh !important;
-    overflow: hidden !important;
+.form-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 100%;
+}
+
+.scrollable-form {
+    overflow-y: auto;
+    padding-right: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: #db4a84 #f5f5f5;
+}
+
+.scrollable-form::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scrollable-form::-webkit-scrollbar-track {
+    background: #f5f5f5;
+    border-radius: 3px;
+}
+
+.scrollable-form::-webkit-scrollbar-thumb {
+    background-color: #db4a84;
+    border-radius: 3px;
 }
 
 .form-group {
-    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
 .form-group label {
-    display: block;
-    margin-bottom: 5px;
+    font-size: 0.9rem;
+    color: #555;
+    font-weight: 500;
 }
 
 .form-group input,
 .form-group select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: border 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #db4a84;
+    box-shadow: 0 0 0 2px rgba(219, 74, 132, 0.1);
 }
 
 .btn-primary {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
+    padding: 12px;
+    background-color: #db4a84;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
     cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-top: 8px;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
+    background-color: #c43d74;
+}
+
+.btn-primary:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
 }
 
 .invalid-feedback {
-    color: red;
-    font-size: 12px;
+    color: #e74c3c;
+    font-size: 0.8rem;
+    margin-top: 4px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .popup-container {
+        max-width: 90%;
+    }
+
+    .popup-title {
+        font-size: 1.1rem;
+        padding: 16px 16px 8px;
+    }
+
+    .tabs {
+        padding: 0 16px;
+    }
+
+    .tabs button {
+        font-size: 0.95rem;
+        padding: 10px 0;
+    }
+
+    .form-content {
+        padding: 16px;
+        max-height: calc(90vh - 130px);
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 8px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .close-button{
+        right: 2px;
+        top: 2px;
+        padding: 5px;
+        width: 20px;
+    }
+
+    .popup-container {
+        max-width: 95%;
+    }
+
+    .popup-title {
+        font-size: 1rem;
+        padding: 14px 14px 6px;
+    }
+
+    .form-content {
+        padding: 12px;
+        max-height: calc(90vh - 120px);
+    }
+
+    .form-group label {
+        font-size: 0.85rem;
+    }
+
+    .btn-primary {
+        padding: 10px;
+        font-size: 0.95rem;
+    }
 }
 </style>

@@ -2,22 +2,13 @@
     <div>
         <!-- Hero Section -->
         <div v-if="loaded">
-            <div class="hero-section">
-                <div class="banner-img">
-                    <NuxtImg :src="bannerData.image" :alt="bannerData.alt" class="banner-image"
-                        placeholder="/assets/images/placeholder.jpg" />
-                </div>
-                <div class="hero-content p-5">
-                    <h1 class="display-2 fw-bold text-white mb-4">{{ categoryName.toUpperCase() }}</h1>
-                    <p class="lead text-light mb-4">{{ bannerData.caption }}</p>
-                    <div class="stats d-flex justify-content-center gap-4">
-                        <div class="stat-item">
-                            <i class="fas fa-users fa-2x text-white"></i>
-                            <h3 class="text-white mt-2">Colombianas Onlyfans</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+            <section class="mb-5">
+                <HeroBanner :title="categoryName.toUpperCase()" :backgroundImage="bannerData.image"
+                    :parallax="true" height="75vh" min-height="400px" overlay-opacity="0.7" :subtitle="bannerData.caption"
+                    cta-text="Regístrate Gratis">
+                </HeroBanner>
+            </section>
 
             <div class="container-fluid">
                 <FeaturedArticlesSplide :featuredArticles="featuredArticles" />
@@ -27,8 +18,8 @@
 
 
             <!-- All Articles -->
-            <div v-if="allArticles.length > 0" class="container-fluid px-5 mt-5">
-                <h2 class="text-start">Publicaciones</h2>
+            <div v-if="allArticles.length > 0" class="container-fluid px-md-5 px-0  mt-5">
+                <h2 class="text-start ms-md-0 ms-3">Publicaciones</h2>
                 <div class="margins container-fluid">
                     <Tags :tags="tags" @select-tag="handleTagSelect" />
                 </div>

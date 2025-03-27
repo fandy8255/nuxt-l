@@ -69,7 +69,7 @@ const loading = ref(true);
 const userStore = useUserStore();
 
 useSeoMeta({
-    title: 'Latin Panty | Uusarios',
+    title: 'Latin Panty | Usuarios',
     description: 'Latin Panty | Usuarios',
     robots: 'noindex',
 });
@@ -125,6 +125,7 @@ const visiblePages = computed(() => {
 const changePage = (page) => {
     if (page > 0 && page <= totalPages.value) {
         currentPage.value = page;
+        window.scrollTo(0, 0);
     }
 };
 </script>

@@ -2,7 +2,7 @@
     <div>
         <!-- Button to Open Modal -->
         <button type="button" class="btn btn-primary text-light" data-bs-toggle="modal" :data-bs-target="`#${modalId}`">
-            {{ review.review_reply ? 'Editar Respuesta' : 'Responder' }}
+            {{ review.review_reply ? 'Editar' : 'Responder' }}
         </button>
 
         <!-- Modal -->
@@ -124,7 +124,8 @@ const submitReviewReply = async () => {
 </script>
 
 <style scoped>
+/*
 .modal-backdrop {
     z-index: 10 !important;
-}
+}*/
 </style>

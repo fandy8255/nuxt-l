@@ -1,8 +1,11 @@
 <template>
-    <nav v-if="isHydrated" class="navbar navbar-expand-lg navbar-dark bg-dark w-100 position-fixed">
-        <div class="container-fluid">
+    <nav v-if="isHydrated" class="navbar navbar-expand-lg navbar-dark w-100 position-fixed">
+        <!-- Backdrop for blur effect -->
+        <div class="navbar-backdrop"></div>
+
+        <div class="container-fluid p-md-1 p-0 ">
             <!-- Logo and Brand Name -->
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center ms-2">
                 <div v-if="isAd">
                     <NuxtLink :to="'/ad'" class="navbar-brand">
                         <NuxtImg src="/assets/images/panty-icon.png" width="auto" height="50" />
@@ -17,12 +20,13 @@
                     </NuxtLink>
                 </div>
                 <h4 class="text-light lead my-auto ms-2 fw-bolder">Latin Panty</h4>
-                
+
             </div>
 
             <!-- Navbar Toggler Button -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler me-md-0 me-2" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -71,7 +75,7 @@
                     </li>
                     <li class="nav-item">
                         <NuxtLink to="/mensajes" class="nav-link text-decoration-none" @click="closeNavbar">
-                            <i class="fa-regular fa-envelope fa-xl me-2"></i>{{ userStore.message_count }}
+                            <i class="fa-regular fa-envelope fa-xl me-2 text-light"></i>{{ userStore.message_count }}
                         </NuxtLink>
                     </li>
                     <li class="nav-item">
@@ -97,7 +101,8 @@
                                 </NuxtLink>
                             </li>
                             <li>
-                                <NuxtLink to="/compras" class="dropdown-item" @click="closeNavbar">Mis Compras</NuxtLink>
+                                <NuxtLink to="/compras" class="dropdown-item" @click="closeNavbar">Mis Compras
+                                </NuxtLink>
                             </li>
                             <li>
                                 <button @click="signOut" class="dropdown-item">Salir</button>
@@ -152,14 +157,14 @@ onMounted(async () => {
 
 // Method to close the navbar
 function closeNavbar() {
-    
+
     if (navbarCollapse.value) {
         const collapseInstance = new bootstrap.Collapse(navbarCollapse.value, {
             toggle: false, // Ensure it only hides
         });
         collapseInstance.hide(); // Hide the navbar
     }
-  // console.log('closed navbar')
+    // console.log('closed navbar')
 }
 
 async function signOut() {
@@ -186,7 +191,7 @@ async function signOut() {
         feed: [],
         blocked_users: [],
         blocked_by: [],
-        orders:[],
+        orders: [],
         message_count: 0
     });
 
@@ -197,58 +202,162 @@ async function signOut() {
 </script>
 
 <style scoped>
-a:hover,
-button:hover {
-    color: rgb(13, 0, 255);
-}
-
-.nav-link {
-    font-weight: 600;
-    font-style: normal;
-    color: white !important;
-}
-
+/* Frosted glass navbar */
 nav {
     position: sticky !important;
-    background: rgba(219, 74, 132) !important;
     height: 76px;
     margin: 0;
+    background: transparent !important;
+    z-index: 1030;
+    /* Higher than most content */
+    transition: all 0.3s ease;
 }
 
-li {
+.nav-item {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.rounded-circle {
-    object-fit: cover;
+/* Frosted glass effect */
+.navbar-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(219, 74, 132, 0.88);
+    /* Brand color with transparency */
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    z-index: -1;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-i {
+/* Logo enhancements */
+.logo-img {
+    transition: transform 0.3s ease;
+}
+
+.logo-img:hover {
+    transform: scale(1.05);
+}
+
+.brand-text {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+/* Nav items */
+.nav-link {
+    font-weight: 600;
     color: white !important;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
 }
 
+/*
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.15);
+}*/
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: white;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 60%;
+}
+
+/* Dropdown enhancements */
+.dropdown-menu {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: none;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.dropdown-item {
+    padding: 0.5rem 1.25rem;
+    transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background: rgba(219, 74, 132, 0.1);
+    color: #db4a84 !important;
+}
+
+/* Mobile menu enhancements */
 @media (max-width: 991.98px) {
     .navbar-collapse {
-        background: rgba(219, 74, 132) !important;
-        padding: 10px;
-        border-radius: 5px;
+        background: rgba(219, 74, 132, 0.95) !important;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        padding: 1rem;
+        border-radius: 12px;
+        margin-top: 0.5rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     }
 
     .navbar-nav {
-        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .nav-link {
+        padding: 0.75rem;
     }
 
     .nav-item {
-        width: 100%;
-        text-align: start !important;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+    }
+}
+
+/* Desktop enhancements */
+@media (min-width: 992px) {
+    nav {
+        height: 80px;
+    }
+
+    .navbar-nav {
+        gap: 0.5rem;
+    }
+
+    .nav-link {
+        margin: 0 0.25rem;
+    }
+}
+
+@supports not (backdrop-filter: blur(12px)) {
+    .navbar-backdrop {
+        background: rgba(219, 74, 132, 0.95) !important;
+        /* More opaque fallback */
     }
 
     .dropdown-menu {
-        text-align: end;
-        /* Align dropdown menu to the right on small screens */
+        background: rgba(255, 255, 255, 0.98) !important;
+        /* Solid white fallback */
+    }
+
+    .navbar-collapse {
+        background: rgba(219, 74, 132, 0.98) !important;
+        /* Solid pink fallback */
     }
 }
 </style>

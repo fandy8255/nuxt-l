@@ -1,17 +1,12 @@
 <template>
     <div>
         <!-- Hero Section -->
-        <section class="hero-section text-center py-xl-5 py-sm-1" style="">
-            <div class="container">
-                <h1 class="display-4 fw-bold mb-4 py-2" style="color: aliceblue !important;">El Mercado #1 de Panties
-                    Usados
-                    en Latinoamérica</h1>
-                <div class="text-container">
-                    <p class="lead mb-4 text-light banner-text">
-                        Vender ropa interior usada es una excelente manera de convertir tus panties en dinero. Únete a
-                        más
-                        de 2,000,000 miembros reales en el mercado más grande para comprar y vender panties usados.
-                    </p>
+        <section class="text-center pb-xl-5 py-0 mt-0">
+            <HeroBanner title="El Mercado #1 de Panties Usados en Latinoamérica"
+                subtitle="Vender ropa interior usada es una excelente manera de convertir tus panties en dinero. Únete a más de 2,000,000 miembros reales en el mercado más grande para comprar y vender panties usados."
+                cta-text="Regístrate Gratis" backgroundImage="/assets/images/hero-banner.jpg" :parallax="true"
+                :gradient="false" height="90vh" @cta-click="handleCtaClick">
+                <template #stats>
                     <div class="stats d-md-flex justify-content-center gap-xl-4 gap-1 mb-5 d-none ">
                         <div class="stat-item">
                             <i class="bi bi-people-fill"></i>
@@ -34,9 +29,8 @@
                             <p class="banner-headings text-light">Tratos Privados</p>
                         </div>
                     </div>
-                    <button @click="ctaClick" class="btn btn-action btn-lg mb-xl-0 mb-3 ">Regístrate Gratis</button>
-                </div>
-            </div>
+                </template>
+            </HeroBanner>
         </section>
 
 
@@ -255,22 +249,10 @@
                     Regístrate gratis hoy y comienza a vender o comprar panties usados en una comunidad segura, anónima
                     y emocionante.
                 </p>
-                <button @click="ctaClick" class="btn btn-success btn-lg">Comienza Ahora</button>
+                <button @click="ctaClick" class="btn btn-lg text-light" style="background:rgb(219, 74, 132, 0.95) !important;">Comienza Ahora</button>
             </div>
         </section>
 
-        <!-- Featured Items Section 
-        <FeaturedItems />-->
-
-        <!-- Final CTA Section 
-        <section class="cta-section text-center py-5">
-            <div class="container">
-                <h2 class="mb-4">Únete al Movimiento</h2>
-                <p class="lead">Limpia tu armario o descubre tesoros en el nuestro. ¡Cada artículo hace la diferencia!
-                </p>
-                <button class="btn btn-success btn-lg">Dona Ropa</button>
-            </div>
-        </section>-->
     </div>
 </template>
 
@@ -282,7 +264,7 @@ const router = useRouter()
 const runtimeConfig = useRuntimeConfig();
 const environment = runtimeConfig.public.dev;
 const baseUrl = 'https://latinpanty.com'
-const userStore=useUserStore()
+const userStore = useUserStore()
 
 function ctaClick() {
     router.push('/register')
@@ -290,7 +272,7 @@ function ctaClick() {
 
 
 onMounted(async () => {
-    
+
     if (user.data.user) {
         router.push('/feed')
     } else {
@@ -378,7 +360,7 @@ useSeoMeta({
 
     // Additional Meta Tags
     canonical: `${baseUrl}`, // Canonical URL for SEO
-    
+
 });
 
 </script>
@@ -388,16 +370,6 @@ useSeoMeta({
     background: rgba(109, 109, 109, 0.603);
     border-radius: 50px;
     /*padding: 100px;*/
-}
-
-.hero-section {
-    background: linear-gradient(to bottom right, #ff7eb9, #ff758c);
-    color: white;
-    height: 90vh;
-    background-image: url('/assets/images/hero-banner.jpg');
-    background-size: cover;
-    background-position: center;
-    /*padding: 100px 0;*/
 }
 
 .stats {
@@ -489,10 +461,8 @@ useSeoMeta({
     color: #ffc107;
 }
 
-.cta-section {
-    background: linear-gradient(to bottom right, #85c79e, #a1eecf);
-    color: white;
-    padding: 100px 0;
+.cta-section{
+    background-color: rgba(226, 43, 156, 0.241);
 }
 
 .categories-section .card {
@@ -509,33 +479,10 @@ useSeoMeta({
     width: auto !important;
 }
 
-.btn-action {
-    background: rgba(219, 74, 132) !important;
-    color: white !important;
-    z-index: 1000;
-}
-
 @media (min-width: 991.98px) {
 
     .text-container {
         padding: 100px;
-    }
-
-}
-
-@media (max-width: 991.98px) {
-
-    .hero-section {
-        height: 75vh;
-    }
-
-    .banner-text {
-        font-size: 16px;
-        padding: 20px;
-    }
-
-    .banner-headings {
-        font-size: 12px;
     }
 
 }

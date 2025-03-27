@@ -22,7 +22,7 @@
                 <!-- Blog Content (Right Column for md-xl, Below TOC for sm) -->
                 <div class="col-md-9 col-12 order-md-2 order-1">
                     <!-- Frontmatter Details -->
-                    <div class="frontmatter-details mt-5">
+                    <div class="frontmatter-details mt-5 p-md-3 p-0">
                         <div class="row">
                             <div class="col-md-6">
                                 <h2 class="headings fw-bold">Descripcion</h2>

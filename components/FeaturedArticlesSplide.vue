@@ -1,5 +1,5 @@
 <template>
-    <div class="px-5">
+    <div class="px-md-5 px-1">
         <h2 id="autoplay-example-heading">Artículos Sugeridos</h2>
 
         <Splide aria-labelledby="autoplay-example-heading" :options="options" :has-track="false">
@@ -68,6 +68,11 @@ export default defineComponent({
             perPage: 3,
             gap: '1rem',
             autoplay: true,
+            breakpoints: {
+            640: {
+                perPage: 1,
+            },
+        }
         };
 
         return {

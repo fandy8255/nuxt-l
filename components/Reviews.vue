@@ -77,7 +77,7 @@
 
                                 <!-- Seller View: Embed ReviewReply Component -->
                                 <div v-if="userStore.user_type === 'seller'">
-                                   
+
                                     <ReviewReply :review="review" @reply-submitted="handleReplySubmitted"
                                         @message="handleMessage" />
                                 </div>
@@ -181,24 +181,35 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-/* Ensure table cells are vertically centered */
-.table td {
-    vertical-align: middle !important;
-    height: 75px;
+/* Base table styles */
+.table {
+    width: 100%;
+    font-size: 0.9rem;
 }
 
-/* Ensure the UserImgComponent is aligned properly */
+.table td {
+    vertical-align: middle;
+    padding: 0.75rem;
+}
+
+/* Ensure proper alignment of components */
 .d-flex.align-items-center {
     display: flex;
     align-items: center;
 }
 
-/* Optional: Add some padding to the table cells for better spacing */
-.table td {
-    padding: 0.75rem;
+/* Rating stars styling */
+.rating-stars {
+    white-space: nowrap;
 }
 
-/* Pagination Styles */
+/* Action buttons styling */
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+}
+
+/* Pagination styles */
 .pagination {
     flex-wrap: wrap;
 }
@@ -225,14 +236,153 @@ onMounted(async () => {
     border-color: #dee2e6;
 }
 
-@media (max-width: 900px) {
-    .pagination {
-        justify-content: center;
+/* Responsive adjustments */
+@media (max-width: 1199.98px) {
+    .table {
+        font-size: 0.85rem;
     }
 
-    .page-link {
-        padding: 0.375rem 0.5rem;
+    .table td {
+        padding: 0.6rem;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .table {
+        font-size: 0.8rem;
+    }
+
+    .table td {
+        padding: 0.5rem;
+    }
+
+    /* Hide less important columns */
+    .table td:nth-child(4),
+    /* Date column */
+    .table th:nth-child(4) {
+        display: none;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .table {
         font-size: 0.75rem;
+    }
+
+    .table td {
+        padding: 0.4rem;
+    }
+
+    /* Hide more columns on small screens */
+    .table td:nth-child(3),
+    /* User column */
+    .table th:nth-child(3) {
+        display: none;
+    }
+
+    /* Make review description shorter */
+    .table td p {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .table {
+        font-size: 0.7rem;
+    }
+
+    .table td {
+        padding: 0.3rem;
+    }
+
+    /* Stack action buttons vertically */
+    .table td:last-child .d-flex {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    /* Adjust pagination for very small screens */
+    .page-link {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    /* Hide table headers on very small screens */
+    .table thead {
+        display: none;
+    }
+
+    /* Convert table rows to block layout */
+    .table,
+    .table tbody,
+    .table tr,
+    .table td {
+        display: block;
+        width: 100%;
+    }
+
+    .table tr {
+        margin-bottom: 1rem;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .table td {
+        height: auto;
+        padding: 0.5rem;
+        text-align: right;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    .table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0.5rem;
+        width: 45%;
+        padding-right: 1rem;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    /* Add data labels for each cell */
+    .table td:nth-child(1)::before {
+        content: "Reseña";
+    }
+
+    .table td:nth-child(2)::before {
+        content: "Calificación";
+    }
+
+    /*
+    .table td:nth-child(3)::before {
+        content: userStore.user_type==='seller' ? 'Comprador': 'Vendedor';
+    }*/
+
+    .table td:nth-child(4)::before {
+        content: "Fecha";
+    }
+
+    .table td:nth-child(5)::before {
+        content: "Respuesta";
+    }
+
+    /* Special handling for the first column */
+    .table td:first-child {
+        text-align: left;
+        padding-left: 0.5rem;
+    }
+
+    .table td:first-child::before {
+        display: none;
+    }
+
+    /* Center action buttons */
+    .table td:last-child {
+        text-align: center;
     }
 }
 </style>

@@ -1,55 +1,36 @@
 <template>
     <div>
         <div v-if="loaded">
-            <div class="hero-section text-center d-flex justify-content-center align-items-center mb-5">
-                <div class="parallax-bg"></div>
-                <div class="hero-content">
-                    <h1 class="display-3 fw-bold text-white mb-4">Revista Latin Panty</h1>
-                    <div class="text-container p-5 mt-3">
-                        <p class="text-light mb-4" style="font-size: 1.25rem; max-width: 900px; margin: 0 auto;">
-                            Descubre el mundo de las estrellas latinas más candentes y exclusivas. En Latin
+            <section>
+                <HeroBanner title="Revista Latin Panty" backgroundImage="/assets/images/hero-banner.jpg"
+                    :parallax="true" height="75vh" min-height="400px" overlay-opacity="0.7" subtitle="Descubre el mundo de las estrellas latinas más candentes y exclusivas. En Latin Panty, te llevamos detrás de cámaras para conocer a tus modelos Descubre el mundo de las estrellas latinas más candentes y exclusivas. En Latin
                             Panty, te llevamos detrás de cámaras para conocer a tus modelos favoritas, sus
                             historias y sus secretos mejor guardados. ¡Suscríbete ahora y accede a contenido exclusivo,
-                            entrevistas íntimas, fotos y videos que no encontrarás en ningún otro lugar!
-                        </p>
-                        <!--
-                        <div class="stats d-flex justify-content-center gap-4 mt-4">
-                            <div class="stat-item d-flex align-items-center gap-3">
-                                <i class="fas fa-heart fa-2x text-white"></i>
-                                <h3 class="text-white mt-2">Latinas</h3>
-                            </div>
-                        </div>-->
-                        <!-- Call-to-Action Button -->
-                        <a href="/suscribirse" class="cta btn btn-lg text-light fw-bolder mt-4"
-                            style="font-size: 1.1rem; padding: 10px 30px; background:rgba(219, 74, 132) !important;">
-                            Suscríbete Ahora
-                        </a>
-                    </div>
-                </div>
-            </div>
+                            entrevistas íntimas, fotos y videos que no encontrarás en ningún otro lugar"
+                    cta-text="Regístrate Gratis">
+                </HeroBanner>
+
+            </section>
 
 
-
-            <div class="container-fluid">
+            <div class="container-fluid mt-5">
                 <FeaturedArticlesSplide :featuredArticles="featuredArticles" />
             </div>
 
-
-
-            <div v-if="allArticles.length > 0" class="container-fluid px-5 mt-5">
+            <div v-if="allArticles.length > 0" class="container-fluid px-3 px-md-5 px-sm-1 mt-4 mt-md-5">
                 <h2 class="text-start">Publicaciones</h2>
                 <!-- Include the Tags component -->
                 <Tags :tags="tags" @select-tag="handleTagSelect" />
                 <div class="row gy-4 mx-0">
-                    <div v-for="article in paginatedArticles" :key="article.title" class="col-sm-12 col-md-6 col-lg-3">
+                    <div v-for="article in paginatedArticles" :key="article.title" class="col-12 col-sm-6 col-lg-3">
                         <ArticleCard :date="article.date" :title="article.title" :category="article.category"
                             :imgSrc="article.image" :articleDescription="article.description"
                             :artPath="article.stem.split('/')[1]" :toc="article.body.toc.links" :cardHeight="'50vh'" />
                     </div>
                 </div>
 
-                <nav aria-label="Page navigation" class="mt-5 mb-5">
-                    <ul class="pagination justify-content-start flex-wrap">
+                <nav aria-label="Page navigation" class="mt-4 mt-md-5 mb-4 mb-md-5">
+                    <ul class="pagination justify-content-center justify-content-md-start flex-wrap">
                         <li class="page-item" :class="{ disabled: currentPage === 1 }">
                             <button class="page-link" @click="changePage(1)">Primero</button>
                         </li>
@@ -69,18 +50,17 @@
                     </ul>
                 </nav>
             </div>
-            <div v-else class="text-center mt-5">
+            <div v-else class="text-center mt-4 mt-md-5">
                 <p class="text-muted">No articles found</p>
             </div>
 
             <div class="margins container-fluid">
                 <CategoriesSplide :categories="categories" />
             </div>
-
         </div>
 
         <div v-else>
-            <div class="text-center mt-5" style="height: 600px !important; margin-top: 100px !important;">
+            <div class="text-center loading-spinner">
                 <div class="spinner-border text-primary" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
@@ -91,21 +71,18 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-/*
-import Tags from '~/components/Tags.vue'; // Import the Tags component*/
 
-const allArticles = ref([]); // Store all fetched articles
+const allArticles = ref([]);
 const featuredArticles = ref([]);
 const currentPage = ref(1);
-const itemsPerPage = 8; // Number of articles per page
+const itemsPerPage = 8;
 const selectedCategory = ref('');
 const categories = ref([]);
 const loaded = ref(false);
 const tags = ref({});
-const selectedTag = ref('todos'); // Default to 'todos' to show all articles
+const selectedTag = ref('todos');
 const baseUrl = 'https://latinpanty.com'
 const userStore = useUserStore();
-
 
 useHead({
     link: [
@@ -119,8 +96,6 @@ useHead({
         },
     ],
 });
-
-
 
 // Fetch categories
 const fetchCategories = async () => {
@@ -164,13 +139,13 @@ const fetchFeaturedArticles = async () => {
 // Handle tag selection
 const handleTagSelect = (tag) => {
     selectedTag.value = tag;
-    currentPage.value = 1; // Reset to the first page when a new tag is selected
+    currentPage.value = 1;
 };
 
 // Filter articles based on the selected tag
 const filteredArticles = computed(() => {
     if (selectedTag.value === 'todos') {
-        return allArticles.value; // Show all articles
+        return allArticles.value;
     }
     return allArticles.value.filter((article) => article.tags && article.tags.includes(selectedTag.value));
 });
@@ -212,138 +187,51 @@ const visiblePages = computed(() => {
 const changePage = (page) => {
     if (page > 0 && page <= totalPages.value) {
         currentPage.value = page;
-        // window.scrollTo(0, 0);
     }
 };
 
 onMounted(async () => {
-    const userr= await userStore.getUser()
+    const userr = await userStore.getUser()
     console.log('userr', userr)
-    await fetchAllArticles(); // Fetch all articles once
+    await fetchAllArticles();
     await fetchFeaturedArticles();
     await fetchCategories();
     loaded.value = true;
-    //window.scrollTo(0, 0);
 });
 
-// SEO Meta Tags
-useSeoMeta({
-    // Basic Meta Tags
-    title: 'Latin Panty Revista | Descubre a las Estrellas Latinas',
-    description: 'Descubre el mundo de las estrellas latinas más candentes y exclusivas. En Latin Panty, te llevamos detrás de cámaras para conocer a tus modelos favoritas, sus historias y sus secretos mejor guardados. ¡Suscríbete ahora!',
-    charset: 'utf-8',
-    viewport: 'width=device-width, initial-scale=1.0',
-    robots: 'index, follow',
-    keywords: 'Latinas, OnlyFans, Instagram, Modelos, Revista, Entrevistas, Fotos, Videos',
-    author: 'Latin Panty',
-    themeColor: '#ffffff',
-
-    // Open Graph (OG) Meta Tags
-    ogTitle: 'Latin Panty Revista | Descubre a las Estrellas Latinas',
-    ogDescription: 'Descubre el mundo de las estrellas latinas más candentes y exclusivas. En Latin Panty, te llevamos detrás de cámaras para conocer a tus modelos favoritas, sus historias y sus secretos mejor guardados. ¡Suscríbete ahora!',
-    ogImage: '/assets/images/hero-banner.jpg', // Replace with your homepage banner image
-    ogUrl: `${baseUrl}/revista`, // Replace with your website URL
-    ogType: 'website',
-    ogLocale: 'es_US',
-    ogLocaleAlternate: [
-        'es_MX', 'es_AR', 'es_CO', 'es_CL', 'es_PE', 'es_VE', 'es_EC', 'es_GT', 'es_CU', 'es_BO', 'es_DO', 'es_HN', 'es_PY', 'es_SV', 'es_NI', 'es_CR', 'es_PR', 'es_ES', 'es_UY', 'es_PA',
-    ],
-    ogSiteName: 'Latin Panty Revista',
-    ogDeterminer: 'auto',
-
-    // Twitter Meta Tags
-    twitterCard: 'summary_large_image',
-    twitterTitle: 'Latin Panty Revista | Descubre a las Estrellas Latinas',
-    twitterDescription: 'Descubre el mundo de las estrellas latinas más candentes y exclusivas. En Latin Panty, te llevamos detrás de cámaras para conocer a tus modelos favoritas, sus historias y sus secretos mejor guardados. ¡Suscríbete ahora!',
-    twitterImage: '/assets/images/hero-banner.jpg', // Replace with your homepage banner image
-    twitterSite: '@latinpanty6969xxx',
-    twitterCreator: '@latinpanty6969xxx',
-
-    // Additional Meta Tags
-    canonical: `${baseUrl}/revista`, // Canonical URL for SEO
-    rating: 'adult',
-
-});
 </script>
 
-
 <style scoped>
-.cta:hover {
-    color: white !important;
-}
-
 .margins {
-    margin-top: 60px;
-    margin-bottom: 60px;
-}
-
-/* Hero Section with Parallax */
-.hero-section {
-    position: relative;
-    height: 70vh;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    overflow: hidden;
-}
-
-.parallax-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('/assets/images/hero-banner.jpg');
-    background-size: cover;
-    background-position: center;
-    z-index: -1;
-    /*transform: translateZ(-1px) scale(2);*/
-    /* Parallax effect */
-}
-
-.hero-content {
-    z-index: 1;
-}
-
-.hero-section h1 {
-    font-size: 4rem;
-    font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.hero-section p {
-    font-size: 1.75rem;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-.stats {
-    margin-top: 20px;
-}
-
-.text-container {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 15px 25px;
-    border-radius: 15px;
-    transition: transform 0.3s ease, background 0.3s ease;
-}
-
-.text-container:hover {
-    transform: scale(1.1);
-    background: rgba(255, 255, 255, 0.2);
-}
-
-/* All Articles */
-#publicaciones {
-    /*font-size: 3rem;*/
-    font-weight: bold;
-    color: #333;
+    margin-top: 40px;
     margin-bottom: 40px;
 }
 
-/* Pagination Styles */
+.loading-spinner {
+    height: 400px;
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .pagination {
     flex-wrap: wrap;
+    gap: 5px;
+}
+
+.page-link {
+    padding: 0.375rem 0.75rem;
+}
+
+@media (min-width: 768px) {
+
+    .pagination {
+        gap: 0;
+    }
+
+    .page-link {
+        padding: 0.5rem 0.75rem;
+    }
 }
 </style>

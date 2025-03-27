@@ -32,6 +32,10 @@ onMounted(async () => {
     font-weight: 400;
     font-style: normal;
 }
+/*
+section{
+    padding: 0 !important;
+}*/
 
 p {
     color: rgb(47, 45, 45) 
@@ -58,6 +62,12 @@ h2 {
     font-weight: 500;
     font-style: normal;
 }
+
+/*
+h2,h3,h4,h1{
+    color:rgb(250, 36, 122) !important;
+    font-weight: 800;
+}*/
 
 * {
     color: rgb(59, 59, 59) !important;
