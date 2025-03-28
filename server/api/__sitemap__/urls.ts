@@ -30,5 +30,26 @@ export default defineSitemapEventHandler(() => {
         {
             loc: '/revista/antonia-chilena-onlyfans-entrevista',
         },
+        {
+            loc: '/revista/entrevista-gabriela-mendez'
+        },
+        {
+            loc: '/revista/isabella-cruz'
+        },
+        {
+            loc: '/revista/valeria-rios-entrevista'
+        },
+        {
+            loc: '/revista/camila-torres'
+        },
+        {
+            loc: '/revista/entrevista-giselle-flores'
+        },
+        {
+            loc: '/revista/entrevista-martina-reyes'
+        },
+        {
+            loc: '/revista/elisabeth-escalante-colombiana-mamasita-entrevista'
+        }
     ];
 });
