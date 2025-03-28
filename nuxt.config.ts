@@ -37,7 +37,7 @@ export default defineNuxtConfig({
       callback: '/confirm',
       exclude: ['/', '/register', '/login', '/ad/bogaloo', '/landing/vendedoras', '/contacto', '/landing/tienda', '/sitemap.xml', '/revista', '/revista/category/instagram', '/revista/category/onlyfans', '/revista/category/entrevistas', '/revista/entrevista-jessica-barranquillera',
         '/revista/mistica-entrevista-venta-panties', '/revista/entrevista-amorazz-onlyfans', '/revista/entrevista-catalina-ortiz-entrevista-gordibuena', '/revista/entrevista-sofymackkk-onlyfans', '/revista/entrevista-latina_chantel-una-latina-explosiva-con-cuenta-de-onlyfans-de-tampa',
-        '/revista/antonia-chilena-onlyfans-entrevista'],
+        '/revista/antonia-chilena-onlyfans-entrevista' , '/revista/entrevista-gabriela-mendez' , '/revista/valeria-rios-entrevista', '/revista/camila-torres', '/revista/entrevista-giselle-flores', '/revista/entrevista-martina-reyes', '/revista/elisabeth-escalante-colombiana-mamasita-entrevista'],
     }
   },
 
