@@ -3,9 +3,11 @@
         <!-- Hero Section -->
         <div v-if="loaded">
 
+            <!--
             <section>
                 <BackButton />
             </section>
+            -->
 
             <section class="mb-5">
                 <HeroBanner :title="categoryName.toUpperCase()" :backgroundImage="bannerData.image" :parallax="true"

@@ -2,9 +2,11 @@
     <div>
         <!-- Hero Section -->
         <div v-if="loaded">
+            <!--
             <section>
                 <BackButton /> 
             </section>
+            -->
             
 
             <section class="mb-5">
@@ -91,7 +93,7 @@ const baseUrl = 'https://latinpanty.com'
 const bannerData = {
     image: "/assets/images/hero-banner.jpg",
     alt: 'Latin Panty | Etiqueta |' + tagName.value,
-    caption: 'Etiqueta: ' + tagName.value,
+    caption: 'Etiqueta: ' + tagName.value
 };
 
 
