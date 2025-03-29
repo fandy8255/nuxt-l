@@ -9,7 +9,15 @@
             <!-- Display other tags -->
             <span v-for="(count, tag) in tags" :key="tag" class="taggy badge bg-secondary text-light fw-normal"
                 :class="{ 'bg-primary': selectedTag === tag }" @click="selectTag(tag)">
-                {{ tag }} ({{ count }})
+
+                <NuxtLink v-if="isCategory" :to="'/revista/category/' + tag" class="text-light">
+                    {{ tag }}
+                </NuxtLink>
+                
+                <NuxtLink v-else :to="'/revista/etiquetas/' + tag" class="text-light">
+                    {{ tag }}
+                </NuxtLink>
+                ({{ count }})
             </span>
         </div>
     </div>
@@ -22,22 +30,30 @@ const props = defineProps({
     tags: {
         type: Object,
         required: true,
-    },
+    }, isCategory: {
+        type: Boolean,
+        default: false
+    }
 });
 
-const emit = defineEmits(['select-tag']);
+//const emit = defineEmits(['select-tag']);
 const selectedTag = ref('todos'); // Default to 'todos'
 
 const selectTag = (tag) => {
     selectedTag.value = tag;
-    emit('select-tag', tag);
+    // emit('select-tag', tag);
 };
 </script>
 
 <style scoped>
+.taggy {
+    background: rgba(219, 74, 132) !important;
+}
 
-.taggy{
-    background:rgba(219, 74, 132) !important;
+/* This will override both the default and hover states */
+.taggy.bg-primary,
+.badge.bg-primary {
+    background: var(--bs-primary) !important;
 }
 
 .tags-section {

@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Gallery Grid -->
-        <div class="gallery-grid" :style="{ gridTemplateColumns: `repeat(${picturesPerRow}, 1fr)` }">
+        <div class="gallery-grid" :style="{ gridTemplateColumns: `repeat(${parseInt(picturesPerRow)}, 1fr)` }">
             <div v-for="(image, index) in parsedImages" :key="index" class="gallery-item" @click="openLightbox(index)">
                 <img :src="image" :alt="`Gallery image ${index + 1}`" class="gallery-image" loading="lazy" />
             </div>
@@ -23,7 +23,7 @@ const { images, picturesPerRow } = defineProps({
         required: true,
     },
     picturesPerRow: {
-        type: Number,
+        type: String,
         default: 3, // Default to 3 pictures per row
     },
 });

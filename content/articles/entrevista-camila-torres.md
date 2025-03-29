@@ -2,7 +2,7 @@
 title: Camila Torres , Una Caleña Colombiana Artística Nos Cuenta Todo Sobre Como Inició en la Venta de Panties Usados
 description : Camila Torres, de 19 años, es una talentosa y apasionada fotógrafa freelance y creadora de contenido que reside en Cali, Colombia. Con un enfoque artístico en su vida y su oficio, aspira a viajar por Latinoamérica para capturar imágenes que muestren la riqueza cultural y el erotismo de la región. Su personalidad combina la rebeldía con la seducción y un espíritu aventurero. Entre sus pasatiempos favoritos se cuentan el viaje, la toma de fotografías sensuales y el senderismo, actividades que reflejan su visión creativa y su deseo de explorar lo desconocido. Camila se define en una relación sin etiquetas con un amigo viajero, lo que sugiere su apertura y flexibilidad en cuanto a las conexiones personales.
 image: 'https://i.ibb.co/MDYq7qm1/2062978378.jpg'
-tags: ['Entrevistas', 'Colombianas Hermosas', 'Panties Usados Colombia','Caleñas Hermosas', 'Tangas Usadas Colombia']
+tags: ['entrevistas', 'colombianas-hermosas', 'panties-usados-colombia','caleñas-hermosas', 'tangas-usadas-colombia']
 published: true
 featured: true
 category: entrevistas

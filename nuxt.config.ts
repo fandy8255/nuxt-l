@@ -6,8 +6,8 @@ export default defineNuxtConfig({
 
 
   site: {
-    url: process.env.NUXT_SITE_URL ,
-    name: process.env.NUXT_SITE_NAME 
+    url: process.env.NUXT_SITE_URL,
+    name: process.env.NUXT_SITE_NAME
   },
 
   sitemap: {
@@ -20,12 +20,12 @@ export default defineNuxtConfig({
 
 
   runtimeConfig: {
-    
-    mail:process.env.MAIL,
+
+    mail: process.env.MAIL,
     supabaseUrl: process.env.SUPABASE_URL,
     secretApiKey: process.env.SECRET_API_KEY,
     dev: process.env.ENVIRONMENT,
-  
+
     public: {
       baseUrl: process.env.PUBLIC_BASE_URL || 'http://localhost:3000',
     },
@@ -35,9 +35,79 @@ export default defineNuxtConfig({
     redirectOptions: {
       login: '/login',
       callback: '/confirm',
-      exclude: ['/', '/register', '/login', '/ad/bogaloo', '/landing/vendedoras', '/contacto', '/landing/tienda', '/sitemap.xml', '/revista', '/revista/category/instagram', '/revista/category/onlyfans', '/revista/category/entrevistas', '/revista/entrevista-jessica-barranquillera',
-        '/revista/mistica-entrevista-venta-panties', '/revista/entrevista-amorazz-onlyfans', '/revista/entrevista-catalina-ortiz-entrevista-gordibuena', '/revista/entrevista-sofymackkk-onlyfans', '/revista/entrevista-latina_chantel-una-latina-explosiva-con-cuenta-de-onlyfans-de-tampa',
-        '/revista/antonia-chilena-onlyfans-entrevista' , '/revista/entrevista-gabriela-mendez' ,'revista/isabella-cruz', '/revista/valeria-rios-entrevista', '/revista/camila-torres', '/revista/entrevista-giselle-flores', '/revista/entrevista-martina-reyes', '/revista/elisabeth-escalante-colombiana-mamasita-entrevista'],
+      exclude: [
+        '/',
+        '/register',
+        '/login',
+        '/ad/bogaloo',
+        '/landing/vendedoras',
+        '/contacto',
+        '/landing/tienda',
+        '/sitemap.xml',
+        '/revista',
+        '/revista/category/instagram',
+        '/revista/category/onlyfans',
+        '/revista/category/entrevistas',
+        '/revista/articulos/entrevista-camila-torres',
+        '/revista/articulos/entrevista-catalina-ortiz-entrevista-gordibuena',
+        '/revista/articulos/elisabeth-escalante-colombiana-mamasita-entrevista',
+        '/revista/articulos/entrevista-gabriela-mendez',
+        "/revista/articulo/entrevista-isabella-cruz",
+        '/revista/articulos/antonia-chilena-onlyfans-entrevista',
+        '/revista/articulos/isabella-cruz',
+        '/revista/articulos/camila-torres',
+        '/revista/articulos/entrevista-giselle-flores',
+        '/revista/articulos/entrevista-martina-reyes',
+        '/revista/articulos/valeria-rios-entrevista',
+        '/revista/etiquetas/entrevistas',
+        '/revista/etiquetas/colombianas-amateur-naturales',
+        '/revista/etiquetas//panties-usados-colombia',
+        '/revista/etiquetas/tangas-usadas',
+        '/revista/etiquetas/calzones-usados',
+        '/revista/etiquetas/colombianas-hermosas',
+        '/revista/etiquetas/caleñas-hermosas',
+        '/revista/etiquetas/tangas-usadas-colombia',
+        '/revista/etiquetas/chilenas-hermosas',
+        '/revista/etiquetas/panties-usados',
+        '/revista/etiquetas/bragas-usadas',
+        '/revista/etiquetas/argentinas-amateur-naturales',
+        '/revista/etiquetas/argentinas-hermosas',
+        '/revista/etiquetas/panties-usados-argentina',
+        '/revista/etiquetas/bragas-usadas-argentina',
+        '/revista/etiquetas/uruguayas-amateur',
+        '/revista/etiquetas/panties-usados-uruguay',
+        '/revista/etiquetas/bragas-usadas-uruguay',
+        '/revista/etiquetas/argentinas-amateur',
+        '/revista/etiquetas/argentinas-tetonas',
+        '/revista/etiquetas/tetonas',
+        '/revista/etiquetas/latinas-tetonas',
+        '/revista/etiquetas/mexicanas-amateur',
+        '/revista/etiquetas/panties-usados-mexico',
+        '/revista/etiquetas/bragas-usadas-mexico',
+        '/revista/etiquetas/mujeres-chilenas',
+        '/revista/etiquetas/amateur',
+        '/revista/etiquetas/latinas',
+        '/revista/etiquetas/entrevista',
+        '/revista/etiquetas/chilenas',
+        '/revista/etiquetas/onlyfans',
+        '/revista/etiquetas/peludas',
+        '/revista/etiquetas/chicas-tatuajes',
+        '/revista/etiquetas/colombianas',
+        '/revista/etiquetas/fetiches',
+        '/revista/etiquetas/onlyfans-latinas',
+        '/revista/etiquetas/mexicanas',
+        '/revista/etiquetas/gordita',
+        '/revista/etiquetas/gordibuena',
+        '/revista/etiquetas/voluptuosas',
+        '/revista/etiquetas/latinas-onlyfans',
+        '/revista/etiquetas/tatuajes',
+        '/revista/etiquetas/latinas-instagram',
+        '/revista/etiquetas/piercings',
+        '/revista/etiquetas/latinas-culonas',
+        '/revista/etiquetas/buttplug',
+        '/revista/etiquetas/barranquilleras',
+        '/revista/etiquetas/latina'
+      ],
     }
   },
 

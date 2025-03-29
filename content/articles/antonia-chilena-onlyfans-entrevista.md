@@ -2,7 +2,7 @@
 title: Conocimos a Antonia, una chilena alegre y apasionada
 description: Antonia, una chilena que ama la naturaleza y vive con pasión, comparte sus experiencias únicas en su relación y su vida sexual. Su energía y actitud libre la destacan, mientras se mantiene auténtica y sin miedo a explorar nuevos horizontes.Tiene tatuajes , es muy peluda y le encanta coger en la naturaleza.
 image: 'https://i.ibb.co/YFSnZymx/1868386752.jpg'
-tags: ['Chile Sexo', 'Amateur', 'Latinas', 'Entrevista', 'Chilenas', 'Onlyfans', 'Peludas', 'Alternas', 'Tatuajes']
+tags: ['mujeres-chilenas', 'amateur', 'latinas', 'entrevista', 'chilenas', 'onlyfans', 'peludas', 'chicas-tatuajes']
 published: true
 featured: true
 category: entrevistas

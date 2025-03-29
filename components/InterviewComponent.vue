@@ -210,6 +210,7 @@ const saveAnswer = async (id, answer) => {
             userQuestions.value[questionIndex].isEdited = false; // Reset isEdited flag
         }
         showMessage({ success: true, text: 'Pregunta guardada satisfactoriamente' });
+        await fetchQuestions()
     } else {
         showMessage({ failure: true, text: 'Error al guardar pregunta' });
     }

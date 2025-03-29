@@ -8,7 +8,7 @@
             </div>
             <figure id="card-main-head" class="card-img-top m-0 overflow-hidden bsb-overlay-hover"
                 :style="{ height: cardHeight }">
-                <NuxtLink :to="'/revista/' + artPath">
+                <NuxtLink :to="'/revista/articulos/' + artPath" >
                     <!--{{ imgSrc }}-->
                     <NuxtImg class="bsb-scale bsb-hover-scale-up" loading="lazy" :src="imgSrc" alt="Business"
                         style="width:100%;" />
@@ -29,9 +29,13 @@
                 <div class="entry-header mb-3">
                     <ul class="entry-meta list-unstyled d-flex mb-2">
                         <li>
-                            <h6 class="link-primary text-decoration-none" style="color:rgb(250, 36, 122) !important;">
-                                {{ category.charAt(0).toUpperCase() + category.slice(1) }}
-                            </h6>
+                            <NuxtLink :to="'/revista/category/' + category" >
+                                <h6 class="link-primary text-decoration-none"
+                                    style="color:rgb(250, 36, 122) !important;">
+                                    {{ category.charAt(0).toUpperCase() + category.slice(1) }}
+                                </h6>
+                            </NuxtLink>
+
                         </li>
                     </ul>
                     <h2 class="card-title entry-title h4 mb-0">
@@ -39,8 +43,12 @@
                     </h2>
                 </div>
                 <p class="card-text entry-summary text-secondary">
-                    {{ articleDescription }}
+
+                    {{ articleDescription && articleDescription.length > 100 ? articleDescription.slice(0, 100) + "..."
+                        :
+                    articleDescription }}
                 </p>
+                <ArticleTags :tags="tags" />
             </div>
             <div class="card-footer border border-top-0 bg-white p-4">
                 <ul class="entry-meta list-unstyled d-flex align-items-center m-0">
@@ -79,8 +87,10 @@
 </template>
 
 <script setup>
+import ArticleTags from './ArticleTags.vue';
 
-const { title, imgSrc, articleDescription, artPath, toc, category, date, cardHeight } = defineProps(['title', 'imgSrc', 'articleDescription', 'artPath', 'toc', 'category', 'date', 'cardHeight'])
+
+const { title, imgSrc, articleDescription, artPath, toc, category, date, cardHeight, tags } = defineProps(['title', 'imgSrc', 'articleDescription', 'artPath', 'toc', 'category', 'date', 'cardHeight', 'tags'])
 //const { } = defineProps(['articleDescription'])
 
 const formatDate = (dateString) => {

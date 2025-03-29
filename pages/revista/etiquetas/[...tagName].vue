@@ -2,20 +2,20 @@
     <div>
         <!-- Hero Section -->
         <div v-if="loaded">
-
             <section>
-                <BackButton />
+                <BackButton /> 
             </section>
+            
 
             <section class="mb-5">
-                <HeroBanner :title="categoryName.toUpperCase()" :backgroundImage="bannerData.image" :parallax="true"
+                <HeroBanner :title="tagName.toUpperCase()" :backgroundImage="bannerData.image" :parallax="true"
                     height="75vh" min-height="400px" overlay-opacity="0.7" :subtitle="bannerData.caption"
                     cta-text="Regístrate Gratis">
                 </HeroBanner>
             </section>
 
             <div class="container-fluid">
-                <FeaturedArticlesSplide :featuredArticles="featuredArticles" />
+                <FeaturedArticlesSplide :featuredArticles="featuredArticles" title="Artículos Sugeridos" />
             </div>
 
             <!-- Tags Section -->
@@ -25,13 +25,15 @@
             <div v-if="allArticles.length > 0" class="container-fluid px-md-5 px-0  mt-5">
                 <h2 class="text-start ms-md-0 ms-3">Publicaciones</h2>
                 <div class="margins container-fluid">
-                    <Tags :tags="tags" @select-tag="handleTagSelect" />
+                    <Tags :isCategory="true" :tags="categories" @select-tag="handleCategorySelect" />
                 </div>
                 <div class="row gy-4 mx-0">
                     <div v-for="article in paginatedArticles" :key="article.title" class="col-sm-12 col-md-6 col-lg-3">
                         <ArticleCard :date="article.date" :title="article.title" :category="article.category"
                             :imgSrc="article.image" :articleDescription="article.description"
-                            :artPath="article.stem.split('/')[1]" :toc="article.body.toc.links" :cardHeight="'50vh'" />
+                            :artPath="article.stem.split('/')[1]" :toc="article.body.toc.links" :cardHeight="'50vh'"
+                            :tags="article.tags"
+                             />
                     </div>
                 </div>
 
@@ -76,16 +78,24 @@ import { ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
-const categoryName = ref(route.params.categoryName[0]);
+const tagName = ref(route.params.tagName[0]);
 const allArticles = ref([]); // Store all fetched articles
-const tags = ref({});
+const categories = ref({});
 const currentPage = ref(1);
 const itemsPerPage = 4; // Number of articles per page
-const banners = ref([]);
 const loaded = ref(false);
 const featuredArticles = ref([]);
-const selectedTag = ref('todos'); // Default to 'todos' to show all articles
+const selectedCategory = ref('todos'); // Default to 'todos' to show all articles
 const baseUrl = 'https://latinpanty.com'
+
+const bannerData = {
+    image: "/assets/images/hero-banner.jpg",
+    alt: 'Latin Panty | Etiqueta |' + tagName.value,
+    caption: 'Etiqueta: ' + tagName.value,
+};
+
+
+// Usage in template: <button @click="goBack">Back</button>
 
 useHead({
     link: [
@@ -100,74 +110,43 @@ useHead({
     ],
 });
 
-// Fetch banner data from the JSON file
-const fetchBanners = async () => {
-    const { data } = await useFetch('/assets/magazine/category-banners.json');
-    banners.value = data.value;
-};
-
-// Find the banner data for the current category
-const bannerData = computed(() => {
-    const banner = banners.value.find((banner) => {
-        const bannerCategory = banner.category.toLowerCase().trim();
-        const currentCategory = categoryName.value.toLowerCase().trim();
-        return bannerCategory === currentCategory;
-    });
-
-    return banner || {
-        image: '/assets/images/panty-icon.jpg',
-        alt: 'Default Banner',
-        caption: 'Categoría: ' + categoryName.value,
-    };
-});
-
-// Fetch all articles for the category
 const fetchAllArticles = async () => {
     const query = queryCollection('blog')
         .where('published', '=', true)
-        .where('category', '=', categoryName.value)
         .order('date', 'DESC');
 
     const { data } = await useAsyncData('blog', () => query.all());
-    allArticles.value = data.value;
 
-    // Extract and count tags
-    const tagCounts = {};
+    allArticles.value = data.value.filter(elem => {
+        return elem.tags.some(tag => tag === tagName.value)
+    })
+
+    featuredArticles.value = allArticles.value.filter(elem => {
+        return elem.featured
+    })
+
+    const categoryCounts = {};
+
     allArticles.value.forEach((article) => {
-        if (article.tags) {
-            article.tags.forEach((tag) => {
-                tagCounts[tag] = (tagCounts[tag] || 0) + 1;
-            });
-        }
+        categoryCounts[article.category] = (categoryCounts[article.category] || 0) + 1;
     });
-    tags.value = tagCounts;
-};
 
-// Fetch featured articles
-const fetchFeaturedArticles = async () => {
-    const { data } = await useAsyncData('featured', () =>
-        queryCollection('blog')
-            .where('category', '=', categoryName.value)
-            .where('featured', '=', true)
-            .order('date', 'DESC')
-            .limit(6)
-            .all()
-    );
-    featuredArticles.value = data.value;
+    categories.value = categoryCounts;
+
 };
 
 // Handle tag selection
-const handleTagSelect = (tag) => {
-    selectedTag.value = tag;
+const handleCategorySelect = (category) => {
+    selectedCategory.value = category;
     currentPage.value = 1; // Reset to the first page when a new tag is selected
 };
 
 // Filter articles based on the selected tag
 const filteredArticles = computed(() => {
-    if (selectedTag.value === 'todos') {
+    if (selectedCategory.value === 'todos') {
         return allArticles.value; // Show all articles
     }
-    return allArticles.value.filter((article) => article.tags && article.tags.includes(selectedTag.value));
+    return allArticles.value.filter((article) => article.category === selectedCategory);
 });
 
 // Paginate filtered articles
@@ -212,29 +191,27 @@ const changePage = (page) => {
 };
 
 onMounted(async () => {
-    await fetchBanners(); // Fetch banner data
     await fetchAllArticles(); // Fetch all articles for the category
-    await fetchFeaturedArticles();
     loaded.value = true;
     window.scrollTo(0, 0);
 });
 
 useSeoMeta({
     // Basic Meta Tags
-    title: `Latin Panty Revista | Latinas ${categoryName.value.toUpperCase()}`,
-    description: bannerData.value.caption || `Explora las mejores publicaciones sobre ${categoryName.value} en Latin Panty Revista.`,
+    title: `Latin Panty Revista | Latinas ${tagName.value.toUpperCase()}`,
+    description: bannerData.caption || `Explora las mejores publicaciones sobre ${tagName.value} en Latin Panty Revista.`,
     charset: 'utf-8',
     viewport: 'width=device-width, initial-scale=1.0',
     robots: 'index, follow',
-    keywords: `${categoryName.value}, Latinas, OnlyFans, Instagram, Modelos, ${Object.keys(tags.value).join(', ')}`,
+    keywords: `${tagName.value}, Latinas, OnlyFans, Instagram, Modelos, ${Object.keys(categories.value).join(', ')}`,
     author: 'Latin Panty',
     themeColor: '#ffffff',
 
     // Open Graph (OG) Meta Tags
-    ogTitle: `Latin Panty Revista | ${categoryName.value.toUpperCase()}`,
-    ogDescription: bannerData.value.caption || `Explora las mejores publicaciones sobre ${categoryName.value} en Latin Panty Revista.`,
-    ogImage: bannerData.value.image || '/assets/images/panty-icon.jpg',
-    ogUrl: `${baseUrl}/revista/${categoryName.value}`,
+    ogTitle: `Latin Panty Revista | ${tagName.value.toUpperCase()}`,
+    ogDescription: bannerData.caption || `Explora las mejores publicaciones sobre ${tagName.value} en Latin Panty Revista.`,
+    ogImage: bannerData.image || '/assets/images/panty-icon.jpg',
+    ogUrl: `${baseUrl}/revista/${tagName.value}`,
     ogType: 'website',
     ogLocale: 'es_US',
     ogLocaleAlternate: [
@@ -245,14 +222,14 @@ useSeoMeta({
 
     // Twitter Meta Tags
     twitterCard: 'summary_large_image',
-    twitterTitle: `Latin Panty Revista | ${categoryName.value.toUpperCase()}`,
-    twitterDescription: bannerData.value.caption || `Explora las mejores publicaciones sobre ${categoryName.value} en Latin Panty Revista.`,
-    twitterImage: bannerData.value.image || '/assets/images/panty-icon.jpg',
+    twitterTitle: `Latin Panty Revista | ${tagName.value.toUpperCase()}`,
+    twitterDescription: bannerData.caption || `Explora las mejores publicaciones sobre ${tagName.value} en Latin Panty Revista.`,
+    twitterImage: bannerData.image || '/assets/images/panty-icon.jpg',
     twitterSite: '@latinpanty6969xxx',
     twitterCreator: '@latinpanty6969xxx',
 
     // Additional Meta Tags
-    canonical: `${baseUrl}/revista/${categoryName.value}`,
+    canonical: `${baseUrl}/revista/${tagName.value}`,
     rating: 'adult',
 
     // Structured Data (JSON-LD)

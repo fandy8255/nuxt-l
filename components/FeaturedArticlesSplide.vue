@@ -1,7 +1,6 @@
 <template>
-    <div class="px-md-5 px-1">
-        <h2 id="autoplay-example-heading">Artículos Sugeridos</h2>
-
+    <div class="">
+        <h2 id="autoplay-example-heading">{{title}}</h2>
         <Splide aria-labelledby="autoplay-example-heading" :options="options" :has-track="false">
             <div style="position: relative">
                 <SplideTrack>
@@ -15,6 +14,7 @@
                             :artPath="article.stem.split('/')[1]"
                             :toc="article.body.toc.links"
                             :cardHeight="'50vh'"
+                            :tags="article.tags"
                         />
                     </SplideSlide>
                 </SplideTrack>
@@ -59,7 +59,8 @@ export default defineComponent({
                 };
             }>>,
             required: true,
-        },
+        },title :String
+        
     },
 
     setup() {

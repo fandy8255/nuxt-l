@@ -1,17 +1,22 @@
 <template>
     <div id="main-article-container">
         <div class="container-xl">
-            <PopupOptIn/>
+            <PopupOptIn />
             <!-- Hero Section -->
+            <section>
+                <BackButton />
+            </section>
+
             <SimpleHeroArticle class="mt-1" :imgUrl="data.image" :title="data.title" :subtitle="data.meta.subtitle" />
 
             <!-- Main Content Layout -->
             <div class="row">
                 <!-- Table of Contents (Left Column for md-xl, Top for sm) -->
                 <div class="col-md-3 col-12 order-md-1 order-2 mt-5" id="toc-column">
+
                     <div class="toc-container">
                         <ul id="toc-ul" class="border border-1">
-                           <!-- {{ data.body.toc.links }}-->
+                            <!-- {{ data.body.toc.links }}-->
                             <li class="toc-li" :key="link.id" v-for="link in data.body.toc.links">
                                 <a class="toc-link text-decoration-none" :href="`#${link.id}`"> {{ link.text }} </a>
                             </li>
@@ -33,17 +38,22 @@
                                 <ul class="list-unstyled">
                                     <li><strong>Fecha:</strong> {{ formatDate(data.date) }}</li>
                                     <li><strong>Categoría:</strong> {{ data.category }}</li>
+                                    <li>
+                                        <strong>Etiquetas:</strong>
+                                        <ArticleTags :tags="data.tags" />
+                                    </li>
+                                    <!--
                                     <li><strong>Etiquetas:</strong>
                                         <span v-for="(tag, index) in data.tags" :key="index"
                                             class="taggy badge text-light fw-normal m-1">
                                             {{ tag }}
                                         </span>
-                                    </li>
+                                    </li>-->
                                 </ul>
                                 <!-- Add Social Media Links Component -->
-                                 
+
                                 <!-- {{ data }}-->
-                                 <SocialMediaLinks v-if="socialLinks" :socialLinks="socialLinks" />
+                                <SocialMediaLinks v-if="socialLinks" :socialLinks="socialLinks" />
                             </div>
                         </div>
                     </div>
@@ -51,6 +61,11 @@
                     <!-- Blog Content -->
                     <ContentRenderer v-if="data" :value="data" class="mb-5" :components="Gallery" />
                 </div>
+                <div class="container-fluid mb-1">
+                    <FeaturedArticlesSplide :featuredArticles="suggestedArticles" title="Artículos Similares" />
+                </div>
+
+
             </div>
         </div>
     </div>
@@ -60,9 +75,7 @@
 const slug = useRoute().params.slug[0].toString();
 //const { data } = await useAsyncData(() => queryCollection('content').path('/articles/' + slug).first());
 const { data } = await useAsyncData(() => queryCollection('blog').path('/articles/' + slug).first());
-
-
-console.log('art data', data)
+let suggestedArticles = ref([]);
 
 // Format date function
 const formatDate = (dateString) => {
@@ -80,15 +93,39 @@ const formatDate = (dateString) => {
 const articleName = data.value?.path.split('/').pop();
 const category = data.value?.category.charAt(0).toUpperCase() + data.value?.category.slice(1)
 
+
+const query = queryCollection('blog')
+    .where('published', '=', true)
+    .where('category', '=', data.value.category)
+    .order('date', 'DESC');
+
+let arr = await useAsyncData('blog', () => query.all());
+
+console.log(typeof arr)
+console.log(data.value.title)
+/*
+arr=arr.filter(elem=>elem.id !== data.id)
+*/
+
+suggestedArticles.value = arr.data.value.filter(elem => elem.title !== data.value.title)
+
+console.log('arr', suggestedArticles)
+
+/*
+console.log('hhh', suggestedArticles.filter(elem=>elem.id !== data.id))
+*/
+
+//console.log('suggested', suggestedArticles)
+
 const socialLinks = computed(() => {
-  return {
-    ig: data.value.meta?.ig,
-    fb: data.value.meta?.fb,
-    onlyfans: data.value.body.meta?.onlyfans,
-    chaturbate: data.value.meta?.chaturbate,
-    x: data.value.meta?.x,
-    phub: data.value.meta?.phub,
-  };
+    return {
+        ig: data.value.meta?.ig,
+        fb: data.value.meta?.fb,
+        onlyfans: data.value.body.meta?.onlyfans,
+        chaturbate: data.value.meta?.chaturbate,
+        x: data.value.meta?.x,
+        phub: data.value.meta?.phub,
+    };
 });
 
 const baseUrl = 'https://latinpanty.com'
@@ -126,7 +163,7 @@ useSeoMeta({
     twitterCreator: '@latinpanty6969xxx',
 
     // Additional Meta Tags
-    canonical: `${baseUrl}/revista/${articleName}`,
+    canonical: `${baseUrl}/revista/articulos/${articleName}`,
     rating: 'adult',
 
     // Structured Data (JSON-LD)
@@ -176,12 +213,11 @@ useSeoMeta({
 
 
 <style scoped>
-
-.taggy{
-  background:rgba(219, 74, 132) !important;
+.taggy {
+    background: rgba(219, 74, 132) !important;
 }
 
-.headings{
+.headings {
     font-size: 1.5rem;
 }
 
@@ -199,7 +235,7 @@ useSeoMeta({
     top: 100px;
     max-height: calc(100vh - 120px);
     overflow-y: auto;
-    
+
 }
 
 #toc-ul {
@@ -219,7 +255,7 @@ useSeoMeta({
 }
 
 .toc-link:hover {
-    color:  rgba(219, 74, 132) !important;
+    color: rgba(219, 74, 132) !important;
 }
 
 /* Frontmatter Details Styling */

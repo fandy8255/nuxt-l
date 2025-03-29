@@ -2,7 +2,7 @@
 title: Entrevista a Elisabeth Escalante Cruz , Una Colombiana de 30 años amante de los relatos eróticos y el mundo swinger
 description : La entrevista con Elisabeth Escalante fue una conversación abierta y ardiente, reflejando su personalidad apasionada y su actitud desinhibida ante la sexualidad. Ella habló sin tapujos de su experiencia en la venta de tangas usadas y su vida sexual, compartió detalles de sus preferencias en la cama y su visión acerca de la aceptación de este mercado en la sociedad. Su lenguaje coloquial y su confianza al hablar de temas sensuales la convierten en una entrevistada interesante y atrevida.
 image: 'https://i.ibb.co/GQdvWrSh/175081457.jpg'
-tags: ['Entrevistas', 'Colombianas Amateur Naturales', 'Panties Usados Colombia', 'Tangas Usadas', 'Calzones Usados Colombia']
+tags: ['entrevistas', 'colombianas-amateur-naturales', 'panties-usados-colombia', 'tangas-usadas', 'calzones-usados']
 published: true
 featured: false
 category: entrevistas

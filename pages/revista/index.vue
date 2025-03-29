@@ -3,7 +3,7 @@
         <div v-if="loaded">
             <section>
                 <HeroBanner title="Revista Latin Panty" backgroundImage="/assets/images/hero-banner.jpg"
-                    :parallax="true" height="75vh" min-height="400px" overlay-opacity="0.7" subtitle="Descubre el mundo de las estrellas latinas más candentes y exclusivas. En Latin Panty, te llevamos detrás de cámaras para conocer a tus modelos Descubre el mundo de las estrellas latinas más candentes y exclusivas. En Latin
+                    :parallax="true" height="90vh" min-height="400px" overlay-opacity="0.7" subtitle="Descubre el mundo de las estrellas latinas más candentes y exclusivas. En Latin
                             Panty, te llevamos detrás de cámaras para conocer a tus modelos favoritas, sus
                             historias y sus secretos mejor guardados. ¡Suscríbete ahora y accede a contenido exclusivo,
                             entrevistas íntimas, fotos y videos que no encontrarás en ningún otro lugar"
@@ -13,14 +13,34 @@
             </section>
 
 
-            <div class="container-fluid mt-5">
-                <FeaturedArticlesSplide :featuredArticles="featuredArticles" />
+            <div class="container-fluid mt-5 px-md-5 px-1 ">
+                <FeaturedArticlesSplide title="Artículos Sugeridos" :featuredArticles="featuredArticles" />
             </div>
 
+
+            <div class="margins container-fluid">
+                <CategoriesSplide :categories="categories" />
+            </div>
+
+            <div class="container-fluid px-md-5 px-1">
+                <div v-for="category in categories" :key="category.category">
+                    <FeaturedArticlesSplide :title="category.category"
+                        v-if="categoryArticles(category.category, allArticles)"
+                        :featuredArticles="categoryArticles(category.category, allArticles)" />
+                </div>
+
+            </div>
+
+
             <div v-if="allArticles.length > 0" class="container-fluid px-3 px-md-5 px-sm-1 mt-4 mt-md-5">
-                <h2 class="text-start">Publicaciones</h2>
+                <h2 class="text-start">Etiquetas</h2>
                 <!-- Include the Tags component -->
-                <Tags :tags="tags" @select-tag="handleTagSelect" />
+                <div class="margins">
+                    <Tags :tags="tags" />
+                </div>
+
+                <h2 class="text-start">Todos Los Artículos</h2>
+
                 <div class="row gy-4 mx-0">
                     <div v-for="article in paginatedArticles" :key="article.title" class="col-12 col-sm-6 col-lg-3">
                         <ArticleCard :date="article.date" :title="article.title" :category="article.category"
@@ -50,13 +70,12 @@
                     </ul>
                 </nav>
             </div>
+
             <div v-else class="text-center mt-4 mt-md-5">
                 <p class="text-muted">No articles found</p>
             </div>
 
-            <div class="margins container-fluid">
-                <CategoriesSplide :categories="categories" />
-            </div>
+
         </div>
 
         <div v-else>
@@ -76,13 +95,20 @@ const allArticles = ref([]);
 const featuredArticles = ref([]);
 const currentPage = ref(1);
 const itemsPerPage = 8;
-const selectedCategory = ref('');
 const categories = ref([]);
 const loaded = ref(false);
 const tags = ref({});
 const selectedTag = ref('todos');
 const baseUrl = 'https://latinpanty.com'
 const userStore = useUserStore();
+
+function categoryArticles(category, arr) {
+    const catArticles = arr.filter(elem => elem.category === category.toLowerCase())
+    if (catArticles && catArticles.length > 0) {
+        return catArticles
+    }
+    return false
+}
 
 useHead({
     link: [
@@ -120,6 +146,8 @@ const fetchAllArticles = async () => {
                 tagCounts[tag] = (tagCounts[tag] || 0) + 1;
             });
         }
+
+
     });
     tags.value = tagCounts;
 };
@@ -137,18 +165,21 @@ const fetchFeaturedArticles = async () => {
 };
 
 // Handle tag selection
+/*
 const handleTagSelect = (tag) => {
     selectedTag.value = tag;
     currentPage.value = 1;
 };
-
+*/
 // Filter articles based on the selected tag
+
 const filteredArticles = computed(() => {
     if (selectedTag.value === 'todos') {
         return allArticles.value;
     }
     return allArticles.value.filter((article) => article.tags && article.tags.includes(selectedTag.value));
-});
+})
+
 
 // Paginate filtered articles
 const paginatedArticles = computed(() => {
@@ -187,6 +218,7 @@ const visiblePages = computed(() => {
 const changePage = (page) => {
     if (page > 0 && page <= totalPages.value) {
         currentPage.value = page;
+        window.scrollTo(0, 3500);
     }
 };
 
@@ -197,6 +229,44 @@ onMounted(async () => {
     await fetchFeaturedArticles();
     await fetchCategories();
     loaded.value = true;
+});
+
+useSeoMeta({
+    // Basic Meta Tags
+    title: 'Latin Panty Revista | Descubre a las Estrellas Latinas',
+    description: 'Descubre el mundo de las estrellas latinas más candentes y exclusivas. En Latin Panty, te llevamos detrás de cámaras para conocer a tus modelos favoritas, sus historias y sus secretos mejor guardados. ¡Suscríbete ahora!',
+    charset: 'utf-8',
+    viewport: 'width=device-width, initial-scale=1.0',
+    robots: 'index, follow',
+    keywords: 'Latinas, OnlyFans, Instagram, Modelos, Revista, Entrevistas, Fotos, Videos',
+    author: 'Latin Panty',
+    themeColor: '#ffffff',
+
+    // Open Graph (OG) Meta Tags
+    ogTitle: 'Latin Panty Revista | Descubre a las Estrellas Latinas',
+    ogDescription: 'Descubre el mundo de las estrellas latinas más candentes y exclusivas. En Latin Panty, te llevamos detrás de cámaras para conocer a tus modelos favoritas, sus historias y sus secretos mejor guardados. ¡Suscríbete ahora!',
+    ogImage: '/assets/images/hero-banner.jpg', // Replace with your homepage banner image
+    ogUrl: `${baseUrl}/revista`, // Replace with your website URL
+    ogType: 'website',
+    ogLocale: 'es_US',
+    ogLocaleAlternate: [
+        'es_MX', 'es_AR', 'es_CO', 'es_CL', 'es_PE', 'es_VE', 'es_EC', 'es_GT', 'es_CU', 'es_BO', 'es_DO', 'es_HN', 'es_PY', 'es_SV', 'es_NI', 'es_CR', 'es_PR', 'es_ES', 'es_UY', 'es_PA',
+    ],
+    ogSiteName: 'Latin Panty Revista',
+    ogDeterminer: 'auto',
+
+    // Twitter Meta Tags
+    twitterCard: 'summary_large_image',
+    twitterTitle: 'Latin Panty Revista | Descubre a las Estrellas Latinas',
+    twitterDescription: 'Descubre el mundo de las estrellas latinas más candentes y exclusivas. En Latin Panty, te llevamos detrás de cámaras para conocer a tus modelos favoritas, sus historias y sus secretos mejor guardados. ¡Suscríbete ahora!',
+    twitterImage: '/assets/images/hero-banner.jpg', // Replace with your homepage banner image
+    twitterSite: '@latinpanty6969xxx',
+    twitterCreator: '@latinpanty6969xxx',
+
+    // Additional Meta Tags
+    canonical: `${baseUrl}/revista`, // Canonical URL for SEO
+    rating: 'adult',
+
 });
 
 </script>

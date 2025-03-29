@@ -2,7 +2,7 @@
 title: Entrevista a Gabriela Mendez
 description : Gabriela, una joven de 24 años, comparte su pasión por el diseño de lencería sensual y su emprendimiento emergente que combina su talento creativo con su atrevida personalidad. Actualmente, se desempeña como barista y estudia Diseño de Modas, lo que le brinda la oportunidad perfecta para explorar su faceta artística.
 image: 'https://i.ibb.co/G352ynPB/73769333.jpg'
-tags: ['Entrevistas', 'Chilenas Hermosas', 'Panties Usados', 'Tangas Usadas', 'Bragas Usadas']
+tags: ['entrevistas', 'chilenas-hermosas', 'panties-usados', 'tangas-usadas', 'bragas-usadas']
 published: true
 featured: true
 category: entrevistas

@@ -141,7 +141,7 @@ const showPopupAfterDelay = () => {
             if (!isAuthenticated.value) {
                 showPopup.value = true;
             }
-        }, 5000); // 30 seconds
+        }, 15000); // 30 seconds
     }
 };
 

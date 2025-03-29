@@ -2,7 +2,7 @@
 title: Conocimos a Catalina Ortiz, Una Mexicana Amante a la playa y la Sensualidad
 description: Catalina Ortiz, una mexicana llena de energía y pasión, comparte su vida como comunicadora social, mientras navega por su camino de autodescubrimiento y crecimiento personal. Con una actitud aventurera y una mente abierta, Catalina nos cuenta sobre su vida sexual activa, sus experiencias y cómo combina su amor por el bienestar físico y emocional con su vida íntima sin tabúes.
 image: 'https://i.ibb.co/chd7rJT7/323443684.jpg'
-tags: ['Mexico Sexo', 'Latinas', 'Entrevista', 'Gordita', 'Gordibuena', 'Voluptuosa']
+tags: ['mexicanas', 'latinas', 'entrevista', 'gordita', 'gordibuena', 'voluptuosas']
 published: true
 featured: true
 category: entrevistas

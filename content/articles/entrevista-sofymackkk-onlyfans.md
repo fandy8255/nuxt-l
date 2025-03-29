@@ -2,7 +2,7 @@
 title: Conocimos a Sofymackkk, Una latina espectacular
 description: Sofymackkk, una colombiana extrovertida y apasionada, comparte con sus seguidores sus experiencias únicas, exploraciones y la vida al límite dentro de la industria del entretenimiento para adultos. Su energía magnética y su empoderamiento sexual la destacan, mientras se mantiene auténtica y libre en cada aspecto de su vida.
 image: 'https://i.ibb.co/sdCnGpwx/1847613780.jpg'
-tags: ['Onlyfans','Empoderamiento Sexual', 'Tatuajes', 'Culo Grande', 'Buttplug', 'Latinas', 'Latinas XXX']
+tags: ['onlyfans','tatuajes', 'latinas-culonas', 'buttplug', 'latinas']
 published: true
 featured: true
 category: onlyfans

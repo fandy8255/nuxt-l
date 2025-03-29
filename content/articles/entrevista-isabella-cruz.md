@@ -2,7 +2,7 @@
 title: Entrevista a Isabella Cruz , Una Uruaguay Natural de 25 años
 description : Isabella Cruz, la influencer fitness y entrenadora personal uruguaya, se mostró abierta y sincera en la entrevista. Con su carisma natural y tono provocador, conversó acerca de su vida sexual activa, su experiencia en la venta de ropa interior usada y su perspectiva acerca de la aceptabilidad de este mercado en la sociedad uruguaya. Compartió detalles personales y anécdotas divertidas que reflejan su personalidad segura y sin complejos.
 image: 'https://i.ibb.co/sdn4LRS7/464117338.jpg'
-tags: ['Entrevistas', 'Uruguayas Amateur Naturales', 'Panties Usados Uruguay', 'Tangas Usadas', 'Bragas Usadas Uruguay']
+tags: ['entrevistas', 'uruguayas-amateur', 'panties-usados-uruguay', 'tangas-usadas', 'bragas-usadas-uruguay']
 published: true
 featured: false
 category: entrevistas

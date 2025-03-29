@@ -2,7 +2,7 @@
 title: Entrevista a Martina Reyes , Una Joven Argéntina Natural de 25 años nos cuenta cómo inició con la venta de tangas
 description : Martina Reyes, una joven de 23 años de la vibrante Rosario, Argentina, se mostró abierta y desinhibida en la entrevista. Estudia Medicina y se dedica a modelar en redes privadas, con un foco en la venta de tangas usadas. Su personalidad sensual y su mentalidad progresista en torno a la sexualidad se reflejaron en cada respuesta. Compartió sus experiencias, preferencias y reflexiones con respecto a su vida sexual, la venta de tangas usadas y la aceptación social de este fetichismo. Su tono era franco y divertido, haciéndonos sentir que la conversación era con una amiga cercana.
 image: 'https://i.ibb.co/HDBLtGgz/2017483021.jpg'
-tags: ['Entrevistas', 'Argentinas Amateur Naturales', 'Panties Usados Argentina', 'Tangas Usadas', 'Bragas Usadas Argentina', 'Argentinas Tetonas']
+tags: ['entrevistas', 'argentinas-amateur', 'panties-usados-argentina', 'tangas-usadas', 'bragas-usadas-argentina', 'argentinas-tetonas', 'tetonas', 'latinas-tetonas']
 published: true
 featured: false
 category: entrevistas

@@ -2,7 +2,7 @@
 title: Entrevista a Valería Ríos , Una Mexicana Natural
 description : Entrevistamos a Valeria Ríos, una joven de 25 años que reside en un pueblo de México. Ella se describe a sí misma como extrovertida y coqueta, y su pasatiempo favorito es conversar y adentrarse en la complejidad de la mente humana. Está estudiando psicología con la intención de abrir su propio consultorio, enfocado en terapia de parejas, lo que demuestra su interés en las interacciones personales.
 image: 'https://i.ibb.co/MkS8JT7f/464469080.jpg'
-tags: ['Entrevistas', 'Mexicanas Amateur Naturales', 'Panties Usados México', 'Tangas Usadas', 'Bragas Usadas México']
+tags: ['entrevistas', 'mexicanas-amateur', 'panties-usados-mexico', 'tangas-usadas', 'bragas-usadas-mexico']
 published: true
 featured: false
 category: entrevistas
