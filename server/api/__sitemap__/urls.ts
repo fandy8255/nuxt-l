@@ -10,31 +10,31 @@ export default defineSitemapEventHandler(() => {
             loc: '/revista/category/entrevistas',
         },
         {
-            loc: '/revista/mistica-entrevista-venta-panties',
+            loc: '/revista/articulos/entrevista-camila-torres'
         },
         {
-            loc: '/revista/entrevista-catalina-ortiz-entrevista-gordibuena',
+            loc: '/revista/articulos/entrevista-catalina-ortiz-entrevista-gordibuena'
         },
         {
-            loc: '/revista/entrevista-gabriela-mendez'
+            loc: '/revista/articulos/elisabeth-escalante-colombiana-mamasita-entrevista'
         },
         {
-            loc: '/revista/isabella-cruz'
+            loc: '/revista/articulos/entrevista-gabriela-mendez'
         },
         {
-            loc: '/revista/valeria-rios-entrevista'
+            loc: '/revista/articulo/entrevista-isabella-cruz'
         },
         {
-            loc: '/revista/camila-torres'
+            loc: '/revista/articulos/camila-torres'
         },
         {
-            loc: '/revista/entrevista-giselle-flores'
+            loc: '/revista/articulos/entrevista-giselle-flores'
         },
         {
-            loc: '/revista/entrevista-martina-reyes'
+            loc: '/revista/articulos/entrevista-martina-reyes'
         },
         {
-            loc: '/revista/elisabeth-escalante-colombiana-mamasita-entrevista'
+            loc: '/revista/articulos/valeria-rios-entrevista'
         },
         { loc: '/revista/etiquetas/entrevistas' },
         { loc: '/revista/etiquetas/colombianas-amateur-naturales' },

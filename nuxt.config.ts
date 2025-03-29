@@ -53,8 +53,6 @@ export default defineNuxtConfig({
         '/revista/articulos/elisabeth-escalante-colombiana-mamasita-entrevista',
         '/revista/articulos/entrevista-gabriela-mendez',
         "/revista/articulo/entrevista-isabella-cruz",
-        '/revista/articulos/antonia-chilena-onlyfans-entrevista',
-        '/revista/articulos/isabella-cruz',
         '/revista/articulos/camila-torres',
         '/revista/articulos/entrevista-giselle-flores',
         '/revista/articulos/entrevista-martina-reyes',
