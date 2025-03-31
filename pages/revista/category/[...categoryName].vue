@@ -255,7 +255,7 @@ useSeoMeta({
 
     // Additional Meta Tags
     canonical: `${baseUrl}/revista/${categoryName.value}`,
-    rating: 'adult',
+    rating: 'mature',
 
     // Structured Data (JSON-LD)
     /*

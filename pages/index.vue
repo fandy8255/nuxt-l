@@ -321,11 +321,6 @@ const sellers = [
         description: "Acá en santiago y con ganas de vender más tangas"
     }]
 
-const featuredItems = [
-    { name: "Vintage Denim Jacket", image: "/images/featured/jacket.jpg", price: 40 },
-    { name: "Floral Summer Dress", image: "/images/featured/dress.jpg", price: 25 },
-    { name: "Leather Handbag", image: "/images/featured/handbag.jpg", price: 60 }]
-
 useSeoMeta({
     // Basic Meta Tags
     title: 'Latin Panty | Compra y Vende Panties Usados en Latinoamérica',
@@ -360,6 +355,7 @@ useSeoMeta({
 
     // Additional Meta Tags
     canonical: `${baseUrl}`, // Canonical URL for SEO
+    rating: 'mature',
 
 });
 

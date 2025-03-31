@@ -232,7 +232,7 @@ useSeoMeta({
 
     // Additional Meta Tags
     canonical: `${baseUrl}/revista/${tagName.value}`,
-    rating: 'adult',
+    rating: 'mature',
 
     // Structured Data (JSON-LD)
     /*

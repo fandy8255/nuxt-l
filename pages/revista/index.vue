@@ -23,10 +23,10 @@
             </div>
 
             <div class="container-fluid px-md-5 px-1">
-                <div v-for="category in categories" :key="category.category">
+                <div v-for="category in categories" :key="category.category" class="my-5">
                     <FeaturedArticlesSplide :title="category.category"
                         v-if="categoryArticles(category.category, allArticles)"
-                        :featuredArticles="categoryArticles(category.category, allArticles)" />
+                        :featuredArticles="categoryArticles(category.category, allArticles)" class="my-5"/>
                 </div>
 
             </div>
@@ -265,7 +265,7 @@ useSeoMeta({
 
     // Additional Meta Tags
     canonical: `${baseUrl}/revista`, // Canonical URL for SEO
-    rating: 'adult',
+    rating: 'mature',
 
 });
 

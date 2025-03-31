@@ -7,6 +7,7 @@ published: true
 featured: false
 category: entrevistas
 date: '2025-03-27'
+adult: false
 ---
 
 ## Pregunta: Isabella,¿cómo te describirías en tres palabras?

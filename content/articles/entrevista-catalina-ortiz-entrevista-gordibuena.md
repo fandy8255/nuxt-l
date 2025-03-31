@@ -7,6 +7,7 @@ published: true
 featured: true
 category: entrevistas
 date: '2025-03-18'
+adult: false
 ---
 
 # Entrevista con Catalina Ortiz

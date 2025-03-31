@@ -36,6 +36,21 @@ export default defineSitemapEventHandler(() => {
         {
             loc: '/revista/articulos/valeria-rios-entrevista'
         },
+        {
+            loc: '/revista/articulos/que-es-el-fetiche-de-pies'
+        },
+        {
+            loc: '/revista/articulos/que-es-el-fetiche-de-manos'
+        },
+        {
+            loc: '/revista/articulos/que-es-el-fetiche-de-axilas'
+        }, {
+            loc: '/revista/articulos/que-es-el-fetiche-de-cosquillas'
+        },
+        {
+            loc:'/revista/articulos/que-es-el-fetiche-de-zapatos'
+        },
+
         { loc: '/revista/etiquetas/entrevistas' },
         { loc: '/revista/etiquetas/colombianas-amateur-naturales' },
         { loc: '/revista/etiquetas/panties-usados-colombia' },

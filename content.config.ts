@@ -17,7 +17,8 @@ export default defineContentConfig({
           category: z.string(),
           description: z.string(),
           published:z.boolean(),
-          featured: z.boolean()
+          featured: z.boolean(),
+          adult: z.boolean()
         })
       })
   }

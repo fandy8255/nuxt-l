@@ -2,10 +2,10 @@
     <div id="main-article-container">
         <div class="container-xl">
             <PopupOptIn />
-            <!-- Hero Section -->
+            <!-- Hero Section 
             <section>
                 <BackButton />
-            </section>
+            </section>-->
 
             <SimpleHeroArticle class="mt-1" :imgUrl="data.image" :title="data.title" :subtitle="data.meta.subtitle" />
 
@@ -164,7 +164,7 @@ useSeoMeta({
 
     // Additional Meta Tags
     canonical: `${baseUrl}/revista/articulos/${articleName}`,
-    rating: 'adult',
+    rating: data.adult? 'adult':'mature',
 
     // Structured Data (JSON-LD)
     /*
