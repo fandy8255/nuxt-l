@@ -50,6 +50,15 @@ export default defineSitemapEventHandler(() => {
         {
             loc:'/revista/articulos/que-es-el-fetiche-de-zapatos'
         },
+        {
+            loc:'/revista/articulos/el-fetiche-de-bragas-usadas'
+        },
+        {
+            loc:'/revista/articulos/que-es-el-fetiche-de-panties-usados'
+        },
+        {
+            loc:'/revista/articulos/que-es-el-fetiche-de-ropa-interior'
+        },
 
         { loc: '/revista/etiquetas/entrevistas' },
         { loc: '/revista/etiquetas/colombianas-amateur-naturales' },

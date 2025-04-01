@@ -13,7 +13,7 @@ adult: false
 
 ## Pregunta:¿Cómo te describirías en tres palabras?
 
-Respuesta de Gabriela Méndez: Mmm, creo que soy "dulzura con pimienta" (sonriendo). Soy una persona agradable y cariñosa, con un toque de picardía y mucha pasión por la vida.
+Respuesta de Gabriela Méndez: Mmm, creo que soy "agridulce jaja" (sonriendo). Soy una persona agradable y cariñosa, con un toque de picardía y mucha pasión por la vida.
 
 <img src="https://i.ibb.co/fYZdbzPs/1049870171.jpg" alt="Latina Chilena Hermosa" class="full-width-image" style="width:100%"/>
 
@@ -36,11 +36,11 @@ Respuesta de Gabriela Méndez: La verdad es que estuve nerviosa al comienzo, no 
 
 ## Pregunta:¿Te sorprendió la cantidad de personas interesadas en la compra de tangas usadas?
 
-Respuesta de Gabriela Méndez: Sí, la verdad es que me sorprendió la cantidad de "weones" (chicos) que hay afuera que disfrutan de este tipo de cosas. Es increíble la variedad de gustos que hay en el mercado, y la gente es cada vez más abierta a probar cosas diferentes.
+Respuesta de Gabriela Méndez: Sí, la verdad es que me sorprendió la cantidad de "weones" que hay afuera que disfrutan de este tipo de cosas. Es increíble la variedad de gustos que hay en el mercado, y la gente es cada vez más abierta a probar cosas diferentes.
 
 ## Pregunta:De (1-10) que tan activa es tu vida sexual?
 
-Respuesta de Gabriela Méndez: Sería injusto conmigo y con mi polola (novia) ponerle un solo número, la verdad. Pero si tuviera que elegir, diría que estamos en un 7. Disfruto del sexting y de las aventuras esporádicas, y mi novio y yo tenemos una buena conexión a la distancia, con reuniones de lo lindo cada que nos vemos.
+Respuesta de Gabriela Méndez: Sería injusto conmigo y con mi polola (novio) ponerle un solo número, la verdad. Pero si tuviera que elegir, diría que estamos en un 7. Disfruto del sexting y de las aventuras esporádicas, y mi novio y yo tenemos una buena conexión a la distancia, con reuniones de lo lindo cada que nos vemos.
 
 <img src="https://i.ibb.co/Pv9PvZJS/467248046.jpg" alt="Latina Chilena Hermosa" class="full-width-image" style="width:100%"/>
 
@@ -50,13 +50,13 @@ Respuesta de Gabriela Méndez: Sí, claro que tengo que ser responsable. Uso la 
 
 ## Pregunta:¿Hay alguna experiencia sexual que consideres un "punto de inflexión" en tu vida, algo que te haya hecho ver la intimidad de una manera diferente?
 
-Respuesta de Gabriela Méndez: Definitivamente. Tuve una experiencia con un chico que me mostró el BDSM, y fue... wow, una explosión de sensaciones que no creía que pudieran existir. Eso me abrió la mente y me ayudó a descubrir que me gustan las cosas un poquito más intensas.
+Respuesta de Gabriela Méndez: Definitivamente. Tuve una experiencia con un chico que me mostró el sexo con otras chicas, y fue... wow, una explosión de sensaciones que no creía que pudieran existir. Eso me abrió la mente y me ayudó a descubrir que me gustan las cosas un poquito más intensas.
 
 <img src="https://i.ibb.co/qFrG7cL7/476289841.jpg" alt="Latina Chilena Hermosa" class="full-width-image" style="width:100%"/>
 
 ## Pregunta:¿Cómo son tus experiencias con tus parejas en el aspecto sexual?¿Alguna vez has tenido algun desafio o algo que te haya marcado?
 
-Respuesta de Gabriela Méndez: Con mi novio actual, la intimidad es increíble. Siempre estamos buscando formas de sorprendernos y de explorar nuestros lados más salvajes. Un desafío que recuerdo fue la primer vez que intenté el "squirting", y la verdad, me costó un rato, pero la sensación de lograrlo fue indescriptible.
+Respuesta de Gabriela Méndez: Con mi novio actual, la intimidad es increíble. Siempre estamos buscando formas de sorprendernos y de explorar nuestros lados más salvajes. Un desafío que recuerdo fue la primer vez que intenté el "squirting", y la verdad, me costó un rato, pero la sensación de lograrlo fue indescriptible.Y estar con otra chica en plena con mi novio es increible. 
 
 ## Pregunta:Cuéntanos un poquito acerca de tus posturas sexuales preferidas.¿Cuáles son las que mas disfrutas?
 

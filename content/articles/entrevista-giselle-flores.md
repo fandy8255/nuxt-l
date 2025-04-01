@@ -12,7 +12,7 @@ adult: false
 
 ## Pregunta: Describime en tres palabras, Giselle Flores.
 
-Respuesta de Giselle Flores: Ambitiosa, seductora, apasionada.
+Respuesta de Giselle Flores: Ambiciosa, seductora, apasionada.
 
 <img src="https://i.ibb.co/0ppqgrKY/56475141.jpg" alt="Argentina Tetona Piercing" class="full-width-image mb-2" style="width:100%"/>
 
@@ -26,13 +26,13 @@ Respuesta de Giselle Flores: Soy una empleada de una empresa pequeñoa de market
 
 ## Pregunta:¿Por qué decidiste empezar a vender tus tangas usadas en línea?
 
-Respuesta de Giselle Flores: Empecé a vender mis tangas usadas en línea por la emoción que me produce saber que hay gente que se excita con lo que hago diariamente. Me encanta la idea de que mi ropa interior pueda ser un trozo de mi vida que comparten conmigo, de alguna forma.
+Respuesta de Giselle Flores: Empecé a vender mis tangas usadas en línea por la emoción que me produce saber que hay gente que se excita con lo que hago diariamente. Me encanta la idea de que mi ropa interior la huela algún extraño random por ahí.
 
 <img src="https://i.ibb.co/PGxCv43s/1095537833.jpg" alt="Argentina Tetona Piercing" class="full-width-image" style="width:100%"/>
 
 ## Pregunta:¿Cómo fue tu primer acercameinto a la venta de tangas usadas?
 
-Respuesta de Giselle Flores: La verdad, mi primer acercameinto a la venta de tangas usadas fue un desafió, una aventura. Me puse un poquito nerviosa, no sé si iba a gustar mi olor o mi gusto en ropa interior. Pero la respuesta fue abrumando, y eso me dio mucha confianza.
+Respuesta de Giselle Flores: La verdad, mi primer acercamiento a la venta de tangas usadas fue un desafío, una aventura. Me puse un poquito nerviosa, no sé si iba a gustar mi olor o mi gusto en ropa interior. Pero la respuesta fue muy positiva, y eso me dio mucha confianza.
 
 <img src="https://i.ibb.co/jkXvtBGd/1505506781.jpg" alt="Argentina Tetona Piercing" class="full-width-image" style="width:100%"/>
 
@@ -50,17 +50,17 @@ Respuesta de Giselle Flores: Sí, mi recomendacón es que sean auténticas y que
 
 ## Pregunta:¿Cuanto es tu ritmo sexual? De 1 a 10.
 
-Respuesta de Giselle Flores: Definitvamete un 9. Soy una persona que disfruta muchísimo de la intimadad, la exploraciòn y la conexiòn con mi pareja.
+Respuesta de Giselle Flores: Definitvamete un 9. Soy una persona que disfruta muchísimo de la intimadad, la exploración y la conexión con mi pareja.
 
 <img src="https://i.ibb.co/3y2GHnW0/1035625523.jpg" alt="Argentina Tetona Piercing" class="full-width-image" style="width:100%"/>
 
 ## Pregunta:¿Actualmte usas alguna metodo de planificacicón familiar?
 
-Respuesta de Giselle Flores: Sí, estoy en una relaciòn abierta con mi pareja, y usamos protecciòn y planificacicón. Es importanto cuidarse y respetar los acuerdos que tenemoss.
+Respuesta de Giselle Flores: Sí, estoy en una relación abierta con mi pareja, y usamos protección y planificacicón. Es importanto cuidarse y respetar los acuerdos que tenemos.
 
 ## Pregunta:¿Tenés alguna experiencia sexual que hayas tenido que haya sido un "punto de inflexiòn" en tu vida, que te haya hecho ver la intimadad de una manera diferente?
 
-Respuesta de Giselle Flores: Tuve un viaje a un club swinger con mi pareja, y ahí descubrimos que la intimadad se potenciaba al compartirla con otrs. Nos abrimos a mundos que no imaginabamos y nuestra relaciòn se fortaleciò.
+Respuesta de Giselle Flores: Tuve un viaje a un club swinger con mi pareja, y ahí descubrimos que la intimidad se potenciaba al compartirla con otr@s. Nos abrimos a mundos que no imaginabamos y nuestra relación se fortaleció.
 
 ## Pregunta:¿Còmo son tus experienciass con tus parejas en el aspecto sexual?¿Alguna que realmehte haya tenido un impacto en ti?
 

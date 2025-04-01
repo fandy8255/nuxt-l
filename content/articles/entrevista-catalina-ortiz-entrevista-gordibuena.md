@@ -14,7 +14,7 @@ adult: false
 
 ## ¿Cómo te describirías en tres palabras?
 
-**Catalina**: ¡Vibrante, segura y abierta! Me encanta vivir la vida al máximo y, para mí, ser auténtica es lo más importante. Soy muy fan de viajar y tomarme fotos en la playa
+**Catalina**: ¡Aventurera, segura y abierta! Me encanta vivir la vida al máximo y, para mí, ser auténtica es lo más importante. Soy muy fan de viajar y tomar fotos.
 
 ## Sabemos que acabas de salir de una relación larga. ¿Cómo estás manejando esta nueva etapa en tu vida?
 
@@ -32,7 +32,7 @@ adult: false
 
 ## ¿Cómo es tu vida sexual con tu novio actual? ¿Qué es lo que más te gusta de él en la cama?
 
-**Catalina**: Mi novio es increíble. Es muy atento, sabe cómo tocarme, besarme y hacerme sentir especial. Me encanta que tenga una buena dotación, lo que hace que todo sea más intenso. También tiene esa mezcla perfecta de pasión y ternura. Nos llevamos muy bien en la cama, porque siempre estamos dispuestos a explorar juntos, probando cosas nuevas y manteniendo la chispa viva.
+**Catalina**: El chico con el que estoy es increíble. Es muy atento, sabe cómo tocarme, besarme y hacerme sentir especial. Me encanta que tenga una buena dotación, lo que hace que todo sea más intenso. También tiene esa mezcla perfecta de pasión y ternura. Nos llevamos muy bien en la cama, porque siempre estamos dispuestos a explorar juntos, probando cosas nuevas y manteniendo la chispa viva.
 
 <img src="https://i.ibb.co/pBWbtXMQ/1306246076.jpg" alt="Mexicana Voluptuosa en la playa" class="full-width-image" style="width:100%"/>
 
@@ -52,13 +52,13 @@ adult: false
 
 ## Hablemos un poco sobre tus posturas sexuales preferidas. ¿Cuáles son las que más disfrutas?
 
-**Catalina**: ¡Ay, me encanta hablar de esto! Ríe Pues, me gustan las posturas que me permiten una conexión profunda, como la posición del misionero, pero dándole un toque más intenso con una penetración profunda. También disfruto mucho de estar encima, porque tengo el control y puedo moverme a mi ritmo. Es una sensación increíble. La vaquera me hace sentir poderosa y en control de todo, lo que me excita mucho. También me gusta cuando me toman por detrás, sobre todo si hay una buena mezcla de intensidad y caricias suaves en mi cuerpo.
+**Catalina**: ¡Uy, me encanta demasiado estar encima, porque tengo el control y puedo moverme a mi ritmo. Es una sensación increíble. La vaquera me hace sentir poderosa y en control de todo, lo que me excita mucho. También me gusta cuando me dan por detrás, sobre todo si hay una buena mezcla de intensidad y caricias suaves en mi cuerpo.
 
 <img src="https://i.ibb.co/1G3b5HYr/1904680480.jpg" alt="Mexicana Voluptuosa en la playa" class="full-width-image" style="width:100%"/>
 
 ## Cuéntanos sobre alguna de tus mejores experiencias sexuales. ¿Tienes alguna que realmente recuerdes con cariño?
 
-**Catalina**: ¡Claro! Una de las experiencias que más recuerdo fue una noche en la que fuimos a la playa con mi exnovio. Había algo mágico en el ambiente, la brisa marina, las olas rompiendo y nosotros completamente conectados. La química era tan fuerte que tuvimos sexo en la orilla, bajo la luna llena. Fue muy intenso, porque todo fluía de manera tan natural y sin ningún tipo de inhibición. Esa experiencia fue completamente única, y creo que nunca olvidaremos esa noche.
+**Catalina**: ¡Claro! Una de las experiencias que más recuerdo fue en un camping con un exnovio.  Había algo mágico en ese sitio lleno de naturaleza. La química era tan fuerte que tuvimos sexo en un bosque jajaja. Fue muy intenso, porque todo fluía de manera tan natural y sin ningún tipo de inhibición. Esa experiencia fue completamente única, y creo que nunca olvidaremos esa noche.
 
 ## ¿Cómo han sido tus experiencias con tus parejas en el aspecto sexual? ¿Alguna vez has tenido algún desafío o algo que te haya marcado?
 

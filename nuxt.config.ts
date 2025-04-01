@@ -62,6 +62,9 @@ export default defineNuxtConfig({
         '/revista/articulos/que-es-el-fetiche-de-axilas',
         '/revista/articulos/que-es-el-fetiche-de-cosquillas',
         '/revista/articulos/que-es-el-fetiche-de-zapatos',
+        '/revista/articulos/el-fetiche-de-bragas-usadas',
+        '/revista/articulos/que-es-el-fetiche-de-panties-usados',
+        '/revista/articulos/que-es-el-fetiche-de-ropa-interior',
         '/revista/etiquetas/entrevistas',
         '/revista/etiquetas/colombianas-amateur-naturales',
         '/revista/etiquetas//panties-usados-colombia',
@@ -135,7 +138,7 @@ export default defineNuxtConfig({
     '/ad/threads': { headers: { 'X-Robots-Tag': 'noindex' } },
     '/ad/users': { headers: { 'X-Robots-Tag': 'noindex' } },
     '/': { headers: { 'X-Robots-Tag': 'index, follow' } }, // Home page
-    '/magazine': { headers: { 'X-Robots-Tag': 'index, follow' } }, // Magazine page
+    '/revista': { headers: { 'X-Robots-Tag': 'index, follow' } }, // Magazine page
     '/landing': { headers: { 'X-Robots-Tag': 'index, follow' } }
   },
 

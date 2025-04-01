@@ -25,7 +25,7 @@ Respuesta de Valeria Ríos:
 Respuesta de Valeria Ríos:
 ¿Por qué no? La neta, un amigovio me contó que podía generar un plus vendiéndolos, ya que soy una fan de la diversificación en la vida, y dije: "¿Por qué no?". Resulta que hay tanta gente que le pone que es increíble, y la verdad, si me gustan las cosas, por qué no compartir un poquito de mi intimidad con los que sienten lo mismo. Así que, ahí estoy, en mi tiendita virtual, ofreciendo mi tesorito personal.
 
-<img src="https://i.ibb.co/tTrt8250/421879096.jpg" alt="Mexicana Amateur" class="full-width-image" style="width:100%"/>
+<img src="https://i.ibb.co/tTrt8250/421879096.jpg" alt="Mexicana Amateur" class="full-width-image my-5" style="width:100%"/>
 
 ## Pregunta:¿Cómo fue tu primera experiencia vendiendo tangas usadas?
 
@@ -42,7 +42,7 @@ Respuesta de Valeria Ríos:
 Respuesta de Valeria Ríos:
 ¿Consejo? Pues que lo hagan, que se lancen. Tiene que ser algo que les guste y que no les de verguenza, ya que hay gente que lo toma de la peor. Tienes que ser natural, sentirte sexy y saber que hay un mercado para todo. Y, obvio, la higiene, no sean descuidados, que es la base de todo, no solo en este negocio.
 
-<img src="https://i.ibb.co/VcNdK32R/439204968.jpg" alt="Mexicana Amateur" class="full-width-image" style="width:100%"/>
+<img src="https://i.ibb.co/VcNdK32R/439204968.jpg" alt="Mexicana Amateur" class="full-width-image my-5" style="width:100%"/>
 
 ## Pregunta:De (1-10) que tan activa es tu vida sexual?
 
@@ -54,7 +54,7 @@ Pues, si soy sincera, estoy en un 8. Me gusta experimentar y probar cosas, ya sa
 Respuesta de Valeria Ríos:
 ¿De planificación? Claro, soy una chica responsable. Uso la pastilla, la nena Valerita no quiere sorpresas que no le caigan del cielo, si me entiendes.
 
-<img src="https://i.ibb.co/MkS8JT7f/464469080.jpg" alt="Mexicana Amateur" class="full-width-image" style="width:100%"/>
+<img src="https://i.ibb.co/MkS8JT7f/464469080.jpg" alt="Mexicana Amateur" class="full-width-image my-5" style="width:100%"/>
 
 ## Pregunta:¿Hay alguna experiencia sexual que consideres un "punto de inflexión" en tu vida, algo que te haya hecho ver la intimidad de una manera diferente?
 
@@ -76,7 +76,7 @@ Respuesta de Valeria Ríos:
  Respuesta de Valeria Ríos:
 ¿Posturas? Oye, soy fan de la posición del misionero, no se por qué, la sencillez de ver a la persona con la que estás, la conexión que se da... Aunque no me quejo de probar cosas raras, el perro, la amazona, la estrella de la mañana, la que sea. Si la conexión es buena, la posición es secundaria.
 
-<img src="https://i.ibb.co/JjG7jSrH/834112675.jpg" alt="Mexicana Amateur" class="full-width-image" style="width:100%"/>
+<img src="https://i.ibb.co/JjG7jSrH/834112675.jpg" alt="Mexicana Amateur" class="full-width-image my-5" style="width:100%"/>
 
 ## Pregunta:¿Qué piensas acerca de la comunidad en línea de venta y compra de tangas usadas?¿Crees que es un tabú o que cada vez es más aceptado?
 
@@ -97,7 +97,7 @@ Sí, mi amigo, la idea de OnlyFans me ronda la mente. Quiero darle más a mis se
  Respuesta de Valeria Ríos:
 ¿Fantasías? Tengo muchas, mi mente no para. Hay una en la que me encantaría ser una colegiala malvada, eso de la sumisa me pone, ya sabes.
 
-<img src="https://i.ibb.co/JjmJCkWw/909626957.jpg" alt="Mexicana Amateur" class="full-width-image" style="width:100%"/>
+<img src="https://i.ibb.co/JjmJCkWw/909626957.jpg" alt="Mexicana Amateur" class="full-width-image my-5" style="width:100%"/>
 
 ## Pregunta:¿Cómo es tu vida sexual con tu novio actual?¿Qué es lo que más te gusta de él en la cama?
 
@@ -114,7 +114,7 @@ Patrón, pues... la verdad, a todos les gustan mis tangas, jajajá. En serio, la
 Respuesta de Valeria Ríos:
 Pues, no tengo un horario fijo, jajajá. Siempre es distinto, depende del humor, la química del momento. Nuestras sesiones duran lo que duran, la clave es disfrutar cada instante.
 
-<img src="https://i.ibb.co/vxrvBRnB/1341962235.jpg" alt="Mexicana Amateur" class="full-width-image" style="width:100%"/>
+<img src="https://i.ibb.co/vxrvBRnB/1341962235.jpg" alt="Mexicana Amateur" class="full-width-image my-5" style="width:100%"/>
 
 ## Pregunta:¿Cómo te describirías en tres palabras?
 
@@ -134,9 +134,9 @@ Con mi novio, la frecuencia es al tiro, depende del estrés de la semana. A vece
 ## Pregunta:¿Cuáles son tus posturas sexuales preferidas?
 
 Respuesta de Valeria Ríos:
-¿Prefieres la sencillez del misionero o la aventura de la amazona? Pues, yo me decanto por la variedad. La vida es para experimentar, mi amigo.
+¿Prefieres la sencillez del misionero o la pasión de el doggystyle? Pues, yo me decanto por la variedad. La vida es para experimentar, mi amigo.
 
-<img src="https://i.ibb.co/k6Qk3gq8/1391985298.jpg" alt="Panties Usados Mexico" class="full-width-image" style="width:100%"/>
+<img src="https://i.ibb.co/k6Qk3gq8/1391985298.jpg" alt="Panties Usados Mexico" class="full-width-image my-5" style="width:100%"/>
 
 ## Pregunta:¿Cómo describirías a tu novio en la cama?
 
@@ -146,7 +146,7 @@ Respuesta de Valeria Ríos:
 ## Pregunta:¿Cuáles son tus fantasía sexuales que aun no has experimentado y que te gustaria probar?
 
 Respuesta de Valeria Ríos:
-Fantasía, hmm... pues, me encantaría ser la seductora enmascarada en una fiesta, que nadie sepa quién soy, que solo sientan el calor de mi presencia y mi tacto.
+Fantasía, hmm... pues, me encantaría ser la seductora enmascarada en una fiesta, que nadie sepa quién soy, que solo sientan el calor y mi tacto.
 
 ## Pregunta:¿Cómo es tu relación con tu novio en la intimidad?¿Cómo describiría la química que hay entre ustedes?
 
@@ -158,12 +158,7 @@ Mi relación con mi novio es explosiva. Nos entendemos sin hablar, nuestros gest
 Respuesta de Valeria Ríos:
 ¿Frecuencia? Pues, la vida es un carrusel, no hay un "cada cuanto". Siempre que la vida se lo permite, jajajá. Las sesiones... duran lo que tengan que durar, mi amigo.
 
-## Pregunta:¿Cuáles son tus posturas sexuales preferidas?
-
-Respuesta de Valeria Ríos:
-¿Preferida? No creo en la monotonía. Me gusta la variedad, el spicy. A veces soy la amazona, a veces la que recibe. Lo que importa es que la pasen rico, a todos.
-
-<img src="https://i.ibb.co/s9xFkHPg/1598830922.jpg" alt="Panties Usados Mexico" class="full-width-image" style="width:100%"/>
+<img src="https://i.ibb.co/s9xFkHPg/1598830922.jpg" alt="Panties Usados Mexico" class="full-width-image my-5" style="width:100%"/>
 
 ## Pregunta:¿Cómo te sientes acerca de la idea de vender tangas usadas?¿Te da verguenza o te excita?
 
@@ -190,7 +185,7 @@ Respuesta de Valeria Ríos:
 Una experiencia que me inspiró? Pues, la de un fan que me dijo que mis tangas le curaron la depresión. Eso me llenó el alma.
 
 
-<img src="https://i.ibb.co/nx07Mmp/1767870477.jpg" alt="Panties Usados Mexico" class="full-width-image" style="width:100%"/>
+<img src="https://i.ibb.co/nx07Mmp/1767870477.jpg" alt="Panties Usados Mexico" class="full-width-image my-5" style="width:100%"/>
 
 ## Pregunta:¿Cómo describirás en tres palabras a las personas que compran tus tangas usadas?
 
@@ -217,7 +212,7 @@ Fantasía pendiente? Sí, hay una de ser la anfitriona de una fiesta privada, co
 Respuesta de Valeria Ríos:
 Dinámica? Nos apoyamos el uno al otro. La regla de oro es la confianza. Sin eso, no hay nada.
 
-<img src="https://i.ibb.co/hxtByJZB/1919614504-1.jpg" alt="Panties Usados Mexico" class="full-width-image" style="width:100%"/>
+<img src="https://i.ibb.co/hxtByJZB/1919614504-1.jpg" alt="Panties Usados Mexico" class="full-width-image my-5" style="width:100%"/>
 
 ## Pregunta:¿Alguna experiencia con clientes que hayas tenido que te haya sorprendido o impactado de alguna forma?
 

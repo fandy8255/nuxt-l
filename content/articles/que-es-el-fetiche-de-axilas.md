@@ -39,8 +39,7 @@ Las axilas contienen una alta concentración de feromonas que pueden provocar re
 2. Símbolos de feminidad y masculinidad
 
 - Axilas sin depilar = sensualidad natural en algunas culturas
-- Axilas afeitadas y perfumadas = erotismo estilizado
-- Olor natural = autenticidad y compatibilidad genética
+- Axilas afeitadas y perfumadas = erotismo femenino
 
 <img src="https://i.ibb.co/39WjMgLQ/117397969.jpg" alt="fetiche de axilas" class="full-width-image my-5" style="width:100%"/>
 
@@ -80,11 +79,11 @@ El fetiche de las axilas es una muestra más de la diversidad dentro del mundo d
 ## Bibliografía:
 
 - Buss, D. M. (2016). The Evolution of Desire: Strategies of Human Mating (4th ed.). Basic Books.
-- Grammer, K., Fink, B., Møller, A. P., & Thornhill, R. (2003). Darwinian aesthetics: Sexual selection and the biology of beauty. Biological Reviews, 78(3), 385–407. https://doi.org/10.1017/S1464793102006090
-- Herz, R. S., & Cahill, E. D. (1997). Differential use of sensory information in sexual behavior as a function of gender. Human Nature, 8(3), 275–286. https://doi.org/10.1007/BF02912492
-- Schleidt, M., Hold, B., & Attili, G. (1981). A cross-cultural study on the attitude towards personal odor. Journal of Chemical Ecology, 7(1), 19–31. https://doi.org/10.1007/BF00988621
+- Grammer, K., Fink, B., Møller, A. P., & Thornhill, R. (2003). Darwinian aesthetics: Sexual selection and the biology of beauty. Biological Reviews, 78(3), 385–407
+- Herz, R. S., & Cahill, E. D. (1997). Differential use of sensory information in sexual behavior as a function of gender. Human Nature, 8(3), 275–286.
+- Schleidt, M., Hold, B., & Attili, G. (1981). A cross-cultural study on the attitude towards personal odor. Journal of Chemical Ecology, 7(1), 19–31.
 - Stoddart, D. M. (1990). The Scented Ape: The Biology and Culture of Human Odour. Cambridge University Press.
-- Vance, S. R. (2012). Pheromones and human attraction: The role of olfactory cues in mate selection. Journal of Evolutionary Psychology, 10(1), 35–47. https://doi.org/10.1556/JEP.10.2012.1.3
+- Vance, S. R. (2012). Pheromones and human attraction: The role of olfactory cues in mate selection. Journal of Evolutionary Psychology, 10(1), 35–47.
 - Wilson, M., & Daly, M. (1992). The man who mistook his wife for a chattel. The Adapted Mind: Evolutionary Psychology and the Generation of Culture, 289–322.
 
 ::SmallGallery{picturesPerRow=3 images='["https://i.ibb.co/hx3kdXKd/86273537.jpg","https://i.ibb.co/39WjMgLQ/117397969.jpg","https://i.ibb.co/LzfCbjd0/137854727.jpg","https://i.ibb.co/CpLJ32NC/159019976.jpg","https://i.ibb.co/qL4vB6Vf/352655517.jpg","https://i.ibb.co/35p7MbXb/438323352.jpg","https://i.ibb.co/WWKtCvK3/469440352.jpg","https://i.ibb.co/hJFqNYy2/511836724.jpg","https://i.ibb.co/Z6DdbYgX/830673320.jpg","https://i.ibb.co/mr4wY3Tx/834809210.jpg","https://i.ibb.co/nsx7Wxh0/864628950.jpg","https://i.ibb.co/WvnHctX8/875171794.jpg","https://i.ibb.co/WYYXjgD/907763773.jpg","https://i.ibb.co/QFXwW86J/966892021.jpg","https://i.ibb.co/cKCsPWkn/1170273574.jpg","https://i.ibb.co/prnd4yzr/1300876396.jpg","https://i.ibb.co/7t93Lh1j/1495230705-1.jpg","https://i.ibb.co/Fb3Cf3mV/1669161370.jpg","https://i.ibb.co/219sTF9f/1722851731.jpg","https://i.ibb.co/vxRSyk3j/1892400930.jpg","https://i.ibb.co/0yKKCR0C/2010634346.jpg"]'}

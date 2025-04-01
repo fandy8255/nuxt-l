@@ -49,9 +49,9 @@ Las manos transmiten:
 
 ### 2. **Señales evolutivas**  
 Estudios antropológicos sugieren que:  
-✔️ Uñas bien cuidadas = salud reproductiva  
-✔️ Venas marcadas = testosterona alta  
-✔️ Movimientos diestros = inteligencia  
+- Uñas bien cuidadas = salud   
+- Venas marcadas = testosterona alta  
+- Movimientos diestros = inteligencia  
 
 <img src="https://i.ibb.co/PZLWQWH2/853629053.jpg" alt="fetiche de manos y uñas" class="full-width-image my-5" style="width:100%"/>
 
@@ -69,7 +69,7 @@ El 67% de los videos ASMR más vistos en 2024 incluyen:
 |---------------|-------------------------|---------------------|
 | OnlyFans      | 8,900                  | $2,100             |
 | Patreon       | 3,400                  | $1,750             |
-| Feetify       | 1,200                  | $3,400 (hibridación pies/manos) |
+| Feetify       | 1,200                  | $3,400 (hibrido entre pies/manos) |
 
 **Tendencias 2025**:  
 - **"Manos narrativas"**: Contenido donde las manos cuentan historias eróticas  
@@ -94,11 +94,6 @@ El 67% de los videos ASMR más vistos en 2024 incluyen:
 
 <img src="https://i.ibb.co/ymBMqLX5/797938925.jpg" alt="fetiche de manos y uñas" class="full-width-image my-5" style="width:100%"/>
 
-### 3. ¿Es legal vender contenido de manos?  
-**Aspectos legales clave**:  
-✅ Legal en USA/EU si no muestra genitales  
-⚠️ Requiere verificación de edad en plataformas  
-🚫 Prohibido en Instagram/Facebook (política de "implícito sexual")  
 
 ### 4. ¿Qué herramientas necesito para empezar?  
 **Kit básico (inversión <$300)**:  
@@ -118,7 +113,7 @@ El 67% de los videos ASMR más vistos en 2024 incluyen:
 ## Conclusión para marcas y creadores  
 El fetiche de manos representa una **oportunidad de nicho** con:  
 - **Baja competencia** vs. otros fetichismos  
-- **Alto engagement** (ratio promedio del 8.7% vs. 3.2% general)  
+- **Alto engagement** (porcentaje promedio del 8.7% vs. 3.2% general)  
 - **Versatilidad** (desde contenido ASMR hasta fotografía artística)  
 
 ¿Listo para aprovechar este mercado? El momento es ahora: la demanda creció un **214%** en 2024 según *Statista Adult Content Report*.

@@ -25,7 +25,7 @@ Respuesta de Elisabeth Escalante: Soy una exitosa y apasionada escritora erótic
 
 ## Pregunta:¿Por qué decidiste empezar a vender tus panties en línea?
 
-Respuesta de Elisabeth Escalante: Pues, sabes, la vida me pegó con la inspiración en la cama. Descubrí que mis tangas usaditas tenían un encanto propio, que podía ser compartido con personas que disfrutan lo prohibido. Era una combinación perfecta entre mi pasatiempo de chica mala y mi gusto por lo excitante.
+Respuesta de Elisabeth Escalante: Pues, sabes, la vida me pegó con la inspiración en la cama. Descubrí que mis tangas usaditas tenían un encanto propio, que podía ser compartido con personas que disfrutan lo prohibido. Era una combinación perfecta de sentire como una chica mala y mi gusto por lo excitante.
 
 <img src="https://i.ibb.co/CRHTNnh/1254301923.jpg" alt="Elisabeth Escalante Colombiana Natural" class="full-width-image" style="width:100%"/>
 
@@ -55,19 +55,19 @@ Respuesta de Elisabeth Escalante: Sí, tengo varios, soy responsable. Uso antico
 
 ## Pregunta:¿Hay alguna experiencia sexual que consideres un "punto de inflexión" en tu vida, que te haya hecho ver la intimidad de una manera distinta?
 
-Respuesta de Elisabeth Escalante: Claro, la que me metió en este tema de vender tangas fue una amiga. Fui a un swingers club con mi amigo con derechos y la chica que conociéramos en Tinder. Ese trío fue la chispa que me mostró que hay un universo lleno de gustos y fantasías, y que la vida es para explorar. Bueno en fin , la nena ya estaba en esta página y me mostró su perfil.
+Respuesta de Elisabeth Escalante: Claro, la que me metió en este tema de vender tangas fue una amiga. Fui a un swingers club con mi amigo con derechos y una chcia que conocimos en Tinder.Hicimos un trío que fue demasiado genial jaja, y pues me mostró que la vida es para explorar. Bueno en fin , la nena ya estaba en esta página y me mostró su perfil y ella me metió a este mundo de vender calzones usados.
 
 <img src="https://i.ibb.co/jvD0VdZ7/249943727.jpg" alt="Elisabeth Escalante Colombiana Natural" class="full-width-image" style="width:100%"/>
 
 ## Pregunta:¿Cómo son tus experiencias con tus parejas en el aspecto sexual?¿Alguna que te haya marcado o que hayas tenido algún desafío?
 
-Respuesta de Elisabeth Escalante: Mis parejas son la inspiración para mis historias. Con mi chico casual de Tinder, por ejemplo, la conexión es pura electricidad. Nos gustan las cosas fuertes, los desafíos, lo que la gente no se atreve a hablar.
+Respuesta de Elisabeth Escalante: Mis parejas son la inspiración para mis historias. Con mi chico casual de Tinder, por ejemplo, la conexión es muy intensa. Nos gustan las cosas fuertes, los desafíos, lo que la gente no se atreve a hablar.Culeamos mucho con chicas generalmente, la nena que conocimos en tinder y otras que hemos conocido por ahí. 
 
 <img src="https://i.ibb.co/d4vLdzn2/943284485.jpg" alt="Elisabeth Escalante Colombiana Natural" class="full-width-image" style="width:100%"/>
 
 ## Pregunta:Cuélanme acerca de alguna de tus mejores experiencias sexuales.¿Tienes alguna que recuerdes con muchísimo cariño?
 
-Respuesta de Elisabeth Escalante: Recuerdo una noche en un hotel con mi ex, la mamacita que es. Nos metimos en la cama y hicimos el amor por horas, probando cada posición que se me ocurriera. Ese polvo fue la inspiración para mis primeros relatos.
+Respuesta de Elisabeth Escalante: Recuerdo una noche en un hotel con mi ex, el papacito que es. Nos metimos en la cama y hicimos el amor por horas, probando cada posición que se me ocurriera. Ese polvo fue la inspiración para mis primeros relatos eróticos.
 
 <img src="https://i.ibb.co/D6H4r5F/1476135051.jpg" alt="Elisabeth Escalante Colombiana Natural" class="full-width-image" style="width:100%"/>
 

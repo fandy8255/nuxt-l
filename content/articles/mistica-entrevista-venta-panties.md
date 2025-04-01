@@ -30,7 +30,7 @@ Por supuesto que sí. Cada pieza que vendo es una historia de deseo compartida y
 
 Sí, estoy en una relación y, por supuesto, comparto mi trabajo con mi pareja. Él no solo apoya mis decisiones, sino que a veces también me ayuda a atender solicitudes especiales.
 
-<img src="https://i.ibb.co/MyCVy7mk/1674495519.jpg" alt="Mistica Latina" class="full-width-image" style="width:100%"/>
+<img src="https://i.ibb.co/MyCVy7mk/1674495519.jpg" alt="Mistica Latina" class="full-width-image my-5" style="width:100%"/>
 
 ### Latin Panty: ¿Qué dirías a las personas que tienen conceptos erróneos sobre el fetichismo de la ropa interior usada?
 

@@ -14,7 +14,6 @@ adult: false
 
 El fetiche de las cosquillas, también conocido como knismolagnia, knismofilia o titillagnia, es una parafilia en la que un individuo experimenta placer sexual al hacer cosquillas, recibirlas o presenciar a alguien siendo cosquilleado. Este tipo de estimulación puede variar según la preferencia de la persona, ya sea en un rol dominante (ler), sumiso (lee) o en ambos roles (switch). Muchas personas dentro de esta comunidad tienen áreas específicas del cuerpo donde disfrutan ser cosquilleadas, particularmente en zonas erógenas o especialmente sensibles.
 
-
 <img src="https://i.ibb.co/3yFw2Mf7/alyssa-milano.jpg" alt="fetiche de axilas cosquillas Alyssa Milano" class="full-width-image my-5" style="width:100%"/>
 
 La **knismolagnia** (o titillagnia) es una parafilia donde el placer sexual se obtiene al:

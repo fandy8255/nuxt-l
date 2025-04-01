@@ -81,22 +81,14 @@ Los pies representan simultáneamente:
 **Tipos de calzado fetichista** más demandados:
 | Tipo | Prevalencia | Característica clave |
 |------|------------|---------------------|
-| Tacones aguja | 78% | Arqueo del pie |
+| Tacones | 78% | Arqueo del pie |
 | Bailarinas | 65% | Exposición parcial |
-| Botas altas | 59% | Factor de dominación |
+| Botas altas (de cuero preferiblemente) | 59% | Factor de dominación |
 | Sandalias | 47% | Accesibilidad |
 
 <img src="https://i.ibb.co/tSmCJD9/2057544810.jpg" alt="fetiche de pies" class="full-width-image my-5" style="width:100%"/>
 
 ## El mercado del fetichismo podal: Datos actuales
-
-**Cifras reveladoras** (2024):
-- Mercado global: $2.3 mil millones
-- Crecimiento anual: 11.7%
-- Principales plataformas:
-  - Feetify (120k creadores)
-  - OnlyFans (23% contenido podal)
-  - Patreon (17k suscripciones premium)
 
 **Servicios especializados**:
 - "Pies personalizados": $50-$500/sesión
@@ -117,7 +109,7 @@ Los pies representan simultáneamente:
 **Guía práctica**:
 1. Iniciar con masajes neutros
 2. Incorporar gradualmente elementos fetichistas
-3. Usar juegos de roles ("diosa podal")
+3. Usar juegos de roles
 4. Experimentar con calzado erótico
 
 ### 3. ¿Existen variaciones geográficas?
@@ -129,12 +121,6 @@ Los pies representan simultáneamente:
 <img src="https://i.ibb.co/RJmcy5w/837664693.jpg" alt="fetiche de pies" class="full-width-image my-5" style="width:100%"/>
 
 
-### 4. ¿Puede convertirse en adicción?
-**Señales de alerta**:
-- Gastos compulsivos en contenido
-- Negligencia de relaciones reales
-- Conductas de riesgo laboral/social
-
 ### 5. ¿Hay diferencias de género?
 **Estadísticas**:
 - Hombres: 82% fetichistas declarados
@@ -143,29 +129,6 @@ Los pies representan simultáneamente:
 
 <img src="https://i.ibb.co/WW3G0vsL/1349899953.jpg" alt="fetiche de pies" class="full-width-image my-5" style="width:100%"/>
 
-### 6. ¿Tiene relación con el TOC?
-**Aclaración médica**:
-Si bien algunos rituales podrían confundirse, la podofilia saludable:
-- No busca neutralizar ansiedad
-- Produce placer genuino
-- Es egosintónica (aceptada por el individuo)
-
-## Conclusión profesional
-
-El fetichismo de pies representa una fascinante intersección entre:
-- **Biología** (mapeo cerebral único)
-- **Psicología** (asociaciones tempranas)
-- **Sociología** (evolución de tabúes)
-
-Su normalización en la última década ha permitido:
-- Mayor investigación científica
-- Desestigmatización terapéutica
-- Desarrollo de economías creativas
-
-Como todo interés sexual, su práctica ética requiere:
-✅ Consentimiento explícito
-✅ Límites claros
-✅ Salud psicológica preservada
 
 
 ## Bibliografía
